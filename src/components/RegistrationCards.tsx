@@ -59,7 +59,7 @@ const RegistrationCards = () => {
             className="text-center mb-16"
           >
             <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-6">
-              Registar
+              Registrar
             </h2>
           </motion.div>
 
@@ -72,8 +72,8 @@ const RegistrationCards = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="hover-lift cursor-pointer group overflow-hidden border-2 border-transparent hover:border-primary/20 transition-all duration-300">
-                  <CardContent className="p-6 text-center">
+                <Card className="hover-lift cursor-pointer group overflow-hidden border-2 border-transparent hover:border-primary/20 transition-all duration-300 h-full">
+                  <CardContent className="p-6 text-center h-full flex flex-col">
                     <div className="mb-4 overflow-hidden rounded-lg">
                       <img
                         src={card.image}
@@ -81,13 +81,13 @@ const RegistrationCards = () => {
                         className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
                       />
                     </div>
-                    <h3 className="text-xl font-semibold text-secondary mb-4 capitalize">
+                    <h3 className="text-xl font-semibold text-secondary mb-4 capitalize flex-grow flex items-center justify-center min-h-[3rem]">
                       {card.title}
                     </h3>
                     <Button
                       variant="rectangular"
                       size="rectangular"
-                      className="w-full"
+                      className="w-full mt-auto"
                       onClick={() => setSelectedCard(card.id)}
                     >
                       Registrar
