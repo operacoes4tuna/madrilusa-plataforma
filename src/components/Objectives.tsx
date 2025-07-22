@@ -45,7 +45,7 @@ const Objectives = () => {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           {objectives.map((objective, index) => {
             const IconComponent = objective.icon;
             return (
@@ -55,10 +55,11 @@ const Objectives = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
+                className="h-full"
               >
                 <Card className="hover-lift h-full border-2 border-transparent hover:border-primary/20 transition-all duration-300">
-                  <CardContent className="p-6">
-                    <div className="mb-6 relative overflow-hidden rounded-lg">
+                  <CardContent className="p-6 h-full flex flex-col">
+                    <div className="mb-6 relative overflow-hidden rounded-lg flex-shrink-0">
                       <img
                         src={objective.image}
                         alt={objective.title}
@@ -66,7 +67,7 @@ const Objectives = () => {
                       />
                     </div>
                     
-                    <div className="flex items-center mb-4">
+                    <div className="flex items-center mb-4 flex-shrink-0">
                       <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
                         <IconComponent className="w-6 h-6 text-primary" />
                       </div>
@@ -75,7 +76,7 @@ const Objectives = () => {
                       </h3>
                     </div>
                     
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-muted-foreground leading-relaxed flex-grow">
                       {objective.description}
                     </p>
                   </CardContent>
