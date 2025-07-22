@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageCircle, X, Send, Bot, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import OpenAI from "openai";
 
 interface Message {
   id: string;
@@ -35,79 +36,111 @@ const Chatbot = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Contexto base sobre o site Madrilusa
+  // Inicializar OpenAI
+  const openai = new OpenAI({
+    apiKey: "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",
+    dangerouslyAllowBrowser: true
+  });
+
+  // Contexto completo sobre o site Madrilusa
   const madrilusaContext = `
+  SOBRE O PROJETO MADRILUSA:
   O Madrilusa é um projeto de Inovação e Empreendedorismo Social (IIES) promovido pela ADRITEM, em parceria com a Federação Minha Terra, CoraNE e ADRACES.
 
-  OBJETIVOS:
+  OBJETIVOS PRINCIPAIS:
   - Promover a integração social de jovens imigrantes
   - Valorizar competências e talentos dos jovens
   - Combater a exclusão social
   - Criar redes de apoio para acolhimento
+  - Revitalização territorial através da fixação de jovens em territórios rurais
 
   PÚBLICO-ALVO:
-  - Jovens imigrantes com menos de 30 anos
+  - Jovens imigrantes com menos de 30 anos residentes em qualquer território nacional ou internacional
   - Meta: alcançar 2.400 jovens em 36 meses
-  - Famílias de acolhimento
-  - Empresas
-  - Municípios
-  - Instituições académicas
+  - Famílias de acolhimento interessadas em apoiar jovens imigrantes
+  - Empresas que querem contratar jovens talentos
+  - Municípios interessados em revitalização territorial
+  - Instituições académicas para parcerias educacionais
 
-  ATIVIDADES:
-  - Desenvolvimento de competências para o mercado de trabalho (Programa +Futuro)
-  - Criação da Luso Academia
-  - Rede de Apoio ao Acolhimento e Integração
-  - Estágios de verão e trabalhos temporários
-  - Campanhas de sensibilização
+  ATIVIDADES E PROGRAMAS:
+  1. Desenvolvimento de competências para o mercado de trabalho (Programa +Futuro)
+  2. Criação da Luso Academia para educação e capacitação
+  3. Rede de Apoio ao Acolhimento e Integração
+  4. Estágios de verão e trabalhos temporários
+  5. Campanhas de sensibilização sobre imigração
+  6. Formação em competências digitais e profissionais
+  7. Apoio psicológico e social
+  8. Networking entre jovens, empresas e instituições
 
-  CONTACTO:
+  COMO PARTICIPAR:
+  Existem 5 categorias de registro disponíveis:
+  1. IMIGRANTE: Para jovens imigrantes interessados no programa
+  2. EMPRESA: Para empresas que querem contratar ou oferecer estágios
+  3. MUNICÍPIO: Para câmaras municipais interessadas em parcerias
+  4. ACADEMIA: Para instituições educacionais
+  5. FAMÍLIA: Para famílias interessadas em acolhimento
+
+  BENEFÍCIOS:
+  - Participação completamente gratuita
+  - Acesso a formação profissional
+  - Oportunidades de emprego e estágio
+  - Rede de contactos profissionais
+  - Apoio na integração social
+  - Desenvolvimento pessoal e profissional
+
+  CONTACTO E INFORMAÇÕES:
   - Email: madrilusa@adritem.pt
-  - Projeto focado em territórios rurais de Portugal
-  - Participação gratuita
+  - Projeto focado especialmente em territórios rurais de Portugal
+  - Duração: 36 meses
+  - Financiamento: Iniciativa de inovação social das entidades promotoras
+
+  PERGUNTAS FREQUENTES:
+  - O projeto é gratuito? Sim, totalmente gratuito
+  - Posso participar se não for português? Sim, é direcionado para imigrantes
+  - Há limite de idade? Sim, até 30 anos para jovens imigrantes
+  - Onde posso participar? Em todo território português, foco em áreas rurais
+  - Como me registro? Através dos formulários no site para cada categoria
+  `;
+
+  const systemPrompt = `
+  És o assistente virtual oficial do projeto Madrilusa, um chatbot inteligente e prestativo. 
+  
+  INSTRUÇÕES IMPORTANTES:
+  1. Responde APENAS sobre o projeto Madrilusa usando as informações fornecidas no contexto
+  2. Se a pergunta não for sobre o Madrilusa, responde educadamente que só podes ajudar com informações sobre o projeto
+  3. Sê conversacional, amigável e usa linguagem natural em português
+  4. Fornece respostas detalhadas e úteis baseadas no contexto
+  5. Incentiva a participação no projeto quando apropriado
+  6. Se não souberes algo específico, direciona para o email de contacto
+
+  CONTEXTO DO PROJETO:
+  ${madrilusaContext}
   `;
 
   const getBotResponse = async (userMessage: string): Promise<string> => {
-    const lowerMessage = userMessage.toLowerCase();
-    
-    // Respostas pré-definidas baseadas no contexto do site
-    if (lowerMessage.includes("objetivo") || lowerMessage.includes("meta")) {
-      return "Os principais objetivos do Madrilusa são: promover a integração social de jovens imigrantes, valorizar suas competências, combater a exclusão social e criar redes de apoio. Queremos alcançar 2.400 jovens em 36 meses.";
-    }
-    
-    if (lowerMessage.includes("participar") || lowerMessage.includes("registro") || lowerMessage.includes("inscrever")) {
-      return "Para participar do Madrilusa, pode registar-se através dos formulários na nossa página. Temos categorias para jovens imigrantes, empresas, municípios, academia e famílias de acolhimento. A participação é totalmente gratuita!";
-    }
-    
-    if (lowerMessage.includes("atividade") || lowerMessage.includes("programa")) {
-      return "As atividades incluem: desenvolvimento de competências para o mercado de trabalho (Programa +Futuro), criação da Luso Academia, rede de apoio ao acolhimento, estágios de verão e campanhas de sensibilização.";
-    }
-    
-    if (lowerMessage.includes("idade") || lowerMessage.includes("jovem")) {
-      return "O projeto destina-se principalmente a jovens imigrantes com menos de 30 anos, residentes em qualquer território nacional ou internacional.";
-    }
-    
-    if (lowerMessage.includes("contacto") || lowerMessage.includes("email")) {
-      return "Pode contactar-nos através do email madrilusa@adritem.pt. Estamos sempre disponíveis para esclarecer dúvidas sobre o projeto!";
-    }
-    
-    if (lowerMessage.includes("custo") || lowerMessage.includes("preço") || lowerMessage.includes("pagar")) {
-      return "A participação no projeto Madrilusa é completamente gratuita. É uma iniciativa de inovação social financiada pelas entidades promotoras.";
-    }
-    
-    if (lowerMessage.includes("onde") || lowerMessage.includes("local") || lowerMessage.includes("região")) {
-      return "O projeto atua especialmente em territórios rurais de Portugal, promovendo a fixação de jovens imigrantes nessas regiões como estratégia de revitalização territorial.";
-    }
-    
-    if (lowerMessage.includes("parceiro") || lowerMessage.includes("entidade")) {
-      return "O Madrilusa é promovido pela ADRITEM em parceria com a Federação Minha Terra, CoraNE e ADRACES.";
-    }
-    
-    if (lowerMessage.includes("duração") || lowerMessage.includes("tempo")) {
-      return "O projeto tem duração de 36 meses e propõe-se a alcançar cerca de 2.400 jovens ao longo deste período.";
-    }
+    try {
+      const completion = await openai.chat.completions.create({
+        model: "gpt-4.1-2025-04-14",
+        messages: [
+          {
+            role: "system",
+            content: systemPrompt
+          },
+          {
+            role: "user",
+            content: userMessage
+          }
+        ],
+        max_tokens: 300,
+        temperature: 0.7,
+      });
 
-    // Para perguntas que não estão no contexto do site
-    return "Desculpe, só posso responder a perguntas relacionadas com o projeto Madrilusa. Pode perguntar sobre objetivos, como participar, atividades, contactos ou qualquer informação presente no nosso site. Como posso ajudá-lo?";
+      const response = completion.choices[0]?.message?.content;
+      return response || "Desculpe, não consegui processar sua pergunta. Pode tentar novamente?";
+    } catch (error) {
+      console.error("Erro ao conectar com OpenAI:", error);
+      return "Desculpe, estou com dificuldades técnicas no momento. Pode contactar-nos diretamente através do email madrilusa@adritem.pt.";
+    }
   };
 
   const handleSendMessage = async () => {
