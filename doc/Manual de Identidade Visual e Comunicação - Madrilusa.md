@@ -725,8 +725,29 @@ Lembre-se: cada material criado é uma oportunidade de reforçar os valores do p
 
 ---
 
-*Manual de Identidade Visual MadriLusa - Versão 2.0*  
-*Revisto para Português de Portugal - Julho 2025*  
+## ORDENAÇÃO OBRIGATÓRIA DAS ENTIDADES
+
+**IMPORTANTE:** Em todas as comunicações, materiais gráficos, website e documentos oficiais, as entidades promotoras devem sempre aparecer na seguinte ordem específica:
+
+### 1.ª Federação Minha Terra
+### 2.ª Adritem  
+### 3.ª Adraces
+### 4.ª CoraNE
+
+**Esta ordem aplica-se a:**
+- Logótipos em footer e materiais promocionais
+- Contactos no website
+- Assinaturas de email
+- Documentos oficiais
+- Comunicações externas
+- Redes sociais
+
+**Nota:** Esta ordenação institucional deve ser respeitada em todos os contextos para manter a consistência da comunicação do projeto Madrilusa.
+
+---
+
+*Manual de Identidade Visual MadriLusa - Versão 2.1*  
+*Revisto para Português de Portugal - Janeiro 2025*  
 *Para dúvidas e sugestões: madrilusa@adritem.pt*
 
 *Projecto desenvolvido em parceria entre Federação Minha Terra, Adritem, Adraces e CoraNE*

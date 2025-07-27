@@ -14,10 +14,10 @@ Conectar jovens imigrantes a oportunidades em territórios rurais, criando solu�
 - Desenvolvimento territorial sustentável
 
 ### 🏢 Entidades Promotoras
-- **ADRITEM** (principal)
-- **Federação Minha Terra**
-- **CoraNE** 
+- **Federação Minha Terra** (principal)
+- **ADRITEM**
 - **ADRACES**
+- **CoraNE**
 
 ### 📊 Metas
 - **2.400 jovens** atendidos
@@ -48,7 +48,9 @@ Conectar jovens imigrantes a oportunidades em territórios rurais, criando solu�
 ```
 madrilusasite/
 ├── 📁 doc/                   # 📋 DOCUMENTAÇÃO COMPLETA
-│   └── project-mapping.md    # Mapeamento detalhado do projeto
+│   ├── Guia Completo de Conteúdo e Seções do Madrilusa.md
+│   ├── Manual de Identidade Visual e Comunicação - Madrilusa.md
+│   └── Guia de Inscrições na Plataforma Madrilusa.md
 ├── 📁 src/
 │   ├── components/          # Componentes React
 │   │   ├── ui/             # 47 componentes shadcn/ui
@@ -60,21 +62,36 @@ madrilusasite/
 │   ├── hooks/              # Custom hooks
 │   ├── pages/              # Páginas da aplicação
 │   └── assets/             # Imagens temáticas
+├── 📁 public/
+│   ├── logo_madrilusa/     # Logótipos oficiais
+│   └── madrilusa_images/   # Imagens do projeto
 └── ...                     # Configurações
 ```
 
 ## 📚 Documentação
 
-### 📖 Documentação Completa
-Para informações detalhadas sobre arquitetura, funcionalidades e roadmap, consulte:
-**[doc/project-mapping.md](./doc/project-mapping.md)**
+### 📖 Documentação Principal
+A documentação do projeto está organizada em 3 documentos especializados:
 
-Este documento contém:
-- Análise técnica completa
-- Mapeamento de componentes
-- Status de implementação
-- Roadmap de desenvolvimento
-- Considerações arquiteturais
+#### 1. **[Guia Completo de Conteúdo e Seções](./doc/Guia%20Completo%20de%20Conteúdo%20e%20Seções%20do%20Madrilusa.md)**
+- **Conteúdo completo** de todas as seções
+- **Estrutura técnica** e arquitetura
+- **Funcionalidades** e componentes
+- **Especificações de desenvolvimento**
+- **Roadmap** e implementação
+
+#### 2. **[Manual de Identidade Visual](./doc/Manual%20de%20Identidade%20Visual%20e%20Comunicação%20-%20Madrilusa.md)**
+- **Paleta de cores** oficial
+- **Tipografia** e hierarquia
+- **Logótipos** e aplicações
+- **Diretrizes** de comunicação
+- **Ordenação das entidades**
+
+#### 3. **[Guia de Inscrições](./doc/Guia%20de%20Inscrições%20na%20Plataforma%20Madrilusa.md)**
+- **Campos específicos** por categoria
+- **Validações** obrigatórias
+- **Formulários** detalhados
+- **Fluxos** de inscrição
 
 ---
 
@@ -165,11 +182,12 @@ npm run lint      # Linting TypeScript
 ## 🤝 Como Contribuir
 
 ### Para Desenvolvedores
-1. Consulte `doc/project-mapping.md` para contexto completo
-2. Fork o repositório
-3. Crie uma branch para sua feature
-4. Faça commit das mudanças
-5. Abra um Pull Request
+1. Consulte o **[Guia Completo de Conteúdo e Seções](./doc/Guia%20Completo%20de%20Conteúdo%20e%20Seções%20do%20Madrilusa.md)** para contexto técnico
+2. Consulte o **[Manual de Identidade Visual](./doc/Manual%20de%20Identidade%20Visual%20e%20Comunicação%20-%20Madrilusa.md)** para diretrizes visuais
+3. Fork o repositório
+4. Crie uma branch para sua feature
+5. Faça commit das mudanças
+6. Abra um Pull Request
 
 ### Para o Projeto Social
 - **Jovens imigrantes:** Registe-se na plataforma
@@ -182,7 +200,7 @@ npm run lint      # Linting TypeScript
 
 ## 📞 Contactos
 
-### Entidades Promotoras
+### Entidades Promotoras (ordem institucional)
 - **Federação Minha Terra:** mariaclarabraga@minhaterra.pt | (+351) 913 196 839
 - **Adritem:** madrilusa@adritem.pt | (+351) 937 342 173  
 - **Adraces:** apoio-imigrantes@adraces.pt | (+351) 272 540 200
@@ -225,4 +243,4 @@ O projeto pode ser deployado em qualquer plataforma que suporte aplicações Rea
 **Projeto desenvolvido com ❤️ para promover integração social e desenvolvimento sustentável**
 
 *Projecto de Inovação e Empreendedorismo Social*  
-*ADRITEM • Federação Minha Terra • CoraNE • ADRACES*
+*Federação Minha Terra • ADRITEM • ADRACES • CoraNE*

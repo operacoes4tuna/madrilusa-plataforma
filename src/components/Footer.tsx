@@ -120,7 +120,7 @@ const Footer = () => {
                 Termos de Uso
               </button>
               <p className="text-muted-foreground text-xs">
-                Desenvolvido por 4tuna
+              Desenvolvido pela 4tuna com ❤️ para promover integração social e desenvolvimento sustentável
               </p>
             </div>
           </div>
