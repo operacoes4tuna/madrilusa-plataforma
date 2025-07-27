@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { GraduationCap, Users, Network, Briefcase, MessageCircle } from "lucide-react";
 
@@ -39,55 +38,40 @@ const Activities = () => {
   return (
     <section id="atividades" className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-6">
             As ações do projeto incluem
           </h2>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {activities.map((activity, index) => {
             const IconComponent = activity.icon;
             return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Card className="hover-lift h-full border-2 border-transparent hover:border-primary/20 transition-all duration-300">
-                  <CardContent className="p-6">
-                    <div className="mb-4 relative overflow-hidden rounded-lg">
-                      <img
-                        src={activity.image}
-                        alt={activity.title}
-                        className="w-full h-40 object-cover transition-transform duration-300 hover:scale-110"
-                      />
+              <Card key={index} className="hover-lift h-full">
+                <CardContent className="p-6 h-full flex flex-col">
+                  <div className="mb-4 overflow-hidden rounded-lg">
+                    <img
+                      src={activity.image}
+                      alt={activity.title}
+                      className="w-full h-48 object-cover"
+                    />
+                  </div>
+                  
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                      <IconComponent className="w-6 h-6 text-primary-foreground" />
                     </div>
-                    
-                    <div className="flex items-start mb-4">
-                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
-                        <IconComponent className="w-5 h-5 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-secondary mb-2">
-                          {activity.title}
-                        </h3>
-                        <p className="text-muted-foreground text-sm leading-relaxed">
-                          {activity.description}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
+                    <h3 className="text-xl font-semibold text-secondary">
+                      {activity.title}
+                    </h3>
+                  </div>
+                  
+                  <p className="text-muted-foreground leading-relaxed flex-grow">
+                    {activity.description}
+                  </p>
+                </CardContent>
+              </Card>
             );
           })}
         </div>

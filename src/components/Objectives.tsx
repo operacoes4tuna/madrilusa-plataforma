@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Globe, Users, Heart, Handshake } from "lucide-react";
 
@@ -33,55 +32,42 @@ const Objectives = () => {
   return (
     <section id="objetivos" className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-6">
             Principais Objetivos
           </h2>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           {objectives.map((objective, index) => {
             const IconComponent = objective.icon;
             return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="h-full"
-              >
-                <Card className="hover-lift h-full border-2 border-transparent hover:border-primary/20 transition-all duration-300">
-                  <CardContent className="p-6 h-full flex flex-col">
-                    <div className="mb-6 relative overflow-hidden rounded-lg flex-shrink-0">
-                      <img
-                        src={objective.image}
-                        alt={objective.title}
-                        className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
-                      />
+              <Card key={index} className="hover-lift h-full">
+                <CardContent className="p-6">
+                  <div className="flex items-start space-x-4 mb-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                      <IconComponent className="w-6 h-6 text-primary-foreground" />
                     </div>
-                    
-                    <div className="flex items-center mb-4 flex-shrink-0">
-                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                        <IconComponent className="w-6 h-6 text-primary" />
-                      </div>
-                      <h3 className="text-xl font-semibold text-secondary">
+                    <div className="flex-1">
+                      <h3 className="text-xl font-semibold text-secondary mb-2">
                         {objective.title}
                       </h3>
                     </div>
-                    
-                    <p className="text-muted-foreground leading-relaxed flex-grow">
-                      {objective.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
+                  </div>
+                  
+                  <div className="mb-4 rounded-lg overflow-hidden">
+                    <img
+                      src={objective.image}
+                      alt={objective.title}
+                      className="w-full h-48 object-cover"
+                    />
+                  </div>
+                  
+                  <p className="text-muted-foreground leading-relaxed">
+                    {objective.description}
+                  </p>
+                </CardContent>
+              </Card>
             );
           })}
         </div>

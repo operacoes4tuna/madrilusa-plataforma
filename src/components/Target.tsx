@@ -6,13 +6,7 @@ const Target = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-12 items-center">
           {/* Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="w-full lg:w-1/2 flex-shrink-0"
-          >
+          <div className="w-full lg:w-1/2 flex-shrink-0">
             <div className="relative rounded-2xl overflow-hidden shadow-card-custom max-w-md mx-auto lg:mx-0">
               <img
                 src="https://static.wixstatic.com/media/bd849e_f1786b4734a1476599c8e37df83d6897~mv2.webp/v1/fill/w_398,h_390,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/jovens_porto_azulejos.webp"
@@ -21,16 +15,10 @@ const Target = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent"></div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Content */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="w-full lg:w-1/2 flex-shrink-0"
-          >
+          <div className="w-full lg:w-1/2 flex-shrink-0">
             <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-6">
               A quem se destina?
             </h2>
@@ -52,7 +40,7 @@ const Target = () => {
                 ao longo de 36 meses</strong>.
               </p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

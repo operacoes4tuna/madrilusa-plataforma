@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageCircle, X, Send, Bot, User } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import OpenAI from "openai";
 
 interface Message {
@@ -181,122 +180,103 @@ const Chatbot = () => {
   return (
     <>
       {/* Botão flutuante */}
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 2, type: "spring", stiffness: 200 }}
-        className="fixed bottom-6 right-6 z-50"
-      >
+      <div className="fixed bottom-6 right-6 z-50">
         <Button
           onClick={() => setIsOpen(true)}
           className="w-14 h-14 rounded-full shadow-glow bg-primary hover:bg-primary-glow transition-all duration-300 hover:scale-110"
         >
           <MessageCircle className="w-6 h-6" />
         </Button>
-      </motion.div>
+      </div>
 
       {/* Chat Window */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 100, scale: 0.3 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 100, scale: 0.3 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed bottom-24 right-6 z-50 w-80 h-96 md:w-96 md:h-[500px]"
-          >
-            <Card className="h-full shadow-elegant border-2 border-primary/20">
-              <CardHeader className="bg-gradient-primary text-primary-foreground p-4 rounded-t-lg">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-primary-foreground/20 rounded-full flex items-center justify-center">
-                      <Bot className="w-4 h-4" />
-                    </div>
-                    <CardTitle className="text-lg">Assistente Madrilusa</CardTitle>
+      {isOpen && (
+        <div className="fixed bottom-24 right-6 z-50 w-80 h-96 md:w-96 md:h-[500px] opacity-100 transform-none">
+          <Card className="h-full shadow-elegant border-2 border-primary/20">
+            <CardHeader className="bg-gradient-primary text-primary-foreground p-4 rounded-t-lg">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-primary-foreground/20 rounded-full flex items-center justify-center">
+                    <Bot className="w-4 h-4" />
                   </div>
+                  <CardTitle className="text-lg">Assistente Madrilusa</CardTitle>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsOpen(false)}
+                  className="text-primary-foreground hover:bg-primary-foreground/20 h-8 w-8"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+            </CardHeader>
+
+            <CardContent className="p-0 h-full flex flex-col">
+              <ScrollArea className="flex-1 p-4">
+                <div className="space-y-4">
+                  {messages.map((message) => (
+                    <div
+                      key={message.id}
+                      className={`flex ${message.isBot ? "justify-start" : "justify-end"}`}
+                    >
+                      <div
+                        className={`max-w-[80%] p-3 rounded-lg ${
+                          message.isBot
+                            ? "bg-muted text-muted-foreground"
+                            : "bg-primary text-primary-foreground"
+                        }`}
+                      >
+                        <div className="flex items-start gap-2">
+                          {message.isBot && <Bot className="w-4 h-4 mt-0.5 flex-shrink-0" />}
+                          <p className="text-sm leading-relaxed">{message.text}</p>
+                          {!message.isBot && <User className="w-4 h-4 mt-0.5 flex-shrink-0" />}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  
+                  {isTyping && (
+                    <div className="flex justify-start">
+                      <div className="bg-muted text-muted-foreground p-3 rounded-lg max-w-[80%]">
+                        <div className="flex items-center gap-2">
+                          <Bot className="w-4 h-4" />
+                          <div className="flex gap-1">
+                            <div className="w-2 h-2 bg-current rounded-full animate-bounce"></div>
+                            <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
+                            <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <div ref={messagesEndRef} />
+              </ScrollArea>
+
+              <div className="p-4 border-t border-border">
+                <div className="flex gap-2">
+                  <Input
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder="Digite sua pergunta..."
+                    className="flex-1"
+                  />
                   <Button
-                    variant="ghost"
+                    onClick={handleSendMessage}
+                    disabled={!inputValue.trim() || isTyping}
                     size="icon"
-                    onClick={() => setIsOpen(false)}
-                    className="text-primary-foreground hover:bg-primary-foreground/20 h-8 w-8"
+                    variant="rectangular"
                   >
-                    <X className="w-4 h-4" />
+                    <Send className="w-4 h-4" />
                   </Button>
                 </div>
-              </CardHeader>
-
-              <CardContent className="p-0 h-full flex flex-col">
-                <ScrollArea className="flex-1 p-4">
-                  <div className="space-y-4">
-                    {messages.map((message) => (
-                      <motion.div
-                        key={message.id}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className={`flex ${message.isBot ? "justify-start" : "justify-end"}`}
-                      >
-                        <div
-                          className={`max-w-[80%] p-3 rounded-lg ${
-                            message.isBot
-                              ? "bg-muted text-muted-foreground"
-                              : "bg-primary text-primary-foreground"
-                          }`}
-                        >
-                          <div className="flex items-start gap-2">
-                            {message.isBot && <Bot className="w-4 h-4 mt-0.5 flex-shrink-0" />}
-                            <p className="text-sm leading-relaxed">{message.text}</p>
-                            {!message.isBot && <User className="w-4 h-4 mt-0.5 flex-shrink-0" />}
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
-                    
-                    {isTyping && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="flex justify-start"
-                      >
-                        <div className="bg-muted text-muted-foreground p-3 rounded-lg max-w-[80%]">
-                          <div className="flex items-center gap-2">
-                            <Bot className="w-4 h-4" />
-                            <div className="flex gap-1">
-                              <div className="w-2 h-2 bg-current rounded-full animate-bounce"></div>
-                              <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-                              <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </div>
-                  <div ref={messagesEndRef} />
-                </ScrollArea>
-
-                <div className="p-4 border-t border-border">
-                  <div className="flex gap-2">
-                    <Input
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                      onKeyPress={handleKeyPress}
-                      placeholder="Digite sua pergunta..."
-                      className="flex-1"
-                    />
-                    <Button
-                      onClick={handleSendMessage}
-                      disabled={!inputValue.trim() || isTyping}
-                      size="icon"
-                      variant="rectangular"
-                    >
-                      <Send className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </>
   );
 };

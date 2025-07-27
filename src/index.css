@@ -2,112 +2,102 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design system baseado no Madrilusa - cores, gradientes, fontes, etc */
+/* Design system oficial Madrilusa - baseado no Manual de Identidade Visual */
 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 210 11% 15%;
+    --foreground: 0 0% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 210 11% 15%;
+    --card-foreground: 0 0% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 11% 15%;
+    --popover-foreground: 0 0% 20%;
 
-    /* Laranja principal do Madrilusa */
-    --primary: 31 95% 53%;
+    /* Cores oficiais do Manual Madrilusa */
+    --primary: 37 89% 55%;              /* #F5A623 - Laranja Madrilusa oficial */
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 31 100% 65%;
+    --primary-glow: 37 100% 70%;        /* Versão mais brilhante do laranja */
 
-    /* Azul escuro do header */
-    --secondary: 210 65% 20%;
+    /* Azul Turquesa oficial */
+    --secondary: 193 38% 47%;           /* #4A90A4 - Azul Turquesa oficial */
     --secondary-foreground: 0 0% 100%;
 
-    /* Cores neutras */
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Cores neutras oficiais */
+    --muted: 0 0% 96%;                  /* #F5F5F5 - Cinzento Claro oficial */
+    --muted-foreground: 0 0% 20%;       /* #333333 - Cinzento Escuro oficial */
 
-    --accent: 31 95% 53%;
+    --accent: 37 89% 55%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 31 95% 53%;
+    --border: 0 0% 91%;
+    --input: 0 0% 91%;
+    --ring: 37 89% 55%;
 
-    /* Gradientes temáticos */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--secondary)), hsl(210 55% 30%));
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(210 30% 98%));
+    /* Gradientes oficiais baseados nas cores do manual */
+    --gradient-hero: linear-gradient(135deg, hsl(193 38% 47%), hsl(193 38% 35%));
+    --gradient-primary: linear-gradient(135deg, hsl(37 89% 55%), hsl(37 100% 70%));
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 96%));
 
-    /* Sombras elegantes */
-    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.2);
-    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.3);
-    --shadow-card: 0 4px 6px -1px hsl(var(--secondary) / 0.1);
-
-    /* Animações */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Sombras elegantes com cores oficiais */
+    --shadow-elegant: 0 10px 30px -10px hsl(37 89% 55% / 0.2);
+    --shadow-glow: 0 0 40px hsl(37 100% 70% / 0.3);
+    --shadow-card: 0 4px 6px -1px hsl(193 38% 47% / 0.1);
 
     --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 37 89% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 20%;
+    --sidebar-border: 0 0% 91%;
+    --sidebar-ring: 37 89% 55%;
   }
 
   .dark {
-    --background: 210 65% 8%;
-    --foreground: 210 40% 98%;
+    --background: 193 38% 8%;
+    --foreground: 0 0% 98%;
 
-    --card: 210 65% 12%;
-    --card-foreground: 210 40% 98%;
+    --card: 193 38% 12%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 210 65% 12%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 193 38% 12%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 31 95% 53%;
-    --primary-foreground: 210 65% 8%;
-    --primary-glow: 31 100% 65%;
+    --primary: 37 89% 55%;
+    --primary-foreground: 193 38% 8%;
+    --primary-glow: 37 100% 70%;
 
-    --secondary: 210 65% 20%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 193 38% 47%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 210 50% 15%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 193 38% 15%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 31 95% 53%;
-    --accent-foreground: 210 65% 8%;
+    --accent: 37 89% 55%;
+    --accent-foreground: 193 38% 8%;
 
     --destructive: 0 62.8% 50.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 210 50% 25%;
-    --input: 210 50% 25%;
-    --ring: 31 95% 53%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --border: 193 38% 25%;
+    --input: 193 38% 25%;
+    --ring: 37 89% 55%;
+    
+    --sidebar-background: 193 38% 10%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 37 89% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 193 38% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 193 38% 15%;
+    --sidebar-ring: 37 89% 55%;
   }
 }
 
@@ -126,38 +116,17 @@
 }
 
 @layer components {
-  /* Efeitos parallax */
-  .parallax-slow {
-    transform: translate3d(0, calc(var(--scroll-y, 0) * 0.5px), 0);
-  }
-  
-  .parallax-medium {
-    transform: translate3d(0, calc(var(--scroll-y, 0) * 0.3px), 0);
-  }
-  
-  .parallax-fast {
-    transform: translate3d(0, calc(var(--scroll-y, 0) * 0.8px), 0);
-  }
-
-  /* Animações para elementos */
-  .fade-in {
-    animation: fadeIn 0.6s ease-out;
-  }
-
-  .slide-up {
-    animation: slideUp 0.8s ease-out;
-  }
-
+  /* Hover effects simplificados (sem animações complexas) */
   .hover-lift {
-    transition: var(--transition-smooth);
+    transition: transform 0.2s ease;
   }
 
   .hover-lift:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
     box-shadow: var(--shadow-elegant);
   }
 
-  /* Gradientes de fundo */
+  /* Gradientes de fundo com cores oficiais */
   .bg-gradient-hero {
     background: var(--gradient-hero);
   }
@@ -168,27 +137,5 @@
 
   .bg-gradient-subtle {
     background: var(--gradient-subtle);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }

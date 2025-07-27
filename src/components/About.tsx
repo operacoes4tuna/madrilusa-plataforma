@@ -4,26 +4,14 @@ const About = () => {
   return (
     <section id="sobre" className="py-20 bg-gradient-subtle">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
+        <div className="text-center mb-12">
           <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-6">
             Bem vindo ao Madrilusa
           </h2>
-        </motion.div>
+        </div>
 
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-lg text-muted-foreground leading-relaxed space-y-6"
-          >
+          <div className="text-lg text-muted-foreground leading-relaxed space-y-6">
             <p>
               O projeto Madrilusa é uma iniciativa de Inovação e Empreendedorismo Social (IIES), 
               promovida pela ADRITEM, em parceria com a Federação Minha Terra, a CoraNE e a ADRACES.
@@ -55,7 +43,7 @@ const About = () => {
               sustentável. O objetivo é contribuir para a construção de comunidades mais inclusivas e 
               resilientes, capazes de enfrentar os desafios actuais com criatividade e espírito de cooperação.
             </p>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

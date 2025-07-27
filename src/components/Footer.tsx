@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Mail, Phone, MapPin } from "lucide-react";
 
@@ -8,26 +7,23 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Logo e Descrição */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-3xl font-bold text-primary mb-4">MADRILUSA</h3>
-            <p className="text-secondary-foreground/80 leading-relaxed">
+          <div>
+            <img
+              src="/logo_madrilusa/logo branco.png"
+              alt="Madrilusa"
+              className="h-12 w-auto mb-4"
+            />
+            <p className="text-secondary-foreground/80 leading-relaxed mb-4">
               Promovendo a integração de jovens imigrantes através de inovação 
               e empreendedorismo social em territórios rurais de Portugal.
             </p>
-          </motion.div>
+            <p className="text-xs text-secondary-foreground/60">
+              Inclusão com identidade
+            </p>
+          </div>
 
           {/* Contactos */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            viewport={{ once: true }}
-          >
+          <div>
             <h4 className="text-xl font-semibold mb-4">Contactos</h4>
             <div className="space-y-3">
               <div className="flex items-center">
@@ -48,15 +44,10 @@ const Footer = () => {
                 <span className="text-secondary-foreground/80">Portugal</span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Parceiros */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
+          <div>
             <h4 className="text-xl font-semibold mb-4">Parceiros</h4>
             <div className="space-y-2 text-secondary-foreground/80">
               <p>ADRITEM</p>
@@ -64,30 +55,27 @@ const Footer = () => {
               <p>CoraNE</p>
               <p>ADRACES</p>
             </div>
-          </motion.div>
+            
+            <div className="mt-6">
+              <Button 
+                variant="rectangular" 
+                size="rectangular"
+                className="w-full"
+                onClick={() => window.location.href = 'mailto:madrilusa@adritem.pt?subject=Contacto%20Site'}
+              >
+                <Mail className="w-4 h-4 mr-2" />
+                Contacte-nos
+              </Button>
+            </div>
+          </div>
         </div>
 
-        {/* Linha divisória */}
-        <div className="border-t border-secondary-foreground/20 mt-12 pt-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="flex flex-col md:flex-row justify-between items-center"
-          >
-            <p className="text-secondary-foreground/60 text-sm">
-              © 2024 Madrilusa. Todos os direitos reservados.
-            </p>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-secondary-foreground/60 hover:text-primary mt-4 md:mt-0"
-              onClick={() => window.location.href = 'mailto:madrilusa@adritem.pt?subject=Contacto%20Site'}
-            >
-              Política de Privacidade
-            </Button>
-          </motion.div>
+        {/* Footer Bottom */}
+        <div className="border-t border-secondary-foreground/20 mt-12 pt-8 text-center">
+          <p className="text-secondary-foreground/60 text-sm">
+            © 2024 Madrilusa. Todos os direitos reservados. 
+            Iniciativa de Inovação e Empreendedorismo Social.
+          </p>
         </div>
       </div>
     </footer>

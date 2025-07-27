@@ -9,11 +9,8 @@ import Activities from "@/components/Activities";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import Chatbot from "@/components/Chatbot";
-import { useParallax } from "@/hooks/useParallax";
 
 const Index = () => {
-  useParallax();
-
   return (
     <div className="min-h-screen bg-background">
       <Header />

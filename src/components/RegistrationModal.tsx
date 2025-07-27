@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { motion } from "framer-motion";
 
 interface RegistrationModalProps {
   isOpen: boolean;
@@ -213,10 +212,7 @@ const RegistrationModal = ({ isOpen, onClose, cardType }: RegistrationModalProps
           </DialogTitle>
         </DialogHeader>
         
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
+        <form
           onSubmit={handleSubmit}
           className="space-y-6 mt-6"
         >
@@ -289,7 +285,7 @@ const RegistrationModal = ({ isOpen, onClose, cardType }: RegistrationModalProps
               Enviar Registro
             </Button>
           </div>
-        </motion.form>
+        </form>
       </DialogContent>
     </Dialog>
   );

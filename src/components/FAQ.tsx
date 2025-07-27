@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
@@ -34,72 +33,37 @@ const FAQ = () => {
   return (
     <section id="faq" className="py-20 bg-gradient-subtle">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-6">
             Perguntas frequentes
           </h2>
-        </motion.div>
+        </div>
 
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <Accordion type="single" collapsible className="space-y-4">
+          <div className="space-y-4">
+            <Accordion type="single" collapsible className="w-full">
               {faqs.map((faq, index) => (
-                <AccordionItem
-                  key={index}
-                  value={`item-${index}`}
-                  className="border border-border rounded-lg px-6 bg-card hover:shadow-card-custom transition-shadow duration-300"
-                >
-                  <AccordionTrigger className="text-left hover:no-underline">
-                    <span className="text-lg font-semibold text-secondary">
-                      {faq.question}
-                    </span>
+                <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionTrigger className="text-left text-lg font-semibold text-secondary">
+                    {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-muted-foreground leading-relaxed pt-2">
-                      {faq.answer}
-                    </p>
+                  <AccordionContent className="text-muted-foreground leading-relaxed pt-2">
+                    {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="text-center mt-12"
-          >
-            <div className="bg-card rounded-lg p-8 shadow-card-custom">
-              <h3 className="text-2xl font-bold text-secondary mb-4">
-                Ainda tem dúvidas?
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                Entre em contacto connosco. Estamos aqui para ajudar!
-              </p>
-              <Button 
-                variant="rectangular" 
-                size="lg" 
-                className="gap-2"
-                onClick={() => window.location.href = 'mailto:madrilusa@adritem.pt?subject=Contacto%20Site'}
-              >
-                <Mail className="w-4 h-4" />
-                Contactar-nos
-              </Button>
-            </div>
-          </motion.div>
+          <div className="text-center mt-12">
+            <p className="text-muted-foreground mb-6">
+              Não encontrou a resposta que procurava?
+            </p>
+            <Button variant="rectangular" size="rectangular">
+              <Mail className="w-4 h-4 mr-2" />
+              Contacte-nos
+            </Button>
+          </div>
         </div>
       </div>
     </section>
