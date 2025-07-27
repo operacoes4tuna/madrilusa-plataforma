@@ -37,14 +37,14 @@ const AppLayout = () => {
             alt="Madrilusa"
             className="h-8 w-auto"
           />
-          <span className="text-xl font-semibold" style={{ color: 'var(--app-primary)' }}>
+          <span className="app-title-h2" style={{ color: 'var(--app-primary)', margin: 0 }}>
             Portal Madrilusa
           </span>
         </div>
         
         <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-600">
-            Olá, <span className="font-medium" style={{ color: 'var(--app-foreground)' }}>
+          <span className="app-text-secondary">
+            Olá, <span className="app-text-body font-medium" style={{ color: 'var(--app-foreground)' }}>
               {user?.nomeCompleto}
             </span>
           </span>
@@ -63,11 +63,11 @@ const AppLayout = () => {
       <div className="flex">
         {/* Sidebar */}
         <nav className="app-sidebar">
-          <div className="p-4">
-            <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+          <div className="app-sidebar-section">
+            <h3 className="app-sidebar-title">
               Menu Principal
             </h3>
-            <div className="space-y-1">
+            <div>
               {sidebarItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path;

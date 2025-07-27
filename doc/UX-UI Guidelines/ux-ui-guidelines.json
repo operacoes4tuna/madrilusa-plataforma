@@ -1,0 +1,548 @@
+{
+  "project_info": {
+    "name": "Orientações UX/UI - Baseado em Shards Dashboard",
+    "description": "Guia completo de design system para desenvolvimento com React, Vite, Tailwind CSS e shadcn/ui",
+    "stack": ["React 18.3.1", "TypeScript", "Vite 5.4.1", "Tailwind CSS 3.4.11", "shadcn/ui", "React Query"],
+    "reference_url": "https://designrevision.com/demo/shards-dashboard-lite-react/blog-overview"
+  },
+  
+  "design_tokens": {
+    "colors": {
+      "primary": {
+        "50": "#eff6ff",
+        "100": "#dbeafe", 
+        "500": "#3b82f6",
+        "600": "#2563eb",
+        "700": "#1d4ed8",
+        "tailwind_class": "blue"
+      },
+      "secondary": {
+        "50": "#f8fafc",
+        "100": "#f1f5f9",
+        "500": "#64748b",
+        "600": "#475569",
+        "700": "#334155",
+        "tailwind_class": "slate"
+      },
+      "success": {
+        "50": "#f0fdf4",
+        "100": "#dcfce7",
+        "500": "#22c55e",
+        "600": "#16a34a",
+        "700": "#15803d",
+        "tailwind_class": "green"
+      },
+      "danger": {
+        "50": "#fef2f2",
+        "100": "#fee2e2",
+        "500": "#ef4444",
+        "600": "#dc2626",
+        "700": "#b91c1c",
+        "tailwind_class": "red"
+      },
+      "warning": {
+        "50": "#fffbeb",
+        "100": "#fef3c7",
+        "500": "#f59e0b",
+        "600": "#d97706",
+        "700": "#b45309",
+        "tailwind_class": "amber"
+      },
+      "info": {
+        "50": "#f0f9ff",
+        "100": "#e0f2fe",
+        "500": "#06b6d4",
+        "600": "#0891b2",
+        "700": "#0e7490",
+        "tailwind_class": "cyan"
+      },
+      "background": {
+        "primary": "#ffffff",
+        "secondary": "#f8fafc",
+        "tertiary": "#f1f5f9",
+        "tailwind_classes": ["bg-white", "bg-slate-50", "bg-slate-100"]
+      },
+      "text": {
+        "primary": "#0f172a",
+        "secondary": "#475569", 
+        "tertiary": "#94a3b8",
+        "muted": "#cbd5e1",
+        "tailwind_classes": ["text-slate-900", "text-slate-600", "text-slate-400", "text-slate-300"]
+      }
+    },
+    
+    "typography": {
+      "font_family": {
+        "primary": "Inter, system-ui, sans-serif",
+        "tailwind_class": "font-sans"
+      },
+      "font_sizes": {
+        "xs": "0.75rem",
+        "sm": "0.875rem", 
+        "base": "1rem",
+        "lg": "1.125rem",
+        "xl": "1.25rem",
+        "2xl": "1.5rem",
+        "3xl": "1.875rem",
+        "4xl": "2.25rem",
+        "tailwind_classes": ["text-xs", "text-sm", "text-base", "text-lg", "text-xl", "text-2xl", "text-3xl", "text-4xl"]
+      },
+      "font_weights": {
+        "normal": "400",
+        "medium": "500",
+        "semibold": "600",
+        "bold": "700",
+        "tailwind_classes": ["font-normal", "font-medium", "font-semibold", "font-bold"]
+      },
+      "line_heights": {
+        "tight": "1.25",
+        "normal": "1.5",
+        "relaxed": "1.75",
+        "tailwind_classes": ["leading-tight", "leading-normal", "leading-relaxed"]
+      }
+    },
+    
+    "spacing": {
+      "scale": {
+        "xs": "0.25rem",
+        "sm": "0.5rem",
+        "md": "1rem", 
+        "lg": "1.5rem",
+        "xl": "2rem",
+        "2xl": "3rem",
+        "tailwind_classes": ["space-1", "space-2", "space-4", "space-6", "space-8", "space-12"]
+      },
+      "component_padding": {
+        "card": "1.5rem",
+        "button": "0.5rem 1rem",
+        "input": "0.75rem 1rem",
+        "tailwind_classes": ["p-6", "px-4 py-2", "px-4 py-3"]
+      }
+    },
+    
+    "borders": {
+      "radius": {
+        "sm": "0.125rem",
+        "md": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "tailwind_classes": ["rounded-sm", "rounded", "rounded-lg", "rounded-xl"]
+      },
+      "width": {
+        "thin": "1px",
+        "medium": "2px",
+        "thick": "4px",
+        "tailwind_classes": ["border", "border-2", "border-4"]
+      },
+      "colors": {
+        "light": "#e2e8f0",
+        "medium": "#cbd5e1",
+        "dark": "#94a3b8",
+        "tailwind_classes": ["border-slate-200", "border-slate-300", "border-slate-400"]
+      }
+    },
+    
+    "shadows": {
+      "sm": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+      "md": "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+      "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+      "xl": "0 20px 25px -5px rgb(0 0 0 / 0.1)",
+      "tailwind_classes": ["shadow-sm", "shadow", "shadow-lg", "shadow-xl"]
+    }
+  },
+  
+  "layout_patterns": {
+    "dashboard_layout": {
+      "description": "Layout principal com sidebar e header fixos",
+      "structure": {
+        "sidebar": {
+          "width": "16rem",
+          "position": "fixed",
+          "background": "bg-white",
+          "border": "border-r border-slate-200",
+          "tailwind_classes": "w-64 fixed left-0 top-0 h-full bg-white border-r border-slate-200"
+        },
+        "header": {
+          "height": "4rem",
+          "position": "fixed",
+          "background": "bg-white",
+          "border": "border-b border-slate-200",
+          "tailwind_classes": "h-16 fixed top-0 right-0 left-64 bg-white border-b border-slate-200"
+        },
+        "main_content": {
+          "margin_left": "16rem",
+          "margin_top": "4rem",
+          "padding": "1.5rem",
+          "tailwind_classes": "ml-64 mt-16 p-6"
+        }
+      },
+      "responsive": {
+        "mobile": {
+          "sidebar": "hidden md:block",
+          "main_content": "ml-0 md:ml-64"
+        }
+      }
+    },
+    
+    "grid_system": {
+      "metrics_grid": {
+        "description": "Grid para cards de métricas",
+        "columns": {
+          "mobile": 1,
+          "tablet": 2,
+          "desktop": 4,
+          "large": 5
+        },
+        "tailwind_classes": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6"
+      },
+      "content_grid": {
+        "description": "Grid para conteúdo principal",
+        "columns": {
+          "mobile": 1,
+          "tablet": 1,
+          "desktop": 2,
+          "large": 3
+        },
+        "tailwind_classes": "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6"
+      },
+      "blog_grid": {
+        "description": "Grid para posts de blog",
+        "columns": {
+          "mobile": 1,
+          "tablet": 2,
+          "desktop": 3,
+          "large": 4
+        },
+        "tailwind_classes": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      }
+    }
+  }
+
+
+,
+  
+  "components": {
+    "metric_card": {
+      "description": "Card para exibir métricas principais",
+      "structure": {
+        "container": "bg-white rounded-lg shadow-sm border border-slate-200 p-6",
+        "header": "flex items-center justify-between mb-4",
+        "title": "text-sm font-medium text-slate-600 uppercase tracking-wide",
+        "value": "text-3xl font-bold text-slate-900",
+        "change_indicator": "flex items-center text-sm",
+        "chart_area": "mt-4 h-16"
+      },
+      "variants": {
+        "positive_change": "text-green-600",
+        "negative_change": "text-red-600",
+        "neutral_change": "text-slate-500"
+      },
+      "react_example": "const MetricCard = ({ title, value, change, changeType, chart }) => (\n  <div className=\"bg-white rounded-lg shadow-sm border border-slate-200 p-6\">\n    <div className=\"flex items-center justify-between mb-4\">\n      <h3 className=\"text-sm font-medium text-slate-600 uppercase tracking-wide\">{title}</h3>\n    </div>\n    <div className=\"text-3xl font-bold text-slate-900\">{value}</div>\n    <div className={`flex items-center text-sm mt-2 ${\n      changeType === 'positive' ? 'text-green-600' : \n      changeType === 'negative' ? 'text-red-600' : 'text-slate-500'\n    }`}>\n      {change}\n    </div>\n    {chart && <div className=\"mt-4 h-16\">{chart}</div>}\n  </div>\n)"
+    },
+    
+    "sidebar_navigation": {
+      "description": "Navegação lateral com ícones e estados",
+      "structure": {
+        "container": "w-64 bg-white border-r border-slate-200 h-full",
+        "logo_area": "p-6 border-b border-slate-200",
+        "nav_list": "py-4",
+        "nav_item": "flex items-center px-6 py-3 text-slate-700 hover:bg-slate-50 hover:text-slate-900",
+        "nav_item_active": "flex items-center px-6 py-3 bg-blue-50 text-blue-700 border-r-2 border-blue-700",
+        "icon": "w-5 h-5 mr-3",
+        "label": "font-medium"
+      },
+      "color_variants": {
+        "dashboard": "text-blue-600",
+        "posts": "text-orange-600", 
+        "add_post": "text-purple-600",
+        "components": "text-green-600",
+        "tables": "text-pink-600",
+        "profile": "text-indigo-600",
+        "errors": "text-red-600"
+      },
+      "react_example": "const SidebarNav = ({ items, activeItem }) => (\n  <nav className=\"py-4\">\n    {items.map((item) => (\n      <a\n        key={item.id}\n        href={item.href}\n        className={`flex items-center px-6 py-3 ${\n          activeItem === item.id\n            ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700'\n            : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'\n        }`}\n      >\n        <item.icon className={`w-5 h-5 mr-3 ${item.color}`} />\n        <span className=\"font-medium\">{item.label}</span>\n      </a>\n    ))}\n  </nav>\n)"
+    },
+    
+    "button_system": {
+      "description": "Sistema completo de botões com variações",
+      "base_classes": "inline-flex items-center justify-center rounded font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2",
+      "sizes": {
+        "sm": "px-3 py-1.5 text-sm",
+        "md": "px-4 py-2 text-sm", 
+        "lg": "px-6 py-3 text-base"
+      },
+      "variants": {
+        "primary": {
+          "solid": "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500",
+          "outline": "border border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-blue-500"
+        },
+        "secondary": {
+          "solid": "bg-slate-600 text-white hover:bg-slate-700 focus:ring-slate-500",
+          "outline": "border border-slate-600 text-slate-600 hover:bg-slate-50 focus:ring-slate-500"
+        },
+        "success": {
+          "solid": "bg-green-600 text-white hover:bg-green-700 focus:ring-green-500",
+          "outline": "border border-green-600 text-green-600 hover:bg-green-50 focus:ring-green-500"
+        },
+        "danger": {
+          "solid": "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
+          "outline": "border border-red-600 text-red-600 hover:bg-red-50 focus:ring-red-500"
+        },
+        "warning": {
+          "solid": "bg-amber-600 text-white hover:bg-amber-700 focus:ring-amber-500",
+          "outline": "border border-amber-600 text-amber-600 hover:bg-amber-50 focus:ring-amber-500"
+        }
+      },
+      "react_example": "const Button = ({ variant = 'primary', size = 'md', outline = false, children, ...props }) => {\n  const baseClasses = 'inline-flex items-center justify-center rounded font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';\n  const sizeClasses = {\n    sm: 'px-3 py-1.5 text-sm',\n    md: 'px-4 py-2 text-sm',\n    lg: 'px-6 py-3 text-base'\n  };\n  const variantClasses = {\n    primary: outline ? 'border border-blue-600 text-blue-600 hover:bg-blue-50' : 'bg-blue-600 text-white hover:bg-blue-700'\n  };\n  \n  return (\n    <button className={`${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]}`} {...props}>\n      {children}\n    </button>\n  );\n};"
+    },
+    
+    "form_elements": {
+      "description": "Elementos de formulário consistentes",
+      "input": {
+        "base_classes": "block w-full rounded border border-slate-300 px-3 py-2 text-slate-900 placeholder-slate-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500",
+        "states": {
+          "default": "border-slate-300",
+          "focus": "border-blue-500 ring-1 ring-blue-500",
+          "error": "border-red-500 ring-1 ring-red-500",
+          "success": "border-green-500 ring-1 ring-green-500",
+          "disabled": "bg-slate-50 text-slate-500 cursor-not-allowed"
+        }
+      },
+      "label": {
+        "base_classes": "block text-sm font-medium text-slate-700 mb-1"
+      },
+      "select": {
+        "base_classes": "block w-full rounded border border-slate-300 px-3 py-2 text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      },
+      "textarea": {
+        "base_classes": "block w-full rounded border border-slate-300 px-3 py-2 text-slate-900 placeholder-slate-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-vertical"
+      },
+      "checkbox_radio": {
+        "base_classes": "h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300 rounded"
+      }
+    },
+    
+    "card_layouts": {
+      "description": "Layouts de cards para diferentes tipos de conteúdo",
+      "basic_card": {
+        "classes": "bg-white rounded-lg shadow-sm border border-slate-200 p-6",
+        "header": "border-b border-slate-200 pb-4 mb-4",
+        "title": "text-lg font-semibold text-slate-900",
+        "content": "text-slate-600"
+      },
+      "blog_post_card": {
+        "classes": "bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden",
+        "image": "w-full h-48 object-cover",
+        "content": "p-6",
+        "category": "inline-block px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded",
+        "title": "text-lg font-semibold text-slate-900 mt-2",
+        "excerpt": "text-slate-600 mt-2",
+        "meta": "flex items-center text-sm text-slate-500 mt-4"
+      },
+      "discussion_card": {
+        "classes": "bg-white rounded-lg shadow-sm border border-slate-200 p-4",
+        "avatar": "w-10 h-10 rounded-full",
+        "content": "ml-3 flex-1",
+        "author": "font-medium text-slate-900",
+        "time": "text-sm text-slate-500",
+        "text": "text-slate-600 mt-1",
+        "actions": "flex space-x-2 mt-3"
+      }
+    }
+  }
+
+
+,
+  
+  "ux_principles": {
+    "visual_hierarchy": {
+      "description": "Estabelecer hierarquia visual clara",
+      "guidelines": [
+        "Use tamanhos de fonte progressivos (4xl > 3xl > 2xl > xl > lg > base)",
+        "Aplique pesos de fonte para diferenciação (bold para títulos, semibold para subtítulos)",
+        "Use cores para destacar elementos importantes (azul para ações primárias)",
+        "Mantenha espaçamento consistente entre elementos relacionados"
+      ]
+    },
+    "consistency": {
+      "description": "Manter consistência em toda a aplicação",
+      "guidelines": [
+        "Use o mesmo sistema de cores em todos os componentes",
+        "Mantenha espaçamentos padronizados (múltiplos de 4px)",
+        "Aplique o mesmo estilo de bordas e sombras",
+        "Use ícones da mesma família (ex: Lucide React para shadcn/ui)"
+      ]
+    },
+    "accessibility": {
+      "description": "Garantir acessibilidade para todos os usuários",
+      "guidelines": [
+        "Mantenha contraste mínimo de 4.5:1 para texto normal",
+        "Use foco visível em elementos interativos",
+        "Forneça labels descritivos para formulários",
+        "Implemente navegação por teclado",
+        "Use aria-labels quando necessário"
+      ]
+    },
+    "responsive_design": {
+      "description": "Design responsivo para todos os dispositivos",
+      "breakpoints": {
+        "sm": "640px",
+        "md": "768px", 
+        "lg": "1024px",
+        "xl": "1280px",
+        "2xl": "1536px"
+      },
+      "guidelines": [
+        "Mobile-first approach (design para mobile primeiro)",
+        "Use grid responsivo com breakpoints do Tailwind",
+        "Oculte sidebar em mobile, mostre menu hambúrguer",
+        "Ajuste tamanhos de fonte para diferentes telas",
+        "Teste em dispositivos reais sempre que possível"
+      ]
+    }
+  },
+  
+  "implementation_guide": {
+    "project_structure": {
+      "description": "Estrutura recomendada para o projeto React",
+      "folders": {
+        "components": {
+          "ui": "Componentes base do shadcn/ui",
+          "layout": "Componentes de layout (Header, Sidebar, etc)",
+          "features": "Componentes específicos de funcionalidades",
+          "common": "Componentes reutilizáveis"
+        },
+        "hooks": "Custom hooks para lógica reutilizável",
+        "lib": "Utilitários e configurações",
+        "styles": "Arquivos CSS globais",
+        "types": "Definições TypeScript"
+      }
+    },
+    
+    "tailwind_config": {
+      "description": "Configuração personalizada do Tailwind CSS",
+      "extend": {
+        "colors": {
+          "primary": "colors.blue",
+          "secondary": "colors.slate",
+          "success": "colors.green",
+          "danger": "colors.red",
+          "warning": "colors.amber",
+          "info": "colors.cyan"
+        },
+        "fontFamily": {
+          "sans": ["Inter", "system-ui", "sans-serif"]
+        },
+        "spacing": {
+          "sidebar": "16rem",
+          "header": "4rem"
+        }
+      }
+    },
+    
+    "shadcn_components": {
+      "description": "Componentes shadcn/ui recomendados para usar",
+      "essential": [
+        "Button",
+        "Input", 
+        "Label",
+        "Card",
+        "Badge",
+        "Avatar",
+        "Select",
+        "Textarea",
+        "Checkbox",
+        "RadioGroup",
+        "Switch",
+        "Progress",
+        "Separator"
+      ],
+      "advanced": [
+        "Dialog",
+        "DropdownMenu",
+        "Popover",
+        "Tooltip",
+        "Sheet",
+        "Tabs",
+        "Table",
+        "Form",
+        "Command",
+        "Calendar"
+      ]
+    },
+    
+    "state_management": {
+      "description": "Gerenciamento de estado com React Query",
+      "patterns": [
+        "Use React Query para estado do servidor (APIs)",
+        "Use useState para estado local de componentes",
+        "Use useContext para estado global simples",
+        "Implemente cache inteligente com React Query",
+        "Use mutations para operações de escrita"
+      ]
+    }
+  },
+  
+  "best_practices": {
+    "performance": [
+      "Use React.memo para componentes que renderizam frequentemente",
+      "Implemente lazy loading para rotas",
+      "Otimize imagens com next/image ou similar",
+      "Use useMemo e useCallback quando apropriado",
+      "Minimize re-renders desnecessários"
+    ],
+    "code_organization": [
+      "Mantenha componentes pequenos e focados",
+      "Use TypeScript para type safety",
+      "Implemente error boundaries",
+      "Use custom hooks para lógica reutilizável",
+      "Mantenha estilos co-localizados com componentes"
+    ],
+    "testing": [
+      "Teste componentes com React Testing Library",
+      "Implemente testes de integração",
+      "Use Storybook para documentar componentes",
+      "Teste acessibilidade com axe-core",
+      "Mantenha cobertura de testes acima de 80%"
+    ]
+  },
+  
+  "common_patterns": {
+    "data_fetching": {
+      "description": "Padrões para busca de dados",
+      "example": "const { data, isLoading, error } = useQuery({\n  queryKey: ['metrics'],\n  queryFn: fetchMetrics,\n  staleTime: 5 * 60 * 1000 // 5 minutos\n});"
+    },
+    "form_handling": {
+      "description": "Padrões para manipulação de formulários",
+      "example": "const form = useForm<FormData>({\n  resolver: zodResolver(schema),\n  defaultValues: {\n    email: '',\n    password: ''\n  }\n});"
+    },
+    "error_handling": {
+      "description": "Padrões para tratamento de erros",
+      "example": "const ErrorBoundary = ({ children }) => {\n  return (\n    <ErrorBoundaryProvider>\n      {children}\n    </ErrorBoundaryProvider>\n  );\n};"
+    }
+  },
+  
+  "resources": {
+    "documentation": [
+      "https://tailwindcss.com/docs",
+      "https://ui.shadcn.com/docs",
+      "https://tanstack.com/query/latest",
+      "https://react.dev/reference/react"
+    ],
+    "tools": [
+      "Figma para design",
+      "Storybook para documentação de componentes",
+      "ESLint + Prettier para formatação",
+      "Husky para git hooks",
+      "Chromatic para visual testing"
+    ],
+    "inspiration": [
+      "https://designrevision.com/demo/shards-dashboard-lite-react/",
+      "https://ui.shadcn.com/examples/dashboard",
+      "https://tailwindui.com/components",
+      "https://headlessui.com/",
+      "https://www.radix-ui.com/"
+    ]
+  }
+}
+

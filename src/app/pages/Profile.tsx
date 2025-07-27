@@ -145,34 +145,35 @@ const Profile = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="app-layout">
       {/* Page Header */}
-      <div>
-        <h1 className="text-3xl font-bold" style={{ color: 'var(--app-primary)' }}>
+      <div className="app-form-section">
+        <h1 className="app-title-h1">
           Editar Perfil
         </h1>
-        <p className="text-gray-600 mt-2">
-          Gerencie suas informações pessoais
+        <p className="app-text-body">
+          Gira as suas informações pessoais
         </p>
       </div>
 
       {/* Profile Form */}
-      <div className="app-card max-w-2xl">
-        <form onSubmit={handleSaveProfile} className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="nomeCompleto">Nome Completo</Label>
+      <div className="app-card app-card-large max-w-2xl">
+        <h2 className="app-title-h2">Informações Pessoais</h2>
+        <form onSubmit={handleSaveProfile} className="app-form-section">
+          <div className="app-form-group">
+            <Label htmlFor="nomeCompleto" className="app-label">Nome Completo</Label>
             <Input
               id="nomeCompleto"
               name="nomeCompleto"
               value={formData.nomeCompleto}
               onChange={handleInputChange}
-              placeholder="Seu nome completo"
+              placeholder="O seu nome completo"
               required
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+          <div className="app-form-group">
+            <Label htmlFor="email" className="app-label">Email</Label>
             <Input
               id="email"
               name="email"
@@ -184,15 +185,15 @@ const Profile = () => {
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="senha">Nova Senha (opcional)</Label>
+          <div className="app-form-group">
+            <Label htmlFor="senha" className="app-label">Nova Senha (opcional)</Label>
             <Input
               id="senha"
               name="senha"
               type="password"
               value={formData.senha}
               onChange={handleInputChange}
-              placeholder="Deixe em branco para manter a atual"
+              placeholder="Deixe em branco para manter a actual"
             />
           </div>
 
@@ -202,7 +203,7 @@ const Profile = () => {
               className="app-button-primary"
               disabled={isSaving}
             >
-              {isSaving ? 'Salvando...' : 'Salvar Alterações'}
+              {isSaving ? 'A guardar...' : 'Guardar Alterações'}
             </Button>
             <Button 
               type="button" 
@@ -221,45 +222,45 @@ const Profile = () => {
 
       {/* Account Info */}
       <div className="app-card max-w-2xl">
-        <h3 className="text-lg font-semibold mb-4" style={{ color: 'var(--app-foreground)' }}>
+        <h3 className="app-title-h2">
           Informações da Conta
         </h3>
-        <div className="space-y-3 text-sm">
+        <div className="space-y-3">
           <div className="flex justify-between">
-            <span className="text-gray-600">ID do Usuário:</span>
-            <span className="font-mono text-xs">{user?.id}</span>
+            <span className="app-text-secondary">ID do Utilizador:</span>
+            <span className="app-text-secondary font-mono text-xs">{user?.id}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-600">Membro desde:</span>
-            <span>{new Date(user?.createdAt || '').toLocaleDateString('pt-PT')}</span>
+            <span className="app-text-secondary">Membro desde:</span>
+            <span className="app-text-body">{new Date(user?.createdAt || '').toLocaleDateString('pt-PT')}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-600">Última atualização:</span>
-            <span>{new Date(user?.updatedAt || '').toLocaleDateString('pt-PT')}</span>
+            <span className="app-text-secondary">Última actualização:</span>
+            <span className="app-text-body">{new Date(user?.updatedAt || '').toLocaleDateString('pt-PT')}</span>
           </div>
         </div>
       </div>
 
       {/* Delete Profile Section */}
       <div className="app-card max-w-2xl border-red-200">
-        <h3 className="text-lg font-semibold mb-4 text-red-600">
+        <h3 className="app-title-h2 app-error-text">
           Zona de Perigo
         </h3>
-        <p className="text-sm text-gray-600 mb-4">
-          Ao deletar seu perfil, todos os seus dados serão removidos permanentemente. Esta ação não pode ser desfeita.
+        <p className="app-text-body mb-4">
+          Ao eliminar o seu perfil, todos os seus dados serão removidos permanentemente. Esta acção não pode ser desfeita.
         </p>
         
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="destructive" className="w-full sm:w-auto">
-              Deletar Meu Perfil
+              Eliminar o Meu Perfil
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Tem certeza que deseja deletar seu perfil?</AlertDialogTitle>
+              <AlertDialogTitle>Tem a certeza que deseja eliminar o seu perfil?</AlertDialogTitle>
               <AlertDialogDescription>
-                Esta ação é permanente e não pode ser desfeita. Todos os seus dados serão removidos do sistema.
+                Esta acção é permanente e não pode ser desfeita. Todos os seus dados serão removidos do sistema.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -269,7 +270,7 @@ const Profile = () => {
                 disabled={isDeleting}
                 className="bg-red-600 hover:bg-red-700"
               >
-                {isDeleting ? 'Deletando...' : 'Sim, deletar perfil'}
+                {isDeleting ? 'A eliminar...' : 'Sim, eliminar perfil'}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

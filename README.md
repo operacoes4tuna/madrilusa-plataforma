@@ -54,18 +54,18 @@ madrilusasite/
 │   │   ├── pages/          # LandingPage.tsx
 │   │   └── styles/         # institutional-theme.css
 │   ├── 📁 app/             # 💻 DESENVOLVIMENTO  
-│   │   ├── layouts/        # AppLayout.tsx
-│   │   ├── pages/          # Dashboard, Profile, etc.
+│   │   ├── layouts/        # AppLayout.tsx (✅ identidade visual)
+│   │   ├── pages/          # Dashboard, Profile (✅ identidade aplicada)
 │   │   ├── components/     # Componentes da aplicação
-│   │   └── styles/         # app-theme.css
+│   │   └── styles/         # app-theme.css (✅ identidade oficial)
 │   ├── 📁 modules/         # 🔐 MÓDULOS (auth, etc.)
 │   └── 📁 shared/          # 🤝 COMPARTILHADO
 ├── 📁 backend/             # 💻 API COMPLETA
 │   ├── src/modules/        # auth, users, entities
 │   ├── prisma/            # Schema e migrations
 │   └── ...                # Express + TypeScript
-├── 📁 doc/                # 📋 DOCUMENTAÇÃO
-└── 📁 public/             # Assets estáticos
+├── 📁 doc/                # 📋 DOCUMENTAÇÃO COMPLETA
+└── 📁 public/             # Assets estáticos + identidade visual
 ```
 
 ### **🌐 URLs**
@@ -80,9 +80,12 @@ madrilusasite/
 - **[Guia de Inscrições](doc/Guia%20de%20Inscrições%20na%20Plataforma%20Madrilusa.md)** - Processo de registro por categoria
 
 ### **🏗️ Documentação Técnica**
+- **[Fluxo Técnico Completo](doc/FLUXO_TECNICO_COMPLETO.md)** - ✅ **Arquitectura e fluxos implementados**
 - **[Estrutura Separada](doc/ESTRUTURA_SEPARADA.md)** - Documentação da separação institucional vs aplicação
 - **[Guia para Equipes](doc/GUIA_EQUIPES.md)** - Como marketing e desenvolvimento devem trabalhar
 - **[Status do Backend](doc/Status%20da%20Implementação%20-%20Backend%20Modular.md)** - Documentação do backend implementado
+- **[Aplicação da Identidade Visual](doc/APLICACAO_IDENTIDADE_VISUAL.md)** - ✅ **Implementação da identidade visual oficial**
+- **[Ajustes Finais Etapa 01](doc/AJUSTES_FINAIS_ETAPA_01.md)** - Simplificações da experiência do utilizador
 - **[Organização de Arquivos](doc/ORGANIZACAO_ARQUIVOS.md)** - Diretrizes de organização do projeto
 
 ### **📝 Política de Documentação**
@@ -136,11 +139,13 @@ npx prisma db push   # Sincronizar schema
 - **47 componentes UI** reutilizáveis
 
 #### **Aplicação** (`/app/*`)
-- **Dashboard de usuário** com boas-vindas
+- **Dashboard de utilizador** com boas-vindas (identidade visual aplicada)
 - **Sistema de autenticação** completo
-- **Edição de perfil** básica
+- **Edição de perfil** com formulários organizados
 - **Rotas protegidas** por autenticação
-- **Layout com sidebar** e navegação
+- **Layout com sidebar** e navegação consistente
+- **Identidade visual oficial** aplicada em todas as páginas
+- **Português de Portugal** implementado em toda interface
 
 #### **Backend API**
 - **Autenticação:** registro e login
@@ -150,17 +155,41 @@ npx prisma db push   # Sincronizar schema
 
 ---
 
-## 🎨 Design System
+## 🎨 Design System & Identidade Visual
 
-### Cores Principais
-- **Primary:** Laranja Madrilusa `#F5A623`
-- **Secondary:** Azul Turquesa `#4A90A4`
-- **Gradientes temáticos** e **sombras elegantes**
+### **✅ Identidade Visual Oficial Aplicada**
+Baseada no **Manual de Identidade Visual e Comunicação - Madrilusa**:
 
-### Componentes
+#### **🎨 Paleta de Cores Oficial**
+- **Laranja Madrilusa:** `#F5A623` (RGB: 245, 166, 35)
+- **Azul Turquesa:** `#4A90A4` (RGB: 74, 144, 164)
+- **Cinzento Escuro:** `#333333` (texto corpo)
+- **Cinzento Claro:** `#F5F5F5` (fundos alternativos)
+
+#### **✍️ Tipografia Conforme Manual**
+- **Família:** Open Sans, Helvetica Neue, sans-serif
+- **H1:** 32px, bold, Azul Turquesa (títulos principais)
+- **H2:** 24px, semibold, Azul Turquesa (subtítulos)
+- **Corpo:** 16px, regular, Cinzento Escuro
+- **Secundário:** 14px, Cinzento Médio
+
+#### **🏗️ Sistema de Layout**
+- **Espaçamentos:** múltiplos de 8px (8, 16, 24, 32, 48px)
+- **Container:** máximo 1200px
+- **Grelha modular** baseada no manual oficial
+
+### **📱 Componentes e Páginas**
 - **shadcn/ui:** Biblioteca completa de componentes
-- **Lucide React:** Ícones modernos
+- **Classes CSS específicas:** `.app-title-h1`, `.app-card`, `.app-button-primary`
+- **Páginas da aplicação:** Dashboard, Profile, AppLayout com identidade aplicada
+- **Português de Portugal:** terminologia oficial implementada
 - **Layout responsivo** e acessível
+
+### **📋 Conformidade**
+- ✅ **Cores oficiais** aplicadas em toda aplicação
+- ✅ **Tipografia hierárquica** conforme especificação
+- ✅ **Linguagem portuguesa** de Portugal
+- ✅ **Sistema modular** implementado
 
 ---
 
