@@ -54,8 +54,8 @@ O **Madrilusa** é uma plataforma web moderna que promove a integração social 
 - React Hook Form 7.53.0 + Zod 3.23.8
 - OpenAI API 5.10.2 (chatbot)
 
-**Backend:** NÃO IMPLEMENTADO
-**Database:** NÃO IMPLEMENTADO
+**Backend:** *A definir conforme necessidades*
+**Database:** *A definir conforme necessidades*
 
 ### **2.2 Estrutura de Arquivos**
 
@@ -502,14 +502,7 @@ Call-to-Action:
 - CTAs de Login/Inscreva-se (não funcionais)
 - Newsletter (frontend apenas)
 
-#### **❌ Não Implementado**
-- **Backend/API** - Nenhum endpoint
-- **Base de dados** - Nenhuma persistência
-- **Autenticação** - Sistema de login
-- **Dashboard** - Área de utilizador
-- **Sistema de email** - Notificações automáticas
-- **Admin panel** - Gestão de utilizadores
-- **Matching system** - Conectar jovens ↔ oportunidades
+**📋 Nota sobre Roadmaps:** Esta documentação não inclui roadmaps ou próximos passos por política interna. Roadmaps devem ser definidos separadamente conforme necessidades específicas do projeto.
 
 ### **6.2 Hooks Customizados**
 
@@ -574,54 +567,16 @@ Call-to-Action:
 
 ---
 
-## **8. ROADMAP DE DESENVOLVIMENTO**
+## **8. CONSIDERAÇÕES ESPECIAIS**
 
-### **8.1 Prioridades Técnicas Imediatas**
-
-**Fase 1: Backend Essencial (4-6 semanas)**
-1. Setup Node.js/Express + PostgreSQL
-2. API de autenticação (JWT)
-3. CRUD de utilizadores por categoria
-4. Endpoints para formulários
-5. Sistema de email (SendGrid/Mailgun)
-6. Migração de API key OpenAI para env vars
-
-**Fase 2: Funcionalidades Core (6-8 semanas)**
-1. Dashboard diferenciado por tipo de utilizador
-2. Sistema de matching inteligente jovens ↔ oportunidades
-3. Chat interno entre utilizadores
-4. Sistema de notificações (push/email)
-5. Admin panel para gestão
-
-**Fase 3: Escalabilidade (4-6 semanas)**
-1. Sistema de aprovação de registos
-2. Relatórios e analytics avançados
-3. Integração com sistemas externos
-4. API para futura mobile app
-5. Otimizações de performance
-
-### **8.2 Funcionalidades Futuras**
-
-**Expansão Técnica:**
-- Machine learning para matching
-- Sistema de gamificação
-- Marketplace de oportunidades
-- Integração com redes sociais
-- Multi-idiomas (PT, EN, outros)
-- PWA (Progressive Web App)
-
----
-
-## **9. CONSIDERAÇÕES ESPECIAIS**
-
-### **9.1 Multilíngue (Preparação)**
+### **8.1 Multilíngue (Preparação)**
 
 **Estrutura Recomendada:**
 - Português (principal)
 - Inglês (internacional)
 - Outros idiomas CPLP conforme demanda
 
-### **9.2 GDPR e Privacidade**
+### **8.2 GDPR e Privacidade**
 
 **Implementação Obrigatória:**
 - Cookie consent banner
@@ -630,7 +585,7 @@ Call-to-Action:
 - Encriptação de dados pessoais
 - Termos e condições específicos
 
-### **9.3 Analytics e Monitorização**
+### **8.3 Analytics e Monitorização**
 
 **Ferramentas Recomendadas:**
 - Google Analytics 4
@@ -641,9 +596,9 @@ Call-to-Action:
 
 ---
 
-## **10. CHECKLIST DE QUALIDADE**
+## **9. CHECKLIST DE QUALIDADE**
 
-### **10.1 Pré-Launch**
+### **9.1 Pré-Launch**
 
 **Conteúdo:**
 - [ ] Todos os textos revistos conforme este guia
@@ -665,7 +620,7 @@ Call-to-Action:
 - [ ] Robots.txt configurado
 - [ ] Schema markup implementado
 
-### **10.2 Pós-Launch**
+### **9.2 Pós-Launch**
 
 **Monitorização:**
 - [ ] Analytics configurado
@@ -675,9 +630,9 @@ Call-to-Action:
 
 ---
 
-## **11. RECURSOS E CONTACTOS**
+## **10. RECURSOS E CONTACTOS**
 
-### **11.1 Stakeholders do Projeto**
+### **10.1 Stakeholders do Projeto**
 
 **Aprovação de Conteúdos:**
 - Federação Minha Terra: mariaclarabraga@minhaterra.pt
@@ -685,13 +640,13 @@ Call-to-Action:
 - Adraces: apoio-imigrantes@adraces.pt
 - CoraNE: terrafria@corane.pt
 
-### **11.2 Documentação Relacionada**
+### **10.2 Documentação Relacionada**
 
 **Documentos na pasta `doc/`:**
 - `Manual de Identidade Visual e Comunicação - Madrilusa.md` (cores, tipografia, logos)
 - `Guia de Inscrições na Plataforma Madrilusa.md` (campos de formulários)
 
-### **11.3 Assets Disponíveis**
+### **10.3 Assets Disponíveis**
 
 **Localização:** `public/logo_madrilusa/`
 - Logo colorido: `logo madrilusa.png`

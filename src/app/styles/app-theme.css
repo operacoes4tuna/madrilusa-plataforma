@@ -1,0 +1,87 @@
+/* App-specific styles baseados na identidade visual Madrilusa */
+/* Cores mantidas iguais mas com variáveis separadas */
+
+.app-layout {
+  /* Cores da aplicação - baseadas no tema institucional */
+  --app-primary: #F5A623;          /* Laranja Madrilusa */
+  --app-secondary: #4A90A4;        /* Azul Turquesa */
+  --app-background: #FFFFFF;
+  --app-foreground: #333333;
+  --app-muted: #F5F5F5;
+  --app-border: #E5E5E5;
+  
+  /* Sombras específicas da app */
+  --app-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --app-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Layout da aplicação */
+.app-container {
+  min-height: 100vh;
+  background: var(--app-background);
+}
+
+.app-header {
+  background: var(--app-background);
+  border-bottom: 1px solid var(--app-border);
+  box-shadow: var(--app-shadow);
+}
+
+.app-sidebar {
+  background: var(--app-background);
+  border-right: 1px solid var(--app-border);
+  width: 250px;
+  min-height: calc(100vh - 60px);
+}
+
+.app-main {
+  flex: 1;
+  padding: 2rem;
+  background: var(--app-muted);
+}
+
+/* Componentes específicos da app */
+.app-card {
+  background: var(--app-background);
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  box-shadow: var(--app-shadow);
+  padding: 1.5rem;
+}
+
+.app-button-primary {
+  background: var(--app-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.app-button-primary:hover {
+  background: #E6941F;
+  box-shadow: var(--app-shadow-lg);
+}
+
+.app-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--app-foreground);
+  text-decoration: none;
+  border-radius: 6px;
+  margin: 0.25rem 0;
+  transition: all 0.2s;
+}
+
+.app-sidebar-item:hover {
+  background: var(--app-muted);
+  color: var(--app-primary);
+}
+
+.app-sidebar-item.active {
+  background: var(--app-primary);
+  color: white;
+} 

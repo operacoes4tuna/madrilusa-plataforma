@@ -704,6 +704,12 @@ Lembre-se: cada material criado é uma oportunidade de reforçar os valores do p
 
 ---
 
+## POLÍTICA DE ROADMAPS
+
+**IMPORTANTE:** Esta documentação e todas as outras do projeto Madrilusa não incluem roadmaps, próximos passos ou planos de desenvolvimento por política interna. Estes elementos devem ser definidos separadamente conforme necessidades específicas e não devem ser incluídos na documentação oficial a menos que explicitamente solicitado.
+
+---
+
 ## ANEXOS
 
 ### Glossário de Termos (Português de Portugal)

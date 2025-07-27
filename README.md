@@ -35,113 +35,118 @@ Conectar jovens imigrantes a oportunidades em territórios rurais, criando solu�
 - **React Query** (estado global)
 - **OpenAI API** (chatbot inteligente)
 
-### Backend (Não Implementado)
-- Base de dados: **PostgreSQL** (recomendado)
-- API: **Node.js/Express** (sugerido)
-- Autenticação: **JWT**
-- Email: **SendGrid/Mailgun**
+### Backend (Implementado)
+- **Node.js + TypeScript**
+- **Express.js** (API REST)
+- **Prisma ORM** + **SQLite**
+- **Autenticação básica** (evolui para JWT)
 
 ---
 
 ## 🏗️ Estrutura do Projeto
 
+### **📁 ESTRUTURA SEPARADA IMPLEMENTADA**
 ```
 madrilusasite/
-├── 📁 doc/                   # 📋 DOCUMENTAÇÃO COMPLETA
-│   ├── Guia Completo de Conteúdo e Seções do Madrilusa.md
-│   ├── Manual de Identidade Visual e Comunicação - Madrilusa.md
-│   └── Guia de Inscrições na Plataforma Madrilusa.md
 ├── 📁 src/
-│   ├── components/          # Componentes React
-│   │   ├── ui/             # 47 componentes shadcn/ui
-│   │   ├── Header.tsx      # Navegação
-│   │   ├── Hero.tsx        # Seção principal
-│   │   ├── RegistrationCards.tsx # 5 tipos de registro
-│   │   ├── Chatbot.tsx     # IA conversacional
-│   │   └── ...             # Outros componentes
-│   ├── hooks/              # Custom hooks
-│   ├── pages/              # Páginas da aplicação
-│   └── assets/             # Imagens temáticas
-├── 📁 public/
-│   ├── logo_madrilusa/     # Logótipos oficiais
-│   └── madrilusa_images/   # Imagens do projeto
-└── ...                     # Configurações
+│   ├── 📁 institutional/    # 🎨 MARKETING
+│   │   ├── components/      # Componentes da landing page
+│   │   ├── pages/          # LandingPage.tsx
+│   │   └── styles/         # institutional-theme.css
+│   ├── 📁 app/             # 💻 DESENVOLVIMENTO  
+│   │   ├── layouts/        # AppLayout.tsx
+│   │   ├── pages/          # Dashboard, Profile, etc.
+│   │   ├── components/     # Componentes da aplicação
+│   │   └── styles/         # app-theme.css
+│   ├── 📁 modules/         # 🔐 MÓDULOS (auth, etc.)
+│   └── 📁 shared/          # 🤝 COMPARTILHADO
+├── 📁 backend/             # 💻 API COMPLETA
+│   ├── src/modules/        # auth, users, entities
+│   ├── prisma/            # Schema e migrations
+│   └── ...                # Express + TypeScript
+├── 📁 doc/                # 📋 DOCUMENTAÇÃO
+└── 📁 public/             # Assets estáticos
 ```
+
+### **🌐 URLs**
+- **`/`** - Página institucional (marketing)
+- **`/app/*`** - Aplicação logada (desenvolvimento)
 
 ## 📚 Documentação
 
-### 📖 Documentação Principal
-A documentação do projeto está organizada em 3 documentos especializados:
+### **📋 Documentação do Projeto**
+- **[Guia Completo de Conteúdo](doc/Guia%20Completo%20de%20Conteúdo%20e%20Seções%20do%20Madrilusa.md)** - Estrutura e conteúdo de todas as seções
+- **[Manual de Identidade Visual](doc/Manual%20de%20Identidade%20Visual%20e%20Comunicação%20-%20Madrilusa.md)** - Guidelines de design e comunicação
+- **[Guia de Inscrições](doc/Guia%20de%20Inscrições%20na%20Plataforma%20Madrilusa.md)** - Processo de registro por categoria
 
-#### 1. **[Guia Completo de Conteúdo e Seções](./doc/Guia%20Completo%20de%20Conteúdo%20e%20Seções%20do%20Madrilusa.md)**
-- **Conteúdo completo** de todas as seções
-- **Estrutura técnica** e arquitetura
-- **Funcionalidades** e componentes
-- **Especificações de desenvolvimento**
-- **Roadmap** e implementação
+### **🏗️ Documentação Técnica**
+- **[Estrutura Separada](doc/ESTRUTURA_SEPARADA.md)** - Documentação da separação institucional vs aplicação
+- **[Guia para Equipes](doc/GUIA_EQUIPES.md)** - Como marketing e desenvolvimento devem trabalhar
+- **[Status do Backend](doc/Status%20da%20Implementação%20-%20Backend%20Modular.md)** - Documentação do backend implementado
+- **[Organização de Arquivos](doc/ORGANIZACAO_ARQUIVOS.md)** - Diretrizes de organização do projeto
 
-#### 2. **[Manual de Identidade Visual](./doc/Manual%20de%20Identidade%20Visual%20e%20Comunicação%20-%20Madrilusa.md)**
-- **Paleta de cores** oficial
-- **Tipografia** e hierarquia
-- **Logótipos** e aplicações
-- **Diretrizes** de comunicação
-- **Ordenação das entidades**
-
-#### 3. **[Guia de Inscrições](./doc/Guia%20de%20Inscrições%20na%20Plataforma%20Madrilusa.md)**
-- **Campos específicos** por categoria
-- **Validações** obrigatórias
-- **Formulários** detalhados
-- **Fluxos** de inscrição
+### **📝 Política de Documentação**
+> **🚨 IMPORTANTE:** Toda documentação (.md) deve ser criada APENAS na pasta `doc/`. Não criar arquivos .md na raiz do projeto para manter a organização.
 
 ---
 
 ## 🚀 Como Executar
 
-### Pré-requisitos
-- **Node.js** (versão 18+)
-- **npm** ou **yarn**
-
-### Instalação
+### **Desenvolvimento Full-Stack**
 ```bash
-# Clone o repositório
-git clone <YOUR_GIT_URL>
-cd madrilusasite
-
-# Instale as dependências
+# Instalar dependências (raiz + backend)
 npm install
+npm run setup
 
-# Execute em modo desenvolvimento
-npm run dev
+# Rodar frontend + backend simultaneamente
+npm run dev:full
+
+# Ou separadamente:
+npm run dev              # Frontend (porta 8080)
+npm run dev:backend      # Backend (porta 3001)
 ```
 
-### Scripts Disponíveis
+### **Scripts Disponíveis**
 ```bash
-npm run dev       # Desenvolvimento local (porta 8080)
-npm run build     # Build para produção
-npm run preview   # Preview do build
-npm run lint      # Linting TypeScript
+npm run dev:full      # Frontend + Backend juntos
+npm run dev          # Frontend apenas
+npm run dev:backend  # Backend apenas
+npm run build        # Build para produção
+npm run setup        # Setup inicial do backend
+```
+
+### **Banco de Dados**
+```bash
+cd backend
+npx prisma studio    # Interface visual (porta 5555)
+npx prisma db push   # Sincronizar schema
 ```
 
 ---
 
 ## ⚡ Funcionalidades Principais
 
-### ✅ Implementadas
-- **Interface responsiva** completa
-- **Sistema de registro** para 5 categorias
+### ✅ Funcionalidades Implementadas
+
+#### **Página Institucional** (`/`)
+- **Landing page completa** com todos os componentes
+- **Modal de autenticação** (cadastro + login)
 - **Chatbot inteligente** com OpenAI
 - **Design system** consistente
 - **47 componentes UI** reutilizáveis
-- **Formulários específicos** por categoria
-- **Painéis laterais** interactivos
-- **Newsletter** funcional
 
-### ⏳ Em Desenvolvimento
-- Backend e base de dados
-- Sistema de autenticação
-- Dashboard por tipo de utilizador
-- Sistema de matching inteligente
-- Notificações por email
+#### **Aplicação** (`/app/*`)
+- **Dashboard de usuário** com boas-vindas
+- **Sistema de autenticação** completo
+- **Edição de perfil** básica
+- **Rotas protegidas** por autenticação
+- **Layout com sidebar** e navegação
+
+#### **Backend API**
+- **Autenticação:** registro e login
+- **CRUD de usuários** completo
+- **Banco SQLite** com Prisma
+- **8 endpoints** funcionais
 
 ---
 
@@ -159,23 +164,9 @@ npm run lint      # Linting TypeScript
 
 ---
 
-## 🔮 Próximos Passos
+## 📋 Política de Roadmaps
 
-### Prioridade Alta
-1. **Backend MVP** (4-6 semanas)
-   - API REST com Node.js/Express
-   - Base de dados PostgreSQL
-   - Sistema de autenticação
-
-2. **Dashboard** (6-8 semanas)
-   - Área personalizada por tipo de utilizador
-   - Sistema de matching jovens ↔ oportunidades
-
-### Prioridade Média
-- Admin panel para gestão
-- Sistema de notificações
-- Relatórios e analytics
-- Mobile app (React Native)
+**IMPORTANTE:** Esta documentação não inclui roadmaps, próximos passos ou planos de desenvolvimento. Estes elementos devem ser definidos separadamente conforme necessidades específicas e não devem ser incluídos na documentação a menos que explicitamente solicitado.
 
 ---
 
