@@ -100,7 +100,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-center md:text-left">
               <p className="text-muted-foreground text-sm">
-                © 2024 Madrilusa. Todos os direitos reservados.
+                © 2025 Madrilusa. Todos os direitos reservados.
               </p>
               <p className="text-muted-foreground text-xs">
                 Projecto de Inovação e Empreendedorismo Social

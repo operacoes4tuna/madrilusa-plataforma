@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageCircle, X, Send, Bot, User } from "lucide-react";
+import ReactMarkdown from 'react-markdown';
 import OpenAI from "openai";
 
 interface Message {
@@ -111,6 +112,7 @@ const Chatbot = () => {
   4. Fornece respostas detalhadas e úteis baseadas no contexto
   5. Incentiva a participação no projeto quando apropriado
   6. Se não souberes algo específico, direciona para o email de contacto
+  7. Usa formatação Markdown nas tuas respostas: **negrito** para destacar pontos importantes, listas numeradas e com bullet points para organizar informação
 
   CONTEXTO DO PROJETO:
   ${madrilusaContext}
@@ -177,6 +179,34 @@ const Chatbot = () => {
     }
   };
 
+  // Componente para renderizar mensagens com formatação
+  const MessageContent = ({ message }: { message: Message }) => {
+    if (message.isBot) {
+      return (
+        <div className="text-sm leading-relaxed">
+          <ReactMarkdown 
+            components={{
+              p: ({ children }) => <p className="my-1">{children}</p>,
+              strong: ({ children }) => <strong className="font-semibold text-current">{children}</strong>,
+              em: ({ children }) => <em className="italic">{children}</em>,
+              ul: ({ children }) => <ul className="list-disc list-inside space-y-1 my-2 ml-2">{children}</ul>,
+              ol: ({ children }) => <ol className="list-decimal list-inside space-y-1 my-2 ml-2">{children}</ol>,
+              li: ({ children }) => <li className="ml-1">{children}</li>,
+              br: () => <br className="my-1" />,
+              h1: ({ children }) => <h1 className="text-base font-semibold my-2">{children}</h1>,
+              h2: ({ children }) => <h2 className="text-sm font-semibold my-2">{children}</h2>,
+              h3: ({ children }) => <h3 className="text-sm font-medium my-1">{children}</h3>,
+            }}
+          >
+            {message.text}
+          </ReactMarkdown>
+        </div>
+      );
+    }
+    
+    return <p className="text-sm leading-relaxed">{message.text}</p>;
+  };
+
   return (
     <>
       {/* Botão flutuante */}
@@ -229,7 +259,9 @@ const Chatbot = () => {
                       >
                         <div className="flex items-start gap-2">
                           {message.isBot && <Bot className="w-4 h-4 mt-0.5 flex-shrink-0" />}
-                          <p className="text-sm leading-relaxed">{message.text}</p>
+                          <div className="flex-1">
+                            <MessageContent message={message} />
+                          </div>
                           {!message.isBot && <User className="w-4 h-4 mt-0.5 flex-shrink-0" />}
                         </div>
                       </div>
