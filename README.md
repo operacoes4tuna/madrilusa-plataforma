@@ -32,7 +32,6 @@ Conectar jovens imigrantes a oportunidades em territórios rurais, criando solu�
 - **React 18.3.1** + **TypeScript**
 - **Vite 5.4.1** (build tool)
 - **Tailwind CSS 3.4.11** + **shadcn/ui**
-- **Framer Motion** (animações)
 - **React Query** (estado global)
 - **OpenAI API** (chatbot inteligente)
 
@@ -114,9 +113,11 @@ npm run lint      # Linting TypeScript
 - **Interface responsiva** completa
 - **Sistema de registro** para 5 categorias
 - **Chatbot inteligente** com OpenAI
-- **Animações avançadas** (parallax, framer-motion)
 - **Design system** consistente
 - **47 componentes UI** reutilizáveis
+- **Formulários específicos** por categoria
+- **Painéis laterais** interactivos
+- **Newsletter** funcional
 
 ### ⏳ Em Desenvolvimento
 - Backend e base de dados
@@ -130,14 +131,14 @@ npm run lint      # Linting TypeScript
 ## 🎨 Design System
 
 ### Cores Principais
-- **Primary:** Laranja Madrilusa `#F59E0B`
-- **Secondary:** Azul escuro `#1e3a8a`
+- **Primary:** Laranja Madrilusa `#F5A623`
+- **Secondary:** Azul Turquesa `#4A90A4`
 - **Gradientes temáticos** e **sombras elegantes**
 
 ### Componentes
 - **shadcn/ui:** Biblioteca completa de componentes
 - **Lucide React:** Ícones modernos
-- **Framer Motion:** Animações fluidas
+- **Layout responsivo** e acessível
 
 ---
 
@@ -171,7 +172,7 @@ npm run lint      # Linting TypeScript
 5. Abra um Pull Request
 
 ### Para o Projeto Social
-- **Jovens imigrantes:** Registre-se na plataforma
+- **Jovens imigrantes:** Registe-se na plataforma
 - **Empresas:** Ofereça oportunidades de emprego/estágio
 - **Municípios:** Participe da revitalização territorial
 - **Academia:** Contribua com programas educacionais
@@ -179,38 +180,49 @@ npm run lint      # Linting TypeScript
 
 ---
 
-## 📞 Contato
+## 📞 Contactos
 
-- **Email:** madrilusa@adritem.pt
-- **Website:** [Lovable Project](https://lovable.dev/projects/b4d18a08-d6ae-4a9b-91f5-34834c17ca6b)
+### Entidades Promotoras
+- **Federação Minha Terra:** mariaclarabraga@minhaterra.pt | (+351) 913 196 839
+- **Adritem:** madrilusa@adritem.pt | (+351) 937 342 173  
+- **Adraces:** apoio-imigrantes@adraces.pt | (+351) 272 540 200
+- **CoraNE:** terrafria@corane.pt | (+351) 273 332 925
+
+### Website
+- **Site oficial:** [madrilusa.com](https://madrilusa.com)
 
 ---
 
-## 📄 Licença e Deploy
+## 📄 Licença e Tecnologia
 
-### Deploy Automático
-Este projeto está configurado com **Lovable** para deploy contínuo:
-
-**URL**: https://lovable.dev/projects/b4d18a08-d6ae-4a9b-91f5-34834c17ca6b
+### Tecnologias Utilizadas
+Este projeto é construído com:
+- **Vite** - Build tool moderna
+- **TypeScript** - Tipagem estática
+- **React** - Framework frontend
+- **shadcn-ui** - Componentes UI
+- **Tailwind CSS** - Framework CSS
 
 ### Como Editar
 
-**Use Lovable (Recomendado)**
-Visite o [Lovable Project](https://lovable.dev/projects/b4d18a08-d6ae-4a9b-91f5-34834c17ca6b) e comece a prompting. As mudanças são commitadas automaticamente.
+**Desenvolvimento Local**
+1. Clone este repositório
+2. Execute `npm install`
+3. Execute `npm run dev`
+4. Faça suas alterações
+5. Teste localmente
+6. Faça commit das mudanças
 
-**Use seu IDE preferido**
-Clone este repo e faça push das mudanças. As mudanças também serão refletidas no Lovable.
-
-**Use GitHub Codespaces**
-- Clique em "Code" → "Codespaces" → "New codespace"
-- Edite diretamente no navegador
-
-### Deploy Personalizado
-Para conectar domínio customizado:
-1. Abra Lovable → Project → Settings → Domains
-2. Clique em "Connect Domain"
-3. Siga as instruções de [configuração de domínio](https://docs.lovable.dev/tips-tricks/custom-domain)
+### Deploy
+O projeto pode ser deployado em qualquer plataforma que suporte aplicações React/Vite:
+- **Vercel** (recomendado)
+- **Netlify**
+- **GitHub Pages**
+- Qualquer servidor web estático
 
 ---
 
 **Projeto desenvolvido com ❤️ para promover integração social e desenvolvimento sustentável**
+
+*Projecto de Inovação e Empreendedorismo Social*  
+*ADRITEM • Federação Minha Terra • CoraNE • ADRACES*
