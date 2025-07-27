@@ -119,10 +119,24 @@ const Footer = () => {
               >
                 Termos de Uso
               </button>
-              <p className="text-muted-foreground text-xs">
-              Desenvolvido pela 4tuna com ❤️ para promover integração social e desenvolvimento sustentável
-              </p>
             </div>
+          </div>
+          
+          {/* Desenvolvido pela 4tuna - Centralizado */}
+          <div className="text-center mt-6 pt-6">
+            <p className="text-muted-foreground text-xs">
+              Desenvolvido pela{' '}
+              <a 
+                href="https://a4tunados.com.br" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-muted-foreground cursor-pointer"
+                style={{ textDecoration: 'none' }}
+              >
+                4tuna
+              </a>
+              {' '}com ❤️ para promover integração social e desenvolvimento sustentável
+            </p>
           </div>
         </div>
       </div>
