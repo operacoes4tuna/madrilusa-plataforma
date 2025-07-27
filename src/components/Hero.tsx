@@ -25,16 +25,18 @@ const Hero = () => {
               <span className="text-primary-glow">jovens imigrantes</span>
             </h1>
             
-            <p className="text-xl mb-8 text-white/90">
-              Jovens imigrantes, famílias de acolhimento ou empresas
+            <p className="text-xl mb-8 text-white/90 leading-relaxed">
+              Jovens imigrantes em início de vida, famílias com espaço no coração 
+              e empresas que abrem portas
             </p>
             
             <Button 
               variant="hero" 
               size="xl"
               className="font-semibold"
+              onClick={() => document.getElementById('registrar')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Juntes-se a Nós
+              Juntem-se a nós
             </Button>
           </div>
 
@@ -43,7 +45,7 @@ const Hero = () => {
             <div className="relative rounded-2xl overflow-hidden shadow-glow">
               <img
                 src={heroImage}
-                alt="Jovens imigrantes felizes"
+                alt="Grupo de jovens diversos sorrindo"
                 className="w-full h-auto object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>

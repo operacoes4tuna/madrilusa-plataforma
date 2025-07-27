@@ -34,8 +34,12 @@ const Objectives = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-6">
-            Principais Objetivos
+            Os nossos objectivos principais
           </h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            Através de uma abordagem holística, trabalhamos em quatro pilares fundamentais 
+            que sustentam a nossa missão de promover a integração social e o desenvolvimento territorial.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
@@ -70,6 +74,24 @@ const Objectives = () => {
               </Card>
             );
           })}
+        </div>
+
+        <div className="text-center mt-12">
+          <div className="bg-gradient-subtle rounded-lg p-8 max-w-4xl mx-auto">
+            <h3 className="text-2xl font-bold text-secondary mb-4">
+              Juntos, construímos um futuro mais inclusivo
+            </h3>
+            <p className="text-muted-foreground mb-6">
+              Cada objectivo do Madrilusa contribui para uma visão maior: criar comunidades 
+              onde a diversidade é valorizada e todos têm oportunidades de crescer e prosperar.
+            </p>
+            <button 
+              onClick={() => document.getElementById('registrar')?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary-glow transition-colors"
+            >
+              Faça parte desta missão
+            </button>
+          </div>
         </div>
       </div>
     </section>

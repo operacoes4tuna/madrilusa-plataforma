@@ -17,30 +17,35 @@ const RegistrationCards = () => {
     {
       id: "imigrante",
       title: "sou imigrante",
+      description: "Jovens com menos de 30 anos que procuram integração, formação e oportunidades de emprego",
       image: imigranteImg,
       alt: "Jovem imigrante"
     },
     {
       id: "empresa",
       title: "minha empresa",
+      description: "Empresas que desejam aceder a talentos qualificados e oferecer oportunidades de trabalho",
       image: empresaImg,
       alt: "Representante de empresa"
     },
     {
       id: "municipio",
       title: "município",
+      description: "Administrações municipais interessadas em revitalização territorial e apoio a imigrantes",
       image: municipioImg,
       alt: "Representante municipal"
     },
     {
       id: "academia",
       title: "academia",
+      description: "Instituições de ensino e formação que querem disponibilizar capacitações",
       image: academiaImg,
-      alt: "Representante acadêmico"
+      alt: "Representante académico"
     },
     {
       id: "familia",
       title: "família de acolhimento",
+      description: "Famílias que oferecem suporte e acolhimento para facilitar a integração social",
       image: familiaImg,
       alt: "Família de acolhimento"
     }
@@ -48,12 +53,16 @@ const RegistrationCards = () => {
 
   return (
     <>
-      <section className="py-20 bg-background">
+      <section id="registrar" className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-6">
-              Registrar
+              Como posso participar?
             </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Escolha a categoria que melhor se adequa ao seu perfil e descubra como pode 
+              fazer parte desta iniciativa de inovação social. A participação é totalmente gratuita.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
@@ -68,26 +77,38 @@ const RegistrationCards = () => {
                         className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
                       />
                     </div>
-                    <h3 className="text-xl font-semibold text-secondary mb-4 capitalize flex-grow flex items-center justify-center min-h-[3rem]">
+                    <h3 className="text-xl font-semibold text-secondary mb-3 capitalize">
                       {card.title}
                     </h3>
+                    <p className="text-sm text-muted-foreground mb-4 flex-grow">
+                      {card.description}
+                    </p>
                     <Button
                       variant="rectangular"
                       size="rectangular"
                       className="w-full mt-auto"
                       onClick={() => setSelectedCard(card.id)}
                     >
-                      Registrar
+                      Registar-me
                     </Button>
                   </CardContent>
                 </Card>
               </div>
             ))}
           </div>
+
+          <div className="text-center mt-12">
+            <p className="text-muted-foreground mb-4">
+              Tem dúvidas sobre qual categoria escolher?
+            </p>
+            <Button variant="outline" size="lg" onClick={() => document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' })}>
+              Ver Perguntas Frequentes
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* Modal de Registro */}
+      {/* Modal de Registo */}
       <RegistrationModal
         isOpen={!!selectedCard}
         onClose={() => setSelectedCard(null)}

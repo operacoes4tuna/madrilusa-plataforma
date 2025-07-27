@@ -1,81 +1,129 @@
 import { Button } from "@/components/ui/button";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, ExternalLink, Facebook, Linkedin, Instagram } from "lucide-react";
 
 const Footer = () => {
+  const entities = [
+    {
+      name: "Minha Terra",
+      email: "mariaclarabraga@minhaterra.pt",
+      phone: "(+351) 913 196 839"
+    },
+    {
+      name: "Adritem",
+      email: "madrilusa@adritem.pt", 
+      phone: "(+351) 937 342 173"
+    },
+    {
+      name: "Adraces",
+      email: "apoio-imigrantes@adraces.pt",
+      phone: "(+351) 272 540 200"
+    },
+    {
+      name: "CoraNE",
+      email: "terrafria@corane.pt",
+      phone: "(+351) 273 332 925"
+    }
+  ];
+
   return (
-    <footer id="contactos" className="bg-secondary text-secondary-foreground py-16">
+    <footer id="contactos" className="bg-muted/30 text-foreground py-16">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Logo e Descrição */}
-          <div>
+        {/* Logo e Redes Sociais */}
+        <div className="text-center mb-12">
+          <img
+            src="/logo_madrilusa/logo madrilusa.png"
+            alt="Madrilusa"
+            className="h-16 w-auto mx-auto mb-6"
+          />
+          
+          <div className="flex justify-center space-x-6 mb-4">
+            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <Facebook className="w-6 h-6" />
+            </a>
+            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <Linkedin className="w-6 h-6" />
+            </a>
+            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <Instagram className="w-6 h-6" />
+            </a>
+          </div>
+        </div>
+
+        {/* Contactos das 4 Entidades */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          {entities.map((entity, index) => (
+            <div key={index} className="text-center">
+              <h3 className="text-xl font-bold text-foreground mb-4">
+                {entity.name}
+              </h3>
+              <div className="space-y-3">
+                <div className="flex items-center justify-center text-sm">
+                  <Mail className="w-4 h-4 mr-2 text-muted-foreground" />
+                  <a 
+                    href={`mailto:${entity.email}`}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {entity.email}
+                  </a>
+                </div>
+                <div className="flex items-center justify-center text-sm">
+                  <Phone className="w-4 h-4 mr-2 text-muted-foreground" />
+                  <a 
+                    href={`tel:${entity.phone.replace(/\s+/g, '')}`}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {entity.phone}
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Barra de Logos dos Parceiros */}
+        <div className="border-t border-border pt-8 mb-8">
+          <h4 className="text-lg font-semibold text-center mb-4 text-muted-foreground">
+            Parceiros e Financiadores
+          </h4>
+          
+          <div className="text-center">
             <img
-              src="/logo_madrilusa/logo branco.png"
-              alt="Madrilusa"
-              className="h-12 w-auto mb-4"
+              src="/logo_madrilusa/barradelogosmadrilusa.png"
+              alt="Logos dos Parceiros e Financiadores - Madrilusa"
+              className="w-full max-w-2xl mx-auto h-auto"
             />
-            <p className="text-secondary-foreground/80 leading-relaxed mb-4">
-              Promovendo a integração de jovens imigrantes através de inovação 
-              e empreendedorismo social em territórios rurais de Portugal.
-            </p>
-            <p className="text-xs text-secondary-foreground/60">
-              Inclusão com identidade
-            </p>
-          </div>
-
-          {/* Contactos */}
-          <div>
-            <h4 className="text-xl font-semibold mb-4">Contactos</h4>
-            <div className="space-y-3">
-              <div className="flex items-center">
-                <Mail className="w-5 h-5 text-primary mr-3" />
-                <a 
-                  href="mailto:madrilusa@adritem.pt?subject=Contacto%20Site"
-                  className="text-secondary-foreground/80 hover:text-primary transition-colors"
-                >
-                  madrilusa@adritem.pt
-                </a>
-              </div>
-              <div className="flex items-center">
-                <Phone className="w-5 h-5 text-primary mr-3" />
-                <span className="text-secondary-foreground/80">+351 XXX XXX XXX</span>
-              </div>
-              <div className="flex items-center">
-                <MapPin className="w-5 h-5 text-primary mr-3" />
-                <span className="text-secondary-foreground/80">Portugal</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Parceiros */}
-          <div>
-            <h4 className="text-xl font-semibold mb-4">Parceiros</h4>
-            <div className="space-y-2 text-secondary-foreground/80">
-              <p>ADRITEM</p>
-              <p>Federação Minha Terra</p>
-              <p>CoraNE</p>
-              <p>ADRACES</p>
-            </div>
-            
-            <div className="mt-6">
-              <Button 
-                variant="rectangular" 
-                size="rectangular"
-                className="w-full"
-                onClick={() => window.location.href = 'mailto:madrilusa@adritem.pt?subject=Contacto%20Site'}
-              >
-                <Mail className="w-4 h-4 mr-2" />
-                Contacte-nos
-              </Button>
-            </div>
           </div>
         </div>
 
         {/* Footer Bottom */}
-        <div className="border-t border-secondary-foreground/20 mt-12 pt-8 text-center">
-          <p className="text-secondary-foreground/60 text-sm">
-            © 2024 Madrilusa. Todos os direitos reservados. 
-            Iniciativa de Inovação e Empreendedorismo Social.
-          </p>
+        <div className="border-t border-border pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div className="text-center md:text-left">
+              <p className="text-muted-foreground text-sm">
+                © 2024 Madrilusa. Todos os direitos reservados.
+              </p>
+              <p className="text-muted-foreground text-xs">
+                Projecto de Inovação e Empreendedorismo Social
+              </p>
+            </div>
+            <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 text-sm">
+              <button 
+                onClick={() => window.location.href = 'mailto:madrilusa@adritem.pt?subject=Política%20Privacidade'}
+                className="text-muted-foreground hover:text-primary transition-colors"
+              >
+                Política de Privacidade
+              </button>
+              <button 
+                onClick={() => window.location.href = 'mailto:madrilusa@adritem.pt?subject=Termos%20Uso'}
+                className="text-muted-foreground hover:text-primary transition-colors"
+              >
+                Termos de Uso
+              </button>
+              <p className="text-muted-foreground text-xs">
+                Desenvolvido por 4tuna
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

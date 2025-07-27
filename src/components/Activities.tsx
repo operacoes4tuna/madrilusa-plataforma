@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { GraduationCap, Users, Network, Briefcase, MessageCircle } from "lucide-react";
+import { GraduationCap, Users, Network, Briefcase } from "lucide-react";
 
 const Activities = () => {
   const activities = [
@@ -18,7 +18,7 @@ const Activities = () => {
     {
       icon: Network,
       title: "Rede de Apoio",
-      description: "Ao Acolhimento e Integração com atividades de capacitação em economia doméstica, cidadania e participação cívica.",
+      description: "Ao Acolhimento e Integração com actividades de capacitação em economia doméstica, cidadania e participação cívica.",
       image: "https://static.wixstatic.com/media/nsplsh_98b77565b8fa415fb25cae0939cd624d~mv2.jpg/v1/fill/w_324,h_216,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Image%20by%20Kelly%20Sikkema.jpg"
     },
     {
@@ -26,12 +26,6 @@ const Activities = () => {
       title: "Realização de estágios",
       description: "de verão e trabalhos temporários para os jovens.",
       image: "https://static.wixstatic.com/media/nsplsh_f6dde0573716445d9ab615e590424000~mv2.jpg/v1/fill/w_324,h_216,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Image%20by%20Ofspace%20LLC.jpg"
-    },
-    {
-      icon: MessageCircle,
-      title: "Campanhas de sensibilização",
-      description: "sobre a exclusão social da população imigrante.",
-      image: "https://static.wixstatic.com/media/nsplsh_b20e61da4f704213863247b706c5cdf2~mv2.jpg/v1/fill/w_324,h_216,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Image%20by%20Alexis%20Brown.jpg"
     }
   ];
 
@@ -40,11 +34,15 @@ const Activities = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-6">
-            As ações do projeto incluem
+            As acções do projecto incluem
           </h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            Através de uma abordagem integrada, desenvolvemos múltiplas iniciativas que promovem 
+            a integração social e o desenvolvimento sustentável das comunidades.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {activities.map((activity, index) => {
             const IconComponent = activity.icon;
             return (
@@ -74,6 +72,24 @@ const Activities = () => {
               </Card>
             );
           })}
+        </div>
+
+        <div className="text-center mt-12">
+          <div className="bg-gradient-subtle rounded-lg p-8 max-w-4xl mx-auto">
+            <h3 className="text-2xl font-bold text-secondary mb-4">
+              Participe connosco nesta jornada
+            </h3>
+            <p className="text-muted-foreground mb-6">
+              Cada acção do Madrilusa é desenhada para criar impacto real na vida das pessoas 
+              e no desenvolvimento das comunidades rurais.
+            </p>
+            <button 
+              onClick={() => document.getElementById('registrar')?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary-glow transition-colors"
+            >
+              Registe-se e faça parte
+            </button>
+          </div>
         </div>
       </div>
     </section>
