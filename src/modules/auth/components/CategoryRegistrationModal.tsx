@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
@@ -49,6 +49,22 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
   const [step, setStep] = useState<1 | 2>(1);
   const [basicData, setBasicData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showNacionalidadesModal, setShowNacionalidadesModal] = useState(false);
+  const nacionalidadeModalRef = useRef<HTMLDivElement>(null);
+
+  // Fechar dropdown quando clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (nacionalidadeModalRef.current && !nacionalidadeModalRef.current.contains(event.target as Node)) {
+        setShowNacionalidadesModal(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // Form para Etapa 1
   const basicForm = useForm<BasicRegistrationFormData>({
@@ -405,18 +421,62 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
           <form onSubmit={imigranteForm.handleSubmit(handleSpecificSubmit)} className="space-y-4">
             <div>
               <Label htmlFor="nacionalidade">Nacionalidade *</Label>
-              <Select onValueChange={(value) => imigranteForm.setValue("nacionalidade", value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione sua nacionalidade" />
-                </SelectTrigger>
-                <SelectContent>
-                  {NACIONALIDADES.map((pais) => (
-                    <SelectItem key={pais} value={pais}>
-                      {pais}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <div ref={nacionalidadeModalRef} className="relative">
+                <Input
+                  id="nacionalidade"
+                  {...imigranteForm.register("nacionalidade")}
+                  onFocus={() => setShowNacionalidadesModal(true)}
+                  placeholder="Digite ou selecione sua nacionalidade"
+                  autoComplete="off"
+                  className="pr-8"
+                />
+                                 <button
+                   type="button"
+                   onClick={() => {
+                     setShowNacionalidadesModal(!showNacionalidadesModal);
+                     // Se estiver abrindo e o campo estiver vazio, garantir que mostre todas
+                     if (!showNacionalidadesModal && (imigranteForm.watch("nacionalidade") || "") === '') {
+                       // Força re-render para mostrar todas as opções
+                       imigranteForm.setValue("nacionalidade", "");
+                     }
+                   }}
+                   className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                   aria-label="Mostrar opções"
+                 >
+                   ▼
+                 </button>
+                {showNacionalidadesModal && (
+                  <div className="absolute top-full left-0 right-0 max-h-48 overflow-y-auto bg-white border border-gray-300 rounded-md shadow-lg z-50 mt-1">
+                    {NACIONALIDADES
+                      .filter(pais => {
+                        const currentValue = imigranteForm.watch("nacionalidade") || "";
+                        return currentValue === '' || 
+                               pais.toLowerCase().includes(currentValue.toLowerCase());
+                      })
+                      .map((pais) => (
+                        <div
+                          key={pais}
+                          onClick={() => {
+                            imigranteForm.setValue("nacionalidade", pais);
+                            setShowNacionalidadesModal(false);
+                          }}
+                          className="px-3 py-2 cursor-pointer border-b border-gray-100 hover:bg-gray-50 last:border-b-0"
+                        >
+                          {pais}
+                        </div>
+                      ))}
+                    {NACIONALIDADES.filter(pais => {
+                      const currentValue = imigranteForm.watch("nacionalidade") || "";
+                      return currentValue === '' || 
+                             pais.toLowerCase().includes(currentValue.toLowerCase());
+                    }).length === 0 && (
+                      <div className="px-3 py-2 text-gray-500">
+                        Nenhuma nacionalidade encontrada
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
               {imigranteForm.formState.errors.nacionalidade && (
                 <p className="text-red-500 text-sm mt-1">
                   {imigranteForm.formState.errors.nacionalidade.message}

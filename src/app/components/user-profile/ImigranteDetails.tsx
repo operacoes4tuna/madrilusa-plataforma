@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Card,
   CardHeader,
@@ -29,6 +29,8 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [nacionalidades, setNacionalidades] = useState<string[]>([]);
+  const [showNacionalidades, setShowNacionalidades] = useState(false);
+  const nacionalidadeRef = useRef<HTMLDivElement>(null);
 
   const [perfilData, setPerfilData] = useState<PerfilImigrante | null>(null);
   const [formData, setFormData] = useState({
@@ -55,6 +57,20 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
     };
 
     fetchNacionalidades();
+  }, []);
+
+  // Fechar dropdown quando clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (nacionalidadeRef.current && !nacionalidadeRef.current.contains(event.target as Node)) {
+        setShowNacionalidades(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   // Buscar perfil do imigrante
@@ -212,29 +228,97 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
               <Col md="6">
                 <FormGroup>
                   <label htmlFor="nacionalidade">Nacionalidade *</label>
-                  <select
-                    id="nacionalidade"
-                    name="nacionalidade"
-                    value={formData.nacionalidade}
-                    onChange={handleInputChange}
-                    required
-                    className="form-control"
-                    style={{ 
-                      width: '100%', 
-                      minWidth: '200px', 
-                      maxWidth: '100%',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap'
-                    }}
-                  >
-                    <option value="">Selecione sua nacionalidade</option>
-                    {nacionalidades.map((pais) => (
-                      <option key={pais} value={pais}>
-                        {pais}
-                      </option>
-                    ))}
-                  </select>
+                  <div ref={nacionalidadeRef} style={{ position: 'relative' }}>
+                    <FormInput
+                      id="nacionalidade"
+                      name="nacionalidade"
+                      value={formData.nacionalidade}
+                      onChange={handleInputChange}
+                      onFocus={() => setShowNacionalidades(true)}
+                      required
+                      placeholder="Digite ou selecione sua nacionalidade"
+                      autoComplete="off"
+                      style={{ paddingRight: '30px' }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowNacionalidades(!showNacionalidades);
+                        // Se estiver abrindo e o campo estiver vazio, garantir que mostre todas
+                        if (!showNacionalidades && formData.nacionalidade === '') {
+                          // Força re-render para mostrar todas as opções
+                          setFormData(prev => ({ ...prev, nacionalidade: '' }));
+                        }
+                      }}
+                      style={{
+                        position: 'absolute',
+                        right: '8px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        border: 'none',
+                        background: 'none',
+                        cursor: 'pointer',
+                        fontSize: '12px',
+                        color: '#666'
+                      }}
+                      aria-label="Mostrar opções"
+                    >
+                      ▼
+                    </button>
+                    {showNacionalidades && (
+                      <div
+                        style={{
+                          position: 'absolute',
+                          top: '100%',
+                          left: 0,
+                          right: 0,
+                          maxHeight: '200px',
+                          overflowY: 'auto',
+                          backgroundColor: 'white',
+                          border: '1px solid #ccc',
+                          borderRadius: '4px',
+                          zIndex: 1000,
+                          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                        }}
+                      >
+                        {nacionalidades
+                          .filter(pais => 
+                            formData.nacionalidade === '' || 
+                            pais.toLowerCase().includes(formData.nacionalidade.toLowerCase())
+                          )
+                          .map((pais) => (
+                            <div
+                              key={pais}
+                              onClick={() => {
+                                setFormData(prev => ({ ...prev, nacionalidade: pais }));
+                                setShowNacionalidades(false);
+                              }}
+                              style={{
+                                padding: '8px 12px',
+                                cursor: 'pointer',
+                                borderBottom: '1px solid #eee'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = '#f5f5f5';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = 'white';
+                              }}
+                            >
+                              {pais}
+                            </div>
+                          ))}
+                        {nacionalidades.filter(pais => 
+                          formData.nacionalidade === '' || 
+                          pais.toLowerCase().includes(formData.nacionalidade.toLowerCase())
+                        ).length === 0 && (
+                          <div style={{ padding: '8px 12px', color: '#999' }}>
+                            Nenhuma nacionalidade encontrada
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </FormGroup>
               </Col>
               <Col md="6">
