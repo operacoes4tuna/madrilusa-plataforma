@@ -17,9 +17,26 @@
 
 /* Cards */
 .card.small {
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
   border: 1px solid #e3ebf0;
   margin-bottom: 30px;
+  transition: box-shadow 0.3s ease;
+}
+
+.card.small:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+/* Força aplicação da sombra em TODOS os cards pequenos */
+.card.small,
+.card[class*="small"] {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15) !important;
+  transition: box-shadow 0.3s ease !important;
+}
+
+.card.small:hover,
+.card[class*="small"]:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2) !important;
 }
 
 .card-header {
@@ -300,8 +317,13 @@
   background: #fff;
   border: 1px solid #e3ebf0;
   border-radius: 0.25rem;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
   margin-bottom: 30px;
+  transition: box-shadow 0.3s ease;
+}
+
+.stats-small:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
 
 .stats-small .card-body {
