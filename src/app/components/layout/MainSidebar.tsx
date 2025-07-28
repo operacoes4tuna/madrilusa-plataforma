@@ -78,6 +78,29 @@ const MainSidebar: React.FC = () => {
             </NavItem>
           ))}
         </Nav>
+        
+        {/* Barra de Logos Institucional */}
+        <div className="sidebar-logos" style={{ 
+          position: 'fixed',
+          bottom: '20px',
+          left: '10px',
+          width: 'calc(16.66667% - 20px)',
+          textAlign: 'center',
+          zIndex: 1000,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <img
+            src="/logo_madrilusa/barradelogosmadrilusa.png"
+            alt="Parceiros Madrilusa"
+            style={{ 
+              width: '95%', 
+              height: 'auto',
+              maxWidth: '280px'
+            }}
+          />
+        </div>
       </div>
     </Col>
   );
