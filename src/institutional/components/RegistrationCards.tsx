@@ -58,8 +58,8 @@ const RegistrationCards = () => {
   ];
 
   const handleCardClick = (category: UserCategory) => {
-    // IMIGRANTE, EMPRESA, MUNICIPIO e ACADEMIA estão implementados
-    if (category === USER_CATEGORIES.IMIGRANTE || category === USER_CATEGORIES.EMPRESA || category === USER_CATEGORIES.MUNICIPIO || category === USER_CATEGORIES.ACADEMIA) {
+    // IMIGRANTE, EMPRESA, MUNICIPIO, ACADEMIA e FAMILIA_ACOLHIMENTO estão implementados
+    if (category === USER_CATEGORIES.IMIGRANTE || category === USER_CATEGORIES.EMPRESA || category === USER_CATEGORIES.MUNICIPIO || category === USER_CATEGORIES.ACADEMIA || category === USER_CATEGORIES.FAMILIA_ACOLHIMENTO) {
       setSelectedCategory(category);
     } else {
       // Para outras categorias, mostrar aviso temporário
@@ -103,13 +103,13 @@ const RegistrationCards = () => {
                       variant="rectangular"
                       size="rectangular"
                                                             className={`w-full mt-auto ${
-                 (card.category === USER_CATEGORIES.IMIGRANTE || card.category === USER_CATEGORIES.EMPRESA || card.category === USER_CATEGORIES.MUNICIPIO || card.category === USER_CATEGORIES.ACADEMIA)
+                 (card.category === USER_CATEGORIES.IMIGRANTE || card.category === USER_CATEGORIES.EMPRESA || card.category === USER_CATEGORIES.MUNICIPIO || card.category === USER_CATEGORIES.ACADEMIA || card.category === USER_CATEGORIES.FAMILIA_ACOLHIMENTO)
                    ? 'bg-primary hover:bg-primary-glow' 
                    : 'bg-gray-400 hover:bg-gray-500'
                }`}
                       onClick={() => handleCardClick(card.category)}
                     >
-                      {(card.category === USER_CATEGORIES.IMIGRANTE || card.category === USER_CATEGORIES.EMPRESA || card.category === USER_CATEGORIES.MUNICIPIO || card.category === USER_CATEGORIES.ACADEMIA) ? 'Registar-me' : 'Em Breve'}
+                      {(card.category === USER_CATEGORIES.IMIGRANTE || card.category === USER_CATEGORIES.EMPRESA || card.category === USER_CATEGORIES.MUNICIPIO || card.category === USER_CATEGORIES.ACADEMIA || card.category === USER_CATEGORIES.FAMILIA_ACOLHIMENTO) ? 'Registar-me' : 'Em Breve'}
                     </Button>
                   </CardContent>
                 </Card>

@@ -39,6 +39,12 @@ export type {
   UpdatePerfilAcademiaRequest,
   PerfilAcademiaResponse,
   
+  // ✨ FASE 5: Tipos para família
+  PerfilFamilia,
+  CreatePerfilFamiliaRequest,
+  UpdatePerfilFamiliaRequest,
+  PerfilFamiliaResponse,
+  
   // ✨ NOVOS: Registro em 2 etapas
   RegisterBasicRequest,
   RegisterBasicResponse,
@@ -46,6 +52,7 @@ export type {
   RegisterEmpresaCompleteRequest,
   RegisterMunicipioCompleteRequest,
   RegisterAcademiaCompleteRequest,
+  RegisterFamiliaCompleteRequest,
   
   // ✨ NOVOS: Nacionalidades
   Nacionalidade

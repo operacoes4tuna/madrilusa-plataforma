@@ -219,6 +219,48 @@ export interface PerfilAcademiaResponse {
   updatedAt: Date;
 }
 
+// ✨ FASE 5: Perfil específico de Família de Acolhimento
+export interface PerfilFamilia {
+  id: string;
+  userId: string;
+  moradaCompleta: string;
+  quantidadePessoas?: string;
+  tiposAcolhimento?: string;
+  duracaoAcolhimento?: string;
+  observacoes?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CreatePerfilFamiliaRequest {
+  userId: string;
+  moradaCompleta: string;
+  quantidadePessoas?: string;
+  tiposAcolhimento?: string;
+  duracaoAcolhimento?: string;
+  observacoes?: string;
+}
+
+export interface UpdatePerfilFamiliaRequest {
+  moradaCompleta?: string;
+  quantidadePessoas?: string;
+  tiposAcolhimento?: string;
+  duracaoAcolhimento?: string;
+  observacoes?: string;
+}
+
+export interface PerfilFamiliaResponse {
+  id: string;
+  userId: string;
+  moradaCompleta: string;
+  quantidadePessoas?: string;
+  tiposAcolhimento?: string;
+  duracaoAcolhimento?: string;
+  observacoes?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // Auth types (atualizado)
 export interface RegisterRequest {
   nomeCompleto: string;
@@ -291,6 +333,16 @@ export interface RegisterAcademiaCompleteRequest {
   telefone?: string;
   ofertaFormativa?: string;
   website?: string;
+  observacoes?: string;
+}
+
+// ✨ FASE 5: Registro completo de família
+export interface RegisterFamiliaCompleteRequest {
+  userId: string;
+  moradaCompleta: string;
+  quantidadePessoas?: string;
+  tiposAcolhimento?: string;
+  duracaoAcolhimento?: string;
   observacoes?: string;
 }
 

@@ -74,6 +74,15 @@ const MainSidebar: React.FC = () => {
     });
   }
   
+  if (user?.categoria === USER_CATEGORIES.FAMILIA_ACOLHIMENTO) {
+    categoryMenuItems.push({
+      title: 'Perfil de Família',
+      to: '/app/perfil-familia',
+      iconClass: 'family_restroom',
+      htmlAfter: ''
+    });
+  }
+  
   // Combinar menus
   const sidebarNavItems = [...baseSidebarNavItems, ...categoryMenuItems];
 

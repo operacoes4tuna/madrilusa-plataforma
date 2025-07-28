@@ -33,8 +33,8 @@ model User {
   // ✨ FASE 4: Relação com perfil específico de academia
   perfilAcademia PerfilAcademia?
   
-  // 🔮 FUTURAS FASES: Relações com outros perfis específicos
-  // perfilFamilia PerfilFamilia?
+  // ✨ FASE 5: Relação com perfil específico de família
+  perfilFamilia PerfilFamilia?
   
   @@map("users")
 }
@@ -115,4 +115,22 @@ model PerfilAcademia {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   @@map("perfis_academia")
+}
+
+// ✨ FASE 5: Perfil específico de Família de Acolhimento
+model PerfilFamilia {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  moradaCompleta      String   // ✨ Obrigatório: Morada com freguesia e concelho
+  quantidadePessoas   String?  // ✨ Opcional: Ex: "1 adulto + 1 criança"
+  tiposAcolhimento    String?  // ✨ Opcional: Tipos disponíveis (JSON ou separado por vírgulas)
+  duracaoAcolhimento  String?  // ✨ Opcional: Durações disponíveis (JSON ou separado por vírgulas)
+  observacoes         String?  // ✨ Opcional: Preferências, condições especiais, horários
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  
+  // Relação com User (1:1 com cascade delete)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("perfis_familia")
 } 

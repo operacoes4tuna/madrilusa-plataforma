@@ -52,6 +52,15 @@ interface AcademiaRegistrationFormData {
   observacoes?: string;
 }
 
+// Interface para formulário de família
+interface FamiliaRegistrationFormData {
+  moradaCompleta: string;
+  quantidadePessoas?: string;
+  tiposAcolhimento?: string[];
+  duracaoAcolhimento?: string[];
+  observacoes?: string;
+}
+
 interface CategoryRegistrationModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -105,6 +114,15 @@ const academiaRegistrationSchema = z.object({
   telefone: z.string().optional(),
   ofertaFormativa: z.string().optional(),
   website: z.string().url("Website deve ser uma URL válida").optional().or(z.literal("")),
+  observacoes: z.string().optional(),
+});
+
+// Schema de validação para Etapa 2 (Família)
+const familiaRegistrationSchema = z.object({
+  moradaCompleta: z.string().min(10, "Morada completa deve ter pelo menos 10 caracteres"),
+  quantidadePessoas: z.string().optional(),
+  tiposAcolhimento: z.array(z.string()).optional(),
+  duracaoAcolhimento: z.array(z.string()).optional(),
   observacoes: z.string().optional(),
 });
 
@@ -195,6 +213,18 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
       telefone: "",
       ofertaFormativa: "",
       website: "",
+      observacoes: ""
+    }
+  });
+
+  // Form para Etapa 2 (Família)
+  const familiaForm = useForm<FamiliaRegistrationFormData>({
+    resolver: zodResolver(familiaRegistrationSchema),
+    defaultValues: {
+      moradaCompleta: "",
+      quantidadePessoas: "",
+      tiposAcolhimento: [],
+      duracaoAcolhimento: [],
       observacoes: ""
     }
   });
@@ -713,6 +743,134 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
     }
   };
 
+  // Etapa 2: Dados específicos da categoria - Família
+  const handleFamiliaSubmit = async (data: FamiliaRegistrationFormData) => {
+    if (!basicData?.userId) {
+      toast({
+        title: "Erro",
+        description: "Dados básicos não encontrados. Reinicie o processo.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+
+      // Converter arrays para strings separadas por vírgula
+      const dataToSend = {
+        userId: basicData.userId,
+        moradaCompleta: data.moradaCompleta,
+        quantidadePessoas: data.quantidadePessoas || undefined,
+        tiposAcolhimento: data.tiposAcolhimento && data.tiposAcolhimento.length > 0 ? data.tiposAcolhimento.join(', ') : undefined,
+        duracaoAcolhimento: data.duracaoAcolhimento && data.duracaoAcolhimento.length > 0 ? data.duracaoAcolhimento.join(', ') : undefined,
+        observacoes: data.observacoes || undefined
+      };
+
+      const response = await fetch("/api/familias/perfil", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToSend),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log('✅ Perfil de família criado com sucesso:', result.data);
+        
+        // Buscar dados completos do usuário após criação do perfil
+        try {
+          console.log('🔍 Buscando dados do usuário família:', basicData.userId);
+          const userResponse = await fetch(`/api/auth/user/${basicData.userId}`);
+          const userResult = await userResponse.json();
+          
+          console.log('📥 Resposta do usuário família:', userResult);
+          
+          if (userResult.success && userResult.data) {
+            // Login automático com dados completos
+            const userData = {
+              id: userResult.data.id,
+              nomeCompleto: userResult.data.nomeCompleto,
+              email: userResult.data.email,
+              telemovel: userResult.data.telemovel,
+              categoria: userResult.data.categoria,
+              foto: userResult.data.foto,
+              createdAt: userResult.data.createdAt || new Date(),
+              updatedAt: userResult.data.updatedAt || new Date()
+            };
+            
+            console.log('💾 Salvando dados família no localStorage:', userData);
+            localStorage.setItem('madrilusa_user', JSON.stringify(userData));
+            
+            // Atualizar estado do useAuth diretamente
+            setUser(userData);
+
+            toast({
+              title: "Registro Concluído!",
+              description: "Bem-vindo(a) ao Madrilusa! Redirecionando para sua plataforma...",
+            });
+
+            // Fechar modal e redirecionar
+            onClose();
+            console.log('🚀 Redirecionando família para dashboard...');
+            
+            // Usar navigate() agora que o estado está atualizado
+            setTimeout(() => {
+              navigate('/app/dashboard');
+            }, 1000);
+          } else {
+            throw new Error(`Erro ao buscar dados do usuário: ${userResult.error || 'Dados não encontrados'}`);
+          }
+        } catch (userError: any) {
+          console.error('❌ Erro ao buscar dados completos da família:', userError);
+          
+          // Fallback: usar dados básicos se falhar buscar dados completos
+          const fallbackUserData = {
+            id: basicData.userId,
+            nomeCompleto: basicForm.getValues('nomeCompleto'),
+            email: basicForm.getValues('email'),
+            categoria: category,
+            telemovel: basicForm.getValues('telemovel') || null,
+            foto: null,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          };
+          
+          console.log('💾 Fallback família - Salvando dados básicos:', fallbackUserData);
+          localStorage.setItem('madrilusa_user', JSON.stringify(fallbackUserData));
+          
+          // Atualizar estado do useAuth diretamente
+          setUser(fallbackUserData as any);
+
+          toast({
+            title: "Registro Concluído!",
+            description: "Bem-vindo(a) ao Madrilusa! Redirecionando para sua plataforma...",
+          });
+
+          onClose();
+          console.log('🚀 Redirecionando família para dashboard (fallback)...');
+          
+          // Usar navigate() agora que o estado está atualizado
+          setTimeout(() => {
+            navigate('/app/dashboard');
+          }, 1000);
+        }
+      } else {
+        throw new Error(result.error || "Erro ao criar perfil");
+      }
+    } catch (error: any) {
+      toast({
+        title: "Erro ao Finalizar Registro",
+        description: error.message || "Erro inesperado. Tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleClose = () => {
     setStep(1);
     setBasicData(null);
@@ -722,6 +880,7 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
     empresaForm.reset();
     municipioForm.reset();
     academiaForm.reset();
+    familiaForm.reset();
     onClose();
   };
 
@@ -749,7 +908,7 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
       case USER_CATEGORIES.ACADEMIA:
         return "Registro de Academia";
       case USER_CATEGORIES.FAMILIA_ACOLHIMENTO:
-        return "Registro de Família";
+        return "Registro de Família de Acolhimento";
       default:
         return "Registro";
     }
@@ -1286,6 +1445,118 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
             <div className="flex items-center space-x-2">
               <Checkbox id="termos-academia" required />
               <Label htmlFor="termos-academia" className="text-sm">
+                Concordo com a política de dados e privacidade e política de cookies *
+              </Label>
+            </div>
+
+            <div className="flex justify-between pt-4">
+              <Button type="button" variant="outline" onClick={() => setStep(1)}>
+                Voltar
+              </Button>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Finalizando..." : "Concluir Registro"}
+              </Button>
+            </div>
+          </form>
+        )}
+
+        {step === 2 && category === USER_CATEGORIES.FAMILIA_ACOLHIMENTO && (
+          <form onSubmit={familiaForm.handleSubmit(handleFamiliaSubmit)} className="space-y-4">
+            <div>
+              <Label htmlFor="moradaCompleta">Morada Completa *</Label>
+              <Input
+                id="moradaCompleta"
+                {...familiaForm.register("moradaCompleta")}
+                placeholder="Inclua freguesia e concelho (ex: Rua das Flores, 123, Penha Garcia, Idanha-a-Nova)"
+              />
+              {familiaForm.formState.errors.moradaCompleta && (
+                <p className="text-red-500 text-sm mt-1">
+                  {familiaForm.formState.errors.moradaCompleta.message}
+                </p>
+              )}
+              <p className="text-xs text-gray-500 mt-1">
+                Deve incluir freguesia e concelho para melhor localização.
+              </p>
+            </div>
+
+            <div>
+              <Label htmlFor="quantidadePessoas">Quantas Pessoas pode Acolher?</Label>
+              <Input
+                id="quantidadePessoas"
+                {...familiaForm.register("quantidadePessoas")}
+                placeholder="Ex: 1 adulto + 1 criança, 2 pessoas, família de 4..."
+              />
+            </div>
+
+            <div>
+              <Label>Tipos de Acolhimento Disponíveis</Label>
+              <div className="grid grid-cols-2 gap-2 mt-2">
+                {['Dormida', 'Alimentação', 'Transporte Local', 'Apoio Emocional', 'Acolhimento de Emergência', 'Outro'].map((tipo) => (
+                  <div key={tipo} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`tipo-${tipo}`}
+                      checked={familiaForm.watch("tiposAcolhimento")?.includes(tipo) || false}
+                      onCheckedChange={(checked) => {
+                        const currentTipos = familiaForm.getValues("tiposAcolhimento") || [];
+                        if (checked) {
+                          familiaForm.setValue("tiposAcolhimento", [...currentTipos, tipo]);
+                        } else {
+                          familiaForm.setValue("tiposAcolhimento", currentTipos.filter(t => t !== tipo));
+                        }
+                      }}
+                    />
+                    <Label htmlFor={`tipo-${tipo}`} className="text-sm font-normal">
+                      {tipo}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-gray-500 mt-1">
+                Selecione todos os tipos de apoio que sua família pode oferecer.
+              </p>
+            </div>
+
+            <div>
+              <Label>Duração do Acolhimento</Label>
+              <div className="space-y-2 mt-2">
+                {['Curto Prazo (até 7 dias)', 'Médio Prazo (1 a 3 meses)', 'Longo Prazo (mais de 3 meses)'].map((duracao) => (
+                  <div key={duracao} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`duracao-${duracao}`}
+                      checked={familiaForm.watch("duracaoAcolhimento")?.includes(duracao) || false}
+                      onCheckedChange={(checked) => {
+                        const currentDuracao = familiaForm.getValues("duracaoAcolhimento") || [];
+                        if (checked) {
+                          familiaForm.setValue("duracaoAcolhimento", [...currentDuracao, duracao]);
+                        } else {
+                          familiaForm.setValue("duracaoAcolhimento", currentDuracao.filter(d => d !== duracao));
+                        }
+                      }}
+                    />
+                    <Label htmlFor={`duracao-${duracao}`} className="text-sm font-normal">
+                      {duracao}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-gray-500 mt-1">
+                Indique por quanto tempo sua família pode oferecer acolhimento.
+              </p>
+            </div>
+
+            <div>
+              <Label htmlFor="observacoes">Observações Adicionais</Label>
+              <Textarea
+                id="observacoes"
+                {...familiaForm.register("observacoes")}
+                rows={4}
+                placeholder="Preferências por perfil de acolhidos, condições especiais, disponibilidade de horários, outras informações relevantes..."
+              />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Checkbox id="termos-familia" required />
+              <Label htmlFor="termos-familia" className="text-sm">
                 Concordo com a política de dados e privacidade e política de cookies *
               </Label>
             </div>
