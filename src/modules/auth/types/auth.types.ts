@@ -27,6 +27,7 @@ export interface User {
   id: string;
   nomeCompleto: string;
   email: string;
+  telemovel?: string; // Telemóvel do usuário
   foto?: string; // URL da foto do usuário
   createdAt: Date;
   updatedAt: Date;
@@ -41,6 +42,7 @@ export interface RegisterRequest {
   nomeCompleto: string;
   email: string;
   senha: string;
+  telemovel?: string;
 }
 
 export interface AuthResponse {

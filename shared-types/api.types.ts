@@ -5,6 +5,7 @@ export interface User {
   id: string;
   nomeCompleto: string;
   email: string;
+  telemovel?: string; // Telemóvel do usuário
   foto?: string; // URL da foto do usuário
   createdAt: Date;
   updatedAt: Date;
@@ -14,12 +15,14 @@ export interface CreateUserRequest {
   nomeCompleto: string;
   email: string;
   senha: string;
+  telemovel?: string;
 }
 
 export interface UpdateUserRequest {
   nomeCompleto?: string;
   email?: string;
   senha?: string;
+  telemovel?: string; // Telemóvel do usuário
   foto?: string; // URL da foto do usuário
 }
 
@@ -28,11 +31,19 @@ export interface RegisterRequest {
   nomeCompleto: string;
   email: string;
   senha: string;
+  telemovel?: string;
 }
 
 export interface LoginRequest {
   email: string;
   senha: string;
+}
+
+// Auth Response type
+export interface AuthResponse {
+  success: boolean;
+  data: User;
+  message?: string;
 }
 
 // API Response types

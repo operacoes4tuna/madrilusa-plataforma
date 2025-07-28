@@ -25,7 +25,7 @@ interface UserAccountDetailsProps {
 const UserAccountDetails: React.FC<UserAccountDetailsProps> = ({
   title = "Detalhes da Conta"
 }) => {
-  const { user, setUser } = useAuth();
+  const { user, setUser, logout } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [isSaving, setIsSaving] = useState(false);
@@ -34,6 +34,7 @@ const UserAccountDetails: React.FC<UserAccountDetailsProps> = ({
   const [formData, setFormData] = useState({
     nomeCompleto: '',
     email: '',
+    telemovel: '',
     senha: ''
   });
 
@@ -43,6 +44,7 @@ const UserAccountDetails: React.FC<UserAccountDetailsProps> = ({
       setFormData({
         nomeCompleto: user.nomeCompleto || '',
         email: user.email || '',
+        telemovel: user.telemovel || '',
         senha: ''
       });
     }
@@ -76,6 +78,10 @@ const UserAccountDetails: React.FC<UserAccountDetailsProps> = ({
 
       if (formData.email !== user?.email) {
         updateData.email = formData.email;
+      }
+
+      if (formData.telemovel !== user?.telemovel) {
+        updateData.telemovel = formData.telemovel;
       }
 
       if (formData.senha.trim() !== '') {
@@ -155,10 +161,9 @@ const UserAccountDetails: React.FC<UserAccountDetailsProps> = ({
         description: "A sua conta foi removida permanentemente.",
       });
 
-      // Fazer logout e redirecionar
+      // Fazer logout e redirecionar para o site institucional
       setTimeout(() => {
-        localStorage.removeItem('user');
-        navigate('/');
+        logout();
       }, 1000);
 
     } catch (error) {
@@ -217,6 +222,19 @@ const UserAccountDetails: React.FC<UserAccountDetailsProps> = ({
                   </Col>
                 </Row>
                 <Row form>
+                  {/* Telemóvel */}
+                  <Col md="6" className="form-group">
+                    <label htmlFor="telemovel">Telemóvel (opcional)</label>
+                    <FormInput
+                      type="tel"
+                      id="telemovel"
+                      name="telemovel"
+                      placeholder="+351 123 456 789"
+                      value={formData.telemovel}
+                      onChange={handleInputChange}
+                      autoComplete="tel"
+                    />
+                  </Col>
                   {/* Senha */}
                   <Col md="6" className="form-group">
                     <label htmlFor="senha">Nova Senha (opcional)</label>

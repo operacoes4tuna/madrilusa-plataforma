@@ -9,6 +9,7 @@ export const userService = {
         id: true,
         nomeCompleto: true,
         email: true,
+        telemovel: true,
         foto: true,
         createdAt: true,
         updatedAt: true,
@@ -24,6 +25,7 @@ export const userService = {
         id: true,
         nomeCompleto: true,
         email: true,
+        telemovel: true,
         foto: true,
         createdAt: true,
         updatedAt: true,
@@ -38,17 +40,19 @@ export const userService = {
     });
   },
 
-  async createUser(data: { nomeCompleto: string; email: string; senha: string }) {
+  async createUser(data: { nomeCompleto: string; email: string; senha: string; telemovel?: string }) {
     const user = await prisma.user.create({
       data: {
         nomeCompleto: data.nomeCompleto,
         email: data.email.toLowerCase(),
         senha: data.senha, // Sem hash por enquanto
+        telemovel: data.telemovel,
       },
       select: {
         id: true,
         nomeCompleto: true,
         email: true,
+        telemovel: true,
         foto: true,
         createdAt: true,
         updatedAt: true,
@@ -72,6 +76,10 @@ export const userService = {
       updateData.senha = data.senha;
     }
     
+    if (data.telemovel !== undefined) {
+      updateData.telemovel = data.telemovel;
+    }
+    
     if (data.foto !== undefined) {
       updateData.foto = data.foto;
     }
@@ -83,6 +91,7 @@ export const userService = {
         id: true,
         nomeCompleto: true,
         email: true,
+        telemovel: true,
         foto: true,
         createdAt: true,
         updatedAt: true,

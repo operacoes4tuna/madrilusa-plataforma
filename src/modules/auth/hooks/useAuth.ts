@@ -73,6 +73,9 @@ export const useAuth = () => {
       title: "Logout realizado",
       description: "Até logo!",
     });
+    
+    // Redirecionar para o site institucional
+    navigate('/');
   };
 
   const register = (data: RegisterRequest) => {

@@ -15,6 +15,7 @@ model User {
   nomeCompleto String
   email        String   @unique
   senha        String   // Hash será implementado futuramente
+  telemovel    String?  // Telemóvel do usuário (opcional)
   foto         String?  // URL da foto do usuário (opcional)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

@@ -10,6 +10,10 @@ import { RegisterRequest } from '../types/auth.types';
 const registerSchema = z.object({
   nomeCompleto: z.string().min(1, 'Nome completo é obrigatório'),
   email: z.string().email('Email inválido'),
+  telemovel: z.string()
+    .regex(/^[\+\d\s\-\(\)]*$/, 'Apenas números, +, espaços, - e () são permitidos')
+    .optional()
+    .or(z.literal('')),
   senha: z.string().min(6, 'Senha deve ter pelo menos 6 caracteres'),
 });
 
@@ -65,7 +69,19 @@ export const RegisterForm = ({ onToggleMode }: RegisterFormProps) => {
           )}
         </div>
 
-
+        <div className="space-y-2">
+          <Label htmlFor="telemovel">Telemóvel (opcional)</Label>
+          <Input
+            id="telemovel"
+            type="tel"
+            {...register('telemovel')}
+            placeholder="+351 123 456 789"
+            className={errors.telemovel ? 'border-destructive' : ''}
+          />
+          {errors.telemovel && (
+            <p className="text-sm text-destructive">{errors.telemovel.message}</p>
+          )}
+        </div>
 
         <div className="space-y-2">
           <Label htmlFor="senha">Senha</Label>
