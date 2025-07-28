@@ -65,11 +65,10 @@ export interface BasicRegistrationFormData {
 export interface ImigranteRegistrationFormData {
   nacionalidade: string;
   dataNascimento: string; // String porque input type="date" retorna string
-  objetivoEmprego?: string;
-  objetivoFormacao?: string;
-  objetivoRegularizacao?: string;
+  objetivos?: string[]; // Array de objetivos selecionados
   objetivoOutros?: string;
   mensagem?: string;
+  aceitaNotificacoes?: boolean; // Aceita receber notificações
 }
 
 export interface CategoryRegistrationState {

@@ -37,11 +37,10 @@ const basicRegistrationSchema = z.object({
 const imigranteRegistrationSchema = z.object({
   nacionalidade: z.string().min(1, "Nacionalidade é obrigatória"),
   dataNascimento: z.string().min(1, "Data de nascimento é obrigatória"),
-  objetivoEmprego: z.string().optional(),
-  objetivoFormacao: z.string().optional(),
-  objetivoRegularizacao: z.string().optional(),
+  objetivos: z.array(z.string()).optional(),
   objetivoOutros: z.string().optional(),
   mensagem: z.string().optional(),
+  aceitaNotificacoes: z.boolean().optional(),
 });
 
 const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegistrationModalProps) => {
@@ -69,11 +68,10 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
     defaultValues: {
       nacionalidade: "",
       dataNascimento: "",
-      objetivoEmprego: "",
-      objetivoFormacao: "",
-      objetivoRegularizacao: "",
+      objetivos: [],
       objetivoOutros: "",
-      mensagem: ""
+      mensagem: "",
+      aceitaNotificacoes: false
     }
   });
 
@@ -441,33 +439,28 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
             </div>
 
             <div>
-              <Label htmlFor="objetivoEmprego">Objetivos - Emprego</Label>
-              <Textarea
-                id="objetivoEmprego"
-                {...imigranteForm.register("objetivoEmprego")}
-                placeholder="Descreva suas expectativas e área de interesse profissional"
-                rows={3}
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="objetivoFormacao">Objetivos - Formação</Label>
-              <Textarea
-                id="objetivoFormacao"
-                {...imigranteForm.register("objetivoFormacao")}
-                placeholder="Indique cursos ou capacitações desejadas"
-                rows={3}
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="objetivoRegularizacao">Objetivos - Regularização</Label>
-              <Textarea
-                id="objetivoRegularizacao"
-                {...imigranteForm.register("objetivoRegularizacao")}
-                placeholder="Especifique necessidades relacionadas à documentação"
-                rows={3}
-              />
+              <Label>Objetivos *</Label>
+              <div className="space-y-2 mt-2">
+                {['Emprego', 'Formação', 'Regularização'].map((objetivo) => (
+                  <div key={objetivo} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`objetivo-${objetivo}`}
+                      checked={imigranteForm.watch("objetivos")?.includes(objetivo) || false}
+                      onCheckedChange={(checked) => {
+                        const currentObjetivos = imigranteForm.getValues("objetivos") || [];
+                        if (checked) {
+                          imigranteForm.setValue("objetivos", [...currentObjetivos, objetivo]);
+                        } else {
+                          imigranteForm.setValue("objetivos", currentObjetivos.filter(obj => obj !== objetivo));
+                        }
+                      }}
+                    />
+                    <Label htmlFor={`objetivo-${objetivo}`} className="text-sm font-normal">
+                      {objetivo}
+                    </Label>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div>
@@ -488,6 +481,19 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
                 placeholder="Informações adicionais que gostaria de compartilhar"
                 rows={3}
               />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="aceitaNotificacoes"
+                checked={imigranteForm.watch("aceitaNotificacoes") || false}
+                onCheckedChange={(checked) => {
+                  imigranteForm.setValue("aceitaNotificacoes", checked as boolean);
+                }}
+              />
+              <Label htmlFor="aceitaNotificacoes" className="text-sm font-normal">
+                Aceito receber notificações de oportunidades, notícias e eventos
+              </Label>
             </div>
 
             <div className="flex items-center space-x-2">

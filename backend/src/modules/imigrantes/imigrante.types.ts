@@ -5,11 +5,10 @@ export interface PerfilImigrante {
   userId: string;
   nacionalidade: string;
   dataNascimento: Date;
-  objetivoEmprego?: string;
-  objetivoFormacao?: string;
-  objetivoRegularizacao?: string;
+  objetivos?: string[]; // Array de objetivos selecionados
   objetivoOutros?: string;
   mensagem?: string;
+  aceitaNotificacoes?: boolean; // Aceita receber notificações
   createdAt: Date;
   updatedAt: Date;
 }
@@ -18,21 +17,19 @@ export interface CreatePerfilImigranteRequest {
   userId: string;
   nacionalidade: string;
   dataNascimento: Date;
-  objetivoEmprego?: string;
-  objetivoFormacao?: string;
-  objetivoRegularizacao?: string;
+  objetivos?: string[]; // Array de objetivos selecionados
   objetivoOutros?: string;
   mensagem?: string;
+  aceitaNotificacoes?: boolean; // Aceita receber notificações
 }
 
 export interface UpdatePerfilImigranteRequest {
   nacionalidade?: string;
   dataNascimento?: Date;
-  objetivoEmprego?: string;
-  objetivoFormacao?: string;
-  objetivoRegularizacao?: string;
+  objetivos?: string[]; // Array de objetivos selecionados
   objetivoOutros?: string;
   mensagem?: string;
+  aceitaNotificacoes?: boolean; // Aceita receber notificações
 }
 
 export interface PerfilImigranteResponse {
@@ -79,4 +76,10 @@ export const NACIONALIDADES = [
   'Itália',
   'Reino Unido',
   'Outros'
+] as const;
+
+export const OBJETIVOS_IMIGRANTE = [
+  'Emprego',
+  'Formação',
+  'Regularização'
 ] as const; 

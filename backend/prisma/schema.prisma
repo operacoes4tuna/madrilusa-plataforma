@@ -39,11 +39,10 @@ model PerfilImigrante {
   userId                String   @unique
   nacionalidade         String
   dataNascimento        DateTime
-  objetivoEmprego       String?  // Descrição do objetivo de emprego
-  objetivoFormacao      String?  // Descrição do objetivo de formação
-  objetivoRegularizacao String?  // Descrição do objetivo de regularização
-  objetivoOutros        String?  // Descrição de outros objetivos
+  objetivos             String?  // JSON array dos objetivos selecionados (Emprego, Formação, Regularização)
+  objetivoOutros        String?  // Descrição de outros objetivos (texto livre)
   mensagem              String?  // Campo opcional adicional
+  aceitaNotificacoes    Boolean  @default(false) // Aceita receber notificações de oportunidades
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
   

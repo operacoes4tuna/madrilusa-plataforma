@@ -46,11 +46,10 @@ export interface PerfilImigrante {
   userId: string;
   nacionalidade: string;
   dataNascimento: Date;
-  objetivoEmprego?: string;
-  objetivoFormacao?: string;
-  objetivoRegularizacao?: string;
-  objetivoOutros?: string;
+  objetivos?: string[]; // ✨ ALTERADO: array de objetivos selecionados (Emprego, Formação, Regularização)
+  objetivoOutros?: string; // Mantido como string para texto livre
   mensagem?: string;
+  aceitaNotificacoes?: boolean; // ✨ NOVO: aceita receber notificações
   createdAt: Date;
   updatedAt: Date;
 }
@@ -59,21 +58,19 @@ export interface CreatePerfilImigranteRequest {
   userId: string;
   nacionalidade: string;
   dataNascimento: Date;
-  objetivoEmprego?: string;
-  objetivoFormacao?: string;
-  objetivoRegularizacao?: string;
+  objetivos?: string[]; // ✨ ALTERADO: array de objetivos selecionados
   objetivoOutros?: string;
   mensagem?: string;
+  aceitaNotificacoes?: boolean; // ✨ NOVO: aceita receber notificações
 }
 
 export interface UpdatePerfilImigranteRequest {
   nacionalidade?: string;
   dataNascimento?: Date;
-  objetivoEmprego?: string;
-  objetivoFormacao?: string;
-  objetivoRegularizacao?: string;
+  objetivos?: string[]; // ✨ ALTERADO: array de objetivos selecionados
   objetivoOutros?: string;
   mensagem?: string;
+  aceitaNotificacoes?: boolean; // ✨ NOVO: aceita receber notificações
 }
 
 // Auth types (atualizado)
@@ -174,4 +171,13 @@ export const NACIONALIDADES = [
   'Outros'
 ] as const;
 
-export type Nacionalidade = typeof NACIONALIDADES[number]; 
+export type Nacionalidade = typeof NACIONALIDADES[number];
+
+// ✨ NOVO: Objetivos disponíveis para imigrantes
+export const OBJETIVOS_IMIGRANTE = [
+  'Emprego',
+  'Formação',
+  'Regularização'
+] as const;
+
+export type ObjetivoImigrante = typeof OBJETIVOS_IMIGRANTE[number]; 

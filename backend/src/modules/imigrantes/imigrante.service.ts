@@ -39,15 +39,20 @@ export class ImigranteService {
         userId: data.userId,
         nacionalidade: data.nacionalidade,
         dataNascimento: new Date(data.dataNascimento),
-        objetivoEmprego: data.objetivoEmprego || null,
-        objetivoFormacao: data.objetivoFormacao || null,
-        objetivoRegularizacao: data.objetivoRegularizacao || null,
+        // @ts-ignore - Campo atualizado no schema
+        objetivos: data.objetivos ? JSON.stringify(data.objetivos) : null,
         objetivoOutros: data.objetivoOutros || null,
-        mensagem: data.mensagem || null
+        mensagem: data.mensagem || null,
+        aceitaNotificacoes: data.aceitaNotificacoes || false
       }
     });
 
-    return perfil;
+    // Deserializar objetivos para o retorno
+    return {
+      ...perfil,
+      // @ts-ignore - Campo atualizado no schema
+      objetivos: perfil.objetivos ? JSON.parse(perfil.objetivos) : []
+    } as PerfilImigrante;
   }
 
   // Buscar perfil de imigrante por userId
@@ -67,7 +72,16 @@ export class ImigranteService {
       }
     });
 
-    return perfil;
+    if (!perfil) return null;
+
+    // Deserializar objetivos
+    return {
+      ...perfil,
+      // @ts-ignore - Campo atualizado no schema
+      objetivos: perfil.objetivos ? JSON.parse(perfil.objetivos) : [],
+      objetivoOutros: perfil.objetivoOutros || undefined,
+      mensagem: perfil.mensagem || undefined
+    } as PerfilImigrante;
   }
 
   // Buscar perfil de imigrante por ID
@@ -76,7 +90,16 @@ export class ImigranteService {
       where: { id }
     });
 
-    return perfil;
+    if (!perfil) return null;
+
+    // Deserializar objetivos
+    return {
+      ...perfil,
+      // @ts-ignore - Campo atualizado no schema
+      objetivos: perfil.objetivos ? JSON.parse(perfil.objetivos) : [],
+      objetivoOutros: perfil.objetivoOutros || undefined,
+      mensagem: perfil.mensagem || undefined
+    } as PerfilImigrante;
   }
 
   // Atualizar perfil de imigrante
@@ -99,20 +122,17 @@ export class ImigranteService {
     if (data.dataNascimento !== undefined) {
       updateData.dataNascimento = new Date(data.dataNascimento);
     }
-    if (data.objetivoEmprego !== undefined) {
-      updateData.objetivoEmprego = data.objetivoEmprego;
-    }
-    if (data.objetivoFormacao !== undefined) {
-      updateData.objetivoFormacao = data.objetivoFormacao;
-    }
-    if (data.objetivoRegularizacao !== undefined) {
-      updateData.objetivoRegularizacao = data.objetivoRegularizacao;
+    if (data.objetivos !== undefined) {
+      updateData.objetivos = data.objetivos ? JSON.stringify(data.objetivos) : null;
     }
     if (data.objetivoOutros !== undefined) {
       updateData.objetivoOutros = data.objetivoOutros;
     }
     if (data.mensagem !== undefined) {
       updateData.mensagem = data.mensagem;
+    }
+    if (data.aceitaNotificacoes !== undefined) {
+      updateData.aceitaNotificacoes = data.aceitaNotificacoes;
     }
 
     // Atualizar perfil
@@ -121,7 +141,14 @@ export class ImigranteService {
       data: updateData
     });
 
-    return perfil;
+    // Deserializar objetivos para o retorno
+    return {
+      ...perfil,
+      // @ts-ignore - Campo atualizado no schema
+      objetivos: perfil.objetivos ? JSON.parse(perfil.objetivos) : [],
+      objetivoOutros: perfil.objetivoOutros || undefined,
+      mensagem: perfil.mensagem || undefined
+    } as PerfilImigrante;
   }
 
   // Deletar perfil de imigrante
@@ -159,7 +186,14 @@ export class ImigranteService {
       }
     });
 
-    return perfis;
+    // Deserializar objetivos para todos os perfis
+    return perfis.map(perfil => ({
+      ...perfil,
+      // @ts-ignore - Campo atualizado no schema
+      objetivos: perfil.objetivos ? JSON.parse(perfil.objetivos) : [],
+      objetivoOutros: perfil.objetivoOutros || undefined,
+      mensagem: perfil.mensagem || undefined
+    } as PerfilImigrante));
   }
 
   // Verificar se usuário tem perfil de imigrante

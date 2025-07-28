@@ -15,7 +15,7 @@ import {
 } from 'shards-react';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
-import type { PerfilImigrante, NACIONALIDADES } from '@/modules/auth/types/auth.types';
+import type { PerfilImigrante, NACIONALIDADES, OBJETIVOS_IMIGRANTE } from '@/modules/auth/types/auth.types';
 
 interface ImigranteDetailsProps {
   title?: string;
@@ -34,11 +34,10 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
   const [formData, setFormData] = useState({
     nacionalidade: '',
     dataNascimento: '',
-    objetivoEmprego: '',
-    objetivoFormacao: '',
-    objetivoRegularizacao: '',
+    objetivos: [] as string[], // Array de objetivos selecionados
     objetivoOutros: '',
-    mensagem: ''
+    mensagem: '',
+    aceitaNotificacoes: false // Aceita receber notificações
   });
 
   // Buscar nacionalidades disponíveis
@@ -80,11 +79,10 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
           setFormData({
             nacionalidade: perfil.nacionalidade || '',
             dataNascimento: dataFormatada,
-            objetivoEmprego: perfil.objetivoEmprego || '',
-            objetivoFormacao: perfil.objetivoFormacao || '',
-            objetivoRegularizacao: perfil.objetivoRegularizacao || '',
+            objetivos: perfil.objetivos || [],
             objetivoOutros: perfil.objetivoOutros || '',
-            mensagem: perfil.mensagem || ''
+            mensagem: perfil.mensagem || '',
+            aceitaNotificacoes: perfil.aceitaNotificacoes || false
           });
         }
       } catch (error) {
@@ -107,6 +105,22 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
     setFormData(prev => ({
       ...prev,
       [name]: value
+    }));
+  };
+
+  const handleObjetivoChange = (objetivo: string) => {
+    setFormData(prev => ({
+      ...prev,
+      objetivos: prev.objetivos.includes(objetivo)
+        ? prev.objetivos.filter(obj => obj !== objetivo)
+        : [...prev.objetivos, objetivo]
+    }));
+  };
+
+  const handleNotificacoesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      aceitaNotificacoes: e.target.checked
     }));
   };
 
@@ -198,12 +212,21 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
               <Col md="6">
                 <FormGroup>
                   <label htmlFor="nacionalidade">Nacionalidade *</label>
-                  <FormSelect
+                  <select
                     id="nacionalidade"
                     name="nacionalidade"
                     value={formData.nacionalidade}
                     onChange={handleInputChange}
                     required
+                    className="form-control"
+                    style={{ 
+                      width: '100%', 
+                      minWidth: '200px', 
+                      maxWidth: '100%',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
+                    }}
                   >
                     <option value="">Selecione sua nacionalidade</option>
                     {nacionalidades.map((pais) => (
@@ -211,7 +234,7 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
                         {pais}
                       </option>
                     ))}
-                  </FormSelect>
+                  </select>
                 </FormGroup>
               </Col>
               <Col md="6">
@@ -230,49 +253,30 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
             </Row>
 
             <Row>
-              <Col md="6">
+              <Col md="12">
                 <FormGroup>
-                  <label htmlFor="objetivoEmprego">Objetivos - Emprego</label>
-                  <FormTextarea
-                    id="objetivoEmprego"
-                    name="objetivoEmprego"
-                    rows={3}
-                    value={formData.objetivoEmprego}
-                    onChange={handleInputChange}
-                    placeholder="Descreva suas expectativas e área de interesse profissional"
-                  />
-                </FormGroup>
-              </Col>
-              <Col md="6">
-                <FormGroup>
-                  <label htmlFor="objetivoFormacao">Objetivos - Formação</label>
-                  <FormTextarea
-                    id="objetivoFormacao"
-                    name="objetivoFormacao"
-                    rows={3}
-                    value={formData.objetivoFormacao}
-                    onChange={handleInputChange}
-                    placeholder="Indique cursos ou capacitações desejadas"
-                  />
+                  <label>Objetivos *</label>
+                  <div style={{ marginTop: '10px' }}>
+                    {['Emprego', 'Formação', 'Regularização'].map((objetivo) => (
+                      <div key={objetivo} style={{ marginBottom: '8px' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', fontWeight: 'normal' }}>
+                          <input
+                            type="checkbox"
+                            checked={formData.objetivos.includes(objetivo)}
+                            onChange={() => handleObjetivoChange(objetivo)}
+                            style={{ marginRight: '8px' }}
+                          />
+                          {objetivo}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
                 </FormGroup>
               </Col>
             </Row>
 
             <Row>
-              <Col md="6">
-                <FormGroup>
-                  <label htmlFor="objetivoRegularizacao">Objetivos - Regularização</label>
-                  <FormTextarea
-                    id="objetivoRegularizacao"
-                    name="objetivoRegularizacao"
-                    rows={3}
-                    value={formData.objetivoRegularizacao}
-                    onChange={handleInputChange}
-                    placeholder="Especifique necessidades relacionadas à documentação"
-                  />
-                </FormGroup>
-              </Col>
-              <Col md="6">
+              <Col md="12">
                 <FormGroup>
                   <label htmlFor="objetivoOutros">Outros Objetivos</label>
                   <FormTextarea
@@ -299,6 +303,24 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
                     onChange={handleInputChange}
                     placeholder="Informações adicionais que gostaria de compartilhar"
                   />
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md="12">
+                <FormGroup>
+                  <div style={{ marginTop: '10px' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', fontWeight: 'normal' }}>
+                      <input
+                        type="checkbox"
+                        checked={formData.aceitaNotificacoes}
+                        onChange={handleNotificacoesChange}
+                        style={{ marginRight: '8px' }}
+                      />
+                      Aceito receber notificações de oportunidades, notícias e eventos
+                    </label>
+                  </div>
                 </FormGroup>
               </Col>
             </Row>
