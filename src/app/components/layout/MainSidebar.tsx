@@ -65,6 +65,15 @@ const MainSidebar: React.FC = () => {
     });
   }
   
+  if (user?.categoria === USER_CATEGORIES.ACADEMIA) {
+    categoryMenuItems.push({
+      title: 'Perfil de Academia',
+      to: '/app/perfil-academia',
+      iconClass: 'school',
+      htmlAfter: ''
+    });
+  }
+  
   // Combinar menus
   const sidebarNavItems = [...baseSidebarNavItems, ...categoryMenuItems];
 

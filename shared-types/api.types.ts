@@ -161,6 +161,64 @@ export interface PerfilMunicipioResponse {
   updatedAt: Date;
 }
 
+// ✨ FASE 4: Perfil específico de Academia
+export interface PerfilAcademia {
+  id: string;
+  userId: string;
+  nomeAcademia: string;
+  tipoAcademia?: string;
+  regiao?: string;
+  pessoaContacto?: string;
+  emailInstitucional?: string;
+  telefone?: string;
+  ofertaFormativa?: string;
+  website?: string;
+  observacoes?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CreatePerfilAcademiaRequest {
+  userId: string;
+  nomeAcademia: string;
+  tipoAcademia?: string;
+  regiao?: string;
+  pessoaContacto?: string;
+  emailInstitucional?: string;
+  telefone?: string;
+  ofertaFormativa?: string;
+  website?: string;
+  observacoes?: string;
+}
+
+export interface UpdatePerfilAcademiaRequest {
+  nomeAcademia?: string;
+  tipoAcademia?: string;
+  regiao?: string;
+  pessoaContacto?: string;
+  emailInstitucional?: string;
+  telefone?: string;
+  ofertaFormativa?: string;
+  website?: string;
+  observacoes?: string;
+}
+
+export interface PerfilAcademiaResponse {
+  id: string;
+  userId: string;
+  nomeAcademia: string;
+  tipoAcademia?: string;
+  regiao?: string;
+  pessoaContacto?: string;
+  emailInstitucional?: string;
+  telefone?: string;
+  ofertaFormativa?: string;
+  website?: string;
+  observacoes?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // Auth types (atualizado)
 export interface RegisterRequest {
   nomeCompleto: string;
@@ -219,6 +277,20 @@ export interface RegisterMunicipioCompleteRequest {
   funcaoCargo?: string;
   projetosApoio?: string;
   disponibilidadeAcoes?: string;
+  observacoes?: string;
+}
+
+// ✨ FASE 4: Registro completo de academia
+export interface RegisterAcademiaCompleteRequest {
+  userId: string;
+  nomeAcademia: string;
+  tipoAcademia?: string;
+  regiao?: string;
+  pessoaContacto?: string;
+  emailInstitucional?: string;
+  telefone?: string;
+  ofertaFormativa?: string;
+  website?: string;
   observacoes?: string;
 }
 

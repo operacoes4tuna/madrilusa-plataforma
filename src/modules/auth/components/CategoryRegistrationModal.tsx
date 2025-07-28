@@ -39,6 +39,19 @@ interface MunicipioRegistrationFormData {
   observacoes?: string;
 }
 
+// Interface para formulário de academia
+interface AcademiaRegistrationFormData {
+  nomeAcademia: string;
+  tipoAcademia?: string;
+  regiao?: string;
+  pessoaContacto?: string;
+  emailInstitucional?: string;
+  telefone?: string;
+  ofertaFormativa?: string;
+  website?: string;
+  observacoes?: string;
+}
+
 interface CategoryRegistrationModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -79,6 +92,19 @@ const municipioRegistrationSchema = z.object({
   funcaoCargo: z.string().optional(),
   projetosApoio: z.string().optional(),
   disponibilidadeAcoes: z.string().optional(),
+  observacoes: z.string().optional(),
+});
+
+// Schema de validação para Etapa 2 (Academia)
+const academiaRegistrationSchema = z.object({
+  nomeAcademia: z.string().min(1, "Nome da academia é obrigatório"),
+  tipoAcademia: z.string().optional(),
+  regiao: z.string().optional(),
+  pessoaContacto: z.string().optional(),
+  emailInstitucional: z.string().email("Email deve ter formato válido").optional().or(z.literal("")),
+  telefone: z.string().optional(),
+  ofertaFormativa: z.string().optional(),
+  website: z.string().url("Website deve ser uma URL válida").optional().or(z.literal("")),
   observacoes: z.string().optional(),
 });
 
@@ -153,6 +179,22 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
       funcaoCargo: "",
       projetosApoio: "",
       disponibilidadeAcoes: "",
+      observacoes: ""
+    }
+  });
+
+  // Form para Etapa 2 (Academia)
+  const academiaForm = useForm<AcademiaRegistrationFormData>({
+    resolver: zodResolver(academiaRegistrationSchema),
+    defaultValues: {
+      nomeAcademia: "",
+      tipoAcademia: "",
+      regiao: "",
+      pessoaContacto: "",
+      emailInstitucional: "",
+      telefone: "",
+      ofertaFormativa: "",
+      website: "",
       observacoes: ""
     }
   });
@@ -550,6 +592,127 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
     }
   };
 
+  // Etapa 2: Dados específicos da categoria - Academia
+  const handleAcademiaSubmit = async (data: AcademiaRegistrationFormData) => {
+    if (!basicData?.userId) {
+      toast({
+        title: "Erro",
+        description: "Dados básicos não encontrados. Reinicie o processo.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+
+      const response = await fetch("/api/academias/perfil", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: basicData.userId,
+          ...data
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log('✅ Perfil de academia criado com sucesso:', result.data);
+        
+        // Buscar dados completos do usuário após criação do perfil
+        try {
+          console.log('🔍 Buscando dados do usuário academia:', basicData.userId);
+          const userResponse = await fetch(`/api/auth/user/${basicData.userId}`);
+          const userResult = await userResponse.json();
+          
+          console.log('📥 Resposta do usuário academia:', userResult);
+          
+          if (userResult.success && userResult.data) {
+            // Login automático com dados completos
+            const userData = {
+              id: userResult.data.id,
+              nomeCompleto: userResult.data.nomeCompleto,
+              email: userResult.data.email,
+              telemovel: userResult.data.telemovel,
+              categoria: userResult.data.categoria,
+              foto: userResult.data.foto,
+              createdAt: userResult.data.createdAt || new Date(),
+              updatedAt: userResult.data.updatedAt || new Date()
+            };
+            
+            console.log('💾 Salvando dados academia no localStorage:', userData);
+            localStorage.setItem('madrilusa_user', JSON.stringify(userData));
+            
+            // Atualizar estado do useAuth diretamente
+            setUser(userData);
+
+            toast({
+              title: "Registro Concluído!",
+              description: "Bem-vindo(a) ao Madrilusa! Redirecionando para sua plataforma...",
+            });
+
+            // Fechar modal e redirecionar
+            onClose();
+            console.log('🚀 Redirecionando academia para dashboard...');
+            
+            // Usar navigate() agora que o estado está atualizado
+            setTimeout(() => {
+              navigate('/app/dashboard');
+            }, 1000);
+          } else {
+            throw new Error(`Erro ao buscar dados do usuário: ${userResult.error || 'Dados não encontrados'}`);
+          }
+        } catch (userError: any) {
+          console.error('❌ Erro ao buscar dados completos da academia:', userError);
+          
+          // Fallback: usar dados básicos se falhar buscar dados completos
+          const fallbackUserData = {
+            id: basicData.userId,
+            nomeCompleto: basicForm.getValues('nomeCompleto'),
+            email: basicForm.getValues('email'),
+            categoria: category,
+            telemovel: basicForm.getValues('telemovel') || null,
+            foto: null,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          };
+          
+          console.log('💾 Fallback academia - Salvando dados básicos:', fallbackUserData);
+          localStorage.setItem('madrilusa_user', JSON.stringify(fallbackUserData));
+          
+          // Atualizar estado do useAuth diretamente
+          setUser(fallbackUserData as any);
+
+          toast({
+            title: "Registro Concluído!",
+            description: "Bem-vindo(a) ao Madrilusa! Redirecionando para sua plataforma...",
+          });
+
+          onClose();
+          console.log('🚀 Redirecionando academia para dashboard (fallback)...');
+          
+          // Usar navigate() agora que o estado está atualizado
+          setTimeout(() => {
+            navigate('/app/dashboard');
+          }, 1000);
+        }
+      } else {
+        throw new Error(result.error || "Erro ao criar perfil");
+      }
+    } catch (error: any) {
+      toast({
+        title: "Erro ao Finalizar Registro",
+        description: error.message || "Erro inesperado. Tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleClose = () => {
     setStep(1);
     setBasicData(null);
@@ -558,6 +721,7 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
     imigranteForm.reset();
     empresaForm.reset();
     municipioForm.reset();
+    academiaForm.reset();
     onClose();
   };
 
@@ -1002,6 +1166,126 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
             <div className="flex items-center space-x-2">
               <Checkbox id="termos-municipio" required />
               <Label htmlFor="termos-municipio" className="text-sm">
+                Concordo com a política de dados e privacidade e política de cookies *
+              </Label>
+            </div>
+
+            <div className="flex justify-between pt-4">
+              <Button type="button" variant="outline" onClick={() => setStep(1)}>
+                Voltar
+              </Button>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Finalizando..." : "Concluir Registro"}
+              </Button>
+            </div>
+          </form>
+        )}
+
+        {step === 2 && category === USER_CATEGORIES.ACADEMIA && (
+          <form onSubmit={academiaForm.handleSubmit(handleAcademiaSubmit)} className="space-y-4">
+            <div>
+              <Label htmlFor="nomeAcademia">Nome da Academia / Instituição *</Label>
+              <Input
+                id="nomeAcademia"
+                {...academiaForm.register("nomeAcademia")}
+                placeholder="Digite o nome da academia ou instituição"
+              />
+              {academiaForm.formState.errors.nomeAcademia && (
+                <p className="text-red-500 text-sm mt-1">
+                  {academiaForm.formState.errors.nomeAcademia.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="tipoAcademia">Tipo de Academia</Label>
+              <Input
+                id="tipoAcademia"
+                {...academiaForm.register("tipoAcademia")}
+                placeholder="Ex: Universidade, Escola Técnica, Centro de Formação..."
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="regiao">Região / Zona de Atuação</Label>
+              <Input
+                id="regiao"
+                {...academiaForm.register("regiao")}
+                placeholder="Ex: Lisboa, Porto, Região Norte..."
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="pessoaContacto">Pessoa de Contacto</Label>
+              <Input
+                id="pessoaContacto"
+                {...academiaForm.register("pessoaContacto")}
+                placeholder="Nome do responsável (opcional)"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="emailInstitucional">Email Institucional</Label>
+              <Input
+                id="emailInstitucional"
+                type="email"
+                {...academiaForm.register("emailInstitucional")}
+                placeholder="contato@academia.pt (opcional)"
+              />
+              {academiaForm.formState.errors.emailInstitucional && (
+                <p className="text-red-500 text-sm mt-1">
+                  {academiaForm.formState.errors.emailInstitucional.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="telefone">Telefone</Label>
+              <Input
+                id="telefone"
+                {...academiaForm.register("telefone")}
+                placeholder="Ex: +351 123 456 789 (opcional)"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="website">Website / Página Institucional</Label>
+              <Input
+                id="website"
+                type="url"
+                {...academiaForm.register("website")}
+                placeholder="https://www.academia.pt (opcional)"
+              />
+              {academiaForm.formState.errors.website && (
+                <p className="text-red-500 text-sm mt-1">
+                  {academiaForm.formState.errors.website.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="ofertaFormativa">Oferta Formativa</Label>
+              <Textarea
+                id="ofertaFormativa"
+                {...academiaForm.register("ofertaFormativa")}
+                rows={3}
+                placeholder="Descreva os cursos e capacitações oferecidas (lista resumida ou link para catálogo)..."
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="observacoes">Observações Adicionais</Label>
+              <Textarea
+                id="observacoes"
+                {...academiaForm.register("observacoes")}
+                rows={3}
+                placeholder="Informações adicionais sobre a instituição, modalidades de ensino, certificações..."
+              />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Checkbox id="termos-academia" required />
+              <Label htmlFor="termos-academia" className="text-sm">
                 Concordo com a política de dados e privacidade e política de cookies *
               </Label>
             </div>

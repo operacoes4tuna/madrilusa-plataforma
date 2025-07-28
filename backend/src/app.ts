@@ -10,6 +10,7 @@ import userRoutes from './modules/users/user.routes';
 import imigranteRoutes from './modules/imigrantes/imigrante.routes';
 import empresaRoutes from './modules/empresas/empresa.routes';
 import municipioRoutes from './modules/municipios/municipio.routes';
+import academiaRoutes from './modules/academias/academia.routes';
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/imigrantes', imigranteRoutes); // ✨ NOVO: Rotas de imigrantes
 app.use('/api/empresas', empresaRoutes); // ✨ FASE 2: Rotas de empresas
 app.use('/api/municipios', municipioRoutes); // ✨ FASE 3: Rotas de municípios
+app.use('/api/academias', academiaRoutes); // ✨ FASE 4: Rotas de academias
 
 // Health check
 app.get('/api/health', (req, res) => {

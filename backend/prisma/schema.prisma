@@ -30,8 +30,10 @@ model User {
   // ✨ FASE 3: Relação com perfil específico de município
   perfilMunicipio PerfilMunicipio?
   
+  // ✨ FASE 4: Relação com perfil específico de academia
+  perfilAcademia PerfilAcademia?
+  
   // 🔮 FUTURAS FASES: Relações com outros perfis específicos
-  // perfilAcademia PerfilAcademia?
   // perfilFamilia PerfilFamilia?
   
   @@map("users")
@@ -91,4 +93,26 @@ model PerfilMunicipio {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   @@map("perfis_municipio")
+}
+
+// ✨ FASE 4: Perfil específico de Academia
+model PerfilAcademia {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  nomeAcademia      String   // ✨ Obrigatório: Nome da Academia/Instituição
+  tipoAcademia      String?  // ✨ Opcional: Tipo (escola, universidade, centro, etc.)
+  regiao            String?  // ✨ Opcional: Região/Zona de atuação
+  pessoaContacto    String?  // ✨ Opcional: Nome do responsável
+  emailInstitucional String? // ✨ Opcional: Email institucional
+  telefone          String?  // ✨ Opcional: Telefone de contacto
+  ofertaFormativa   String?  // ✨ Opcional: Descrição dos cursos oferecidos
+  website           String?  // ✨ Opcional: URL do site oficial
+  observacoes       String?  // ✨ Opcional: Informações adicionais
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relação com User (1:1 com cascade delete)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("perfis_academia")
 } 

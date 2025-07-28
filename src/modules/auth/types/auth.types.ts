@@ -33,12 +33,19 @@ export type {
   UpdatePerfilMunicipioRequest,
   PerfilMunicipioResponse,
   
+  // ✨ FASE 4: Tipos para academia
+  PerfilAcademia,
+  CreatePerfilAcademiaRequest,
+  UpdatePerfilAcademiaRequest,
+  PerfilAcademiaResponse,
+  
   // ✨ NOVOS: Registro em 2 etapas
   RegisterBasicRequest,
   RegisterBasicResponse,
   RegisterImigranteCompleteRequest,
   RegisterEmpresaCompleteRequest,
   RegisterMunicipioCompleteRequest,
+  RegisterAcademiaCompleteRequest,
   
   // ✨ NOVOS: Nacionalidades
   Nacionalidade

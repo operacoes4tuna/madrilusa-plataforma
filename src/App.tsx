@@ -10,6 +10,7 @@ import Profile from "./app/pages/Profile";
 import PerfilImigrante from "./app/pages/PerfilImigrante";
 import PerfilEmpresa from "./app/pages/PerfilEmpresa";
 import PerfilMunicipio from "./app/pages/PerfilMunicipio";
+import PerfilAcademia from "./app/pages/PerfilAcademia";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="perfil-imigrante" element={<PerfilImigrante />} />
             <Route path="perfil-empresa" element={<PerfilEmpresa />} />
             <Route path="perfil-municipio" element={<PerfilMunicipio />} />
+            <Route path="perfil-academia" element={<PerfilAcademia />} />
           </Route>
           
           {/* 404 */}
