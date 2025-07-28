@@ -22,24 +22,26 @@ Conectar jovens imigrantes a oportunidades em territórios rurais, criando solu�
 ### 📊 Metas
 - **2.400 jovens** atendidos
 - **36 meses** de duração
-- **5 públicos-alvo:** Imigrantes, Empresas, Municípios, Academia, Famílias
+- **5 públicos-alvo:** ✅ **TODOS IMPLEMENTADOS** - Imigrantes, Empresas, Municípios, Academia, Famílias
 
 ---
 
 ## 🛠️ Stack Tecnológica
 
-### Frontend (Implementado)
+### Frontend (✅ Implementado)
 - **React 18.3.1** + **TypeScript**
 - **Vite 5.4.1** (build tool)
 - **Tailwind CSS 3.4.11** + **shadcn/ui**
 - **React Query** (estado global)
 - **OpenAI API** (chatbot inteligente)
+- **React Hook Form + Zod** (validações)
 
-### Backend (Implementado)
+### Backend (✅ Implementado)
 - **Node.js + TypeScript**
-- **Express.js** (API REST)
+- **Express.js** (API REST modular)
 - **Prisma ORM** + **SQLite**
-- **Autenticação básica** (evolui para JWT)
+- **5 módulos completos** (30 endpoints)
+- **Validações robustas** + **Testes automatizados**
 
 ---
 
@@ -80,13 +82,13 @@ madrilusasite/
 - **[Guia de Inscrições](doc/Guia%20de%20Inscrições%20na%20Plataforma%20Madrilusa.md)** - Processo de registro por categoria
 
 ### **🏗️ Documentação Técnica**
-- **[Fluxo Técnico Completo](doc/FLUXO_TECNICO_COMPLETO.md)** - ✅ **Arquitectura e fluxos implementados**
-- **[Estrutura Separada](doc/ESTRUTURA_SEPARADA.md)** - Documentação da separação institucional vs aplicação
-- **[Guia para Equipes](doc/GUIA_EQUIPES.md)** - Como marketing e desenvolvimento devem trabalhar
-- **[Status do Backend](doc/Status%20da%20Implementação%20-%20Backend%20Modular.md)** - Documentação do backend implementado
-- **[Aplicação da Identidade Visual](doc/APLICACAO_IDENTIDADE_VISUAL.md)** - ✅ **Implementação da identidade visual oficial**
-- **[Ajustes Finais Etapa 01](doc/AJUSTES_FINAIS_ETAPA_01.md)** - Simplificações da experiência do utilizador
-- **[Organização de Arquivos](doc/ORGANIZACAO_ARQUIVOS.md)** - Diretrizes de organização do projeto
+- **[Metodologia Categoria Universal](doc/03_IMPLEMENTACAO_TECNICA/06_Metodologia_Categoria_Universal.md)** - ✅ **NOVO: Padrão revolucionário para implementar categorias**
+- **[Sistema de Categorias](doc/03_IMPLEMENTACAO_TECNICA/04_Sistema_Categorias_Usuario.md)** - ✅ **Todas as 5 categorias implementadas**
+- **[Status Implementação Completa](doc/status_implementacao/STATUS_Todas_Categorias_Implementadas.md)** - ✅ **Resultado final e métricas**
+- **[Fluxo Técnico Completo](doc/03_IMPLEMENTACAO_TECNICA/01_Fluxo_Tecnico_Completo.md)** - ✅ **Arquitectura e fluxos implementados**
+- **[Estrutura Separada](doc/03_IMPLEMENTACAO_TECNICA/03_Estrutura_Separada_Responsabilidades.md)** - Separação institucional vs aplicação
+- **[Backend Modular](doc/03_IMPLEMENTACAO_TECNICA/02_Roadmap_Backend_Modular.md)** - ✅ **5 módulos implementados**
+- **[Status Resumido](doc/status_implementacao/README_Status_Completo.md)** - ✅ **Resumo executivo completo**
 
 ### **📝 Política de Documentação**
 > **🚨 IMPORTANTE:** Toda documentação (.md) deve ser criada APENAS na pasta `doc/`. Não criar arquivos .md na raiz do projeto para manter a organização.
@@ -147,11 +149,14 @@ npx prisma db push   # Sincronizar schema
 - **Identidade visual oficial** aplicada em todas as páginas
 - **Português de Portugal** implementado em toda interface
 
-#### **Backend API**
-- **Autenticação:** registro e login
-- **CRUD de usuários** completo
-- **Banco SQLite** com Prisma
-- **8 endpoints** funcionais
+#### **Backend API - TODAS AS 5 CATEGORIAS**
+- **Sistema modular:** 5 módulos independentes  
+- **30 endpoints funcionais:** 6 por categoria
+- **5 categorias implementadas:** Imigrante, Empresa, Município, Academia, Família
+- **Validações robustas:** TypeScript + Zod
+- **Banco SQLite** com Prisma + migrações automáticas
+- **Registro em 2 etapas** para todas as categorias
+- **34+ campos específicos** por categoria
 
 ---
 
@@ -209,12 +214,14 @@ Baseada no **Manual de Identidade Visual e Comunicação - Madrilusa**:
 5. Faça commit das mudanças
 6. Abra um Pull Request
 
-### Para o Projeto Social
-- **Jovens imigrantes:** Registe-se na plataforma
-- **Empresas:** Ofereça oportunidades de emprego/estágio
-- **Municípios:** Participe da revitalização territorial
-- **Academia:** Contribua com programas educacionais
-- **Famílias:** Ofereça apoio no acolhimento
+### Para o Projeto Social - ✅ TODAS AS CATEGORIAS ATIVAS
+- **🌍 Jovens imigrantes:** Registe-se na plataforma (9 campos específicos)
+- **🏢 Empresas:** Ofereça oportunidades de emprego/estágio (4 campos específicos)
+- **🏛️ Municípios:** Participe da revitalização territorial (7 campos específicos)
+- **🎓 Academia:** Contribua com programas educacionais (9 campos específicos)
+- **👨‍👩‍👧‍👦 Famílias:** Ofereça apoio no acolhimento (5 campos específicos)
+
+**📊 Sistema completo:** 30 endpoints, 5 dashboards, registro em 2 etapas para todas
 
 ---
 
