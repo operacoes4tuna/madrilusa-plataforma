@@ -47,6 +47,15 @@ const MainSidebar: React.FC = () => {
     });
   }
   
+  if (user?.categoria === USER_CATEGORIES.EMPRESA) {
+    categoryMenuItems.push({
+      title: 'Perfil de Empresa',
+      to: '/app/perfil-empresa',
+      iconClass: 'business',
+      htmlAfter: ''
+    });
+  }
+  
   // Combinar menus
   const sidebarNavItems = [...baseSidebarNavItems, ...categoryMenuItems];
 

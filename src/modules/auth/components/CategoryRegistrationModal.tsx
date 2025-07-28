@@ -19,6 +19,14 @@ import {
   NACIONALIDADES
 } from "../types/auth.types";
 
+// Interface para formulário de empresa
+interface EmpresaRegistrationFormData {
+  nomeEmpresa: string;
+  pessoaContacto?: string;
+  morada?: string;
+  observacoes?: string;
+}
+
 interface CategoryRegistrationModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -41,6 +49,14 @@ const imigranteRegistrationSchema = z.object({
   objetivoOutros: z.string().optional(),
   mensagem: z.string().optional(),
   aceitaNotificacoes: z.boolean().optional(),
+});
+
+// Schema de validação para Etapa 2 (Empresa)
+const empresaRegistrationSchema = z.object({
+  nomeEmpresa: z.string().min(1, "Nome da empresa é obrigatório"),
+  pessoaContacto: z.string().optional(),
+  morada: z.string().optional(),
+  observacoes: z.string().optional(),
 });
 
 const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegistrationModalProps) => {
@@ -92,6 +108,17 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
     }
   });
 
+  // Form para Etapa 2 (Empresa)
+  const empresaForm = useForm<EmpresaRegistrationFormData>({
+    resolver: zodResolver(empresaRegistrationSchema),
+    defaultValues: {
+      nomeEmpresa: "",
+      pessoaContacto: "",
+      morada: "",
+      observacoes: ""
+    }
+  });
+
   // Etapa 1: Registro básico
   const handleBasicSubmit = async (data: BasicRegistrationFormData) => {
     try {
@@ -140,8 +167,8 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
     }
   };
 
-  // Etapa 2: Dados específicos da categoria
-  const handleSpecificSubmit = async (data: ImigranteRegistrationFormData) => {
+  // Etapa 2: Dados específicos da categoria - Imigrante
+  const handleImigranteSubmit = async (data: ImigranteRegistrationFormData) => {
     if (!basicData?.userId) {
       toast({
         title: "Erro",
@@ -231,12 +258,124 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
     }
   };
 
+  // Etapa 2: Dados específicos da categoria - Empresa
+  const handleEmpresaSubmit = async (data: EmpresaRegistrationFormData) => {
+    if (!basicData?.userId) {
+      toast({
+        title: "Erro",
+        description: "Dados básicos não encontrados. Reinicie o processo.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+
+      const response = await fetch("/api/empresas/perfil", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: basicData.userId,
+          ...data
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log('✅ Perfil de empresa criado com sucesso:', result.data);
+        
+        // Buscar dados completos do usuário após criação do perfil
+        try {
+          console.log('🔍 Buscando dados do usuário empresa:', basicData.userId);
+          const userResponse = await fetch(`/api/auth/user/${basicData.userId}`);
+          const userResult = await userResponse.json();
+          
+          console.log('📥 Resposta do usuário empresa:', userResult);
+          
+          if (userResult.success && userResult.data) {
+            // Login automático com dados completos
+            const userData = {
+              id: userResult.data.id,
+              nomeCompleto: userResult.data.nomeCompleto,
+              email: userResult.data.email,
+              telemovel: userResult.data.telemovel,
+              categoria: userResult.data.categoria,
+              foto: userResult.data.foto
+            };
+            
+            console.log('💾 Salvando dados empresa no localStorage:', userData);
+            localStorage.setItem('user', JSON.stringify(userData));
+
+            toast({
+              title: "Registro Concluído!",
+              description: "Bem-vindo(a) ao Madrilusa! Redirecionando para sua plataforma...",
+            });
+
+            // Fechar modal e redirecionar
+            onClose();
+            console.log('🚀 Redirecionando empresa para dashboard...');
+            
+            // Forçar reload da página para atualizar o estado do auth
+            setTimeout(() => {
+              window.location.href = '/app/dashboard';
+            }, 1000);
+          } else {
+            throw new Error(`Erro ao buscar dados do usuário: ${userResult.error || 'Dados não encontrados'}`);
+          }
+        } catch (userError: any) {
+          console.error('❌ Erro ao buscar dados completos da empresa:', userError);
+          
+          // Fallback: usar dados básicos se falhar buscar dados completos
+          const fallbackUserData = {
+            id: basicData.userId,
+            nomeCompleto: basicForm.getValues('nomeCompleto'),
+            email: basicForm.getValues('email'),
+            categoria: category,
+            telemovel: basicForm.getValues('telemovel') || null,
+            foto: null
+          };
+          
+          console.log('💾 Fallback empresa - Salvando dados básicos:', fallbackUserData);
+          localStorage.setItem('user', JSON.stringify(fallbackUserData));
+
+          toast({
+            title: "Registro Concluído!",
+            description: "Bem-vindo(a) ao Madrilusa! Redirecionando para sua plataforma...",
+          });
+
+          onClose();
+          console.log('🚀 Redirecionando empresa para dashboard (fallback)...');
+          
+          // Forçar reload da página para atualizar o estado do auth
+          setTimeout(() => {
+            window.location.href = '/app/dashboard';
+          }, 1000);
+        }
+      } else {
+        throw new Error(result.error || "Erro ao criar perfil");
+      }
+    } catch (error: any) {
+      toast({
+        title: "Erro ao Finalizar Registro",
+        description: error.message || "Erro inesperado. Tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleClose = () => {
     setStep(1);
     setBasicData(null);
     setEmailExistsError(null);
     basicForm.reset();
     imigranteForm.reset();
+    empresaForm.reset();
     onClose();
   };
 
@@ -393,7 +532,7 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
         )}
 
         {step === 2 && category === USER_CATEGORIES.IMIGRANTE && (
-          <form onSubmit={imigranteForm.handleSubmit(handleSpecificSubmit)} className="space-y-4">
+          <form onSubmit={imigranteForm.handleSubmit(handleImigranteSubmit)} className="space-y-4">
             <div>
               <Label htmlFor="nacionalidade">Nacionalidade *</Label>
               <div ref={nacionalidadeModalRef} className="relative">
@@ -534,6 +673,68 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
             <div className="flex items-center space-x-2">
               <Checkbox id="termos" required />
               <Label htmlFor="termos" className="text-sm">
+                Concordo com a política de dados e privacidade e política de cookies *
+              </Label>
+            </div>
+
+            <div className="flex justify-between pt-4">
+              <Button type="button" variant="outline" onClick={() => setStep(1)}>
+                Voltar
+              </Button>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Finalizando..." : "Concluir Registro"}
+              </Button>
+            </div>
+          </form>
+        )}
+
+        {step === 2 && category === USER_CATEGORIES.EMPRESA && (
+          <form onSubmit={empresaForm.handleSubmit(handleEmpresaSubmit)} className="space-y-4">
+            <div>
+              <Label htmlFor="nomeEmpresa">Nome da Empresa *</Label>
+              <Input
+                id="nomeEmpresa"
+                {...empresaForm.register("nomeEmpresa")}
+                placeholder="Digite o nome da empresa"
+              />
+              {empresaForm.formState.errors.nomeEmpresa && (
+                <p className="text-red-500 text-sm mt-1">
+                  {empresaForm.formState.errors.nomeEmpresa.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="pessoaContacto">Pessoa de Contacto</Label>
+              <Input
+                id="pessoaContacto"
+                {...empresaForm.register("pessoaContacto")}
+                placeholder="Nome do responsável (opcional)"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="morada">Morada</Label>
+              <Input
+                id="morada"
+                {...empresaForm.register("morada")}
+                placeholder="Endereço da empresa (opcional)"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="observacoes">Observações Adicionais</Label>
+              <Textarea
+                id="observacoes"
+                {...empresaForm.register("observacoes")}
+                rows={4}
+                placeholder="Vagas disponíveis, requisitos, outros detalhes..."
+              />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Checkbox id="termos-empresa" required />
+              <Label htmlFor="termos-empresa" className="text-sm">
                 Concordo com a política de dados e privacidade e política de cookies *
               </Label>
             </div>

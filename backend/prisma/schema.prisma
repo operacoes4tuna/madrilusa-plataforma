@@ -24,8 +24,10 @@ model User {
   // ✨ NOVO: Relação com perfil específico de imigrante
   perfilImigrante PerfilImigrante?
   
+  // ✨ FASE 2: Relação com perfil específico de empresa
+  perfilEmpresa PerfilEmpresa?
+  
   // 🔮 FUTURAS FASES: Relações com outros perfis específicos
-  // perfilEmpresa PerfilEmpresa?
   // perfilMunicipio PerfilMunicipio?
   // perfilAcademia PerfilAcademia?
   // perfilFamilia PerfilFamilia?
@@ -50,4 +52,21 @@ model PerfilImigrante {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   @@map("perfis_imigrante")
+}
+
+// ✨ FASE 2: Perfil específico de Empresa
+model PerfilEmpresa {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  nomeEmpresa       String   // ✨ Obrigatório: Nome da empresa
+  pessoaContacto    String?  // ✨ Opcional: Nome do responsável
+  morada            String?  // ✨ Opcional: Endereço da empresa
+  observacoes       String?  // ✨ Opcional: Vagas, requisitos, detalhes
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relação com User (1:1 com cascade delete)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("perfis_empresa")
 } 

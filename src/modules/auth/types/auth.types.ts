@@ -21,10 +21,17 @@ export type {
   UpdatePerfilImigranteRequest,
   PerfilImigranteResponse,
   
+  // ✨ FASE 2: Tipos para empresa
+  PerfilEmpresa,
+  CreatePerfilEmpresaRequest,
+  UpdatePerfilEmpresaRequest,
+  PerfilEmpresaResponse,
+  
   // ✨ NOVOS: Registro em 2 etapas
   RegisterBasicRequest,
   RegisterBasicResponse,
   RegisterImigranteCompleteRequest,
+  RegisterEmpresaCompleteRequest,
   
   // ✨ NOVOS: Nacionalidades
   Nacionalidade

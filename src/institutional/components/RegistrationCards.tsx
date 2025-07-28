@@ -58,8 +58,8 @@ const RegistrationCards = () => {
   ];
 
   const handleCardClick = (category: UserCategory) => {
-    // Por enquanto, apenas IMIGRANTE está implementado
-    if (category === USER_CATEGORIES.IMIGRANTE) {
+    // IMIGRANTE e EMPRESA estão implementados
+    if (category === USER_CATEGORIES.IMIGRANTE || category === USER_CATEGORIES.EMPRESA) {
       setSelectedCategory(category);
     } else {
       // Para outras categorias, mostrar aviso temporário
@@ -103,13 +103,13 @@ const RegistrationCards = () => {
                       variant="rectangular"
                       size="rectangular"
                       className={`w-full mt-auto ${
-                        card.category === USER_CATEGORIES.IMIGRANTE 
+                        (card.category === USER_CATEGORIES.IMIGRANTE || card.category === USER_CATEGORIES.EMPRESA)
                           ? 'bg-primary hover:bg-primary-glow' 
                           : 'bg-gray-400 hover:bg-gray-500'
                       }`}
                       onClick={() => handleCardClick(card.category)}
                     >
-                      {card.category === USER_CATEGORIES.IMIGRANTE ? 'Registar-me' : 'Em Breve'}
+                      {(card.category === USER_CATEGORIES.IMIGRANTE || card.category === USER_CATEGORIES.EMPRESA) ? 'Registar-me' : 'Em Breve'}
                     </Button>
                   </CardContent>
                 </Card>

@@ -73,6 +73,44 @@ export interface UpdatePerfilImigranteRequest {
   aceitaNotificacoes?: boolean; // ✨ NOVO: aceita receber notificações
 }
 
+// ✨ FASE 2: Perfil específico de Empresa
+export interface PerfilEmpresa {
+  id: string;
+  userId: string;
+  nomeEmpresa: string;
+  pessoaContacto?: string;
+  morada?: string;
+  observacoes?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CreatePerfilEmpresaRequest {
+  userId: string;
+  nomeEmpresa: string;
+  pessoaContacto?: string;
+  morada?: string;
+  observacoes?: string;
+}
+
+export interface UpdatePerfilEmpresaRequest {
+  nomeEmpresa?: string;
+  pessoaContacto?: string;
+  morada?: string;
+  observacoes?: string;
+}
+
+export interface PerfilEmpresaResponse {
+  id: string;
+  userId: string;
+  nomeEmpresa: string;
+  pessoaContacto?: string;
+  morada?: string;
+  observacoes?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // Auth types (atualizado)
 export interface RegisterRequest {
   nomeCompleto: string;
@@ -111,6 +149,15 @@ export interface RegisterImigranteCompleteRequest {
   objetivoRegularizacao?: string;
   objetivoOutros?: string;
   mensagem?: string;
+}
+
+// ✨ FASE 2: Registro completo de empresa
+export interface RegisterEmpresaCompleteRequest {
+  userId: string;
+  nomeEmpresa: string;
+  pessoaContacto?: string;
+  morada?: string;
+  observacoes?: string;
 }
 
 // Auth Response type
