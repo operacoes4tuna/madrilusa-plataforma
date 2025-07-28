@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -62,6 +63,7 @@ const empresaRegistrationSchema = z.object({
 const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegistrationModalProps) => {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { setUser } = useAuth();
   const [step, setStep] = useState<1 | 2>(1);
   const [basicData, setBasicData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -203,14 +205,19 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
           
           if (userResult.success) {
             // Login automático com dados completos
-            localStorage.setItem('user', JSON.stringify({
+            const imigranteUserData = {
               id: userResult.data.id,
               nomeCompleto: userResult.data.nomeCompleto,
               email: userResult.data.email,
               telemovel: userResult.data.telemovel,
               categoria: userResult.data.categoria,
-              foto: userResult.data.foto
-            }));
+              foto: userResult.data.foto,
+              createdAt: userResult.data.createdAt || new Date(),
+              updatedAt: userResult.data.updatedAt || new Date()
+            };
+            
+            localStorage.setItem('madrilusa_user', JSON.stringify(imigranteUserData));
+            setUser(imigranteUserData);
 
             toast({
               title: "Registro Concluído!",
@@ -227,12 +234,19 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
           }
         } catch (userError: any) {
           // Fallback: usar dados básicos se falhar buscar dados completos
-          localStorage.setItem('user', JSON.stringify({
+          const imigranteFallbackData = {
             id: basicData.userId,
             nomeCompleto: basicForm.getValues('nomeCompleto'),
             email: basicForm.getValues('email'),
-            categoria: category
-          }));
+            categoria: category,
+            telemovel: basicForm.getValues('telemovel') || null,
+            foto: null,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          };
+          
+          localStorage.setItem('madrilusa_user', JSON.stringify(imigranteFallbackData));
+          setUser(imigranteFallbackData);
 
           toast({
             title: "Registro Concluído!",
@@ -304,11 +318,16 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
               email: userResult.data.email,
               telemovel: userResult.data.telemovel,
               categoria: userResult.data.categoria,
-              foto: userResult.data.foto
+              foto: userResult.data.foto,
+              createdAt: userResult.data.createdAt || new Date(),
+              updatedAt: userResult.data.updatedAt || new Date()
             };
             
             console.log('💾 Salvando dados empresa no localStorage:', userData);
-            localStorage.setItem('user', JSON.stringify(userData));
+            localStorage.setItem('madrilusa_user', JSON.stringify(userData));
+            
+            // Atualizar estado do useAuth diretamente
+            setUser(userData);
 
             toast({
               title: "Registro Concluído!",
@@ -319,9 +338,9 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
             onClose();
             console.log('🚀 Redirecionando empresa para dashboard...');
             
-            // Forçar reload da página para atualizar o estado do auth
+            // Usar navigate() agora que o estado está atualizado
             setTimeout(() => {
-              window.location.href = '/app/dashboard';
+              navigate('/app/dashboard');
             }, 1000);
           } else {
             throw new Error(`Erro ao buscar dados do usuário: ${userResult.error || 'Dados não encontrados'}`);
@@ -336,11 +355,16 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
             email: basicForm.getValues('email'),
             categoria: category,
             telemovel: basicForm.getValues('telemovel') || null,
-            foto: null
+            foto: null,
+            createdAt: new Date(),
+            updatedAt: new Date()
           };
           
           console.log('💾 Fallback empresa - Salvando dados básicos:', fallbackUserData);
-          localStorage.setItem('user', JSON.stringify(fallbackUserData));
+          localStorage.setItem('madrilusa_user', JSON.stringify(fallbackUserData));
+          
+          // Atualizar estado do useAuth diretamente
+          setUser(fallbackUserData as any);
 
           toast({
             title: "Registro Concluído!",
@@ -350,9 +374,9 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
           onClose();
           console.log('🚀 Redirecionando empresa para dashboard (fallback)...');
           
-          // Forçar reload da página para atualizar o estado do auth
+          // Usar navigate() agora que o estado está atualizado
           setTimeout(() => {
-            window.location.href = '/app/dashboard';
+            navigate('/app/dashboard');
           }, 1000);
         }
       } else {
