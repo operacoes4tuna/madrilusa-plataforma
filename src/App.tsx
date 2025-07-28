@@ -12,6 +12,8 @@ import PerfilEmpresa from "./app/pages/PerfilEmpresa";
 import PerfilMunicipio from "./app/pages/PerfilMunicipio";
 import PerfilAcademia from "./app/pages/PerfilAcademia";
 import PerfilFamilia from "./app/pages/PerfilFamilia";
+import AdminDashboard from "./app/pages/AdminDashboard"; // ✨ ADMIN
+import UserManagement from "./app/pages/UserManagement"; // ✨ ADMIN
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -41,6 +43,8 @@ const App = () => (
             <Route path="perfil-municipio" element={<PerfilMunicipio />} />
             <Route path="perfil-academia" element={<PerfilAcademia />} />
             <Route path="perfil-familia" element={<PerfilFamilia />} />
+            <Route path="admin-dashboard" element={<AdminDashboard />} />
+            <Route path="user-management" element={<UserManagement />} />
           </Route>
           
           {/* 404 */}

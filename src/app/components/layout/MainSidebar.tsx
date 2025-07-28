@@ -83,6 +83,24 @@ const MainSidebar: React.FC = () => {
     });
   }
   
+  // ✨ ADMIN: Menu específico para administradores
+  if (user?.categoria === USER_CATEGORIES.ADMIN) {
+    categoryMenuItems.push(
+      {
+        title: 'Dashboard Admin',
+        to: '/app/admin-dashboard',
+        iconClass: 'admin_panel_settings',
+        htmlAfter: ''
+      },
+      {
+        title: 'Gestão de Usuários',
+        to: '/app/user-management',
+        iconClass: 'group',
+        htmlAfter: ''
+      }
+    );
+  }
+  
   // Combinar menus
   const sidebarNavItems = [...baseSidebarNavItems, ...categoryMenuItems];
 

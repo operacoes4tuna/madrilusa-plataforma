@@ -1,5 +1,5 @@
 import app from './app';
-import { prisma } from '@/shared/database';
+import { prisma } from './shared/database';
 
 const PORT = process.env.PORT || 3001;
 
