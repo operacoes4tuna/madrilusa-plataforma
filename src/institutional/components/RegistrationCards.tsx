@@ -58,8 +58,8 @@ const RegistrationCards = () => {
   ];
 
   const handleCardClick = (category: UserCategory) => {
-    // IMIGRANTE e EMPRESA estão implementados
-    if (category === USER_CATEGORIES.IMIGRANTE || category === USER_CATEGORIES.EMPRESA) {
+    // IMIGRANTE, EMPRESA e MUNICIPIO estão implementados
+    if (category === USER_CATEGORIES.IMIGRANTE || category === USER_CATEGORIES.EMPRESA || category === USER_CATEGORIES.MUNICIPIO) {
       setSelectedCategory(category);
     } else {
       // Para outras categorias, mostrar aviso temporário
@@ -102,14 +102,14 @@ const RegistrationCards = () => {
                     <Button
                       variant="rectangular"
                       size="rectangular"
-                      className={`w-full mt-auto ${
-                        (card.category === USER_CATEGORIES.IMIGRANTE || card.category === USER_CATEGORIES.EMPRESA)
-                          ? 'bg-primary hover:bg-primary-glow' 
-                          : 'bg-gray-400 hover:bg-gray-500'
-                      }`}
+                                    className={`w-full mt-auto ${
+                (card.category === USER_CATEGORIES.IMIGRANTE || card.category === USER_CATEGORIES.EMPRESA || card.category === USER_CATEGORIES.MUNICIPIO)
+                  ? 'bg-primary hover:bg-primary-glow' 
+                  : 'bg-gray-400 hover:bg-gray-500'
+              }`}
                       onClick={() => handleCardClick(card.category)}
                     >
-                      {(card.category === USER_CATEGORIES.IMIGRANTE || card.category === USER_CATEGORIES.EMPRESA) ? 'Registar-me' : 'Em Breve'}
+                      {(card.category === USER_CATEGORIES.IMIGRANTE || card.category === USER_CATEGORIES.EMPRESA || card.category === USER_CATEGORIES.MUNICIPIO) ? 'Registar-me' : 'Em Breve'}
                     </Button>
                   </CardContent>
                 </Card>

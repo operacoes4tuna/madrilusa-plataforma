@@ -27,8 +27,10 @@ model User {
   // ✨ FASE 2: Relação com perfil específico de empresa
   perfilEmpresa PerfilEmpresa?
   
+  // ✨ FASE 3: Relação com perfil específico de município
+  perfilMunicipio PerfilMunicipio?
+  
   // 🔮 FUTURAS FASES: Relações com outros perfis específicos
-  // perfilMunicipio PerfilMunicipio?
   // perfilAcademia PerfilAcademia?
   // perfilFamilia PerfilFamilia?
   
@@ -69,4 +71,24 @@ model PerfilEmpresa {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   @@map("perfis_empresa")
+}
+
+// ✨ FASE 3: Perfil específico de Município
+model PerfilMunicipio {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  nomeMunicipio         String?  // ✨ Opcional: Nome do município
+  distrito              String?  // ✨ Opcional: Distrito/Região administrativa
+  pessoaContacto        String?  // ✨ Opcional: Pessoa de contacto institucional
+  funcaoCargo           String?  // ✨ Opcional: Função/Cargo do responsável
+  projetosApoio         String?  // ✨ Opcional: Projetos de apoio existentes (CLAIM, CLDS, etc.)
+  disponibilidadeAcoes  String?  // ✨ Opcional: Disponibilidade para acolher ações locais
+  observacoes           String?  // ✨ Opcional: Horários, espaços, eventos locais
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  // Relação com User (1:1 com cascade delete)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("perfis_municipio")
 } 

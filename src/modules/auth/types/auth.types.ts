@@ -27,11 +27,18 @@ export type {
   UpdatePerfilEmpresaRequest,
   PerfilEmpresaResponse,
   
+  // ✨ FASE 3: Tipos para município
+  PerfilMunicipio,
+  CreatePerfilMunicipioRequest,
+  UpdatePerfilMunicipioRequest,
+  PerfilMunicipioResponse,
+  
   // ✨ NOVOS: Registro em 2 etapas
   RegisterBasicRequest,
   RegisterBasicResponse,
   RegisterImigranteCompleteRequest,
   RegisterEmpresaCompleteRequest,
+  RegisterMunicipioCompleteRequest,
   
   // ✨ NOVOS: Nacionalidades
   Nacionalidade

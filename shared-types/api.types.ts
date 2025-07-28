@@ -111,6 +111,56 @@ export interface PerfilEmpresaResponse {
   updatedAt: Date;
 }
 
+// ✨ FASE 3: Perfil específico de Município
+export interface PerfilMunicipio {
+  id: string;
+  userId: string;
+  nomeMunicipio?: string;
+  distrito?: string;
+  pessoaContacto?: string;
+  funcaoCargo?: string;
+  projetosApoio?: string;
+  disponibilidadeAcoes?: string;
+  observacoes?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CreatePerfilMunicipioRequest {
+  userId: string;
+  nomeMunicipio?: string;
+  distrito?: string;
+  pessoaContacto?: string;
+  funcaoCargo?: string;
+  projetosApoio?: string;
+  disponibilidadeAcoes?: string;
+  observacoes?: string;
+}
+
+export interface UpdatePerfilMunicipioRequest {
+  nomeMunicipio?: string;
+  distrito?: string;
+  pessoaContacto?: string;
+  funcaoCargo?: string;
+  projetosApoio?: string;
+  disponibilidadeAcoes?: string;
+  observacoes?: string;
+}
+
+export interface PerfilMunicipioResponse {
+  id: string;
+  userId: string;
+  nomeMunicipio?: string;
+  distrito?: string;
+  pessoaContacto?: string;
+  funcaoCargo?: string;
+  projetosApoio?: string;
+  disponibilidadeAcoes?: string;
+  observacoes?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // Auth types (atualizado)
 export interface RegisterRequest {
   nomeCompleto: string;
@@ -157,6 +207,18 @@ export interface RegisterEmpresaCompleteRequest {
   nomeEmpresa: string;
   pessoaContacto?: string;
   morada?: string;
+  observacoes?: string;
+}
+
+// ✨ FASE 3: Registro completo de município
+export interface RegisterMunicipioCompleteRequest {
+  userId: string;
+  nomeMunicipio?: string;
+  distrito?: string;
+  pessoaContacto?: string;
+  funcaoCargo?: string;
+  projetosApoio?: string;
+  disponibilidadeAcoes?: string;
   observacoes?: string;
 }
 

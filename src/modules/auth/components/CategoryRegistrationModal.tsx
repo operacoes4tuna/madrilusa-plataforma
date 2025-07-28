@@ -28,6 +28,17 @@ interface EmpresaRegistrationFormData {
   observacoes?: string;
 }
 
+// Interface para formulário de município
+interface MunicipioRegistrationFormData {
+  nomeMunicipio?: string;
+  distrito?: string;
+  pessoaContacto?: string;
+  funcaoCargo?: string;
+  projetosApoio?: string;
+  disponibilidadeAcoes?: string;
+  observacoes?: string;
+}
+
 interface CategoryRegistrationModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -57,6 +68,17 @@ const empresaRegistrationSchema = z.object({
   nomeEmpresa: z.string().min(1, "Nome da empresa é obrigatório"),
   pessoaContacto: z.string().optional(),
   morada: z.string().optional(),
+  observacoes: z.string().optional(),
+});
+
+// Schema de validação para Etapa 2 (Município)
+const municipioRegistrationSchema = z.object({
+  nomeMunicipio: z.string().optional(),
+  distrito: z.string().optional(),
+  pessoaContacto: z.string().optional(),
+  funcaoCargo: z.string().optional(),
+  projetosApoio: z.string().optional(),
+  disponibilidadeAcoes: z.string().optional(),
   observacoes: z.string().optional(),
 });
 
@@ -117,6 +139,20 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
       nomeEmpresa: "",
       pessoaContacto: "",
       morada: "",
+      observacoes: ""
+    }
+  });
+
+  // Form para Etapa 2 (Município)
+  const municipioForm = useForm<MunicipioRegistrationFormData>({
+    resolver: zodResolver(municipioRegistrationSchema),
+    defaultValues: {
+      nomeMunicipio: "",
+      distrito: "",
+      pessoaContacto: "",
+      funcaoCargo: "",
+      projetosApoio: "",
+      disponibilidadeAcoes: "",
       observacoes: ""
     }
   });
@@ -393,6 +429,127 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
     }
   };
 
+  // Etapa 2: Dados específicos da categoria - Município
+  const handleMunicipioSubmit = async (data: MunicipioRegistrationFormData) => {
+    if (!basicData?.userId) {
+      toast({
+        title: "Erro",
+        description: "Dados básicos não encontrados. Reinicie o processo.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+
+      const response = await fetch("/api/municipios/perfil", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: basicData.userId,
+          ...data
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log('✅ Perfil de município criado com sucesso:', result.data);
+        
+        // Buscar dados completos do usuário após criação do perfil
+        try {
+          console.log('🔍 Buscando dados do usuário município:', basicData.userId);
+          const userResponse = await fetch(`/api/auth/user/${basicData.userId}`);
+          const userResult = await userResponse.json();
+          
+          console.log('📥 Resposta do usuário município:', userResult);
+          
+          if (userResult.success && userResult.data) {
+            // Login automático com dados completos
+            const userData = {
+              id: userResult.data.id,
+              nomeCompleto: userResult.data.nomeCompleto,
+              email: userResult.data.email,
+              telemovel: userResult.data.telemovel,
+              categoria: userResult.data.categoria,
+              foto: userResult.data.foto,
+              createdAt: userResult.data.createdAt || new Date(),
+              updatedAt: userResult.data.updatedAt || new Date()
+            };
+            
+            console.log('💾 Salvando dados município no localStorage:', userData);
+            localStorage.setItem('madrilusa_user', JSON.stringify(userData));
+            
+            // Atualizar estado do useAuth diretamente
+            setUser(userData);
+
+            toast({
+              title: "Registro Concluído!",
+              description: "Bem-vindo(a) ao Madrilusa! Redirecionando para sua plataforma...",
+            });
+
+            // Fechar modal e redirecionar
+            onClose();
+            console.log('🚀 Redirecionando município para dashboard...');
+            
+            // Usar navigate() agora que o estado está atualizado
+            setTimeout(() => {
+              navigate('/app/dashboard');
+            }, 1000);
+          } else {
+            throw new Error(`Erro ao buscar dados do usuário: ${userResult.error || 'Dados não encontrados'}`);
+          }
+        } catch (userError: any) {
+          console.error('❌ Erro ao buscar dados completos do município:', userError);
+          
+          // Fallback: usar dados básicos se falhar buscar dados completos
+          const fallbackUserData = {
+            id: basicData.userId,
+            nomeCompleto: basicForm.getValues('nomeCompleto'),
+            email: basicForm.getValues('email'),
+            categoria: category,
+            telemovel: basicForm.getValues('telemovel') || null,
+            foto: null,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          };
+          
+          console.log('💾 Fallback município - Salvando dados básicos:', fallbackUserData);
+          localStorage.setItem('madrilusa_user', JSON.stringify(fallbackUserData));
+          
+          // Atualizar estado do useAuth diretamente
+          setUser(fallbackUserData as any);
+
+          toast({
+            title: "Registro Concluído!",
+            description: "Bem-vindo(a) ao Madrilusa! Redirecionando para sua plataforma...",
+          });
+
+          onClose();
+          console.log('🚀 Redirecionando município para dashboard (fallback)...');
+          
+          // Usar navigate() agora que o estado está atualizado
+          setTimeout(() => {
+            navigate('/app/dashboard');
+          }, 1000);
+        }
+      } else {
+        throw new Error(result.error || "Erro ao criar perfil");
+      }
+    } catch (error: any) {
+      toast({
+        title: "Erro ao Finalizar Registro",
+        description: error.message || "Erro inesperado. Tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleClose = () => {
     setStep(1);
     setBasicData(null);
@@ -400,6 +557,7 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
     basicForm.reset();
     imigranteForm.reset();
     empresaForm.reset();
+    municipioForm.reset();
     onClose();
   };
 
@@ -759,6 +917,91 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
             <div className="flex items-center space-x-2">
               <Checkbox id="termos-empresa" required />
               <Label htmlFor="termos-empresa" className="text-sm">
+                Concordo com a política de dados e privacidade e política de cookies *
+              </Label>
+            </div>
+
+            <div className="flex justify-between pt-4">
+              <Button type="button" variant="outline" onClick={() => setStep(1)}>
+                Voltar
+              </Button>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Finalizando..." : "Concluir Registro"}
+              </Button>
+            </div>
+          </form>
+        )}
+
+        {step === 2 && category === USER_CATEGORIES.MUNICIPIO && (
+          <form onSubmit={municipioForm.handleSubmit(handleMunicipioSubmit)} className="space-y-4">
+            <div>
+              <Label htmlFor="nomeMunicipio">Nome do Município</Label>
+              <Input
+                id="nomeMunicipio"
+                {...municipioForm.register("nomeMunicipio")}
+                placeholder="Digite o nome do município (opcional)"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="distrito">Distrito / Região Administrativa</Label>
+              <Input
+                id="distrito"
+                {...municipioForm.register("distrito")}
+                placeholder="Ex: Porto, Lisboa, Coimbra... (opcional)"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="pessoaContacto">Pessoa de Contacto Institucional</Label>
+              <Input
+                id="pessoaContacto"
+                {...municipioForm.register("pessoaContacto")}
+                placeholder="Nome do responsável (opcional)"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="funcaoCargo">Função / Cargo</Label>
+              <Input
+                id="funcaoCargo"
+                {...municipioForm.register("funcaoCargo")}
+                placeholder="Ex: Vereador, Técnico Superior... (opcional)"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="projetosApoio">Projetos de Apoio a Imigrantes Existentes</Label>
+              <Textarea
+                id="projetosApoio"
+                {...municipioForm.register("projetosApoio")}
+                rows={3}
+                placeholder="Ex: CLAIM, CLDS, Programa Bairros Saudáveis... (opcional)"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="disponibilidadeAcoes">Disponibilidade para Acolher Ações Locais</Label>
+              <Input
+                id="disponibilidadeAcoes"
+                {...municipioForm.register("disponibilidadeAcoes")}
+                placeholder="Ex: Sim, mediante agendamento prévio (opcional)"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="observacoes">Observações Adicionais</Label>
+              <Textarea
+                id="observacoes"
+                {...municipioForm.register("observacoes")}
+                rows={4}
+                placeholder="Horários de atendimento, espaços disponíveis, eventos locais..."
+              />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Checkbox id="termos-municipio" required />
+              <Label htmlFor="termos-municipio" className="text-sm">
                 Concordo com a política de dados e privacidade e política de cookies *
               </Label>
             </div>

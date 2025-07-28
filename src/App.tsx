@@ -9,6 +9,7 @@ import Dashboard from "./app/pages/Dashboard";
 import Profile from "./app/pages/Profile";
 import PerfilImigrante from "./app/pages/PerfilImigrante";
 import PerfilEmpresa from "./app/pages/PerfilEmpresa";
+import PerfilMunicipio from "./app/pages/PerfilMunicipio";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="profile" element={<Profile />} />
             <Route path="perfil-imigrante" element={<PerfilImigrante />} />
             <Route path="perfil-empresa" element={<PerfilEmpresa />} />
+            <Route path="perfil-municipio" element={<PerfilMunicipio />} />
           </Route>
           
           {/* 404 */}

@@ -56,6 +56,15 @@ const MainSidebar: React.FC = () => {
     });
   }
   
+  if (user?.categoria === USER_CATEGORIES.MUNICIPIO) {
+    categoryMenuItems.push({
+      title: 'Perfil de Município',
+      to: '/app/perfil-municipio',
+      iconClass: 'location_city',
+      htmlAfter: ''
+    });
+  }
+  
   // Combinar menus
   const sidebarNavItems = [...baseSidebarNavItems, ...categoryMenuItems];
 
