@@ -50,6 +50,7 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
   const [basicData, setBasicData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showNacionalidadesModal, setShowNacionalidadesModal] = useState(false);
+  const [emailExistsError, setEmailExistsError] = useState<string | null>(null);
   const nacionalidadeModalRef = useRef<HTMLDivElement>(null);
 
   // Fechar dropdown quando clicar fora
@@ -95,6 +96,7 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
   const handleBasicSubmit = async (data: BasicRegistrationFormData) => {
     try {
       setIsLoading(true);
+      setEmailExistsError(null); // Limpar erros anteriores
       
       const response = await fetch("/api/auth/register-basic", {
         method: "POST",
@@ -117,82 +119,12 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
           description: "Agora complete com seus dados específicos.",
         });
       } else {
-        // Se email já existe, tentar fazer login
+        // Se email já existe, mostrar mensagem com link de login
         if (result.error && result.error.toLowerCase().includes("email")) {
-          try {
-            const loginResponse = await fetch("/api/auth/login", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                email: data.email,
-                senha: data.senha
-              }),
-            });
-
-            const loginResult = await loginResponse.json();
-
-            if (loginResult.success) {
-              const user = loginResult.data.user;
-              
-              // Verificar se usuário já tem a categoria desejada
-              if (user.categoria === category) {
-                // Verificar se já tem perfil específico da categoria
-                let hasProfile = false;
-                
-                if (category === USER_CATEGORIES.IMIGRANTE) {
-                  const profileResponse = await fetch(`/api/imigrantes/has-perfil/${user.id}`);
-                  const profileResult = await profileResponse.json();
-                  hasProfile = profileResult.success && profileResult.data.hasPerfil;
-                }
-
-                if (hasProfile) {
-                  // Usuário já tem perfil completo, fazer login direto
-                  localStorage.setItem('user', JSON.stringify(user));
-                  toast({
-                    title: "Login realizado!",
-                    description: "Redirecionando para sua plataforma...",
-                  });
-                  onClose();
-                  setTimeout(() => {
-                    navigate('/app/dashboard');
-                  }, 1000);
-                  return;
-                } else {
-                  // Usuário tem categoria mas não tem perfil específico, continuar para etapa 2
-                  setBasicData({ 
-                    userId: user.id,
-                    nomeCompleto: user.nomeCompleto,
-                    email: user.email 
-                  });
-                  setStep(2);
-                  toast({
-                    title: "Login realizado!",
-                    description: "Complete seu perfil específico.",
-                  });
-                  return;
-                }
-              } else {
-                // Usuário não tem categoria ou tem categoria diferente
-                toast({
-                  title: "Erro",
-                  description: `Este email já está registrado em outra categoria. Entre em contato conosco.`,
-                  variant: "destructive",
-                });
-                return;
-              }
-            } else {
-              throw new Error("Senha incorreta");
-            }
-          } catch (loginError: any) {
-            toast({
-              title: "Email já existe",
-              description: "Email já cadastrado. Verifique sua senha ou use o login.",
-              variant: "destructive",
-            });
-            return;
-          }
+          setEmailExistsError(
+            `O email "${data.email}" já está cadastrado na plataforma. Para continuar seu cadastro, você deve fazer login primeiro.`
+          );
+          return;
         } else {
           throw new Error(result.error || "Erro no registro");
         }
@@ -302,9 +234,23 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
   const handleClose = () => {
     setStep(1);
     setBasicData(null);
+    setEmailExistsError(null);
     basicForm.reset();
     imigranteForm.reset();
     onClose();
+  };
+
+  const handleLoginClick = () => {
+    // Fechar modal de registro e abrir modal de login
+    onClose();
+    // Aguardar um pouco para o modal fechar antes de abrir o de login
+    setTimeout(() => {
+      // Encontrar e clicar no botão de login do header
+      const loginButton = document.querySelector('[data-login-button]') as HTMLButtonElement;
+      if (loginButton) {
+        loginButton.click();
+      }
+    }, 300);
   };
 
   const getCategoryTitle = (cat: UserCategory) => {
@@ -353,6 +299,35 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
 
         {step === 1 && (
           <form onSubmit={basicForm.handleSubmit(handleBasicSubmit)} className="space-y-4">
+            {emailExistsError && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4 mb-4">
+                <div className="flex">
+                  <div className="flex-shrink-0">
+                    <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-sm font-medium text-yellow-800">
+                      Email já cadastrado
+                    </h3>
+                    <div className="mt-2 text-sm text-yellow-700">
+                      <p>{emailExistsError}</p>
+                    </div>
+                    <div className="mt-3">
+                      <button
+                        type="button"
+                        onClick={handleLoginClick}
+                        className="bg-yellow-50 text-yellow-800 hover:bg-yellow-100 border border-yellow-200 rounded-md px-3 py-2 text-sm font-medium transition-colors"
+                      >
+                        Fazer Login
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div>
               <Label htmlFor="nomeCompleto">Nome Completo *</Label>
               <Input

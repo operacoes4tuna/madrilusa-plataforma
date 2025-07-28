@@ -184,6 +184,7 @@ const Header = () => {
                   variant="secondary" 
                   size="rectangular"
                   onClick={openLoginModal}
+                  data-login-button
                 >
                   Login
                 </Button>
@@ -274,6 +275,7 @@ const Header = () => {
                       size="rectangular" 
                       className="w-full"
                       onClick={openLoginModal}
+                      data-login-button
                     >
                       Login
                     </Button>
