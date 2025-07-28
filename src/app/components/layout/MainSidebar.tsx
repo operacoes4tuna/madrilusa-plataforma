@@ -13,6 +13,12 @@ const MainSidebar: React.FC = () => {
   // Itens de navegação seguindo padrão do Shards original
   const sidebarNavItems = [
     {
+      title: 'Site Madrilusa',
+      to: '/',
+      iconClass: 'public',
+      htmlAfter: ''
+    },
+    {
       title: 'Dashboard',
       to: '/app/dashboard',
       iconClass: 'dashboard',

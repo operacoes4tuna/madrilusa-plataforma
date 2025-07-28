@@ -4,7 +4,6 @@ import { Container, Row, Col } from 'shards-react';
 
 import MainSidebar from '../components/layout/MainSidebar';
 import MainNavbar from '../components/layout/MainNavbar';
-import MainFooter from '../components/layout/MainFooter';
 
 // Importar estilos do Shards para aplicação
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -32,7 +31,6 @@ const AppLayout: React.FC = () => {
           >
             <MainNavbar />
             <Outlet />
-            <MainFooter />
           </Col>
         </Row>
       </Container>

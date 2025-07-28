@@ -19,6 +19,11 @@ const NavbarNav: React.FC = () => {
     setDropdownOpen(false);
   };
 
+  const handleDashboardClick = () => {
+    navigate('/app/dashboard');
+    setDropdownOpen(false);
+  };
+
   // Fechar dropdown quando clicar fora
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -81,9 +86,9 @@ const NavbarNav: React.FC = () => {
         
         {/* Dropdown Menu Custom */}
         <div className={`dropdown-menu-custom ${dropdownOpen ? 'show' : ''}`}>
-          <div className="dropdown-item-custom" onClick={handleProfileClick}>
-            <i className="material-icons mr-2" style={{ fontSize: '20px' }}>person</i> 
-            Perfil
+          <div className="dropdown-item-custom" onClick={handleDashboardClick}>
+            <i className="material-icons mr-2" style={{ fontSize: '20px' }}>dashboard</i> 
+            Minha Plataforma
           </div>
           <div className="dropdown-item-custom" onClick={handleProfileClick}>
             <i className="material-icons mr-2" style={{ fontSize: '20px' }}>edit</i> 
