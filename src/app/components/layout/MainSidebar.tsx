@@ -4,14 +4,17 @@ import { Col, Nav, NavItem, NavLink } from 'shards-react';
 import classNames from 'classnames';
 
 import SidebarMainNavbar from './SidebarMainNavbar';
+import { useAuth } from '@/modules/auth/hooks/useAuth';
+import { USER_CATEGORIES } from '@/modules/auth/types/auth.types';
 
 const MainSidebar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [menuVisible, setMenuVisible] = useState(false);
+  const { user } = useAuth();
 
-  // Itens de navegação seguindo padrão do Shards original
-  const sidebarNavItems = [
+  // Itens de navegação base
+  const baseSidebarNavItems = [
     {
       title: 'Site Madrilusa',
       to: '/',
@@ -31,6 +34,21 @@ const MainSidebar: React.FC = () => {
       htmlAfter: ''
     }
   ];
+
+  // Menu específico por categoria
+  const categoryMenuItems = [];
+  
+  if (user?.categoria === USER_CATEGORIES.IMIGRANTE) {
+    categoryMenuItems.push({
+      title: 'Perfil de Imigrante',
+      to: '/app/perfil-imigrante',
+      iconClass: 'language',
+      htmlAfter: ''
+    });
+  }
+  
+  // Combinar menus
+  const sidebarNavItems = [...baseSidebarNavItems, ...categoryMenuItems];
 
   const classes = classNames(
     'main-sidebar',

@@ -7,6 +7,7 @@ import LandingPage from "./institutional/pages/LandingPage";
 import AppLayout from "./app/layouts/AppLayout";
 import Dashboard from "./app/pages/Dashboard";
 import Profile from "./app/pages/Profile";
+import PerfilImigrante from "./app/pages/PerfilImigrante";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -31,6 +32,7 @@ const App = () => (
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="perfil-imigrante" element={<PerfilImigrante />} />
           </Route>
           
           {/* 404 */}
