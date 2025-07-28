@@ -22,3 +22,29 @@ export interface AuthState {
 }
 
 export type AuthMode = 'register' | 'login'; 
+
+export interface User {
+  id: string;
+  nomeCompleto: string;
+  email: string;
+  foto?: string; // URL da foto do usuário
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface LoginRequest {
+  email: string;
+  senha: string;
+}
+
+export interface RegisterRequest {
+  nomeCompleto: string;
+  email: string;
+  senha: string;
+}
+
+export interface AuthResponse {
+  success: boolean;
+  data: User;
+  message?: string;
+} 

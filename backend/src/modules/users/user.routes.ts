@@ -1,19 +1,16 @@
 import { Router } from 'express';
 import { userController } from './user.controller';
+import { uploadUserPhoto } from '../../shared/middleware/upload';
 
-export const userRoutes = Router();
+const router = Router();
 
-// GET /api/users - Listar todos os usuários
-userRoutes.get('/', userController.findAll.bind(userController));
+// Rotas de usuários
+router.get('/', userController.getAllUsers);
+router.get('/:id', userController.getUserById);
+router.put('/:id', userController.updateUser);
+router.delete('/:id', userController.deleteUser);
 
-// GET /api/users/:id - Buscar usuário por ID
-userRoutes.get('/:id', userController.findById.bind(userController));
+// Rota para upload de foto
+router.post('/:id/upload-photo', uploadUserPhoto, userController.uploadUserPhoto);
 
-// POST /api/users - Criar novo usuário
-userRoutes.post('/', userController.create.bind(userController));
-
-// PUT /api/users/:id - Atualizar usuário
-userRoutes.put('/:id', userController.update.bind(userController));
-
-// DELETE /api/users/:id - Deletar usuário
-userRoutes.delete('/:id', userController.delete.bind(userController)); 
+export default router; 

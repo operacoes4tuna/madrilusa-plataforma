@@ -4,7 +4,7 @@
 .institutional-layout {
   /* Cores institucionais - podem ser ajustadas pelo marketing */
   --institutional-primary: #F5A623;      /* Laranja Madrilusa */
-  --institutional-secondary: #4A90A4;    /* Azul Turquesa */
+  --institutional-secondary: #E6941F;    /* Laranja Madrilusa mais escuro */
   --institutional-background: #FFFFFF;
   --institutional-foreground: #333333;
   --institutional-muted: #F5F5F5;
@@ -62,33 +62,69 @@
 }
 
 .institutional-button-primary:hover {
-  background: #E6941F;
-  box-shadow: var(--institutional-shadow-glow);
+  background: var(--institutional-secondary);
   transform: translateY(-1px);
+  box-shadow: var(--institutional-shadow-elegant);
 }
 
 .institutional-button-secondary {
   background: transparent;
-  color: var(--institutional-secondary);
-  border: 2px solid var(--institutional-secondary);
+  color: var(--institutional-primary);
+  border: 2px solid var(--institutional-primary);
   padding: 0.875rem 2rem;
   border-radius: 8px;
   font-weight: 600;
   transition: all 0.3s ease;
+  text-transform: none;
 }
 
 .institutional-button-secondary:hover {
-  background: var(--institutional-secondary);
+  background: var(--institutional-primary);
   color: white;
 }
 
-/* Seções */
+/* Tipografia institucional */
+.institutional-heading {
+  color: var(--institutional-foreground);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.institutional-heading-primary {
+  color: var(--institutional-primary);
+}
+
+.institutional-text {
+  color: var(--institutional-foreground);
+  line-height: 1.6;
+}
+
+.institutional-text-muted {
+  color: #6B7280;
+}
+
+/* Seções especiais */
 .institutional-section {
   padding: 4rem 0;
 }
 
-.institutional-section:nth-child(even) {
+.institutional-section-alt {
   background: var(--institutional-muted);
+}
+
+/* Navigation institucional */
+.institutional-nav-link {
+  color: var(--institutional-foreground);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.institutional-nav-link:hover {
+  color: var(--institutional-primary);
+}
+
+.institutional-nav-link.active {
+  color: var(--institutional-primary);
 }
 
 /* Footer institucional */
@@ -96,6 +132,55 @@
   background: var(--institutional-foreground);
   color: white;
   padding: 3rem 0 2rem;
+}
+
+/* Override das classes globais do Tailwind para usar cores Madrilusa */
+.institutional-layout .bg-primary {
+  background-color: var(--institutional-primary) !important;
+}
+
+.institutional-layout .text-primary {
+  color: var(--institutional-primary) !important;
+}
+
+.institutional-layout .border-primary {
+  border-color: var(--institutional-primary) !important;
+}
+
+.institutional-layout .bg-primary-glow {
+  background-color: var(--institutional-secondary) !important;
+}
+
+.institutional-layout .text-primary-glow {
+  color: var(--institutional-secondary) !important;
+}
+
+.institutional-layout .hover\:bg-primary-glow:hover {
+  background-color: var(--institutional-secondary) !important;
+}
+
+.institutional-layout .bg-primary\/10 {
+  background-color: rgba(245, 166, 35, 0.1) !important;
+}
+
+.institutional-layout .bg-primary\/20 {
+  background-color: rgba(245, 166, 35, 0.2) !important;
+}
+
+.institutional-layout .text-primary-foreground {
+  color: white !important;
+}
+
+.institutional-layout .bg-secondary {
+  background-color: #4A90A4 !important; /* Azul Turquesa oficial */
+}
+
+.institutional-layout .text-secondary-foreground {
+  color: white !important;
+}
+
+.institutional-layout .hover\:bg-secondary\/90:hover {
+  background-color: rgba(74, 144, 164, 0.9) !important;
 }
 
 /* Responsividade específica institucional */

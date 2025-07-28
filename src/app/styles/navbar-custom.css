@@ -1,0 +1,42 @@
+/* Customizações para a barra de navegação */
+.main-navbar {
+  min-height: 80px !important;
+  height: 80px !important;
+}
+
+.main-navbar .navbar {
+  min-height: 80px !important;
+  height: 80px !important;
+}
+
+.main-navbar .navbar-brand {
+  min-height: 80px !important;
+  height: 80px !important;
+}
+
+/* Ajustar altura dos itens de navegação */
+.main-navbar .nav-link {
+  min-height: 80px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 1rem !important;
+}
+
+/* Garantir que a borda inferior ocupe toda a altura */
+.main-navbar.border-bottom {
+  border-bottom: 1px solid #dee2e6 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Ajustar bordas laterais dos itens */
+.main-navbar .nav-item.border-right {
+  border-right: 1px solid #dee2e6 !important;
+  min-height: 80px !important;
+}
+
+/* Garantir que todos os itens da navbar tenham a altura correta */
+.main-navbar .nav-item {
+  min-height: 80px !important;
+  display: flex !important;
+  align-items: center !important;
+} 

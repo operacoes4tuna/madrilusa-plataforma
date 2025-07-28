@@ -1,92 +1,105 @@
-import { prisma } from '@/shared/database';
-import { AppError } from '@/shared/middleware/errorHandler';
-import { CreateUserRequest, UpdateUserRequest, SafeUser, UserServiceInterface } from './user.types';
+import { prisma } from '../../shared/database';
+import type { UpdateUserRequest } from '../../../shared-types/api.types';
 
-export class UserService implements UserServiceInterface {
-  
-  async create(data: CreateUserRequest): Promise<SafeUser> {
-    try {
-      const user = await prisma.user.create({
-        data: {
-          nomeCompleto: data.nomeCompleto,
-          email: data.email.toLowerCase(),
-          senha: data.senha, // Sem hash por enquanto
-        },
-      });
+export const userService = {
+  async getAllUsers() {
+    const users = await prisma.user.findMany({
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        nomeCompleto: true,
+        email: true,
+        foto: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+    return users;
+  },
 
-      return this.excludePassword(user);
-    } catch (error: any) {
-      if (error.code === 'P2002') {
-        throw new AppError('Este email já está em uso', 400, 'DUPLICATE_EMAIL');
-      }
-      throw new AppError('Erro ao criar usuário', 500);
-    }
-  }
-
-  async findById(id: string): Promise<SafeUser | null> {
+  async getUserById(id: string) {
     const user = await prisma.user.findUnique({
       where: { id },
+      select: {
+        id: true,
+        nomeCompleto: true,
+        email: true,
+        foto: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
+    return user;
+  },
 
-    return user ? this.excludePassword(user) : null;
-  }
-
-  async findByEmail(email: string): Promise<any> {
+  async getUserByEmail(email: string) {
     return await prisma.user.findUnique({
       where: { email: email.toLowerCase() },
     });
-  }
+  },
 
-  async findAll(): Promise<SafeUser[]> {
-    const users = await prisma.user.findMany({
-      orderBy: { createdAt: 'desc' },
+  async createUser(data: { nomeCompleto: string; email: string; senha: string }) {
+    const user = await prisma.user.create({
+      data: {
+        nomeCompleto: data.nomeCompleto,
+        email: data.email.toLowerCase(),
+        senha: data.senha, // Sem hash por enquanto
+      },
+      select: {
+        id: true,
+        nomeCompleto: true,
+        email: true,
+        foto: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
+    return user;
+  },
 
-    return users.map(user => this.excludePassword(user));
-  }
-
-  async update(id: string, data: UpdateUserRequest): Promise<SafeUser> {
-    try {
-      const updateData: any = {};
-      
-      if (data.nomeCompleto) updateData.nomeCompleto = data.nomeCompleto;
-      if (data.email) updateData.email = data.email.toLowerCase();
-      if (data.senha) updateData.senha = data.senha; // Sem hash por enquanto
-
-      const user = await prisma.user.update({
-        where: { id },
-        data: updateData,
-      });
-
-      return this.excludePassword(user);
-    } catch (error: any) {
-      if (error.code === 'P2002') {
-        throw new AppError('Este email já está em uso', 400, 'DUPLICATE_EMAIL');
-      }
-      if (error.code === 'P2025') {
-        throw new AppError('Usuário não encontrado', 404, 'USER_NOT_FOUND');
-      }
-      throw new AppError('Erro ao atualizar usuário', 500);
+  async updateUser(id: string, data: UpdateUserRequest) {
+    const updateData: any = {};
+    
+    if (data.nomeCompleto !== undefined) {
+      updateData.nomeCompleto = data.nomeCompleto;
     }
-  }
+    
+    if (data.email !== undefined) {
+      updateData.email = data.email.toLowerCase();
+    }
+    
+    if (data.senha !== undefined) {
+      updateData.senha = data.senha;
+    }
+    
+    if (data.foto !== undefined) {
+      updateData.foto = data.foto;
+    }
 
-  async delete(id: string): Promise<void> {
+    const user = await prisma.user.update({
+      where: { id },
+      data: updateData,
+      select: {
+        id: true,
+        nomeCompleto: true,
+        email: true,
+        foto: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+    
+    return user;
+  },
+
+  async deleteUser(id: string) {
     try {
       await prisma.user.delete({
         where: { id },
       });
-    } catch (error: any) {
-      if (error.code === 'P2025') {
-        throw new AppError('Usuário não encontrado', 404, 'USER_NOT_FOUND');
-      }
-      throw new AppError('Erro ao deletar usuário', 500);
+      return true;
+    } catch (error) {
+      return false;
     }
   }
-
-  private excludePassword(user: any): SafeUser {
-    const { senha, ...userWithoutPassword } = user;
-    return userWithoutPassword;
-  }
-}
-
-export const userService = new UserService(); 
+}; 

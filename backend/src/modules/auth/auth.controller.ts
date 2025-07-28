@@ -1,70 +1,77 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { authService } from './auth.service';
-import { ApiResponse } from '../../../../shared-types/api.types';
-import { RegisterRequest, LoginRequest } from './auth.types';
+import type { RegisterRequest, LoginRequest } from '../../../shared-types/api.types';
 
-export class AuthController {
-  
-  async register(req: Request, res: Response, next: NextFunction) {
+export const authController = {
+  async register(req: Request, res: Response) {
     try {
-      const userData: RegisterRequest = req.body;
-      
+      const data: RegisterRequest = req.body;
+
       // Validação básica
-      if (!userData.nomeCompleto || !userData.email || !userData.senha) {
+      if (!data.nomeCompleto || !data.email || !data.senha) {
         return res.status(400).json({
           success: false,
           error: 'Nome completo, email e senha são obrigatórios'
         });
       }
 
-      // Validação de email básica
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(userData.email)) {
-        return res.status(400).json({
-          success: false,
-          error: 'Email inválido'
-        });
-      }
+      const user = await authService.register(data);
 
-      const user = await authService.register(userData);
-      
-      const response: ApiResponse = {
+      res.status(201).json({
         success: true,
         data: user,
         message: 'Usuário registrado com sucesso'
-      };
-
-      res.status(201).json(response);
+      });
     } catch (error) {
-      next(error);
-    }
-  }
-
-  async login(req: Request, res: Response, next: NextFunction) {
-    try {
-      const loginData: LoginRequest = req.body;
+      console.error('Erro no registro:', error);
       
+      if (error instanceof Error && error.message.includes('já está em uso')) {
+        return res.status(400).json({
+          success: false,
+          error: error.message
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'Erro interno do servidor'
+      });
+    }
+  },
+
+  async login(req: Request, res: Response) {
+    try {
+      const data: LoginRequest = req.body;
+
       // Validação básica
-      if (!loginData.email || !loginData.senha) {
+      if (!data.email || !data.senha) {
         return res.status(400).json({
           success: false,
           error: 'Email e senha são obrigatórios'
         });
       }
 
-      const user = await authService.login(loginData);
-      
-      const response: ApiResponse = {
+      const user = await authService.login(data);
+
+      res.json({
         success: true,
         data: user,
         message: 'Login realizado com sucesso'
-      };
-
-      res.json(response);
+      });
     } catch (error) {
-      next(error);
+      console.error('Erro no login:', error);
+      
+      if (error instanceof Error && error.message.includes('Credenciais inválidas')) {
+        return res.status(401).json({
+          success: false,
+          error: 'Email ou senha incorretos'
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'Erro interno do servidor'
+      });
     }
   }
-}
-
-export const authController = new AuthController(); 
+}; 

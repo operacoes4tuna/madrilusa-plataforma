@@ -5,6 +5,7 @@ export interface User {
   id: string;
   nomeCompleto: string;
   email: string;
+  foto?: string; // URL da foto do usuário
   createdAt: Date;
   updatedAt: Date;
 }
@@ -19,6 +20,7 @@ export interface UpdateUserRequest {
   nomeCompleto?: string;
   email?: string;
   senha?: string;
+  foto?: string; // URL da foto do usuário
 }
 
 // Auth types
@@ -33,21 +35,17 @@ export interface LoginRequest {
   senha: string;
 }
 
-export interface AuthResponse {
-  user: User;
-  message: string;
-}
-
 // API Response types
 export interface ApiResponse<T = any> {
   success: boolean;
   data?: T;
-  message?: string;
   error?: string;
+  message?: string;
 }
 
+// Error types
 export interface ApiError {
+  status: number;
   message: string;
-  code?: string;
   details?: any;
 } 
