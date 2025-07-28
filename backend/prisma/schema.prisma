@@ -17,14 +17,38 @@ model User {
   senha        String   // Hash será implementado futuramente
   telemovel    String?  // Telemóvel do usuário (opcional)
   foto         String?  // URL da foto do usuário (opcional)
+  categoria    String?  // ✨ NOVO: categoria do usuário (IMIGRANTE, EMPRESA, MUNICIPIO, ACADEMIA, FAMILIA_ACOLHIMENTO)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   
-  // Futuras relações com entidades
-  // empresas Empresa[]
-  // academias Academia[]
-  // municipios Municipio[]
-  // familias FamiliaAcolhimento[]
+  // ✨ NOVO: Relação com perfil específico de imigrante
+  perfilImigrante PerfilImigrante?
+  
+  // 🔮 FUTURAS FASES: Relações com outros perfis específicos
+  // perfilEmpresa PerfilEmpresa?
+  // perfilMunicipio PerfilMunicipio?
+  // perfilAcademia PerfilAcademia?
+  // perfilFamilia PerfilFamilia?
   
   @@map("users")
+}
+
+// ✨ NOVO: Perfil específico de Imigrante (FASE 1)
+model PerfilImigrante {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  nacionalidade         String
+  dataNascimento        DateTime
+  objetivoEmprego       String?  // Descrição do objetivo de emprego
+  objetivoFormacao      String?  // Descrição do objetivo de formação
+  objetivoRegularizacao String?  // Descrição do objetivo de regularização
+  objetivoOutros        String?  // Descrição de outros objetivos
+  mensagem              String?  // Campo opcional adicional
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  // Relação com User (1:1 com cascade delete)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("perfis_imigrante")
 } 

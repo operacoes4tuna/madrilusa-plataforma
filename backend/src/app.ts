@@ -7,6 +7,7 @@ import { errorHandler } from './shared/middleware/errorHandler';
 // Import routes
 import authRoutes from './modules/auth/auth.routes';
 import userRoutes from './modules/users/user.routes';
+import imigranteRoutes from './modules/imigrantes/imigrante.routes';
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 // Rotas
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/imigrantes', imigranteRoutes); // ✨ NOVO: Rotas de imigrantes
 
 // Health check
 app.get('/api/health', (req, res) => {

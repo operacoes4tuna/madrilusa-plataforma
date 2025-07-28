@@ -30,8 +30,18 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
-  const openAuthModal = (mode: 'register' | 'login') => {
-    setAuthMode(mode);
+  // ✨ NOVO: Scroll para seção de registration cards
+  const handleInscrevaSeClick = () => {
+    const registrationSection = document.getElementById('registration-cards');
+    if (registrationSection) {
+      registrationSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
+
+  // ✅ Mantido para Login (ainda usa modal)
+  const openLoginModal = () => {
+    setAuthMode('login');
     setIsAuthModalOpen(true);
     setIsMenuOpen(false);
   };
@@ -165,7 +175,7 @@ const Header = () => {
                 <Button 
                   variant="rectangular" 
                   size="rectangular"
-                  onClick={() => openAuthModal('register')}
+                  onClick={handleInscrevaSeClick} 
                   className="bg-primary text-primary-foreground hover:bg-primary-glow"
                 >
                   Inscreva-se
@@ -173,7 +183,7 @@ const Header = () => {
                 <Button 
                   variant="secondary" 
                   size="rectangular"
-                  onClick={() => openAuthModal('login')}
+                  onClick={openLoginModal}
                 >
                   Login
                 </Button>
@@ -255,7 +265,7 @@ const Header = () => {
                       variant="rectangular" 
                       size="rectangular" 
                       className="w-full bg-primary text-primary-foreground hover:bg-primary-glow"
-                      onClick={() => openAuthModal('register')}
+                      onClick={handleInscrevaSeClick}
                     >
                       Inscreva-se
                     </Button>
@@ -263,7 +273,7 @@ const Header = () => {
                       variant="secondary" 
                       size="rectangular" 
                       className="w-full"
-                      onClick={() => openAuthModal('login')}
+                      onClick={openLoginModal}
                     >
                       Login
                     </Button>
@@ -275,7 +285,7 @@ const Header = () => {
         )}
       </div>
       
-      {/* Auth Modal */}
+      {/* Auth Modal - Apenas para Login agora */}
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}

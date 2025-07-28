@@ -1,18 +1,48 @@
-// Reexport shared types
+// Imports dos tipos que usamos no arquivo
+import type { 
+  UserCategory, 
+  User, 
+  RegisterBasicResponse 
+} from '../../../../shared-types/api.types';
+
+// Reexport ALL shared types (atualizado com categorias)
 export type { 
+  // ✅ Tipos existentes
   RegisterRequest, 
   LoginRequest, 
   AuthResponse,
   User,
-  ApiResponse 
+  ApiResponse,
+  
+  // ✨ NOVOS: Tipos para categorias
+  UserCategory,
+  PerfilImigrante,
+  CreatePerfilImigranteRequest,
+  UpdatePerfilImigranteRequest,
+  PerfilImigranteResponse,
+  
+  // ✨ NOVOS: Registro em 2 etapas
+  RegisterBasicRequest,
+  RegisterBasicResponse,
+  RegisterImigranteCompleteRequest,
+  
+  // ✨ NOVOS: Nacionalidades
+  Nacionalidade
 } from '../../../../shared-types/api.types';
 
-// Frontend-specific types
+// ✨ NOVO: Reexportar valores (constantes)
+export { 
+  USER_CATEGORIES,
+  NACIONALIDADES 
+} from '../../../../shared-types/api.types';
+
+// Frontend-specific types (únicos do frontend)
 export interface AuthFormData {
   nomeCompleto?: string;
   email: string;
   telemovel?: string;
   senha: string;
+  categoria?: UserCategory; // ✨ ADICIONADO: categoria opcional
 }
 
 export interface AuthState {
@@ -21,32 +51,31 @@ export interface AuthState {
   isLoading: boolean;
 }
 
-export type AuthMode = 'register' | 'login'; 
+export type AuthMode = 'register' | 'login';
 
-export interface User {
-  id: string;
+// ✨ NOVO: Tipos específicos para fluxo em 2 etapas no frontend
+export interface BasicRegistrationFormData {
   nomeCompleto: string;
   email: string;
-  telemovel?: string; // Telemóvel do usuário
-  foto?: string; // URL da foto do usuário
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface LoginRequest {
-  email: string;
-  senha: string;
-}
-
-export interface RegisterRequest {
-  nomeCompleto: string;
-  email: string;
-  senha: string;
   telemovel?: string;
+  senha: string;
+  categoria: UserCategory;
 }
 
-export interface AuthResponse {
-  success: boolean;
-  data: User;
-  message?: string;
+export interface ImigranteRegistrationFormData {
+  nacionalidade: string;
+  dataNascimento: string; // String porque input type="date" retorna string
+  objetivoEmprego?: string;
+  objetivoFormacao?: string;
+  objetivoRegularizacao?: string;
+  objetivoOutros?: string;
+  mensagem?: string;
+}
+
+export interface CategoryRegistrationState {
+  step: 1 | 2;
+  category: UserCategory | null;
+  basicData: RegisterBasicResponse | null;
+  isLoading: boolean;
+  error: string | null;
 } 
