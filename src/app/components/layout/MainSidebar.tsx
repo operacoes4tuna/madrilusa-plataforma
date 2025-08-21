@@ -39,48 +39,88 @@ const MainSidebar: React.FC = () => {
   const categoryMenuItems = [];
   
   if (user?.categoria === USER_CATEGORIES.IMIGRANTE) {
-    categoryMenuItems.push({
-      title: 'Perfil de Imigrante',
-      to: '/app/perfil-imigrante',
-      iconClass: 'language',
-      htmlAfter: ''
-    });
+    categoryMenuItems.push(
+      {
+        title: 'Perfil de Imigrante',
+        to: '/app/perfil-imigrante',
+        iconClass: 'language',
+        htmlAfter: ''
+      },
+      {
+        title: 'Minhas Habilidades',
+        to: '/app/minhas-contribuicoes',
+        iconClass: 'star',
+        htmlAfter: ''
+      }
+    );
   }
   
   if (user?.categoria === USER_CATEGORIES.EMPRESA) {
-    categoryMenuItems.push({
-      title: 'Perfil de Empresa',
-      to: '/app/perfil-empresa',
-      iconClass: 'business',
-      htmlAfter: ''
-    });
+    categoryMenuItems.push(
+      {
+        title: 'Perfil de Empresa',
+        to: '/app/perfil-empresa',
+        iconClass: 'business',
+        htmlAfter: ''
+      },
+      {
+        title: 'Minhas Oportunidades',
+        to: '/app/minhas-contribuicoes',
+        iconClass: 'work',
+        htmlAfter: ''
+      }
+    );
   }
   
   if (user?.categoria === USER_CATEGORIES.MUNICIPIO) {
-    categoryMenuItems.push({
-      title: 'Perfil de Município',
-      to: '/app/perfil-municipio',
-      iconClass: 'location_city',
-      htmlAfter: ''
-    });
+    categoryMenuItems.push(
+      {
+        title: 'Perfil de Município',
+        to: '/app/perfil-municipio',
+        iconClass: 'location_city',
+        htmlAfter: ''
+      },
+      {
+        title: 'Meus Projetos',
+        to: '/app/minhas-contribuicoes',
+        iconClass: 'account_balance',
+        htmlAfter: ''
+      }
+    );
   }
   
   if (user?.categoria === USER_CATEGORIES.ACADEMIA) {
-    categoryMenuItems.push({
-      title: 'Perfil de Academia',
-      to: '/app/perfil-academia',
-      iconClass: 'school',
-      htmlAfter: ''
-    });
+    categoryMenuItems.push(
+      {
+        title: 'Perfil de Academia',
+        to: '/app/perfil-academia',
+        iconClass: 'school',
+        htmlAfter: ''
+      },
+      {
+        title: 'Meus Cursos',
+        to: '/app/minhas-contribuicoes',
+        iconClass: 'menu_book',
+        htmlAfter: ''
+      }
+    );
   }
   
   if (user?.categoria === USER_CATEGORIES.FAMILIA_ACOLHIMENTO) {
-    categoryMenuItems.push({
-      title: 'Perfil de Família',
-      to: '/app/perfil-familia',
-      iconClass: 'family_restroom',
-      htmlAfter: ''
-    });
+    categoryMenuItems.push(
+      {
+        title: 'Perfil de Família',
+        to: '/app/perfil-familia',
+        iconClass: 'family_restroom',
+        htmlAfter: ''
+      },
+      {
+        title: 'Meu Suporte',
+        to: '/app/minhas-contribuicoes',
+        iconClass: 'favorite',
+        htmlAfter: ''
+      }
+    );
   }
   
   // ✨ ADMIN: Menu específico para administradores
@@ -96,6 +136,18 @@ const MainSidebar: React.FC = () => {
         title: 'Gestão de Usuários',
         to: '/app/user-management',
         iconClass: 'group',
+        htmlAfter: ''
+      },
+      {
+        title: 'Tipos de Contribuição',
+        to: '/app/tipos-contribuicao',
+        iconClass: 'category',
+        htmlAfter: ''
+      },
+      {
+        title: 'Gestão de Tags',
+        to: '/app/tags-management',
+        iconClass: 'local_offer',
         htmlAfter: ''
       }
     );

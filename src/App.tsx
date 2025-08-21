@@ -14,6 +14,9 @@ import PerfilAcademia from "./app/pages/PerfilAcademia";
 import PerfilFamilia from "./app/pages/PerfilFamilia";
 import AdminDashboard from "./app/pages/AdminDashboard"; // ✨ ADMIN
 import UserManagement from "./app/pages/UserManagement"; // ✨ ADMIN
+import TiposContribuicaoManagement from "./app/pages/TiposContribuicaoManagement"; // ✨ CONTRIBUIÇÕES
+import TagsManagement from "./app/pages/TagsManagement"; // ✨ CONTRIBUIÇÕES
+import MinhasContribuicoes from "./app/pages/MinhasContribuicoes"; // ✨ CONTRIBUIÇÕES USUÁRIO
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -45,6 +48,9 @@ const App = () => (
             <Route path="perfil-familia" element={<PerfilFamilia />} />
             <Route path="admin-dashboard" element={<AdminDashboard />} />
             <Route path="user-management" element={<UserManagement />} />
+            <Route path="tipos-contribuicao" element={<TiposContribuicaoManagement />} />
+            <Route path="tags-management" element={<TagsManagement />} />
+            <Route path="minhas-contribuicoes" element={<MinhasContribuicoes />} />
           </Route>
           
           {/* 404 */}

@@ -559,4 +559,109 @@ export const OBJETIVOS_IMIGRANTE = [
   'Regularização'
 ] as const;
 
-export type ObjetivoImigrante = typeof OBJETIVOS_IMIGRANTE[number]; 
+export type ObjetivoImigrante = typeof OBJETIVOS_IMIGRANTE[number];
+
+// ✨ SISTEMA CONTRIBUIÇÕES: Interfaces para tipos de contribuição
+export interface TipoContribuicao {
+  id: string;
+  titulo: string;
+  categoria: UserCategory;
+  contextoIA?: string;
+  textoModelo?: string;
+  tagsModelo?: string[];
+  perguntasModelo?: string;
+  ativo: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CreateTipoContribuicaoRequest {
+  titulo: string;
+  categoria: UserCategory;
+  contextoIA?: string;
+  textoModelo?: string;
+  tagsModelo?: string[];
+  perguntasModelo?: string;
+}
+
+export interface UpdateTipoContribuicaoRequest {
+  titulo?: string;
+  categoria?: UserCategory;
+  contextoIA?: string;
+  textoModelo?: string;
+  tagsModelo?: string[];
+  perguntasModelo?: string;
+  ativo?: boolean;
+}
+
+// ✨ SISTEMA CONTRIBUIÇÕES: Interfaces para contribuições dos usuários
+export interface Contribuicao {
+  id: string;
+  userId: string;
+  tipoContribuicaoId: string;
+  descricao: string;
+  tags?: string[];
+  ativo: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  // Relações
+  tipoContribuicao?: TipoContribuicao;
+  user?: User;
+}
+
+export interface CreateContribuicaoRequest {
+  tipoContribuicaoId: string;
+  descricao: string;
+  tags?: string[];
+}
+
+export interface UpdateContribuicaoRequest {
+  descricao?: string;
+  tags?: string[];
+  ativo?: boolean;
+}
+
+// ✨ SISTEMA CONTRIBUIÇÕES: Interfaces para tags do sistema
+export interface TagSistema {
+  id: string;
+  nome: string;
+  cor?: string;
+  categoria?: string;
+  usos: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CreateTagSistemaRequest {
+  nome: string;
+  cor?: string;
+  categoria?: string;
+}
+
+export interface UpdateTagSistemaRequest {
+  nome?: string;
+  cor?: string;
+  categoria?: string;
+}
+
+// ✨ SISTEMA CONTRIBUIÇÕES: Responses específicas
+export interface ContribuicoesResponse {
+  success: boolean;
+  data?: Contribuicao[];
+  error?: string;
+  message?: string;
+}
+
+export interface TiposContribuicaoResponse {
+  success: boolean;
+  data?: TipoContribuicao[];
+  error?: string;
+  message?: string;
+}
+
+export interface TagsSistemaResponse {
+  success: boolean;
+  data?: TagSistema[];
+  error?: string;
+  message?: string;
+} 

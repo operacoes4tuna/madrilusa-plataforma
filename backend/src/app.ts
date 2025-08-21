@@ -13,6 +13,7 @@ import municipioRoutes from './modules/municipios/municipio.routes';
 import academiaRoutes from './modules/academias/academia.routes';
 import familiaRoutes from './modules/familias/familia.routes';
 import adminRoutes from './modules/admin/admin.routes'; // ✨ NOVO: Rotas admin
+import contribuicoesRoutes from './modules/contribuicoes/contribuicoes.routes'; // ✨ SISTEMA CONTRIBUIÇÕES
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use('/api/municipios', municipioRoutes); // ✨ FASE 3: Rotas de municípios
 app.use('/api/academias', academiaRoutes); // ✨ FASE 4: Rotas de academias
 app.use('/api/familias', familiaRoutes); // ✨ FASE 5: Rotas de famílias
 app.use('/api/admin', adminRoutes); // ✨ ADMIN: Rotas de administração
+app.use('/api/contribuicoes', contribuicoesRoutes); // ✨ SISTEMA CONTRIBUIÇÕES: Rotas de contribuições
 
 // Health check
 app.get('/api/health', (req, res) => {
