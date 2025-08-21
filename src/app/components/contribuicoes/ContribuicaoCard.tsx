@@ -7,7 +7,7 @@ interface TipoContribuicao {
   categoria: string;
   contextoIA?: string;
   textoModelo?: string;
-  tagsModelo?: string[];
+  tagsModelo?: string[] | string; // Pode ser array ou string JSON
   perguntasModelo?: string;
 }
 

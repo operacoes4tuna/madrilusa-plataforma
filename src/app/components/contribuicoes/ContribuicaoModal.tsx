@@ -10,7 +10,7 @@ interface TipoContribuicao {
   categoria: string;
   contextoIA?: string;
   textoModelo?: string;
-  tagsModelo?: string[];
+  tagsModelo?: string[] | string; // Pode ser array ou string JSON
   perguntasModelo?: string;
 }
 
@@ -78,13 +78,29 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
   const handleTipoChange = (tipoId: string) => {
     const tipo = tiposDisponiveis.find(t => t.id === tipoId);
     setSelectedTipo(tipo || null);
+    
+    // Parse das tags modelo se disponível
+    let tagsModelo: string[] = [];
+    if (tipo?.tagsModelo) {
+      try {
+        if (typeof tipo.tagsModelo === 'string') {
+          tagsModelo = JSON.parse(tipo.tagsModelo);
+        } else if (Array.isArray(tipo.tagsModelo)) {
+          tagsModelo = tipo.tagsModelo;
+        }
+      } catch (error) {
+        console.error('Erro ao fazer parse das tags modelo:', error);
+        tagsModelo = [];
+      }
+    }
+    
     setFormData({
       ...formData,
       tipoContribuicaoId: tipoId,
       // Pré-preencher com texto modelo se disponível
       descricao: !editingContribuicao && tipo?.textoModelo ? tipo.textoModelo : formData.descricao,
       // Sugerir tags modelo se disponível
-      tags: !editingContribuicao && tipo?.tagsModelo ? tipo.tagsModelo : formData.tags
+      tags: !editingContribuicao && tagsModelo.length > 0 ? tagsModelo : formData.tags
     });
   };
 
@@ -250,34 +266,51 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
               </div>
 
               {/* Tags Sugeridas */}
-              {selectedTipo?.tagsModelo && selectedTipo.tagsModelo.length > 0 && (
-                <div className="form-group">
-                  <label>Tags Sugeridas:</label>
-                  <div>
-                    {selectedTipo.tagsModelo
-                      .filter(tag => !formData.tags.includes(tag))
-                      .map((tag, index) => (
-                      <Button
-                        key={index}
-                        size="sm"
-                        theme="outline-secondary"
-                        className="mr-1 mb-1"
-                        onClick={() => {
-                          if (formData.tags.length < 8) {
-                            setFormData({
-                              ...formData,
-                              tags: [...formData.tags, tag]
-                            });
-                          }
-                        }}
-                        disabled={formData.tags.length >= 8}
-                      >
-                        + {tag}
-                      </Button>
-                    ))}
+              {(() => {
+                // Parse seguro das tags modelo
+                let tagsModelo: string[] = [];
+                if (selectedTipo?.tagsModelo) {
+                  try {
+                    if (typeof selectedTipo.tagsModelo === 'string') {
+                      tagsModelo = JSON.parse(selectedTipo.tagsModelo);
+                    } else if (Array.isArray(selectedTipo.tagsModelo)) {
+                      tagsModelo = selectedTipo.tagsModelo;
+                    }
+                  } catch (error) {
+                    console.error('Erro ao fazer parse das tags modelo:', error);
+                    tagsModelo = [];
+                  }
+                }
+
+                return tagsModelo.length > 0 && (
+                  <div className="form-group">
+                    <label>Tags Sugeridas:</label>
+                    <div>
+                      {tagsModelo
+                        .filter(tag => !formData.tags.includes(tag))
+                        .map((tag, index) => (
+                        <Button
+                          key={index}
+                          size="sm"
+                          theme="outline-secondary"
+                          className="mr-1 mb-1"
+                          onClick={() => {
+                            if (formData.tags.length < 8) {
+                              setFormData({
+                                ...formData,
+                                tags: [...formData.tags, tag]
+                              });
+                            }
+                          }}
+                          disabled={formData.tags.length >= 8}
+                        >
+                          + {tag}
+                        </Button>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                );
+              })()}
             </div>
 
             <div className="modal-footer">
