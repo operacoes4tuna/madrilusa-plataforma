@@ -132,7 +132,7 @@ const TiposContribuicaoManagement: React.FC = () => {
   };
 
   const handleDelete = async (id: string, titulo: string) => {
-    if (!confirm(`Tem certeza que deseja remover o tipo "${titulo}"?`)) {
+    if (!window.confirm(`Tem certeza que deseja remover o tipo "${titulo}"?`)) {
       return;
     }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'shards-react';
+import { Container, Row, Col, Button } from 'shards-react';
 import PageTitle from '../components/common/PageTitle';
 import SmallStats from '../components/common/SmallStats';
 
@@ -17,8 +17,16 @@ interface AdminStats {
   profilesCompleted: number;
 }
 
+interface ContribuicoesStats {
+  totalTipos: number;
+  totalTags: number;
+  totalContribuicoes: number;
+  tagsComUso: number;
+}
+
 const AdminDashboard: React.FC = () => {
   const [stats, setStats] = useState<AdminStats | null>(null);
+  const [contribuicoesStats, setContribuicoesStats] = useState<ContribuicoesStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,13 +39,22 @@ const AdminDashboard: React.FC = () => {
       setLoading(true);
       setError(null);
       
-      const response = await fetch('/api/admin/stats');
-      const data = await response.json();
+      const [statsRes, contribuicoesRes] = await Promise.all([
+        fetch('/api/admin/stats'),
+        fetch('/api/admin/contribuicoes/stats')
+      ]);
+
+      const statsData = await statsRes.json();
+      const contribuicoesData = await contribuicoesRes.json();
       
-      if (data.success) {
-        setStats(data.data);
+      if (statsData.success) {
+        setStats(statsData.data);
       } else {
-        setError(data.error || 'Erro ao carregar estatísticas');
+        setError(statsData.error || 'Erro ao carregar estatísticas');
+      }
+
+      if (contribuicoesData.success) {
+        setContribuicoesStats(contribuicoesData.data.resumo);
       }
     } catch (error) {
       console.error('Erro ao buscar estatísticas:', error);
@@ -150,6 +167,38 @@ const AdminDashboard: React.FC = () => {
     }
   ];
 
+  // Estatísticas de contribuições
+  const contribuicoesStatsCards = [
+    {
+      label: "Total Contribuições",
+      value: contribuicoesStats?.totalContribuicoes || 0,
+      percentage: "Ativas",
+      increase: true,
+      attrs: { md: "6", sm: "6" }
+    },
+    {
+      label: "Tipos Configurados",
+      value: contribuicoesStats?.totalTipos || 0,
+      percentage: "Disponíveis",
+      increase: true,
+      attrs: { md: "6", sm: "6" }
+    },
+    {
+      label: "Tags no Sistema",
+      value: contribuicoesStats?.totalTags || 0,
+      percentage: "Cadastradas",
+      increase: true,
+      attrs: { md: "6", sm: "6" }
+    },
+    {
+      label: "Tags em Uso",
+      value: contribuicoesStats?.tagsComUso || 0,
+      percentage: "Utilizadas",
+      increase: true,
+      attrs: { md: "6", sm: "6" }
+    }
+  ];
+
   return (
     <Container fluid className="main-content-container px-4">
       {/* Page Header */}
@@ -167,6 +216,51 @@ const AdminDashboard: React.FC = () => {
           <Col className="col-lg mb-4" key={idx} {...stat.attrs}>
             <SmallStats
               id={`admin-stats-${idx}`}
+              variation="1"
+              label={stat.label}
+              value={stat.value}
+              percentage={stat.percentage}
+              increase={stat.increase}
+            />
+          </Col>
+        ))}
+      </Row>
+
+      {/* Estatísticas de Contribuições */}
+      <Row className="mb-4">
+        <Col>
+          <div className="card small">
+            <div className="card-header border-bottom d-flex justify-content-between align-items-center">
+              <h6 className="m-0">Sistema de Contribuições</h6>
+              <div>
+                <Button
+                  size="sm"
+                  theme="outline-primary"
+                  className="mr-2"
+                  onClick={() => window.location.href = '/app/tipos-contribuicao'}
+                >
+                  <i className="material-icons mr-1">category</i>
+                  Tipos
+                </Button>
+                <Button
+                  size="sm"
+                  theme="outline-secondary"
+                  onClick={() => window.location.href = '/app/tags-management'}
+                >
+                  <i className="material-icons mr-1">local_offer</i>
+                  Tags
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Col>
+      </Row>
+
+      <Row className="mb-4">
+        {contribuicoesStatsCards.map((stat, idx) => (
+          <Col className="col-lg mb-4" key={idx} {...stat.attrs}>
+            <SmallStats
+              id={`contribuicoes-stats-${idx}`}
               variation="1"
               label={stat.label}
               value={stat.value}

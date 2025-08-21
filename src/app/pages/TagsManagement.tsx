@@ -128,7 +128,7 @@ const TagsManagement: React.FC = () => {
       return;
     }
 
-    if (!confirm(`Tem certeza que deseja remover a tag "${nome}"?`)) {
+    if (!window.confirm(`Tem certeza que deseja remover a tag "${nome}"?`)) {
       return;
     }
 

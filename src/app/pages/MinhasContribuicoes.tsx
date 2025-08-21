@@ -82,7 +82,7 @@ const MinhasContribuicoes: React.FC = () => {
   };
 
   const handleDelete = async (id: string, descricao: string) => {
-    if (!confirm(`Tem certeza que deseja remover esta contribuição?\n\n"${descricao.substring(0, 100)}..."`)) {
+    if (!window.confirm(`Tem certeza que deseja remover esta contribuição?\n\n"${descricao.substring(0, 100)}..."`)) {
       return;
     }
 

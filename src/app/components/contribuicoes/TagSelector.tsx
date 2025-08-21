@@ -138,7 +138,7 @@ const TagSelector: React.FC<TagSelectorProps> = ({
         {showSuggestions && filteredTags.length > 0 && (
           <div 
             className="position-absolute w-100 bg-white border rounded shadow-sm mt-1"
-            style={{ zIndex: 1000, maxHeight: '200px', overflowY: 'auto' }}
+            style={{ zIndex: 1050, maxHeight: '200px', overflowY: 'auto' }}
           >
             {filteredTags.slice(0, 8).map((tag, index) => (
               <div

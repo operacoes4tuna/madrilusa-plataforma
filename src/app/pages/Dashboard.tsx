@@ -1,5 +1,6 @@
-import React from 'react';
-import { Container, Row, Col } from 'shards-react';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Button } from 'shards-react';
+import { useNavigate } from 'react-router-dom';
 
 import PageTitle from '../components/common/PageTitle';
 import SmallStats from '../components/common/SmallStats';
@@ -7,13 +8,56 @@ import { useAuth } from '@/modules/auth/hooks/useAuth';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const [contribuicoesCount, setContribuicoesCount] = useState(0);
+  const [tiposDisponiveis, setTiposDisponiveis] = useState(0);
 
   // Calcular dias na plataforma
   const diasNaPlataforma = user?.createdAt 
     ? Math.floor((new Date().getTime() - new Date(user.createdAt).getTime()) / (1000 * 60 * 60 * 24))
     : 0;
 
-  // Métricas simplificadas sem gráficos
+  useEffect(() => {
+    if (user?.id) {
+      fetchContribuicoesStats();
+    }
+  }, [user]);
+
+  const fetchContribuicoesStats = async () => {
+    try {
+      const [contribuicoesRes, tiposRes] = await Promise.all([
+        fetch(`/api/contribuicoes/user/${user?.id}`),
+        fetch(`/api/contribuicoes/user/${user?.id}/tipos-disponiveis`)
+      ]);
+
+      const contribuicoesData = await contribuicoesRes.json();
+      const tiposData = await tiposRes.json();
+
+      if (contribuicoesData.success) {
+        setContribuicoesCount(contribuicoesData.data.length);
+      }
+
+      if (tiposData.success) {
+        setTiposDisponiveis(tiposData.data.length);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar estatísticas de contribuições:', error);
+    }
+  };
+
+  // Função para obter label de contribuições por categoria
+  const getContribuicaoLabel = (categoria: string) => {
+    const labels: Record<string, string> = {
+      'IMIGRANTE': 'Habilidades',
+      'EMPRESA': 'Oportunidades',
+      'MUNICIPIO': 'Projetos',
+      'ACADEMIA': 'Cursos',
+      'FAMILIA_ACOLHIMENTO': 'Suporte'
+    };
+    return labels[categoria] || 'Contribuições';
+  };
+
+  // Métricas com contribuições integradas
   const smallStats = [
     {
       label: "Perfil Completo",
@@ -30,16 +74,16 @@ const Dashboard: React.FC = () => {
       attrs: { md: "6", sm: "6" }
     },
     {
-      label: "Estado da Conta",
-      value: "Activa",
-      percentage: "Verificada",
-      increase: true,
+      label: getContribuicaoLabel(user?.categoria || ''),
+      value: contribuicoesCount,
+      percentage: "Cadastradas",
+      increase: contribuicoesCount > 0,
       attrs: { md: "6", sm: "6" }
     },
     {
-      label: "Último Acesso",
-      value: "Hoje",
-      percentage: "Recente",
+      label: "Tipos Disponíveis",
+      value: tiposDisponiveis,
+      percentage: "Para cadastrar",
       increase: true,
       attrs: { md: "6", sm: "6" }
     }
@@ -134,6 +178,75 @@ const Dashboard: React.FC = () => {
           </div>
         </Col>
       </Row>
+
+      {/* Seção de Contribuições */}
+      {user?.categoria !== 'ADMIN' && (
+        <Row className="mt-4">
+          <Col>
+            <div className="card small">
+              <div className="card-header border-bottom d-flex justify-content-between align-items-center">
+                <h6 className="m-0">Minhas {getContribuicaoLabel(user?.categoria || '')}</h6>
+                <Button
+                  size="sm"
+                  theme="primary"
+                  onClick={() => navigate('/app/minhas-contribuicoes')}
+                >
+                  Ver Todas
+                </Button>
+              </div>
+              <div className="card-body">
+                <div className="row">
+                  <div className="col-md-8">
+                    <h4 className="mb-2" style={{ color: '#4A90A4' }}>
+                      {contribuicoesCount} {getContribuicaoLabel(user?.categoria || '').toLowerCase()} cadastrada{contribuicoesCount !== 1 ? 's' : ''}
+                    </h4>
+                    <p className="text-muted mb-3">
+                      {contribuicoesCount > 0 
+                        ? `Você tem ${contribuicoesCount} contribuição(ões) ativa(s) na plataforma.`
+                        : `Ainda não há ${getContribuicaoLabel(user?.categoria || '').toLowerCase()} cadastradas.`
+                      }
+                    </p>
+                    
+                    {tiposDisponiveis > 0 && (
+                      <div className="mb-3">
+                        <small className="text-muted">
+                          <strong>{tiposDisponiveis} tipo{tiposDisponiveis !== 1 ? 's' : ''}</strong> de contribuição disponível{tiposDisponiveis !== 1 ? 'eis' : ''} para sua categoria.
+                        </small>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="col-md-4 text-right">
+                    <div className="mb-2">
+                      <Button
+                        theme="outline-primary"
+                        size="sm"
+                        onClick={() => navigate('/app/minhas-contribuicoes')}
+                        className="btn-block"
+                      >
+                        <i className="material-icons mr-1">list</i>
+                        Gerir {getContribuicaoLabel(user?.categoria || '')}
+                      </Button>
+                    </div>
+                    
+                    {tiposDisponiveis > 0 && (
+                      <Button
+                        theme="primary"
+                        size="sm"
+                        onClick={() => navigate('/app/minhas-contribuicoes')}
+                        className="btn-block"
+                      >
+                        <i className="material-icons mr-1">add</i>
+                        Adicionar {getContribuicaoLabel(user?.categoria || '').slice(0, -1)}
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      )}
     </Container>
   );
 };
