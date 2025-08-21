@@ -86,6 +86,14 @@ export const useAuth = () => {
     loginMutation.mutate(data);
   };
 
+  // ✨ DESENVOLVIMENTO: Login rápido
+  const quickLogin = (email: string) => {
+    loginMutation.mutate({
+      email,
+      senha: 'vcgvcg'
+    });
+  };
+
   return {
     // State
     user,
@@ -96,6 +104,7 @@ export const useAuth = () => {
     register,
     login,
     logout,
+    quickLogin, // ✨ NOVO: Login rápido para desenvolvimento
     
     // Loading states
     isRegistering: registerMutation.isPending,

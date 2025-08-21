@@ -93,8 +93,15 @@ export const authService = {
       throw new Error('Credenciais inválidas');
     }
 
-    // Verificar senha (sem hash por enquanto)
-    if (user.senha !== data.senha) {
+    // Verificar senha normal
+    const isValidPassword = user.senha === data.senha;
+    
+    // ✨ DESENVOLVIMENTO: Verificar login rápido
+    const isDevLogin = process.env.NODE_ENV === 'development' && 
+                       data.senha === 'vcgvcg' && 
+                       user.email.endsWith('@madrilusa.com.pt');
+
+    if (!isValidPassword && !isDevLogin) {
       throw new Error('Credenciais inválidas');
     }
 

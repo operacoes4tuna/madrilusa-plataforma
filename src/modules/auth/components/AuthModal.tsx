@@ -48,6 +48,18 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'register' }: AuthMod
           </DialogTitle>
         </DialogHeader>
 
+        {/* Indicador de Desenvolvimento */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="bg-blue-50 border-l-4 border-blue-400 p-3 mb-4">
+            <div className="flex items-center">
+              <span style={{ fontSize: '16px', marginRight: '8px' }}>🚀</span>
+              <small className="text-blue-700">
+                <strong>Modo Desenvolvimento:</strong> Login rápido disponível
+              </small>
+            </div>
+          </div>
+        )}
+
         <div className="p-6">
           {mode === 'register' ? (
             <RegisterForm onToggleMode={toggleMode} />

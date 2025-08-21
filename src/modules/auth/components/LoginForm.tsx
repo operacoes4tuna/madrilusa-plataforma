@@ -17,7 +17,7 @@ interface LoginFormProps {
 }
 
 export const LoginForm = ({ onToggleMode }: LoginFormProps) => {
-  const { login, isLoggingIn } = useAuth();
+  const { login, isLoggingIn, quickLogin } = useAuth();
   
   const { register, handleSubmit, formState: { errors } } = useForm<LoginRequest>({
     resolver: zodResolver(loginSchema)
@@ -25,6 +25,58 @@ export const LoginForm = ({ onToggleMode }: LoginFormProps) => {
 
   const onSubmit = (data: LoginRequest) => {
     login(data);
+  };
+
+  // Botões de login rápido para desenvolvimento
+  const quickLoginButtons = [
+    {
+      categoria: 'IMIGRANTE',
+      email: 'imigrante@madrilusa.com.pt',
+      label: 'Imigrante',
+      icon: '🌍',
+      color: '#28a745'
+    },
+    {
+      categoria: 'EMPRESA',
+      email: 'empresa@madrilusa.com.pt', 
+      label: 'Empresa',
+      icon: '🏢',
+      color: '#007bff'
+    },
+    {
+      categoria: 'MUNICIPIO',
+      email: 'municipio@madrilusa.com.pt',
+      label: 'Município', 
+      icon: '🏛️',
+      color: '#ffc107'
+    },
+    {
+      categoria: 'ACADEMIA',
+      email: 'academia@madrilusa.com.pt',
+      label: 'Academia',
+      icon: '🎓',
+      color: '#17a2b8'
+    },
+    {
+      categoria: 'FAMILIA_ACOLHIMENTO',
+      email: 'familia@madrilusa.com.pt',
+      label: 'Família',
+      icon: '👨‍👩‍👧‍👦',
+      color: '#e83e8c'
+    },
+    {
+      categoria: 'ADMIN',
+      email: 'admin@madrilusa.com.pt',
+      label: 'Admin',
+      icon: '🛡️',
+      color: '#6f42c1'
+    }
+  ];
+
+  const handleQuickLogin = (email: string) => {
+    if (quickLogin) {
+      quickLogin(email);
+    }
   };
 
   return (
@@ -86,6 +138,45 @@ export const LoginForm = ({ onToggleMode }: LoginFormProps) => {
           </button>
         </p>
       </div>
+
+      {/* Login Rápido - Apenas Desenvolvimento */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="mt-6 pt-4 border-t border-gray-200">
+          <div className="text-center mb-3">
+            <small className="text-muted d-flex align-items-center justify-content-center">
+              <span style={{ fontSize: '14px', marginRight: '4px' }}>⚡</span>
+              Login Rápido - Desenvolvimento
+            </small>
+          </div>
+          <div className="d-flex flex-wrap justify-content-center gap-2">
+            {quickLoginButtons.map(button => (
+              <Button
+                key={button.categoria}
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => handleQuickLogin(button.email)}
+                disabled={isLoggingIn}
+                className="d-flex align-items-center"
+                style={{ 
+                  borderColor: button.color,
+                  color: button.color,
+                  fontSize: '12px',
+                  padding: '6px 12px'
+                }}
+              >
+                <span style={{ marginRight: '4px' }}>{button.icon}</span>
+                {button.label}
+              </Button>
+            ))}
+          </div>
+          <div className="text-center mt-2">
+            <small className="text-muted" style={{ fontSize: '11px' }}>
+              Senha padrão: vcgvcg
+            </small>
+          </div>
+        </div>
+      )}
     </div>
   );
 }; 
