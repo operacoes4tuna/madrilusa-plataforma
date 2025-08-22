@@ -56,7 +56,7 @@ const SinergIA: React.FC = () => {
     setError(null);
 
     try {
-      const response = await fetch(`/api/sinergia/test-analyze/${user.id}`, {
+      const response = await fetch(`/api/sinergia/analyze/${user.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
