@@ -1,0 +1,165 @@
+/* Sistema de cores por categoria - Madrilusa */
+
+/* Cards com bordas laterais coloridas */
+.card-categoria-imigrante {
+  border-left: 4px solid #28a745 !important;
+  transition: box-shadow 0.2s ease;
+}
+
+.card-categoria-imigrante:hover {
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
+}
+
+.card-categoria-empresa {
+  border-left: 4px solid #007bff !important;
+  transition: box-shadow 0.2s ease;
+}
+
+.card-categoria-empresa:hover {
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+.card-categoria-municipio {
+  border-left: 4px solid #ffc107 !important;
+  transition: box-shadow 0.2s ease;
+}
+
+.card-categoria-municipio:hover {
+  box-shadow: 0 4px 8px rgba(255, 193, 7, 0.2);
+}
+
+.card-categoria-academia {
+  border-left: 4px solid #17a2b8 !important;
+  transition: box-shadow 0.2s ease;
+}
+
+.card-categoria-academia:hover {
+  box-shadow: 0 4px 8px rgba(23, 162, 184, 0.2);
+}
+
+.card-categoria-familia-acolhimento,
+.card-categoria-familia_acolhimento {
+  border-left: 4px solid #e83e8c !important;
+  transition: box-shadow 0.2s ease;
+}
+
+.card-categoria-familia-acolhimento:hover,
+.card-categoria-familia_acolhimento:hover {
+  box-shadow: 0 4px 8px rgba(232, 62, 140, 0.2);
+}
+
+/* Headers com backgrounds suaves */
+.header-categoria-imigrante {
+  background-color: #d4edda !important;
+  border-bottom: 1px solid #c3e6cb !important;
+}
+
+.header-categoria-empresa {
+  background-color: #d1ecf1 !important;
+  border-bottom: 1px solid #bee5eb !important;
+}
+
+.header-categoria-municipio {
+  background-color: #fff3cd !important;
+  border-bottom: 1px solid #ffeaa7 !important;
+}
+
+.header-categoria-academia {
+  background-color: #d1ecf1 !important;
+  border-bottom: 1px solid #bee5eb !important;
+}
+
+.header-categoria-familia-acolhimento,
+.header-categoria-familia_acolhimento {
+  background-color: #f8d7e4 !important;
+  border-bottom: 1px solid #f5c2c7 !important;
+}
+
+/* Botões de filtro com cores da categoria */
+.btn-filtro-categoria {
+  transition: all 0.2s ease;
+}
+
+.btn-filtro-categoria:hover {
+  transform: translateY(-1px);
+}
+
+/* Cards de estatísticas clicáveis */
+.card-stats-categoria {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.card-stats-categoria:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.card-stats-categoria.active {
+  border: 2px solid #007bff;
+  box-shadow: 0 4px 12px rgba(0,123,255,0.2);
+}
+
+/* Badges com cores específicas */
+.badge-categoria-imigrante {
+  background-color: #28a745 !important;
+  color: white !important;
+}
+
+.badge-categoria-empresa {
+  background-color: #007bff !important;
+  color: white !important;
+}
+
+.badge-categoria-municipio {
+  background-color: #ffc107 !important;
+  color: #212529 !important;
+}
+
+.badge-categoria-academia {
+  background-color: #17a2b8 !important;
+  color: white !important;
+}
+
+.badge-categoria-familia-acolhimento {
+  background-color: #e83e8c !important;
+  color: white !important;
+}
+
+/* Ícones coloridos */
+.icon-categoria-imigrante {
+  color: #28a745 !important;
+}
+
+.icon-categoria-empresa {
+  color: #007bff !important;
+}
+
+.icon-categoria-municipio {
+  color: #ffc107 !important;
+}
+
+.icon-categoria-academia {
+  color: #17a2b8 !important;
+}
+
+.icon-categoria-familia-acolhimento {
+  color: #e83e8c !important;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .card-categoria-imigrante,
+  .card-categoria-empresa,
+  .card-categoria-municipio,
+  .card-categoria-academia,
+  .card-categoria-familia-acolhimento {
+    border-left: 3px solid;
+    border-top: 3px solid;
+  }
+  
+  .btn-filtro-categoria {
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+}

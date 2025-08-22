@@ -1,9 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Row, Col, Card, CardBody, CardHeader, Button } from 'shards-react';
 import PageTitle from '../components/common/PageTitle';
 import { useToast } from '@/hooks/use-toast';
 import { USER_CATEGORIES } from '../../../shared-types/api.types';
 import ContribuicoesAdminModal from '../components/admin/ContribuicoesAdminModal';
+import { 
+  getCategoryConfig, 
+  getCategoryColor, 
+  getCategoryBadge, 
+  getCategoryLabel,
+  getCategoryIcon,
+  getCategoryCardClass,
+  getCategoryHeaderClass
+} from '../utils/categoryColors';
 
 interface TipoContribuicao {
   id: string;
@@ -26,7 +35,34 @@ const TiposContribuicaoManagement: React.FC = () => {
   const [contribuicoesCount, setContribuicoesCount] = useState<Record<string, number>>({});
   const [viewingTipo, setViewingTipo] = useState<TipoContribuicao | null>(null);
   const [showContribuicoesModal, setShowContribuicoesModal] = useState(false);
+  const [filtroCategoria, setFiltroCategoria] = useState<string>('TODAS');
   const { toast } = useToast();
+
+  // Tipos filtrados baseados na categoria selecionada
+  const tiposFiltrados = useMemo(() => {
+    if (filtroCategoria === 'TODAS') {
+      return tipos;
+    }
+    return tipos.filter(tipo => tipo.categoria === filtroCategoria);
+  }, [tipos, filtroCategoria]);
+
+  // Categorias disponíveis nos tipos
+  const categoriasDisponiveis = useMemo(() => {
+    const cats = [...new Set(tipos.map(tipo => tipo.categoria))];
+    return cats.sort();
+  }, [tipos]);
+
+  // Contar tipos por categoria
+  const getCountPorCategoria = (categoria: string) => {
+    return tipos.filter(tipo => tipo.categoria === categoria).length;
+  };
+
+  // Contar contribuições por categoria
+  const getTotalContribuicoesPorCategoria = (categoria: string) => {
+    return tipos
+      .filter(tipo => tipo.categoria === categoria)
+      .reduce((total, tipo) => total + (contribuicoesCount[tipo.id] || 0), 0);
+  };
 
   // Estados do formulário
   const [formData, setFormData] = useState({
@@ -220,16 +256,7 @@ const TiposContribuicaoManagement: React.FC = () => {
     }
   };
 
-  const getCategoryLabel = (categoria: string) => {
-    const labels: Record<string, string> = {
-      'IMIGRANTE': 'Imigrante',
-      'EMPRESA': 'Empresa',
-      'MUNICIPIO': 'Município',
-      'ACADEMIA': 'Academia',
-      'FAMILIA_ACOLHIMENTO': 'Família de Acolhimento'
-    };
-    return labels[categoria] || categoria;
-  };
+
 
   if (loading) {
     return (
@@ -249,9 +276,151 @@ const TiposContribuicaoManagement: React.FC = () => {
       <Row noGutters className="page-header py-4">
         <PageTitle 
           title="Gestão de Tipos de Contribuição" 
-          subtitle={`${tipos.length} tipos cadastrados`}
+          subtitle={`${tiposFiltrados.length} de ${tipos.length} tipos exibidos`}
           className="text-sm-left mb-3" 
         />
+      </Row>
+
+      {/* Estatísticas por Categoria */}
+      {categoriasDisponiveis.length > 0 && (
+        <Row className="mb-4">
+          {categoriasDisponiveis.map(categoria => (
+            <Col md={6} lg={4} key={categoria} className="mb-3">
+              <Card 
+                className={`card-stats card-stats-categoria ${
+                  filtroCategoria === categoria ? 'active' : ''
+                }`}
+                onClick={() => setFiltroCategoria(categoria)}
+              >
+                <CardBody>
+                  <div className="row">
+                    <div className="col">
+                      <div 
+                        className="card-title text-uppercase mb-0"
+                        style={{ color: getCategoryColor(categoria) }}
+                      >
+                        {getCategoryLabel(categoria)}
+                      </div>
+                      <span className="h3 font-weight-bold mb-0">
+                        {getCountPorCategoria(categoria)}
+                      </span>
+                      <p className="mb-0 text-muted small">
+                        {getTotalContribuicoesPorCategoria(categoria)} contribuições
+                      </p>
+                    </div>
+                    <div className="col-auto">
+                      <div 
+                        className="icon icon-shape text-white rounded-circle shadow"
+                        style={{ backgroundColor: getCategoryColor(categoria) }}
+                      >
+                        <i className="material-icons">
+                          {getCategoryIcon(categoria)}
+                        </i>
+                      </div>
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+          ))}
+          
+          {/* Card "Todas" */}
+          <Col md={6} lg={4} className="mb-3">
+            <Card 
+              className={`card-stats card-stats-categoria ${
+                filtroCategoria === 'TODAS' ? 'active' : ''
+              }`}
+              onClick={() => setFiltroCategoria('TODAS')}
+            >
+              <CardBody>
+                <div className="row">
+                  <div className="col">
+                    <div className="card-title text-uppercase text-muted mb-0">
+                      Todas as Categorias
+                    </div>
+                    <span className="h3 font-weight-bold mb-0">
+                      {tipos.length}
+                    </span>
+                    <p className="mb-0 text-muted small">
+                      {Object.values(contribuicoesCount).reduce((a, b) => a + b, 0)} contribuições
+                    </p>
+                  </div>
+                  <div className="col-auto">
+                    <div className="icon icon-shape bg-secondary text-white rounded-circle shadow">
+                      <i className="material-icons">category</i>
+                    </div>
+                  </div>
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      )}
+
+      {/* Filtros Adicionais */}
+      <Row className="mb-4">
+        <Col>
+          <Card>
+            <CardHeader>
+              <h6 className="m-0">Filtros</h6>
+            </CardHeader>
+            <CardBody>
+              <div className="row align-items-center">
+                <div className="col-md-6">
+                  <label htmlFor="filtroCategoria" className="form-label">
+                    <strong>Categoria Selecionada:</strong>
+                  </label>
+                  <select 
+                    id="filtroCategoria"
+                    className="form-control"
+                    value={filtroCategoria}
+                    onChange={(e) => setFiltroCategoria(e.target.value)}
+                  >
+                    <option value="TODAS">
+                      Todas as Categorias ({tipos.length})
+                    </option>
+                    {categoriasDisponiveis.map(categoria => (
+                      <option key={categoria} value={categoria}>
+                        {getCategoryLabel(categoria)} ({getCountPorCategoria(categoria)})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">
+                    <strong>Filtros Rápidos:</strong>
+                  </label>
+                  <div className="d-flex flex-wrap">
+                    <button
+                      className={`btn btn-sm mr-1 mb-1 ${
+                        filtroCategoria === 'TODAS' ? 'btn-secondary' : 'btn-outline-secondary'
+                      }`}
+                      onClick={() => setFiltroCategoria('TODAS')}
+                    >
+                      Todas ({tipos.length})
+                    </button>
+                    {categoriasDisponiveis.map(categoria => (
+                      <button
+                        key={categoria}
+                        className={`btn btn-sm mr-1 mb-1 btn-filtro-categoria ${
+                          filtroCategoria === categoria 
+                            ? `btn-${getCategoryBadge(categoria)}` 
+                            : `btn-outline-${getCategoryBadge(categoria)}`
+                        }`}
+                        onClick={() => setFiltroCategoria(categoria)}
+                      >
+                        <i className="material-icons mr-1" style={{fontSize: '14px'}}>
+                          {getCategoryIcon(categoria)}
+                        </i>
+                        {getCategoryLabel(categoria)} ({getCountPorCategoria(categoria)})
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
       </Row>
 
       {/* Botão Adicionar */}
@@ -390,19 +559,33 @@ const TiposContribuicaoManagement: React.FC = () => {
 
       {/* Lista de Tipos */}
       <Row>
-        {tipos.map(tipo => (
+        {tiposFiltrados.map(tipo => (
           <Col md={6} lg={4} className="mb-4" key={tipo.id}>
-            <Card>
-              <CardHeader className="d-flex justify-content-between align-items-center">
-                <h6 className="m-0">{tipo.titulo}</h6>
+            <Card className={getCategoryCardClass(tipo.categoria)}>
+              <CardHeader className={`${getCategoryHeaderClass(tipo.categoria)} d-flex justify-content-between align-items-center`}>
+                <div className="d-flex align-items-center">
+                  <i 
+                    className="material-icons mr-2" 
+                    style={{color: getCategoryColor(tipo.categoria)}}
+                  >
+                    {getCategoryIcon(tipo.categoria)}
+                  </i>
+                  <h6 className="m-0">{tipo.titulo}</h6>
+                </div>
                 <span className={`badge badge-${tipo.ativo ? 'success' : 'secondary'}`}>
                   {tipo.ativo ? 'Ativo' : 'Inativo'}
                 </span>
               </CardHeader>
               <CardBody>
-                <p className="text-muted mb-2">
-                  <strong>Categoria:</strong> {getCategoryLabel(tipo.categoria)}
-                </p>
+                {/* Badge de categoria com cor específica */}
+                <div className="mb-2">
+                  <span className={`badge badge-${getCategoryBadge(tipo.categoria)}`}>
+                    <i className="material-icons mr-1" style={{fontSize: '12px'}}>
+                      {getCategoryIcon(tipo.categoria)}
+                    </i>
+                    {getCategoryLabel(tipo.categoria)}
+                  </span>
+                </div>
                 
                 {tipo.contextoIA && (
                   <p className="text-muted mb-2 small">
@@ -436,10 +619,19 @@ const TiposContribuicaoManagement: React.FC = () => {
                     className="mr-2"
                     onClick={() => handleViewContribuicoes(tipo)}
                     title="Visualizar contribuições"
+                    style={{
+                      borderColor: getCategoryColor(tipo.categoria),
+                      color: getCategoryColor(tipo.categoria)
+                    }}
                   >
                     <i className="material-icons" style={{fontSize: '16px'}}>visibility</i>
                     {contribuicoesCount[tipo.id] !== undefined && (
-                      <span className="ml-1">({contribuicoesCount[tipo.id]})</span>
+                      <span 
+                        className={`badge badge-${getCategoryBadge(tipo.categoria)} ml-1`}
+                        style={{ fontSize: '10px' }}
+                      >
+                        {contribuicoesCount[tipo.id]}
+                      </span>
                     )}
                   </Button>
                   <Button
@@ -464,19 +656,34 @@ const TiposContribuicaoManagement: React.FC = () => {
         ))}
       </Row>
 
-      {tipos.length === 0 && (
+      {tiposFiltrados.length === 0 && !loading && (
         <Row>
           <Col>
             <div className="text-center py-5">
               <i className="material-icons" style={{fontSize: '48px', color: '#ccc'}}>
-                category
+                {filtroCategoria === 'TODAS' ? 'category' : getCategoryIcon(filtroCategoria)}
               </i>
               <h5 className="mt-3 text-muted">
-                Nenhum tipo de contribuição cadastrado
+                {filtroCategoria === 'TODAS' 
+                  ? 'Nenhum tipo de contribuição cadastrado'
+                  : `Nenhum tipo encontrado para ${getCategoryLabel(filtroCategoria)}`
+                }
               </h5>
               <p className="text-muted">
-                Clique em "Adicionar Tipo" para criar o primeiro tipo.
+                {filtroCategoria === 'TODAS'
+                  ? 'Clique em "Adicionar Tipo" para criar o primeiro tipo.'
+                  : `Não há tipos de contribuição cadastrados para a categoria ${getCategoryLabel(filtroCategoria)}.`
+                }
               </p>
+              {filtroCategoria !== 'TODAS' && (
+                <Button 
+                  theme="outline-secondary" 
+                  onClick={() => setFiltroCategoria('TODAS')}
+                  className="mt-2"
+                >
+                  Ver Todas as Categorias
+                </Button>
+              )}
             </div>
           </Col>
         </Row>

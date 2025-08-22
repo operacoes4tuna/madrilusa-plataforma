@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 /* Design system oficial Madrilusa - baseado no Manual de Identidade Visual */
+@import './app/styles/category-colors.css';
 
 @layer base {
   :root {
