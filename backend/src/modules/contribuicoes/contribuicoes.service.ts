@@ -9,6 +9,32 @@ import {
   TagSistemaUpdateData
 } from './contribuicoes.types';
 
+// Helper para padronizar tags no retorno
+function formatTagsForResponse(contribuicao: any) {
+  if (!contribuicao.tags) {
+    return { ...contribuicao, tags: [] };
+  }
+
+  try {
+    const tags = typeof contribuicao.tags === 'string' 
+      ? JSON.parse(contribuicao.tags) 
+      : contribuicao.tags;
+    
+    return { 
+      ...contribuicao, 
+      tags: Array.isArray(tags) ? tags : [] 
+    };
+  } catch (error) {
+    console.error('Erro ao fazer parse das tags:', error);
+    return { ...contribuicao, tags: [] };
+  }
+}
+
+// Helper para formatar múltiplas contribuições
+function formatMultipleContribuicoes(contribuicoes: any[]) {
+  return contribuicoes.map(formatTagsForResponse);
+}
+
 export const contribuicoesService = {
   // ===== CONTRIBUIÇÕES DOS USUÁRIOS =====
   
@@ -59,11 +85,11 @@ export const contribuicoesService = {
       await this.incrementTagUsage(data.tags);
     }
 
-    return contribuicao;
+    return formatTagsForResponse(contribuicao);
   },
 
   async getContribuicoesByUser(userId: string) {
-    return await prisma.contribuicao.findMany({
+    const contribuicoes = await prisma.contribuicao.findMany({
       where: { 
         userId,
         ativo: true
@@ -73,10 +99,12 @@ export const contribuicoesService = {
       },
       orderBy: { createdAt: 'desc' }
     });
+
+    return formatMultipleContribuicoes(contribuicoes);
   },
 
   async getContribuicoesByUserAndTipo(userId: string, tipoId: string) {
-    return await prisma.contribuicao.findMany({
+    const contribuicoes = await prisma.contribuicao.findMany({
       where: { 
         userId,
         tipoContribuicaoId: tipoId,
@@ -87,6 +115,8 @@ export const contribuicoesService = {
       },
       orderBy: { createdAt: 'desc' }
     });
+
+    return formatMultipleContribuicoes(contribuicoes);
   },
 
   async getContribuicaoById(id: string, userId?: string) {
@@ -95,7 +125,7 @@ export const contribuicoesService = {
       where.userId = userId;
     }
 
-    return await prisma.contribuicao.findFirst({
+    const contribuicao = await prisma.contribuicao.findFirst({
       where,
       include: {
         tipoContribuicao: true,
@@ -108,6 +138,8 @@ export const contribuicoesService = {
         }
       }
     });
+
+    return contribuicao ? formatTagsForResponse(contribuicao) : null;
   },
 
   async updateContribuicao(id: string, userId: string, data: ContribuicaoUpdateData) {
@@ -129,7 +161,7 @@ export const contribuicoesService = {
       await this.incrementTagUsage(newTags);
     }
 
-    return await prisma.contribuicao.update({
+    const updatedContribuicao = await prisma.contribuicao.update({
       where: { id },
       data: {
         ...data,
@@ -139,6 +171,8 @@ export const contribuicoesService = {
         tipoContribuicao: true
       }
     });
+
+    return formatTagsForResponse(updatedContribuicao);
   },
 
   async deleteContribuicao(id: string, userId: string) {
@@ -174,7 +208,7 @@ export const contribuicoesService = {
       };
     }
 
-    return await prisma.contribuicao.findMany({
+    const contribuicoes = await prisma.contribuicao.findMany({
       where,
       include: {
         tipoContribuicao: true,
@@ -189,6 +223,8 @@ export const contribuicoesService = {
       orderBy: { createdAt: 'desc' },
       take: 50 // Limitar resultados
     });
+
+    return formatMultipleContribuicoes(contribuicoes);
   },
 
   // ===== TIPOS DE CONTRIBUIÇÃO (ADMIN) =====
@@ -278,14 +314,31 @@ export const contribuicoesService = {
   // ===== HELPERS PARA TAGS =====
 
   async incrementTagUsage(tags: string[]) {
-    for (const tagName of tags) {
+    // Validar que tags é um array e filtrar tags válidas
+    if (!Array.isArray(tags)) {
+      console.error('incrementTagUsage: tags não é um array:', typeof tags, tags);
+      return;
+    }
+
+    const validTags = tags.filter(tag => 
+      typeof tag === 'string' && 
+      tag.trim().length > 0 && 
+      tag.trim().length <= 50 &&
+      tag.trim() !== ',' &&
+      tag.trim() !== '"' &&
+      tag.trim() !== '[' &&
+      tag.trim() !== ']'
+    );
+
+    for (const tagName of validTags) {
+      const cleanTag = tagName.trim();
       await prisma.tagSistema.upsert({
-        where: { nome: tagName },
+        where: { nome: cleanTag },
         update: { 
           usos: { increment: 1 }
         },
         create: {
-          nome: tagName,
+          nome: cleanTag,
           usos: 1
         }
       });
@@ -293,14 +346,27 @@ export const contribuicoesService = {
   },
 
   async decrementTagUsage(tags: string[]) {
-    for (const tagName of tags) {
+    // Validar que tags é um array e filtrar tags válidas
+    if (!Array.isArray(tags)) {
+      console.error('decrementTagUsage: tags não é um array:', typeof tags, tags);
+      return;
+    }
+
+    const validTags = tags.filter(tag => 
+      typeof tag === 'string' && 
+      tag.trim().length > 0 && 
+      tag.trim().length <= 50
+    );
+
+    for (const tagName of validTags) {
+      const cleanTag = tagName.trim();
       const tag = await prisma.tagSistema.findUnique({
-        where: { nome: tagName }
+        where: { nome: cleanTag }
       });
       
       if (tag && tag.usos > 0) {
         await prisma.tagSistema.update({
-          where: { nome: tagName },
+          where: { nome: cleanTag },
           data: { usos: { decrement: 1 } }
         });
       }

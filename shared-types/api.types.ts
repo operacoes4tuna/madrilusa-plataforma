@@ -600,7 +600,7 @@ export interface Contribuicao {
   userId: string;
   tipoContribuicaoId: string;
   descricao: string;
-  tags?: string[];
+  tags: string[]; // ✅ SEMPRE array - backend faz parse automático
   ativo: boolean;
   createdAt: Date;
   updatedAt: Date;

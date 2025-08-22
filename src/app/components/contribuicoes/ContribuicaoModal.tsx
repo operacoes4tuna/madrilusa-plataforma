@@ -21,7 +21,7 @@ interface Contribuicao {
   userId: string;
   tipoContribuicaoId: string;
   descricao: string;
-  tags: string[];
+  tags: string[]; // ✅ Backend agora retorna como array
   ativo: boolean;
   createdAt: string;
   updatedAt: string;
