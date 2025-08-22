@@ -148,6 +148,16 @@ const MainSidebar: React.FC = () => {
           htmlAfter: ''
         });
       });
+
+      // ✨ NOVO: SinergIA - disponível para todas as categorias
+      if (tiposDisponiveis.length > 0) {
+        categoryMenuItems.push({
+          title: 'SinergIA Madrilusa',
+          to: '/app/sinergia',
+          iconClass: 'psychology',
+          htmlAfter: '<span class="badge badge-warning ml-auto" style="font-size: 9px;">IA</span>'
+        });
+      }
     }
 
     return categoryMenuItems;

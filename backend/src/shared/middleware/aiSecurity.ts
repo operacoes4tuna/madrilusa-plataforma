@@ -113,9 +113,63 @@ export const aiLogging = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
+// Rate limiting específico para SinergIA (mais restritivo)
+export const sinergiaRateLimit = (req: Request, res: Response, next: NextFunction) => {
+  const clientId = req.ip || 'unknown';
+  const now = Date.now();
+  const windowMs = 24 * 60 * 60 * 1000; // 24 horas
+  const maxRequests = 1; // máximo 1 análise por dia
+
+  // Limpar entradas expiradas
+  Object.keys(rateLimitStore).forEach(key => {
+    if (rateLimitStore[key].resetTime < now) {
+      delete rateLimitStore[key];
+    }
+  });
+
+  // Chave específica para sinergia
+  const sinergiaKey = `sinergia_${clientId}`;
+
+  // Verificar limite atual
+  if (!rateLimitStore[sinergiaKey]) {
+    rateLimitStore[sinergiaKey] = {
+      count: 1,
+      resetTime: now + windowMs
+    };
+  } else {
+    rateLimitStore[sinergiaKey].count++;
+  }
+
+  // Verificar se excedeu limite
+  if (rateLimitStore[sinergiaKey].count > maxRequests) {
+    const timeLeft = Math.ceil((rateLimitStore[sinergiaKey].resetTime - now) / 1000 / 60 / 60);
+    
+    return res.status(429).json({
+      success: false,
+      error: 'Limite de análises de sinergia excedido',
+      message: `Apenas ${maxRequests} análise por dia permitida. Tente novamente em ${timeLeft} horas.`,
+      retryAfter: timeLeft
+    });
+  }
+
+  // Adicionar headers informativos
+  res.setHeader('X-SinergiaLimit-Limit', maxRequests);
+  res.setHeader('X-SinergiaLimit-Remaining', Math.max(0, maxRequests - rateLimitStore[sinergiaKey].count));
+  res.setHeader('X-SinergiaLimit-Reset', Math.ceil(rateLimitStore[sinergiaKey].resetTime / 1000));
+
+  next();
+};
+
 // Middleware combinado para rotas de IA
 export const aiMiddleware = [
   aiLogging,
   aiRateLimit,
+  aiSanitization
+];
+
+// Middleware específico para SinergIA
+export const sinergiaMiddleware = [
+  aiLogging,
+  sinergiaRateLimit, // Rate limiting mais restritivo
   aiSanitization
 ];

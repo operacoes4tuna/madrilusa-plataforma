@@ -15,6 +15,7 @@ import familiaRoutes from './modules/familias/familia.routes';
 import adminRoutes from './modules/admin/admin.routes'; // ✨ NOVO: Rotas admin
 import contribuicoesRoutes from './modules/contribuicoes/contribuicoes.routes'; // ✨ SISTEMA CONTRIBUIÇÕES
 import aiRoutes from './modules/ai/ai.routes'; // 🤖 IA: Rotas de inteligência artificial
+import sinergiaRoutes from './modules/sinergia/sinergia.routes'; // 🧠 SINERGIA: Rotas de matching IA
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use('/api/familias', familiaRoutes); // ✨ FASE 5: Rotas de famílias
 app.use('/api/admin', adminRoutes); // ✨ ADMIN: Rotas de administração
 app.use('/api/contribuicoes', contribuicoesRoutes); // ✨ SISTEMA CONTRIBUIÇÕES: Rotas de contribuições
 app.use('/api/ai', aiRoutes); // 🤖 IA: Rotas de inteligência artificial
+app.use('/api/sinergia', sinergiaRoutes); // 🧠 SINERGIA: Rotas de matching IA
 
 // Health check
 app.get('/api/health', (req, res) => {
