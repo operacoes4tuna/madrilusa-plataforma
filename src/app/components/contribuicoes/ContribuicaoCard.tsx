@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardBody, CardHeader, Button } from 'shards-react';
+import { parseTagsSafely } from '../../../lib/tagsUtils';
 
 interface TipoContribuicao {
   id: string;
@@ -68,20 +69,7 @@ const ContribuicaoCard: React.FC<ContribuicaoCardProps> = ({
         </p>
         
         {(() => {
-          // Parse seguro das tags
-          let tags: string[] = [];
-          if (contribuicao.tags) {
-            try {
-              if (typeof contribuicao.tags === 'string') {
-                tags = JSON.parse(contribuicao.tags);
-              } else if (Array.isArray(contribuicao.tags)) {
-                tags = contribuicao.tags;
-              }
-            } catch (error) {
-              console.error('Erro ao fazer parse das tags:', error);
-              tags = [];
-            }
-          }
+          const tags = parseTagsSafely(contribuicao.tags);
 
           return tags.length > 0 && (
             <div className="mb-3">

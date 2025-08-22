@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'shards-react';
 import { useToast } from '@/hooks/use-toast';
+import { parseTagsSafely } from '../../../lib/tagsUtils';
 
 interface TipoContribuicao {
   id: string;
@@ -331,16 +332,24 @@ const ContribuicoesAdminModal: React.FC<ContribuicoesAdminModalProps> = ({
                         </td>
                         <td>
                           <div>
-                            {contrib.tags.slice(0, 2).map((tag, index) => (
-                              <span key={index} className="badge badge-secondary mr-1 mb-1">
-                                {tag}
-                              </span>
-                            ))}
-                            {contrib.tags.length > 2 && (
-                              <span className="badge badge-light" title={contrib.tags.join(', ')}>
-                                +{contrib.tags.length - 2}
-                              </span>
-                            )}
+                            {(() => {
+                              const tags = parseTagsSafely(contrib.tags);
+
+                              return (
+                                <>
+                                  {tags.slice(0, 2).map((tag, index) => (
+                                    <span key={index} className="badge badge-secondary mr-1 mb-1">
+                                      {tag}
+                                    </span>
+                                  ))}
+                                  {tags.length > 2 && (
+                                    <span className="badge badge-light" title={tags.join(', ')}>
+                                      +{tags.length - 2}
+                                    </span>
+                                  )}
+                                </>
+                              );
+                            })()}
                           </div>
                         </td>
                         <td>

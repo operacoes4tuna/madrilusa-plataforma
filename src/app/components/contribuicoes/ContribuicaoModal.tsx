@@ -110,6 +110,10 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
   useEffect(() => {
     // Só inicializar quando modal abre e ainda não foi inicializado
     if (!isOpen) {
+      // Reset quando modal fecha para evitar problemas de HMR
+      if (isFormInitialized) {
+        setIsFormInitialized(false);
+      }
       return;
     }
 
@@ -160,31 +164,17 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
       resetForm();
       setIsFormInitialized(true);
     }
-  }, [editingContribuicao, tiposDisponiveis, tipoPreSelecionado, isOpen, isFormInitialized]);
+  }, [editingContribuicao?.id, tipoPreSelecionado?.id, isOpen, isFormInitialized]);
 
-  // Handler robusto para texto (DOM + State)
+  // Handler robusto para texto (DOM + State) - Estável para HMR
   const handleTextChange = useCallback((newText: string) => {
     try {
-      // 1. Atualizar DOM diretamente para feedback imediato
-      if (textareaRef.current) {
-        textareaRef.current.value = newText;
-        textareaRef.current.focus();
-        // Posicionar cursor no final
-        textareaRef.current.setSelectionRange(newText.length, newText.length);
-      }
-      
-      // 2. Atualizar estado React
+      // 1. Atualizar estado React primeiro
       setFormData(prev => ({ ...prev, descricao: newText }));
       
-      // 3. Mostrar componentes de IA quando texto atingir mínimo (e manter visíveis)
+      // 2. Mostrar componentes de IA quando texto atingir mínimo
       if (newText.trim().length >= 20 && !showAIComponents) {
         setShowAIComponents(true);
-      }
-      
-      // 4. Disparar evento para garantir consistência
-      if (textareaRef.current) {
-        const event = new Event('input', { bubbles: true });
-        textareaRef.current.dispatchEvent(event);
       }
     } catch (error) {
       console.error('Erro em handleTextChange:', error);
@@ -195,7 +185,7 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
     setFormData(prev => ({ ...prev, tags: newTags }));
   }, []);
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setFormData({
       tipoContribuicaoId: '',
       descricao: '',
@@ -203,8 +193,8 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
     });
     setSelectedTipo(null);
     setIsFormInitialized(false);
-    setShowAIComponents(false); // Reset da flag de IA
-  };
+    setShowAIComponents(false);
+  }, []);
 
   const handleTipoChange = (tipoId: string) => {
     const tipo = tiposDisponiveis.find(t => t.id === tipoId);
@@ -284,9 +274,14 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
           description: data.message,
         });
         
-        onSave();
-        onClose();
+        // Reset form primeiro para evitar problemas de HMR
         resetForm();
+        
+        // Pequeno delay para garantir que o reset foi processado
+        setTimeout(() => {
+          onSave();
+          onClose();
+        }, 100);
       } else {
         throw new Error(data.error);
       }
@@ -311,6 +306,7 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
 
   return (
     <div 
+      key={`modal-${editingContribuicao?.id || tipoPreSelecionado?.id || 'new'}`}
       className="modal fade show" 
       style={{
         display: 'block',

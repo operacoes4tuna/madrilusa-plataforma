@@ -1,9 +1,9 @@
+/* Imports devem vir antes dos @layer */
+@import './app/styles/category-colors.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Imports devem vir antes dos @layer */
-@import './app/styles/category-colors.css';
 
 /* Design system oficial Madrilusa - baseado no Manual de Identidade Visual */
 

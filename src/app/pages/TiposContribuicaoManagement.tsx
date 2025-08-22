@@ -603,11 +603,21 @@ const TiposContribuicaoManagement: React.FC = () => {
                   <div className="mb-2">
                     <small className="text-muted d-block mb-1"><strong>Tags modelo:</strong></small>
                     <div>
-                      {JSON.parse(tipo.tagsModelo).map((tag: string, index: number) => (
-                        <span key={index} className="badge badge-light mr-1 mb-1">
-                          {tag}
-                        </span>
-                      ))}
+                      {(() => {
+                        try {
+                          const tags = JSON.parse(tipo.tagsModelo);
+                          if (Array.isArray(tags)) {
+                            return tags.map((tag: string, index: number) => (
+                              <span key={index} className="badge badge-light mr-1 mb-1">
+                                {tag}
+                              </span>
+                            ));
+                          }
+                        } catch (error) {
+                          console.error('Erro ao fazer parse das tags modelo:', error);
+                        }
+                        return null;
+                      })()}
                     </div>
                   </div>
                 )}

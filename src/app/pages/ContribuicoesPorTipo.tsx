@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
 import ContribuicaoCard from '../components/contribuicoes/ContribuicaoCard';
 import ContribuicaoModal from '../components/contribuicoes/ContribuicaoModal';
+import { parseTagsSafely } from '../../lib/tagsUtils';
 
 interface TipoContribuicao {
   id: string;
@@ -216,18 +217,7 @@ const ContribuicoesPorTipo: React.FC = () => {
                   <div className="card-title text-uppercase text-muted mb-0">Tags Usadas</div>
                   <span className="h2 font-weight-bold mb-0">
                     {(() => {
-                      const allTags = contribuicoes.flatMap(c => {
-                        try {
-                          if (typeof c.tags === 'string') {
-                            return JSON.parse(c.tags);
-                          } else if (Array.isArray(c.tags)) {
-                            return c.tags;
-                          }
-                          return [];
-                        } catch (error) {
-                          return [];
-                        }
-                      });
+                      const allTags = contribuicoes.flatMap(c => parseTagsSafely(c.tags));
                       return new Set(allTags).size;
                     })()}
                   </span>
