@@ -133,33 +133,16 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
         setShowAIComponents(true);
       }
     } else if (tipoPreSelecionado && !isFormInitialized) {
-      // ✨ NOVO: Configurar com tipo pré-selecionado
+      // ✨ NOVO: Configurar com tipo pré-selecionado (sem texto modelo)
       setFormData({
         tipoContribuicaoId: tipoPreSelecionado.id,
-        descricao: tipoPreSelecionado.textoModelo || '',
-        tags: (() => {
-          if (tipoPreSelecionado.tagsModelo) {
-            try {
-              if (typeof tipoPreSelecionado.tagsModelo === 'string') {
-                return JSON.parse(tipoPreSelecionado.tagsModelo);
-              } else if (Array.isArray(tipoPreSelecionado.tagsModelo)) {
-                return tipoPreSelecionado.tagsModelo;
-              }
-            } catch (error) {
-              console.error('Erro ao fazer parse das tags modelo:', error);
-            }
-          }
-          return [];
-        })()
+        descricao: '', // ✅ SEMPRE em branco para nova contribuição
+        tags: [] // ✅ SEMPRE vazio para nova contribuição
       });
       setSelectedTipo(tipoPreSelecionado);
       setIsFormInitialized(true);
       
-      // Mostrar IA se há texto modelo suficiente
-      const textoModelo = tipoPreSelecionado.textoModelo || '';
-      if (textoModelo.trim().length >= 20) {
-        setShowAIComponents(true);
-      }
+      // IA não é mostrada inicialmente (campo vazio)
     } else if (!editingContribuicao && !tipoPreSelecionado && !isFormInitialized) {
       resetForm();
       setIsFormInitialized(true);
@@ -218,10 +201,10 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
     setFormData({
       ...formData,
       tipoContribuicaoId: tipoId,
-      // Pré-preencher com texto modelo se disponível
-      descricao: !editingContribuicao && tipo?.textoModelo ? tipo.textoModelo : formData.descricao,
-      // Sugerir tags modelo se disponível
-      tags: !editingContribuicao && tagsModelo.length > 0 ? tagsModelo : formData.tags
+      // ✅ SEMPRE em branco para nova contribuição
+      descricao: editingContribuicao ? formData.descricao : '',
+      // ✅ SEMPRE vazio para nova contribuição  
+      tags: editingContribuicao ? formData.tags : []
     });
   };
 
