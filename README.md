@@ -40,8 +40,8 @@ Conectar jovens imigrantes a oportunidades em territórios rurais, criando solu�
 - **Node.js + TypeScript**
 - **Express.js** (API REST modular)
 - **Prisma ORM** + **SQLite**
-- **8 módulos completos** (46 endpoints + **4 endpoints IA**)
-- **OpenAI GPT-4** (aprimoramento de contribuições)
+- **9 módulos completos** (46 endpoints + **4 endpoints IA** + **5 endpoints SinergIA**)
+- **OpenAI GPT-4** (aprimoramento de contribuições + **matching inteligente**)
 - **Validações robustas** + **Rate limiting IA**
 
 ---
@@ -83,8 +83,10 @@ madrilusasite/
 - **[Guia de Inscrições](doc/Guia%20de%20Inscrições%20na%20Plataforma%20Madrilusa.md)** - Processo de registro por categoria
 
 ### **🏗️ Documentação Técnica**
-- **[Sistema de IA Completo](doc/03_IMPLEMENTACAO_TECNICA/12_Sistema_IA_Contribuicoes_Completo.md)** - ✅ **NOVO: IA integrada para aprimoramento de contribuições**
-- **[Status Sistema IA](doc/status_implementacao/STATUS_Sistema_IA_Implementado.md)** - ✅ **NOVO: Jornada completa de implementação IA**
+- **[Sistema SinergIA Completo](doc/03_IMPLEMENTACAO_TECNICA/14_Sistema_SinergIA_Matching_Completo.md)** - ✅ **NOVO: Matching IA revolucionário entre categorias**
+- **[Status SinergIA](doc/status_implementacao/STATUS_SinergIA_Implementado.md)** - ✅ **NOVO: Jornada feat/sinergIA-madrilusa**
+- **[Sistema de IA Completo](doc/03_IMPLEMENTACAO_TECNICA/12_Sistema_IA_Contribuicoes_Completo.md)** - ✅ **IA integrada para aprimoramento de contribuições**
+- **[Status Sistema IA](doc/status_implementacao/STATUS_Sistema_IA_Implementado.md)** - ✅ **Jornada completa de implementação IA**
 - **[Metodologia Categoria Universal](doc/03_IMPLEMENTACAO_TECNICA/06_Metodologia_Categoria_Universal.md)** - ✅ **Padrão revolucionário para implementar categorias**
 - **[Sistema de Categorias](doc/03_IMPLEMENTACAO_TECNICA/04_Sistema_Categorias_Usuario.md)** - ✅ **Todas as 5 categorias implementadas**
 - **[Sistema de Contribuições Completo](doc/03_IMPLEMENTACAO_TECNICA/10_Sistema_Contribuicoes_Completo.md)** - ✅ **Sistema completo de contribuições por categoria**
@@ -143,6 +145,7 @@ Admin: admin@madrilusa.com / madrilusa1234tuna
 4. Digite sua contribuição (mínimo 20 caracteres)
 5. Use "✨ Aprimorar com IA" para melhorar o texto
 6. Use "🏷️ Sugerir com IA" para obter tags relevantes
+7. Acesse "SinergIA Madrilusa" no menu para encontrar compatibilidades
 
 # Configuração OpenAI:
 # A chave da API está configurada no backend/.env
@@ -299,9 +302,11 @@ Cada categoria de usuário pode criar múltiplas **contribuições específicas*
 #### **🤖 Funcionalidades de IA**
 - **Aprimoramento de texto:** IA melhora clareza, gramática e impacto das contribuições
 - **Sugestão de tags:** IA sugere tags relevantes baseadas no conteúdo e contexto
+- **SinergIA Madrilusa:** IA encontra compatibilidades entre contribuições de diferentes categorias
+- **Matching inteligente:** Sistema de sinergia que conecta imigrantes, empresas, municípios, academias e famílias
 - **Contextualização:** IA adapta sugestões por categoria de usuário e tipo de contribuição
 - **Português de Portugal:** IA especializada em linguagem portuguesa europeia
-- **Rate limiting:** Proteção contra abuso (20 requests/15min por usuário)
+- **Rate limiting:** Proteção contra abuso (IA geral: 20/15min, SinergIA: 10/5min)
 
 #### **Dados Atuais**
 - **9 tipos** de contribuição configurados
@@ -309,6 +314,31 @@ Cada categoria de usuário pode criar múltiplas **contribuições específicas*
 - **55 tags** no sistema (51 em uso)
 - **27 usuários** incluindo 6 de desenvolvimento
 - **🤖 IA GPT-4** integrada e operacional
+
+### **🧠 SinergIA Madrilusa**
+
+#### **Conceito**
+Sistema revolucionário de matching inteligente que utiliza IA para encontrar compatibilidades entre contribuições de diferentes categorias de usuários.
+
+#### **Como Funciona**
+- **Análise IA:** GPT-4 compara contribuições do usuário com todas as outras categorias
+- **Matching contextual:** Considera complementaridade, competências e relevância social
+- **Resultados organizados:** Apresenta sinergias por categoria com porcentagens
+- **Informações detalhadas:** Modal com dados completos para demonstração admin
+
+#### **Categorias de Matching**
+- **🌍 Imigrantes** ↔ 🏢 Empresas, 🎓 Academias, 👨‍👩‍👧‍👦 Famílias
+- **🏢 Empresas** ↔ 🌍 Imigrantes, 🏛️ Municípios, 🎓 Academias  
+- **🏛️ Municípios** ↔ 🌍 Imigrantes, 🏢 Empresas, 🎓 Academias
+- **🎓 Academias** ↔ 🌍 Imigrantes, 🏢 Empresas, 🏛️ Municípios
+- **👨‍👩‍👧‍👦 Famílias** ↔ 🌍 Imigrantes
+
+#### **Funcionalidades**
+- **Processamento IA:** Análise contextual usando GPT-4
+- **Scores de sinergia:** Porcentagens de 30% a 100%
+- **Explicações contextuais:** IA explica o motivo de cada match
+- **Tags em comum:** Identificação automática de compatibilidades
+- **Mode demonstração:** Dados completos visíveis para administradores
 
 ---
 
