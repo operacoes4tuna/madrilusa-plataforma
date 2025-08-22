@@ -22,6 +22,8 @@ const TagSelector: React.FC<TagSelectorProps> = ({
   placeholder = "Selecione ou digite tags...",
   maxTags = 10
 }) => {
+  // 🔧 Garantir que selectedTags seja sempre um array
+  const safeTags = Array.isArray(selectedTags) ? selectedTags : [];
   const [availableTags, setAvailableTags] = useState<TagSistema[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -45,23 +47,23 @@ const TagSelector: React.FC<TagSelectorProps> = ({
 
   const filteredTags = availableTags.filter(tag =>
     tag.nome.toLowerCase().includes(inputValue.toLowerCase()) &&
-    !selectedTags.includes(tag.nome)
+    !safeTags.includes(tag.nome)
   );
 
   const handleAddTag = (tagName: string) => {
-    if (selectedTags.length >= maxTags) {
+    if (safeTags.length >= maxTags) {
       return;
     }
 
-    if (!selectedTags.includes(tagName)) {
-      onChange([...selectedTags, tagName]);
+    if (!safeTags.includes(tagName)) {
+      onChange([...safeTags, tagName]);
     }
     setInputValue('');
     setShowSuggestions(false);
   };
 
   const handleRemoveTag = (tagName: string) => {
-    onChange(selectedTags.filter(tag => tag !== tagName));
+    onChange(safeTags.filter(tag => tag !== tagName));
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -79,11 +81,11 @@ const TagSelector: React.FC<TagSelectorProps> = ({
   return (
     <div className="tag-selector">
       {/* Tags Selecionadas */}
-      {selectedTags.length > 0 && (
+      {safeTags.length > 0 && (
         <div className="mb-3">
           <small className="text-muted d-block mb-2">Tags selecionadas:</small>
           <div>
-            {selectedTags.map((tag, index) => (
+            {safeTags.map((tag, index) => (
               <span 
                 key={index}
                 className="badge mr-1 mb-1 d-inline-flex align-items-center"
@@ -120,7 +122,7 @@ const TagSelector: React.FC<TagSelectorProps> = ({
         <input
           type="text"
           className="form-control"
-          placeholder={selectedTags.length >= maxTags 
+          placeholder={safeTags.length >= maxTags 
             ? `Máximo de ${maxTags} tags atingido`
             : placeholder
           }
@@ -131,7 +133,7 @@ const TagSelector: React.FC<TagSelectorProps> = ({
           }}
           onKeyDown={handleKeyDown}
           onFocus={() => setShowSuggestions(inputValue.length > 0)}
-          disabled={selectedTags.length >= maxTags}
+          disabled={safeTags.length >= maxTags}
         />
 
         {/* Sugestões */}
@@ -195,7 +197,7 @@ const TagSelector: React.FC<TagSelectorProps> = ({
       {/* Informações */}
       <small className="form-text text-muted mt-1">
         Digite para buscar tags existentes ou criar novas. 
-        Máximo {maxTags} tags. ({selectedTags.length}/{maxTags})
+        Máximo {maxTags} tags. ({safeTags.length}/{maxTags})
       </small>
     </div>
   );
