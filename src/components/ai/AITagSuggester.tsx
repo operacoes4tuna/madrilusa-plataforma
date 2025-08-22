@@ -48,42 +48,7 @@ const AITagSuggester: React.FC<AITagSuggesterProps> = ({
   const { suggestTags } = useAI();
   const { toast } = useToast();
 
-  // Auto-sugerir tags quando texto muda (debounced)
-  useEffect(() => {
-    if (text.trim().length >= 30 && selectedTags.length < maxTags) {
-      const timeoutId = setTimeout(() => {
-        handleAutoSuggest();
-      }, 2000); // Aguarda 2s após parar de digitar
-
-      return () => clearTimeout(timeoutId);
-    }
-  }, [text, selectedTags.length]);
-
-  const handleAutoSuggest = async () => {
-    if (text.trim().length < 10) return;
-    
-    setIsLoadingSuggestions(true);
-    
-    try {
-      const existingTagNames = existingTags.map(t => t.nome);
-      const suggestions = await suggestTags(text, context, existingTagNames, selectedTags);
-      
-      // Filtrar tags que já estão selecionadas
-      const newSuggestions = suggestions.filter(tag => !selectedTags.includes(tag));
-      setAISuggestedTags(newSuggestions);
-      
-      if (newSuggestions.length > 0) {
-        toast({
-          title: "🏷️ Tags sugeridas",
-          description: `IA sugeriu ${newSuggestions.length} tags relevantes`,
-        });
-      }
-    } catch (error) {
-      console.error('Erro na sugestão automática:', error);
-    } finally {
-      setIsLoadingSuggestions(false);
-    }
-  };
+  // Auto-sugestão removida - apenas sugestão manual
 
   const handleManualSuggest = async () => {
     if (!text.trim() || text.length < 10) {
@@ -168,45 +133,45 @@ const AITagSuggester: React.FC<AITagSuggesterProps> = ({
     <div className="ai-tag-suggester">
       {/* Header com botão de sugestão manual */}
       <div className="d-flex justify-content-between align-items-center mb-2">
-        <label className="mb-0">
-          Tags
-          {isLoadingSuggestions && (
-            <small className="text-primary ml-2">
-              <span 
-                className="spinner-border spinner-border-sm mr-1" 
-                style={{ width: '12px', height: '12px' }}
-              />
-              Sugerindo...
-            </small>
-          )}
-        </label>
+        <div className="d-flex align-items-center">
+          <label className="mb-0 mr-2">Tags</label>
+          <Button
+            size="sm"
+            theme="outline-primary"
+            onClick={handleManualSuggest}
+            disabled={!canSuggestTags || isLoadingSuggestions}
+            style={{ 
+              fontSize: '11px',
+              padding: '3px 6px',
+              borderColor: '#F5A623',
+              color: '#F5A623'
+            }}
+          >
+            {isLoadingSuggestions ? (
+              <>
+                <span 
+                  className="spinner-border spinner-border-sm mr-1" 
+                  style={{ width: '10px', height: '10px' }}
+                />
+                Sugerindo...
+              </>
+            ) : (
+              <>
+                🏷️ Sugerir com IA
+              </>
+            )}
+          </Button>
+        </div>
         
-        <Button
-          size="sm"
-          theme="outline-primary"
-          onClick={handleManualSuggest}
-          disabled={!canSuggestTags || isLoadingSuggestions}
-          style={{ 
-            fontSize: '12px',
-            padding: '4px 8px',
-            borderColor: '#F5A623',
-            color: '#F5A623'
-          }}
-        >
-          {isLoadingSuggestions ? (
-            <>
-              <span 
-                className="spinner-border spinner-border-sm mr-1" 
-                style={{ width: '10px', height: '10px' }}
-              />
-              Sugerindo...
-            </>
-          ) : (
-            <>
-              🏷️ Sugerir com IA
-            </>
-          )}
-        </Button>
+        {isLoadingSuggestions && (
+          <small className="text-primary">
+            <span 
+              className="spinner-border spinner-border-sm mr-1" 
+              style={{ width: '12px', height: '12px' }}
+            />
+            Processando...
+          </small>
+        )}
       </div>
 
       {/* Tags Sugeridas pela IA */}
@@ -262,19 +227,12 @@ const AITagSuggester: React.FC<AITagSuggesterProps> = ({
         </div>
       )}
 
-      {/* Informação sobre sugestão automática */}
-      {canSuggestTags && aiSuggestedTags.length === 0 && !isLoadingSuggestions && (
-        <small className="text-muted d-block mb-2" style={{ fontSize: '11px' }}>
-          💡 A IA irá sugerir tags automaticamente enquanto escreve (após 30 caracteres)
-        </small>
-      )}
-
       {/* Informação quando não pode sugerir */}
-      {!canSuggestTags && !disabled && (
+      {!canSuggestTags && !disabled && aiSuggestedTags.length === 0 && (
         <small className="text-muted d-block mb-2" style={{ fontSize: '11px' }}>
           {selectedTags.length >= maxTags ? 
             `Limite de ${maxTags} tags atingido` :
-            `Escreva mais ${10 - text.trim().length} caracteres para sugestões de IA`
+            `💡 Clique "🏷️ Sugerir com IA" para obter sugestões baseadas no texto`
           }
         </small>
       )}

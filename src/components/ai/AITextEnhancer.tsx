@@ -49,10 +49,13 @@ const AITextEnhancer: React.FC<AITextEnhancerProps> = ({
   const { toast } = useToast();
 
   const handleEnhance = async () => {
-    if (!originalText.trim() || originalText.length < 20) {
+    // Usar sempre o texto mais atual
+    const currentText = originalText.trim();
+    
+    if (!currentText || currentText.length < 10) {
       toast({
         title: "Texto insuficiente",
-        description: "Escreva pelo menos 20 caracteres para usar a IA",
+        description: "Escreva pelo menos 10 caracteres para usar a IA",
         variant: "destructive",
       });
       return;
@@ -69,7 +72,7 @@ const AITextEnhancer: React.FC<AITextEnhancerProps> = ({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          text: originalText,
+          text: currentText, // Usar texto atual
           context: context,
           enhancementType: 'enhance'
         }),
