@@ -84,7 +84,10 @@ madrilusasite/
 ### **🏗️ Documentação Técnica**
 - **[Metodologia Categoria Universal](doc/03_IMPLEMENTACAO_TECNICA/06_Metodologia_Categoria_Universal.md)** - ✅ **NOVO: Padrão revolucionário para implementar categorias**
 - **[Sistema de Categorias](doc/03_IMPLEMENTACAO_TECNICA/04_Sistema_Categorias_Usuario.md)** - ✅ **Todas as 5 categorias implementadas**
+- **[Sistema de Contribuições Completo](doc/03_IMPLEMENTACAO_TECNICA/10_Sistema_Contribuicoes_Completo.md)** - ✅ **NOVO: Sistema completo de contribuições por categoria**
+- **[Funções de Login e Testes](doc/03_IMPLEMENTACAO_TECNICA/09_Funcoes_Logins_Testes.md)** - ✅ **NOVO: Login rápido para desenvolvimento**
 - **[Status Implementação Completa](doc/status_implementacao/STATUS_Todas_Categorias_Implementadas.md)** - ✅ **Resultado final e métricas**
+- **[Status Sistema Contribuições](doc/status_implementacao/STATUS_Sistema_Contribuicoes_Implementado.md)** - ✅ **NOVO: Jornada completa de implementação**
 - **[Fluxo Técnico Completo](doc/03_IMPLEMENTACAO_TECNICA/01_Fluxo_Tecnico_Completo.md)** - ✅ **Arquitectura e fluxos implementados**
 - **[Estrutura Separada](doc/03_IMPLEMENTACAO_TECNICA/03_Estrutura_Separada_Responsabilidades.md)** - Separação institucional vs aplicação
 - **[Backend Modular](doc/03_IMPLEMENTACAO_TECNICA/02_Roadmap_Backend_Modular.md)** - ✅ **5 módulos implementados**
@@ -109,6 +112,22 @@ npm run dev:full
 # Ou separadamente:
 npm run dev              # Frontend (porta 8080)
 npm run dev:backend      # Backend (porta 3001)
+```
+
+### **Login Rápido para Desenvolvimento**
+```bash
+# Acesse: http://localhost:8080
+# Clique em "Login" e use os botões coloridos:
+
+🌍 Imigrante:  imigrante@madrilusa.com.pt  / vcgvcg
+🏢 Empresa:    empresa@madrilusa.com.pt    / vcgvcg  
+🏛️ Município:  municipio@madrilusa.com.pt  / vcgvcg
+🎓 Academia:   academia@madrilusa.com.pt   / vcgvcg
+👨‍👩‍👧‍👦 Família:    familia@madrilusa.com.pt    / vcgvcg
+🛡️ Admin:      admin@madrilusa.com.pt      / vcgvcg
+
+# Ou credenciais originais:
+Admin: admin@madrilusa.com / madrilusa1234tuna
 ```
 
 ### **Scripts Disponíveis**
@@ -149,6 +168,14 @@ npx prisma db push   # Sincronizar schema
 - **Identidade visual oficial** aplicada em todas as páginas
 - **Português de Portugal** implementado em toda interface
 
+#### **Sistema de Contribuições** (`/app/contribuicoes/*`)
+- **Menu dinâmico** por categoria (ex: "Minhas Habilidades", "Minhas Oportunidades")
+- **Páginas específicas** para cada tipo de contribuição
+- **Formulários inteligentes** com orientações e tags sugeridas
+- **Sistema de tags** compartilhado com contadores automáticos
+- **18 contribuições** ativas de exemplo
+- **Login rápido** para desenvolvimento (6 usuários pré-configurados)
+
 #### **Backend API - TODAS AS 5 CATEGORIAS**
 - **Sistema modular:** 5 módulos independentes  
 - **30 endpoints funcionais:** 6 por categoria
@@ -157,6 +184,15 @@ npx prisma db push   # Sincronizar schema
 - **Banco SQLite** com Prisma + migrações automáticas
 - **Registro em 2 etapas** para todas as categorias
 - **34+ campos específicos** por categoria
+
+#### **Sistema de Contribuições - ✅ IMPLEMENTADO**
+- **Sistema completo** de contribuições por categoria de usuário
+- **9 tipos configurados:** Habilidades, Oportunidades, Cursos, Eventos, Notícias, Projetos, Suporte
+- **Menu dinâmico:** Cada categoria vê apenas seus tipos específicos
+- **18 contribuições** ativas de exemplo
+- **55 tags inteligentes** com sistema compartilhado
+- **Interface admin** para moderação e gestão completa
+- **Login rápido** para desenvolvimento (6 usuários pré-configurados)
 
 ---
 
@@ -222,6 +258,29 @@ Baseada no **Manual de Identidade Visual e Comunicação - Madrilusa**:
 - **👨‍👩‍👧‍👦 Famílias:** Ofereça apoio no acolhimento (5 campos específicos)
 
 **📊 Sistema completo:** 30 endpoints, 5 dashboards, registro em 2 etapas para todas
+
+### **🎯 Sistema de Contribuições**
+
+#### **Conceito**
+Cada categoria de usuário pode criar múltiplas **contribuições específicas** ao seu perfil:
+- **Imigrantes:** Habilidades profissionais e pessoais
+- **Empresas:** Oportunidades de emprego e estágios  
+- **Municípios:** Projetos, eventos e notícias locais
+- **Academias:** Cursos e eventos educacionais
+- **Famílias:** Tipos de suporte oferecidos
+
+#### **Funcionalidades**
+- **Menu dinâmico:** Cada categoria vê apenas seus tipos (ex: "Minhas Habilidades", "Minhas Oportunidades")
+- **Páginas específicas:** Uma página dedicada para cada tipo de contribuição
+- **Sistema de tags:** Tags compartilhadas entre todas as contribuições com contadores automáticos
+- **Moderação admin:** Visualização, despublicar e excluir contribuições
+- **Filtros visuais:** Interface admin com cores específicas por categoria
+
+#### **Dados Atuais**
+- **9 tipos** de contribuição configurados
+- **18 contribuições** ativas de exemplo
+- **55 tags** no sistema (51 em uso)
+- **27 usuários** incluindo 6 de desenvolvimento
 
 ---
 
