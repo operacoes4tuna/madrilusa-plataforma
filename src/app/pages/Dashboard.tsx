@@ -185,7 +185,7 @@ const Dashboard: React.FC = () => {
           <Col>
             <div className="card small">
               <div className="card-header border-bottom d-flex justify-content-between align-items-center">
-                <h6 className="m-0">Minhas {getContribuicaoLabel(user?.categoria || '')}</h6>
+                <h6 className="m-0">{getContribuicaoLabel(user?.categoria || '')}</h6>
                 <Button
                   size="sm"
                   theme="primary"

@@ -176,13 +176,13 @@ const ContribuicoesPorTipo: React.FC = () => {
                 </Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-                Meus {tipo.titulo}
+                {tipo.titulo}
               </li>
             </ol>
           </nav>
           
           <PageTitle 
-            title={`Meus ${tipo.titulo}`}
+            title={tipo.titulo}
             subtitle={`${contribuicoes.length} ${tipo.titulo.toLowerCase()} cadastrada${contribuicoes.length !== 1 ? 's' : ''}`}
             className="text-sm-left mb-3" 
           />

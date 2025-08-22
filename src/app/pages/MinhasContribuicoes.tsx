@@ -150,7 +150,7 @@ const MinhasContribuicoes: React.FC = () => {
       {/* Page Header */}
       <Row noGutters className="page-header py-4">
         <PageTitle 
-          title={`Minhas ${getTipoLabel(user?.categoria || '')}`}
+          title={getTipoLabel(user?.categoria || '')}
           subtitle={`${contribuicoes.length} contribuição(ões) cadastrada(s)`}
           className="text-sm-left mb-3" 
         />

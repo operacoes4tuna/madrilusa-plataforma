@@ -142,7 +142,7 @@ const MainSidebar: React.FC = () => {
     } else {
       tiposDisponiveis.forEach(tipo => {
         categoryMenuItems.push({
-          title: `Meus ${tipo.titulo}`,
+          title: tipo.titulo,
           to: `/app/contribuicoes/${tipo.id}`,
           iconClass: getIconForTipo(tipo.titulo),
           htmlAfter: ''
