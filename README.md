@@ -33,15 +33,16 @@ Conectar jovens imigrantes a oportunidades em territórios rurais, criando solu�
 - **Vite 5.4.1** (build tool)
 - **Tailwind CSS 3.4.11** + **shadcn/ui**
 - **React Query** (estado global)
-- **OpenAI API** (chatbot inteligente)
+- **OpenAI API** (chatbot + **IA de contribuições**)
 - **React Hook Form + Zod** (validações)
 
 ### Backend (✅ Implementado)
 - **Node.js + TypeScript**
 - **Express.js** (API REST modular)
 - **Prisma ORM** + **SQLite**
-- **5 módulos completos** (30 endpoints)
-- **Validações robustas** + **Testes automatizados**
+- **8 módulos completos** (46 endpoints + **4 endpoints IA**)
+- **OpenAI GPT-4** (aprimoramento de contribuições)
+- **Validações robustas** + **Rate limiting IA**
 
 ---
 
@@ -82,15 +83,17 @@ madrilusasite/
 - **[Guia de Inscrições](doc/Guia%20de%20Inscrições%20na%20Plataforma%20Madrilusa.md)** - Processo de registro por categoria
 
 ### **🏗️ Documentação Técnica**
-- **[Metodologia Categoria Universal](doc/03_IMPLEMENTACAO_TECNICA/06_Metodologia_Categoria_Universal.md)** - ✅ **NOVO: Padrão revolucionário para implementar categorias**
+- **[Sistema de IA Completo](doc/03_IMPLEMENTACAO_TECNICA/12_Sistema_IA_Contribuicoes_Completo.md)** - ✅ **NOVO: IA integrada para aprimoramento de contribuições**
+- **[Status Sistema IA](doc/status_implementacao/STATUS_Sistema_IA_Implementado.md)** - ✅ **NOVO: Jornada completa de implementação IA**
+- **[Metodologia Categoria Universal](doc/03_IMPLEMENTACAO_TECNICA/06_Metodologia_Categoria_Universal.md)** - ✅ **Padrão revolucionário para implementar categorias**
 - **[Sistema de Categorias](doc/03_IMPLEMENTACAO_TECNICA/04_Sistema_Categorias_Usuario.md)** - ✅ **Todas as 5 categorias implementadas**
-- **[Sistema de Contribuições Completo](doc/03_IMPLEMENTACAO_TECNICA/10_Sistema_Contribuicoes_Completo.md)** - ✅ **NOVO: Sistema completo de contribuições por categoria**
-- **[Funções de Login e Testes](doc/03_IMPLEMENTACAO_TECNICA/09_Funcoes_Logins_Testes.md)** - ✅ **NOVO: Login rápido para desenvolvimento**
+- **[Sistema de Contribuições Completo](doc/03_IMPLEMENTACAO_TECNICA/10_Sistema_Contribuicoes_Completo.md)** - ✅ **Sistema completo de contribuições por categoria**
+- **[Funções de Login e Testes](doc/03_IMPLEMENTACAO_TECNICA/09_Funcoes_Logins_Testes.md)** - ✅ **Login rápido para desenvolvimento**
 - **[Status Implementação Completa](doc/status_implementacao/STATUS_Todas_Categorias_Implementadas.md)** - ✅ **Resultado final e métricas**
-- **[Status Sistema Contribuições](doc/status_implementacao/STATUS_Sistema_Contribuicoes_Implementado.md)** - ✅ **NOVO: Jornada completa de implementação**
+- **[Status Sistema Contribuições](doc/status_implementacao/STATUS_Sistema_Contribuicoes_Implementado.md)** - ✅ **Jornada completa de implementação**
 - **[Fluxo Técnico Completo](doc/03_IMPLEMENTACAO_TECNICA/01_Fluxo_Tecnico_Completo.md)** - ✅ **Arquitectura e fluxos implementados**
 - **[Estrutura Separada](doc/03_IMPLEMENTACAO_TECNICA/03_Estrutura_Separada_Responsabilidades.md)** - Separação institucional vs aplicação
-- **[Backend Modular](doc/03_IMPLEMENTACAO_TECNICA/02_Roadmap_Backend_Modular.md)** - ✅ **5 módulos implementados**
+- **[Backend Modular](doc/03_IMPLEMENTACAO_TECNICA/02_Roadmap_Backend_Modular.md)** - ✅ **8 módulos implementados**
 - **[Status Resumido](doc/status_implementacao/README_Status_Completo.md)** - ✅ **Resumo executivo completo**
 
 ### **📝 Política de Documentação**
@@ -128,6 +131,22 @@ npm run dev:backend      # Backend (porta 3001)
 
 # Ou credenciais originais:
 Admin: admin@madrilusa.com / madrilusa1234tuna
+```
+
+### **🤖 Como Usar a IA**
+```bash
+# A IA está integrada no sistema de contribuições:
+
+1. Faça login com qualquer usuário
+2. Vá para o menu da sua categoria (ex: "Habilidades", "Oportunidades")
+3. Clique "Adicionar [Tipo]"
+4. Digite sua contribuição (mínimo 20 caracteres)
+5. Use "✨ Aprimorar com IA" para melhorar o texto
+6. Use "🏷️ Sugerir com IA" para obter tags relevantes
+
+# Configuração OpenAI:
+# A chave da API está configurada no backend/.env
+# OPENAI_API_KEY=sk-proj-...
 ```
 
 ### **Scripts Disponíveis**
@@ -270,17 +289,26 @@ Cada categoria de usuário pode criar múltiplas **contribuições específicas*
 - **Famílias:** Tipos de suporte oferecidos
 
 #### **Funcionalidades**
-- **Menu dinâmico:** Cada categoria vê apenas seus tipos (ex: "Minhas Habilidades", "Minhas Oportunidades")
+- **Menu dinâmico:** Cada categoria vê apenas seus tipos (ex: "Habilidades", "Oportunidades")
 - **Páginas específicas:** Uma página dedicada para cada tipo de contribuição
 - **Sistema de tags:** Tags compartilhadas entre todas as contribuições com contadores automáticos
 - **Moderação admin:** Visualização, despublicar e excluir contribuições
 - **Filtros visuais:** Interface admin com cores específicas por categoria
+- **🤖 IA Integrada:** Aprimoramento inteligente de texto e sugestão de tags
+
+#### **🤖 Funcionalidades de IA**
+- **Aprimoramento de texto:** IA melhora clareza, gramática e impacto das contribuições
+- **Sugestão de tags:** IA sugere tags relevantes baseadas no conteúdo e contexto
+- **Contextualização:** IA adapta sugestões por categoria de usuário e tipo de contribuição
+- **Português de Portugal:** IA especializada em linguagem portuguesa europeia
+- **Rate limiting:** Proteção contra abuso (20 requests/15min por usuário)
 
 #### **Dados Atuais**
 - **9 tipos** de contribuição configurados
 - **18 contribuições** ativas de exemplo
 - **55 tags** no sistema (51 em uso)
 - **27 usuários** incluindo 6 de desenvolvimento
+- **🤖 IA GPT-4** integrada e operacional
 
 ---
 
