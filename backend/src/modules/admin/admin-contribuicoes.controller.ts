@@ -397,5 +397,133 @@ export const adminContribuicoesController = {
         error: 'Erro interno do servidor'
       });
     }
+  },
+
+  // ===== MODERAÇÃO DE CONTRIBUIÇÕES =====
+
+  async getContribuicoesPorTipo(req: Request, res: Response) {
+    try {
+      const { tipoId } = req.params;
+      
+      // Buscar tipo de contribuição
+      const tipo = await contribuicoesService.getTipoContribuicaoById(tipoId);
+      if (!tipo) {
+        return res.status(404).json({
+          success: false,
+          error: 'Tipo de contribuição não encontrado'
+        });
+      }
+
+      // Buscar todas as contribuições deste tipo (ativas e inativas)
+      const contribuicoes = await contribuicoesService.getContribuicoesByTipo(tipoId);
+
+      // Formatar dados para admin
+      const contribuicoesFormatadas = contribuicoes.map(contrib => {
+        const diasNaPlataforma = Math.floor(
+          (new Date().getTime() - new Date(contrib.user.createdAt).getTime()) / 
+          (1000 * 60 * 60 * 24)
+        );
+
+        return {
+          ...contrib,
+          tags: contrib.tags ? JSON.parse(contrib.tags) : [],
+          user: {
+            ...contrib.user,
+            diasNaPlataforma
+          }
+        };
+      });
+
+      // Calcular estatísticas
+      const estatisticas = {
+        total: contribuicoes.length,
+        ativas: contribuicoes.filter(c => c.ativo).length,
+        inativas: contribuicoes.filter(c => !c.ativo).length,
+        usuarios: new Set(contribuicoes.map(c => c.userId)).size
+      };
+
+      res.json({
+        success: true,
+        data: {
+          tipo,
+          contribuicoes: contribuicoesFormatadas,
+          estatisticas
+        },
+        message: 'Contribuições do tipo obtidas com sucesso'
+      });
+    } catch (error) {
+      console.error('Erro ao buscar contribuições por tipo:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Erro interno do servidor'
+      });
+    }
+  },
+
+  async toggleContribuicaoStatus(req: Request, res: Response) {
+    try {
+      const { contribuicaoId } = req.params;
+      const { ativo } = req.body;
+
+      if (typeof ativo !== 'boolean') {
+        return res.status(400).json({
+          success: false,
+          error: 'Status deve ser true ou false'
+        });
+      }
+
+      // Buscar contribuição
+      const contribuicao = await contribuicoesService.getContribuicaoById(contribuicaoId);
+      if (!contribuicao) {
+        return res.status(404).json({
+          success: false,
+          error: 'Contribuição não encontrada'
+        });
+      }
+
+      // Atualizar status
+      const updated = await contribuicoesService.updateContribuicaoStatus(contribuicaoId, ativo);
+
+      res.json({
+        success: true,
+        data: updated,
+        message: `Contribuição ${ativo ? 'publicada' : 'despublicada'} com sucesso`
+      });
+    } catch (error) {
+      console.error('Erro ao alterar status da contribuição:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Erro interno do servidor'
+      });
+    }
+  },
+
+  async deleteContribuicaoAdmin(req: Request, res: Response) {
+    try {
+      const { contribuicaoId } = req.params;
+
+      // Buscar contribuição com dados do usuário
+      const contribuicao = await contribuicoesService.getContribuicaoById(contribuicaoId);
+      if (!contribuicao) {
+        return res.status(404).json({
+          success: false,
+          error: 'Contribuição não encontrada'
+        });
+      }
+
+      // Excluir contribuição (service já decrementa tags)
+      await contribuicoesService.deleteContribuicaoAdmin(contribuicaoId);
+
+      res.json({
+        success: true,
+        message: `Contribuição de ${contribuicao.user?.nomeCompleto} removida com sucesso`
+      });
+    } catch (error) {
+      console.error('Erro ao excluir contribuição:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Erro interno do servidor'
+      });
+    }
   }
 };

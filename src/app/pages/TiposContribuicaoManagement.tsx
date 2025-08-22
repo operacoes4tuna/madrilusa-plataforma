@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, CardBody, CardHeader, Button } from 'shards-
 import PageTitle from '../components/common/PageTitle';
 import { useToast } from '@/hooks/use-toast';
 import { USER_CATEGORIES } from '../../../shared-types/api.types';
+import ContribuicoesAdminModal from '../components/admin/ContribuicoesAdminModal';
 
 interface TipoContribuicao {
   id: string;
@@ -22,6 +23,9 @@ const TiposContribuicaoManagement: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [editingTipo, setEditingTipo] = useState<TipoContribuicao | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const [contribuicoesCount, setContribuicoesCount] = useState<Record<string, number>>({});
+  const [viewingTipo, setViewingTipo] = useState<TipoContribuicao | null>(null);
+  const [showContribuicoesModal, setShowContribuicoesModal] = useState(false);
   const { toast } = useToast();
 
   // Estados do formulário
@@ -45,6 +49,8 @@ const TiposContribuicaoManagement: React.FC = () => {
       
       if (data.success) {
         setTipos(data.data);
+        // Buscar contadores de contribuições
+        fetchContribuicoesCount(data.data);
       } else {
         throw new Error(data.error);
       }
@@ -57,6 +63,31 @@ const TiposContribuicaoManagement: React.FC = () => {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchContribuicoesCount = async (tiposList: TipoContribuicao[]) => {
+    try {
+      const counts: Record<string, number> = {};
+      
+      // Buscar contadores para cada tipo em paralelo
+      const promises = tiposList.map(async (tipo) => {
+        try {
+          const response = await fetch(`/api/admin/tipos-contribuicao/${tipo.id}/contribuicoes`);
+          const data = await response.json();
+          if (data.success) {
+            counts[tipo.id] = data.data.estatisticas.total;
+          }
+        } catch (error) {
+          console.error(`Erro ao buscar contador para ${tipo.titulo}:`, error);
+          counts[tipo.id] = 0;
+        }
+      });
+
+      await Promise.all(promises);
+      setContribuicoesCount(counts);
+    } catch (error) {
+      console.error('Erro ao buscar contadores:', error);
     }
   };
 
@@ -173,6 +204,20 @@ const TiposContribuicaoManagement: React.FC = () => {
     });
     setEditingTipo(null);
     setShowForm(false);
+  };
+
+  const handleViewContribuicoes = (tipo: TipoContribuicao) => {
+    setViewingTipo(tipo);
+    setShowContribuicoesModal(true);
+  };
+
+  const handleCloseContribuicoesModal = () => {
+    setShowContribuicoesModal(false);
+    setViewingTipo(null);
+    // Refresh contadores após possíveis alterações
+    if (tipos.length > 0) {
+      fetchContribuicoesCount(tipos);
+    }
   };
 
   const getCategoryLabel = (categoria: string) => {
@@ -387,6 +432,18 @@ const TiposContribuicaoManagement: React.FC = () => {
                 <div className="d-flex justify-content-end mt-3">
                   <Button
                     size="sm"
+                    theme="outline-info"
+                    className="mr-2"
+                    onClick={() => handleViewContribuicoes(tipo)}
+                    title="Visualizar contribuições"
+                  >
+                    <i className="material-icons" style={{fontSize: '16px'}}>visibility</i>
+                    {contribuicoesCount[tipo.id] !== undefined && (
+                      <span className="ml-1">({contribuicoesCount[tipo.id]})</span>
+                    )}
+                  </Button>
+                  <Button
+                    size="sm"
                     theme="outline-primary"
                     className="mr-2"
                     onClick={() => handleEdit(tipo)}
@@ -424,6 +481,14 @@ const TiposContribuicaoManagement: React.FC = () => {
           </Col>
         </Row>
       )}
+
+      {/* Modal de Visualização de Contribuições */}
+      <ContribuicoesAdminModal
+        isOpen={showContribuicoesModal}
+        onClose={handleCloseContribuicoesModal}
+        tipo={viewingTipo}
+        onRefresh={fetchTipos}
+      />
     </Container>
   );
 };

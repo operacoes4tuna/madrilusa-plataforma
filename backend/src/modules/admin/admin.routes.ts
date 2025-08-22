@@ -35,4 +35,9 @@ router.delete('/tags/:id', adminContribuicoesController.deleteTag);
 router.get('/contribuicoes/stats', adminContribuicoesController.getContribuicoesStats);
 router.get('/contribuicoes/todas', adminContribuicoesController.getAllContribuicoes);
 
+// ✨ SISTEMA CONTRIBUIÇÕES - Moderação
+router.get('/tipos-contribuicao/:tipoId/contribuicoes', adminContribuicoesController.getContribuicoesPorTipo);
+router.put('/contribuicao/:contribuicaoId/status', adminContribuicoesController.toggleContribuicaoStatus);
+router.delete('/contribuicao/:contribuicaoId', adminContribuicoesController.deleteContribuicaoAdmin);
+
 export default router; 

@@ -319,5 +319,63 @@ export const contribuicoesService = {
         email: true
       }
     });
+  },
+
+  // ===== MÉTODOS ADMIN PARA MODERAÇÃO =====
+
+  async getContribuicoesByTipo(tipoId: string) {
+    return await prisma.contribuicao.findMany({
+      where: { tipoContribuicaoId: tipoId },
+      include: {
+        user: {
+          select: {
+            id: true,
+            nomeCompleto: true,
+            email: true,
+            categoria: true,
+            telemovel: true,
+            createdAt: true
+          }
+        },
+        tipoContribuicao: true
+      },
+      orderBy: [
+        { ativo: 'desc' }, // Ativas primeiro
+        { createdAt: 'desc' }
+      ]
+    });
+  },
+
+  async updateContribuicaoStatus(contribuicaoId: string, ativo: boolean) {
+    return await prisma.contribuicao.update({
+      where: { id: contribuicaoId },
+      data: { ativo },
+      include: {
+        user: {
+          select: {
+            id: true,
+            nomeCompleto: true,
+            email: true
+          }
+        }
+      }
+    });
+  },
+
+  async deleteContribuicaoAdmin(contribuicaoId: string) {
+    // Buscar contribuição para decrementar tags
+    const contribuicao = await prisma.contribuicao.findUnique({
+      where: { id: contribuicaoId }
+    });
+
+    if (contribuicao && contribuicao.tags) {
+      const tags = JSON.parse(contribuicao.tags);
+      await this.decrementTagUsage(tags);
+    }
+
+    // Excluir contribuição
+    return await prisma.contribuicao.delete({
+      where: { id: contribuicaoId }
+    });
   }
 };
