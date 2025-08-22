@@ -43,7 +43,6 @@ const AITagSuggester: React.FC<AITagSuggesterProps> = ({
   disabled = false,
   maxTags = 8
 }) => {
-  const [aiSuggestedTags, setAISuggestedTags] = useState<string[]>([]);
   const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
   const { suggestTags } = useAI();
   const { toast } = useToast();
@@ -67,52 +66,37 @@ const AITagSuggester: React.FC<AITagSuggesterProps> = ({
       const suggestions = await suggestTags(text, context, existingTagNames, selectedTags);
       
       const newSuggestions = suggestions.filter(tag => !selectedTags.includes(tag));
-      setAISuggestedTags(newSuggestions);
       
-      toast({
-        title: "✨ Sugestões atualizadas",
-        description: `${newSuggestions.length} tags relevantes encontradas`,
-      });
+      // Adicionar automaticamente as primeiras 3-4 sugestões mais relevantes
+      const tagsToAdd = newSuggestions.slice(0, Math.min(4, maxTags - selectedTags.length));
+      
+      if (tagsToAdd.length > 0) {
+        const updatedTags = [...selectedTags, ...tagsToAdd];
+        onTagsChanged(updatedTags);
+        
+        toast({
+          title: "✨ Tags adicionadas",
+          description: `${tagsToAdd.length} tags relevantes adicionadas: ${tagsToAdd.join(', ')}`,
+        });
+      } else {
+        toast({
+          title: "Nenhuma tag nova",
+          description: "Todas as tags sugeridas já estão selecionadas",
+        });
+      }
     } catch (error) {
       console.error('Erro na sugestão manual:', error);
+      toast({
+        title: "Erro na IA",
+        description: "Não foi possível obter sugestões de tags",
+        variant: "destructive",
+      });
     } finally {
       setIsLoadingSuggestions(false);
     }
   };
 
-  const addTag = (tag: string) => {
-    if (selectedTags.length >= maxTags) {
-      toast({
-        title: "Limite atingido",
-        description: `Máximo de ${maxTags} tags permitidas`,
-        variant: "destructive",
-      });
-      return;
-    }
 
-    if (!selectedTags.includes(tag)) {
-      const newTags = [...selectedTags, tag];
-      
-      try {
-        onTagsChanged(newTags);
-        
-        // Remover da lista de sugestões
-        setAISuggestedTags(aiSuggestedTags.filter(t => t !== tag));
-        
-        toast({
-          title: "Tag adicionada",
-          description: `"${tag}" foi adicionada às suas tags`,
-        });
-      } catch (error) {
-        console.error('Erro ao adicionar tag:', error);
-        toast({
-          title: "Erro",
-          description: "Erro ao adicionar tag",
-          variant: "destructive",
-        });
-      }
-    }
-  };
 
   const getTagInfo = (tagName: string) => {
     const existingTag = existingTags.find(t => 
@@ -174,61 +158,10 @@ const AITagSuggester: React.FC<AITagSuggesterProps> = ({
         )}
       </div>
 
-      {/* Tags Sugeridas pela IA */}
-      {aiSuggestedTags.length > 0 && (
-        <div className="ai-suggested-tags mb-3 p-2 border rounded" style={{ backgroundColor: '#f8f9fa' }}>
-          <div className="d-flex justify-content-between align-items-center mb-2">
-            <small className="text-muted mb-0">
-              ✨ <strong>Sugestões da IA:</strong>
-            </small>
-            <Button
-              size="sm"
-              theme="light"
-              onClick={() => setAISuggestedTags([])}
-              style={{ fontSize: '10px', padding: '2px 4px' }}
-            >
-              Limpar
-            </Button>
-          </div>
-          
-          <div className="d-flex flex-wrap">
-            {aiSuggestedTags.map((tag, index) => {
-              const tagInfo = getTagInfo(tag);
-              
-              return (
-                <div key={index} className="mr-1 mb-1">
-                  <Button
-                    size="sm"
-                    theme={tagInfo.isExisting ? "primary" : "outline-primary"}
-                    onClick={() => addTag(tag)}
-                    disabled={selectedTags.length >= maxTags}
-                    style={{ 
-                      fontSize: '11px',
-                      padding: '4px 8px',
-                      backgroundColor: tagInfo.isExisting ? tagInfo.color : 'transparent',
-                      borderColor: tagInfo.color,
-                      color: tagInfo.isExisting ? '#fff' : tagInfo.color
-                    }}
-                    title={tagInfo.isExisting ? 
-                      `Tag existente (${tagInfo.usage} usos)` : 
-                      'Tag nova'
-                    }
-                  >
-                    {tagInfo.isExisting ? '✓' : '+'} {tag}
-                  </Button>
-                </div>
-              );
-            })}
-          </div>
-          
-          <small className="text-muted d-block mt-1" style={{ fontSize: '10px' }}>
-            ✓ = Tag existente na plataforma | + = Tag nova
-          </small>
-        </div>
-      )}
+
 
       {/* Informação quando não pode sugerir */}
-      {!canSuggestTags && !disabled && aiSuggestedTags.length === 0 && (
+      {!canSuggestTags && !disabled && (
         <small className="text-muted d-block mb-2" style={{ fontSize: '11px' }}>
           {selectedTags.length >= maxTags ? 
             `Limite de ${maxTags} tags atingido` :
