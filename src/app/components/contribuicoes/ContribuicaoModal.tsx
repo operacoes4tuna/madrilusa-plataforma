@@ -32,6 +32,8 @@ interface ContribuicaoModalProps {
   onSave: () => void;
   editingContribuicao?: Contribuicao | null;
   tiposDisponiveis: TipoContribuicao[];
+  tipoPreSelecionado?: TipoContribuicao; // ✨ NOVO: Tipo pré-selecionado
+  ocultarSeletorTipo?: boolean;          // ✨ NOVO: Ocultar seletor de tipo
 }
 
 const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
@@ -39,7 +41,9 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
   onClose,
   onSave,
   editingContribuicao,
-  tiposDisponiveis
+  tiposDisponiveis,
+  tipoPreSelecionado,
+  ocultarSeletorTipo = false
 }) => {
   const [formData, setFormData] = useState({
     tipoContribuicaoId: '',
@@ -61,10 +65,31 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
       
       const tipo = tiposDisponiveis.find(t => t.id === editingContribuicao.tipoContribuicaoId);
       setSelectedTipo(tipo || null);
+    } else if (tipoPreSelecionado) {
+      // ✨ NOVO: Configurar com tipo pré-selecionado
+      setFormData({
+        tipoContribuicaoId: tipoPreSelecionado.id,
+        descricao: tipoPreSelecionado.textoModelo || '',
+        tags: (() => {
+          if (tipoPreSelecionado.tagsModelo) {
+            try {
+              if (typeof tipoPreSelecionado.tagsModelo === 'string') {
+                return JSON.parse(tipoPreSelecionado.tagsModelo);
+              } else if (Array.isArray(tipoPreSelecionado.tagsModelo)) {
+                return tipoPreSelecionado.tagsModelo;
+              }
+            } catch (error) {
+              console.error('Erro ao fazer parse das tags modelo:', error);
+            }
+          }
+          return [];
+        })()
+      });
+      setSelectedTipo(tipoPreSelecionado);
     } else {
       resetForm();
     }
-  }, [editingContribuicao, tiposDisponiveis]);
+  }, [editingContribuicao, tiposDisponiveis, tipoPreSelecionado]);
 
   const resetForm = () => {
     setFormData({
@@ -198,7 +223,7 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
           <form onSubmit={handleSubmit}>
             <div className="modal-body">
               {/* Seleção do Tipo */}
-              {!editingContribuicao && (
+              {!editingContribuicao && !ocultarSeletorTipo && (
                 <div className="form-group">
                   <label htmlFor="tipoContribuicao">Tipo de Contribuição *</label>
                   <select
@@ -218,8 +243,23 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
                 </div>
               )}
 
+              {/* Tipo Pré-selecionado (apenas visual) */}
+              {ocultarSeletorTipo && selectedTipo && (
+                <div className="alert alert-primary">
+                  <h6 className="mb-1">
+                    <i className="material-icons mr-1">category</i>
+                    {selectedTipo.titulo}
+                  </h6>
+                  {selectedTipo.contextoIA && (
+                    <p className="mb-0 small text-muted">
+                      {selectedTipo.contextoIA}
+                    </p>
+                  )}
+                </div>
+              )}
+
               {/* Informações do Tipo Selecionado */}
-              {selectedTipo && (
+              {selectedTipo && !ocultarSeletorTipo && (
                 <div className="alert alert-info">
                   <h6 className="mb-2">{selectedTipo.titulo}</h6>
                   {selectedTipo.perguntasModelo && (

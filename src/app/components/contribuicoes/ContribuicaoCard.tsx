@@ -67,23 +67,40 @@ const ContribuicaoCard: React.FC<ContribuicaoCardProps> = ({
           }
         </p>
         
-        {contribuicao.tags && contribuicao.tags.length > 0 && (
-          <div className="mb-3">
-            <small className="text-muted d-block mb-1"><strong>Tags:</strong></small>
-            <div>
-              {contribuicao.tags.slice(0, 3).map((tag, index) => (
-                <span key={index} className="badge badge-light mr-1 mb-1">
-                  {tag}
-                </span>
-              ))}
-              {contribuicao.tags.length > 3 && (
-                <span className="badge badge-secondary">
-                  +{contribuicao.tags.length - 3}
-                </span>
-              )}
+        {(() => {
+          // Parse seguro das tags
+          let tags: string[] = [];
+          if (contribuicao.tags) {
+            try {
+              if (typeof contribuicao.tags === 'string') {
+                tags = JSON.parse(contribuicao.tags);
+              } else if (Array.isArray(contribuicao.tags)) {
+                tags = contribuicao.tags;
+              }
+            } catch (error) {
+              console.error('Erro ao fazer parse das tags:', error);
+              tags = [];
+            }
+          }
+
+          return tags.length > 0 && (
+            <div className="mb-3">
+              <small className="text-muted d-block mb-1"><strong>Tags:</strong></small>
+              <div>
+                {tags.slice(0, 3).map((tag, index) => (
+                  <span key={index} className="badge badge-light mr-1 mb-1">
+                    {tag}
+                  </span>
+                ))}
+                {tags.length > 3 && (
+                  <span className="badge badge-secondary">
+                    +{tags.length - 3}
+                  </span>
+                )}
+              </div>
             </div>
-          </div>
-        )}
+          );
+        })()}
 
         {showActions && (
           <div className="d-flex justify-content-end mt-auto">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Col, Nav, NavItem, NavLink } from 'shards-react';
 import classNames from 'classnames';
@@ -7,11 +7,90 @@ import SidebarMainNavbar from './SidebarMainNavbar';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
 import { USER_CATEGORIES } from '@/modules/auth/types/auth.types';
 
+interface TipoContribuicao {
+  id: string;
+  titulo: string;
+  categoria: string;
+  ativo: boolean;
+}
+
 const MainSidebar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [menuVisible, setMenuVisible] = useState(false);
   const { user } = useAuth();
+  
+  // ✨ NOVO: Estado para tipos de contribuição dinâmicos
+  const [tiposDisponiveis, setTiposDisponiveis] = useState<TipoContribuicao[]>([]);
+  const [loadingTipos, setLoadingTipos] = useState(false);
+
+  // ✨ NOVO: Buscar tipos quando usuário muda
+  useEffect(() => {
+    if (user?.id && user?.categoria !== 'ADMIN') {
+      fetchTiposParaCategoria();
+    } else {
+      setTiposDisponiveis([]);
+    }
+  }, [user]);
+
+  const fetchTiposParaCategoria = async () => {
+    setLoadingTipos(true);
+    try {
+      const response = await fetch(`/api/contribuicoes/user/${user?.id}/tipos-disponiveis`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setTiposDisponiveis(data.data);
+      } else {
+        console.error('Erro ao buscar tipos:', data.error);
+        setTiposDisponiveis([]);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar tipos para categoria:', error);
+      setTiposDisponiveis([]);
+    } finally {
+      setLoadingTipos(false);
+    }
+  };
+
+  // ✨ NOVO: Mapeamento de ícones por tipo de contribuição
+  const getIconForTipo = (titulo: string): string => {
+    const iconMap: Record<string, string> = {
+      'Habilidades': 'star',
+      'Oportunidades': 'work',
+      'Projetos': 'account_balance',
+      'Eventos': 'event',
+      'Notícias': 'article',
+      'Cursos': 'menu_book',
+      'Suporte': 'favorite',
+      'Workshops': 'build'
+    };
+    return iconMap[titulo] || 'assignment';
+  };
+
+  // ✨ NOVO: Obter ícone da categoria de usuário
+  const getCategoryIcon = (categoria?: string): string => {
+    const iconMap: Record<string, string> = {
+      'IMIGRANTE': 'language',
+      'EMPRESA': 'business',
+      'MUNICIPIO': 'location_city',
+      'ACADEMIA': 'school',
+      'FAMILIA_ACOLHIMENTO': 'family_restroom'
+    };
+    return iconMap[categoria || ''] || 'person';
+  };
+
+  // ✨ NOVO: Obter label da categoria
+  const getCategoryLabel = (categoria?: string): string => {
+    const labelMap: Record<string, string> = {
+      'IMIGRANTE': 'Imigrante',
+      'EMPRESA': 'Empresa',
+      'MUNICIPIO': 'Município',
+      'ACADEMIA': 'Academia',
+      'FAMILIA_ACOLHIMENTO': 'Família'
+    };
+    return labelMap[categoria || ''] || 'Usuário';
+  };
 
   // Itens de navegação base
   const baseSidebarNavItems = [
@@ -35,97 +114,50 @@ const MainSidebar: React.FC = () => {
     }
   ];
 
-  // Menu específico por categoria
-  const categoryMenuItems = [];
+  // ✨ NOVO: Menu dinâmico por categoria
+  const generateCategoryMenuItems = () => {
+    const categoryMenuItems = [];
+
+    // Item de perfil (sempre presente para não-admin)
+    if (user?.categoria && user.categoria !== 'ADMIN') {
+      const perfilRoute = `/app/perfil-${user.categoria.toLowerCase().replace('_acolhimento', '')}`;
+      
+      categoryMenuItems.push({
+        title: `Perfil de ${getCategoryLabel(user.categoria)}`,
+        to: perfilRoute,
+        iconClass: getCategoryIcon(user.categoria),
+        htmlAfter: ''
+      });
+    }
+
+    // Items de contribuição (dinâmicos baseados nos tipos disponíveis)
+    if (loadingTipos) {
+      categoryMenuItems.push({
+        title: 'Carregando tipos...',
+        to: '#',
+        iconClass: 'hourglass_empty',
+        htmlAfter: '',
+        disabled: true
+      });
+    } else {
+      tiposDisponiveis.forEach(tipo => {
+        categoryMenuItems.push({
+          title: `Meus ${tipo.titulo}`,
+          to: `/app/contribuicoes/${tipo.id}`,
+          iconClass: getIconForTipo(tipo.titulo),
+          htmlAfter: ''
+        });
+      });
+    }
+
+    return categoryMenuItems;
+  };
   
-  if (user?.categoria === USER_CATEGORIES.IMIGRANTE) {
-    categoryMenuItems.push(
-      {
-        title: 'Perfil de Imigrante',
-        to: '/app/perfil-imigrante',
-        iconClass: 'language',
-        htmlAfter: ''
-      },
-      {
-        title: 'Minhas Habilidades',
-        to: '/app/minhas-contribuicoes',
-        iconClass: 'star',
-        htmlAfter: ''
-      }
-    );
-  }
-  
-  if (user?.categoria === USER_CATEGORIES.EMPRESA) {
-    categoryMenuItems.push(
-      {
-        title: 'Perfil de Empresa',
-        to: '/app/perfil-empresa',
-        iconClass: 'business',
-        htmlAfter: ''
-      },
-      {
-        title: 'Minhas Oportunidades',
-        to: '/app/minhas-contribuicoes',
-        iconClass: 'work',
-        htmlAfter: ''
-      }
-    );
-  }
-  
-  if (user?.categoria === USER_CATEGORIES.MUNICIPIO) {
-    categoryMenuItems.push(
-      {
-        title: 'Perfil de Município',
-        to: '/app/perfil-municipio',
-        iconClass: 'location_city',
-        htmlAfter: ''
-      },
-      {
-        title: 'Meus Projetos',
-        to: '/app/minhas-contribuicoes',
-        iconClass: 'account_balance',
-        htmlAfter: ''
-      }
-    );
-  }
-  
-  if (user?.categoria === USER_CATEGORIES.ACADEMIA) {
-    categoryMenuItems.push(
-      {
-        title: 'Perfil de Academia',
-        to: '/app/perfil-academia',
-        iconClass: 'school',
-        htmlAfter: ''
-      },
-      {
-        title: 'Meus Cursos',
-        to: '/app/minhas-contribuicoes',
-        iconClass: 'menu_book',
-        htmlAfter: ''
-      }
-    );
-  }
-  
-  if (user?.categoria === USER_CATEGORIES.FAMILIA_ACOLHIMENTO) {
-    categoryMenuItems.push(
-      {
-        title: 'Perfil de Família',
-        to: '/app/perfil-familia',
-        iconClass: 'family_restroom',
-        htmlAfter: ''
-      },
-      {
-        title: 'Meu Suporte',
-        to: '/app/minhas-contribuicoes',
-        iconClass: 'favorite',
-        htmlAfter: ''
-      }
-    );
-  }
-  
-  // ✨ ADMIN: Menu específico para administradores
-  if (user?.categoria === USER_CATEGORIES.ADMIN) {
-    categoryMenuItems.push(
+  // ✨ NOVO: Gerar menu dinâmico baseado na categoria
+  const generateAdminMenuItems = () => {
+    if (user?.categoria !== USER_CATEGORIES.ADMIN) return [];
+    
+    return [
       {
         title: 'Dashboard Admin',
         to: '/app/admin-dashboard',
@@ -150,10 +182,14 @@ const MainSidebar: React.FC = () => {
         iconClass: 'local_offer',
         htmlAfter: ''
       }
-    );
-  }
+    ];
+  };
   
-  // Combinar menus
+  // ✨ NOVO: Combinar menus dinamicamente
+  const categoryMenuItems = user?.categoria === 'ADMIN' 
+    ? generateAdminMenuItems()
+    : generateCategoryMenuItems();
+    
   const sidebarNavItems = [...baseSidebarNavItems, ...categoryMenuItems];
 
   const classes = classNames(

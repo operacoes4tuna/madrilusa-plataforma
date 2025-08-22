@@ -17,6 +17,7 @@ import UserManagement from "./app/pages/UserManagement"; // ✨ ADMIN
 import TiposContribuicaoManagement from "./app/pages/TiposContribuicaoManagement"; // ✨ CONTRIBUIÇÕES
 import TagsManagement from "./app/pages/TagsManagement"; // ✨ CONTRIBUIÇÕES
 import MinhasContribuicoes from "./app/pages/MinhasContribuicoes"; // ✨ CONTRIBUIÇÕES USUÁRIO
+import ContribuicoesPorTipo from "./app/pages/ContribuicoesPorTipo"; // ✨ MENU DINÂMICO
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -50,6 +51,7 @@ const App = () => (
             <Route path="user-management" element={<UserManagement />} />
             <Route path="tipos-contribuicao" element={<TiposContribuicaoManagement />} />
             <Route path="tags-management" element={<TagsManagement />} />
+            <Route path="contribuicoes/:tipoId" element={<ContribuicoesPorTipo />} />
             <Route path="minhas-contribuicoes" element={<MinhasContribuicoes />} />
           </Route>
           

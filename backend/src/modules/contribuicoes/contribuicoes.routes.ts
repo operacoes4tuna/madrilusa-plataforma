@@ -10,9 +10,13 @@ router.post('/user/:userId', contribuicoesController.createContribuicao);
 router.get('/user/:userId', contribuicoesController.getMinhasContribuicoes);
 router.get('/user/:userId/formatadas', contribuicoesController.getContribuicoesComTipo);
 router.get('/user/:userId/tipos-disponiveis', contribuicoesController.getTiposParaUsuario);
+router.get('/user/:userId/tipo/:tipoId', contribuicoesController.getContribuicoesPorTipo);
 router.get('/:id', contribuicoesController.getContribuicaoById);
 router.put('/:id', contribuicoesController.updateContribuicao);
 router.delete('/:id', contribuicoesController.deleteContribuicao);
+
+// Detalhes de tipos
+router.get('/tipo/:tipoId/detalhes', contribuicoesController.getTipoDetalhes);
 
 // Contribuições públicas
 router.get('/publicas/list', contribuicoesController.getContribuicoesPublicas);

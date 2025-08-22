@@ -75,6 +75,20 @@ export const contribuicoesService = {
     });
   },
 
+  async getContribuicoesByUserAndTipo(userId: string, tipoId: string) {
+    return await prisma.contribuicao.findMany({
+      where: { 
+        userId,
+        tipoContribuicaoId: tipoId,
+        ativo: true
+      },
+      include: {
+        tipoContribuicao: true
+      },
+      orderBy: { createdAt: 'desc' }
+    });
+  },
+
   async getContribuicaoById(id: string, userId?: string) {
     const where: any = { id, ativo: true };
     if (userId) {

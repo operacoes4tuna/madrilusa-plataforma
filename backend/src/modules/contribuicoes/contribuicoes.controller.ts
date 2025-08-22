@@ -283,6 +283,82 @@ export const contribuicoesController = {
     }
   },
 
+  async getContribuicoesPorTipo(req: Request, res: Response) {
+    try {
+      const { userId, tipoId } = req.params;
+
+      // Validar usuário
+      const user = await contribuicoesService.getUserById?.(userId);
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          error: 'Usuário não encontrado'
+        });
+      }
+
+      // Validar tipo de contribuição
+      const tipo = await contribuicoesService.getTipoContribuicaoById(tipoId);
+      if (!tipo) {
+        return res.status(404).json({
+          success: false,
+          error: 'Tipo de contribuição não encontrado'
+        });
+      }
+
+      // Verificar se o tipo pertence à categoria do usuário
+      if (tipo.categoria !== user.categoria) {
+        return res.status(403).json({
+          success: false,
+          error: 'Tipo de contribuição não disponível para sua categoria'
+        });
+      }
+
+      // Buscar contribuições específicas deste tipo
+      const contribuicoes = await contribuicoesService.getContribuicoesByUserAndTipo(userId, tipoId);
+
+      res.json({
+        success: true,
+        data: {
+          tipo,
+          contribuicoes
+        },
+        message: 'Contribuições por tipo obtidas com sucesso'
+      });
+    } catch (error) {
+      console.error('Erro ao buscar contribuições por tipo:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Erro interno do servidor'
+      });
+    }
+  },
+
+  async getTipoDetalhes(req: Request, res: Response) {
+    try {
+      const { tipoId } = req.params;
+
+      const tipo = await contribuicoesService.getTipoContribuicaoById(tipoId);
+      if (!tipo) {
+        return res.status(404).json({
+          success: false,
+          error: 'Tipo de contribuição não encontrado'
+        });
+      }
+
+      res.json({
+        success: true,
+        data: tipo,
+        message: 'Detalhes do tipo obtidos com sucesso'
+      });
+    } catch (error) {
+      console.error('Erro ao buscar detalhes do tipo:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Erro interno do servidor'
+      });
+    }
+  },
+
   async getContribuicoesComTipo(req: Request, res: Response) {
     try {
       const { userId } = req.params;
