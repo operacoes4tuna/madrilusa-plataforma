@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, CardBody, Button } from 'shards-react';
 import PageTitle from '../components/common/PageTitle';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
+import InformationModal from '../components/sinergia/InformationModal';
 
 // Tipos para SinergIA
 interface Match {
@@ -35,6 +36,9 @@ const SinergIA: React.FC = () => {
   const [results, setResults] = useState<SinergiaResults | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
+  const [entityDetails, setEntityDetails] = useState<any>(null);
+  const [showInfoModal, setShowInfoModal] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
 
@@ -88,41 +92,38 @@ const SinergIA: React.FC = () => {
     }
   };
 
-  const handleSolicitarContato = async (match: Match) => {
+  const handleSolicitarInformacoes = async (match: Match) => {
     try {
-      const response = await fetch('/api/sinergia/request-contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: user?.id,
-          targetCategory: match.targetCategory,
-          matchScore: match.score,
-          explanation: match.explanation,
-          userMessage: `Interesse em ${match.contributionType} com ${match.score}% de sinergia`,
-          userEmail: user?.email,
-          userName: user?.nomeCompleto
-        }),
-      });
-
+      setSelectedMatch(match);
+      
+      // Buscar dados completos da entidade
+      const response = await fetch(`/api/sinergia/entity-details/${match.targetContributionId}`);
       const data = await response.json();
 
       if (data.success) {
+        setEntityDetails(data.data);
+        setShowInfoModal(true);
+        
         toast({
-          title: "✅ Contato Solicitado",
-          description: "A administração entrará em contacto em breve",
+          title: "📋 Informações Carregadas",
+          description: "Dados completos da entidade disponíveis",
         });
       } else {
-        throw new Error(data.error || 'Erro ao solicitar contato');
+        throw new Error(data.error || 'Erro ao obter informações');
       }
     } catch (error) {
       toast({
         title: "Erro",
-        description: "Não foi possível solicitar contato",
+        description: "Não foi possível obter informações da entidade",
         variant: "destructive",
       });
     }
+  };
+
+  const handleCloseModal = () => {
+    setShowInfoModal(false);
+    setSelectedMatch(null);
+    setEntityDetails(null);
   };
 
   const getCategoryIcon = (categoria: string): string => {
@@ -192,10 +193,11 @@ const SinergIA: React.FC = () => {
                 A <strong>SinergIA</strong> utiliza inteligência artificial para analisar suas contribuições 
                 e encontrar compatibilidades com empresas, municípios, academias e famílias da rede Madrilusa.
               </p>
-              <div className="alert alert-info">
-                <i className="material-icons mr-2">info</i>
-                <strong>Privacidade:</strong> Os nomes das entidades são mantidos confidenciais. 
-                Para obter contactos, solicite através da administração.
+              <div className="alert alert-warning">
+                <i className="material-icons mr-2">visibility</i>
+                <strong>Modo Demonstração:</strong> Esta ferramenta está a ser demonstrada para 
+                administradores com dados completos visíveis. Na versão de produção, os dados 
+                das entidades serão confidenciais.
               </div>
             </CardBody>
           </Card>
@@ -364,11 +366,11 @@ const SinergIA: React.FC = () => {
                           
                           <Button
                             size="sm"
-                            theme="outline-primary"
-                            onClick={() => handleSolicitarContato(match)}
+                            theme="outline-info"
+                            onClick={() => handleSolicitarInformacoes(match)}
                             style={{ fontSize: '11px' }}
                           >
-                            📞 Solicitar Contato
+                            📋 Solicitar Informações
                           </Button>
                         </div>
                       ))}
@@ -433,11 +435,11 @@ const SinergIA: React.FC = () => {
                           
                           <Button
                             size="sm"
-                            theme="outline-primary"
-                            onClick={() => handleSolicitarContato(match)}
+                            theme="outline-info"
+                            onClick={() => handleSolicitarInformacoes(match)}
                             style={{ fontSize: '11px' }}
                           >
-                            📞 Solicitar Contato
+                            📋 Solicitar Informações
                           </Button>
                         </div>
                       ))}
@@ -502,11 +504,11 @@ const SinergIA: React.FC = () => {
                           
                           <Button
                             size="sm"
-                            theme="outline-primary"
-                            onClick={() => handleSolicitarContato(match)}
+                            theme="outline-info"
+                            onClick={() => handleSolicitarInformacoes(match)}
                             style={{ fontSize: '11px' }}
                           >
-                            📞 Solicitar Contato
+                            📋 Solicitar Informações
                           </Button>
                         </div>
                       ))}
@@ -571,11 +573,11 @@ const SinergIA: React.FC = () => {
                           
                           <Button
                             size="sm"
-                            theme="outline-primary"
-                            onClick={() => handleSolicitarContato(match)}
+                            theme="outline-info"
+                            onClick={() => handleSolicitarInformacoes(match)}
                             style={{ fontSize: '11px' }}
                           >
-                            📞 Solicitar Contato
+                            📋 Solicitar Informações
                           </Button>
                         </div>
                       ))}
@@ -643,6 +645,16 @@ const SinergIA: React.FC = () => {
             </Col>
           </Row>
         </>
+      )}
+
+      {/* Modal de Informações */}
+      {showInfoModal && selectedMatch && entityDetails && (
+        <InformationModal
+          isOpen={showInfoModal}
+          onClose={handleCloseModal}
+          match={selectedMatch}
+          entityDetails={entityDetails}
+        />
       )}
     </Container>
   );

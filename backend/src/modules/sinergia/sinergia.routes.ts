@@ -11,6 +11,7 @@ router.use(sinergiaMiddleware);
 // Rotas principais
 router.post('/analyze/:userId', sinergiaController.analyzeUserSynergy);
 router.get('/check-eligibility/:userId', sinergiaController.checkUserEligibility);
+router.get('/entity-details/:contributionId', sinergiaController.getEntityDetails);
 router.post('/request-contact', sinergiaController.requestContact);
 
 // Rota de debug/stats (sem rate limiting)

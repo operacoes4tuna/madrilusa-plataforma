@@ -520,6 +520,65 @@ MOTIVO: Habilidades em JavaScript combinam perfeitamente com oportunidade de des
     }
   }
 
+  // Obter detalhes completos da entidade (para preview admin)
+  async getEntityDetails(contributionId: string) {
+    try {
+      const contribution = await prisma.contribuicao.findUnique({
+        where: { id: contributionId },
+        include: {
+          user: {
+            select: {
+              id: true,
+              nomeCompleto: true, // ✅ MOSTRAR para admin preview
+              categoria: true,
+              email: true // Para contato futuro
+            }
+          },
+          tipoContribuicao: {
+            select: {
+              id: true,
+              titulo: true,
+              categoria: true,
+              contextoIA: true
+            }
+          }
+        }
+      });
+
+      if (!contribution) {
+        throw new Error('Contribuição não encontrada');
+      }
+
+      // Parse das tags
+      let tags: string[] = [];
+      if (contribution.tags) {
+        try {
+          tags = typeof contribution.tags === 'string' 
+            ? JSON.parse(contribution.tags) 
+            : contribution.tags;
+        } catch (error) {
+          tags = [];
+        }
+      }
+
+      return {
+        entityName: contribution.user.nomeCompleto,
+        entityCategory: contribution.user.categoria,
+        entityEmail: contribution.user.email, // Para admin
+        contributionId: contribution.id,
+        contributionType: contribution.tipoContribuicao.titulo,
+        contributionDescription: contribution.descricao,
+        contributionTags: tags,
+        contributionContext: contribution.tipoContribuicao.contextoIA,
+        createdAt: contribution.createdAt,
+        isAdminPreview: true
+      };
+    } catch (error) {
+      console.error('Erro ao buscar detalhes da entidade:', error);
+      throw error;
+    }
+  }
+
   // Obter estatísticas rápidas para debugging
   async getSystemStats(): Promise<any> {
     try {

@@ -102,6 +102,38 @@ export class SinergiaController {
     }
   };
 
+  // Endpoint para obter detalhes da entidade (admin preview)
+  getEntityDetails = async (req: Request, res: Response) => {
+    try {
+      const { contributionId } = req.params;
+
+      if (!contributionId) {
+        return res.status(400).json({
+          success: false,
+          error: 'ID da contribuição é obrigatório'
+        });
+      }
+
+      const details = await this.sinergiaService.getEntityDetails(contributionId);
+
+      res.json({
+        success: true,
+        data: details,
+        adminPreview: true,
+        message: 'Dados completos para demonstração admin'
+      });
+
+    } catch (error) {
+      console.error('❌ Erro ao obter detalhes da entidade:', error);
+      
+      res.status(500).json({
+        success: false,
+        error: 'Erro interno do servidor',
+        message: error instanceof Error ? error.message : 'Não foi possível obter detalhes'
+      });
+    }
+  };
+
   // Endpoint simples para solicitar contato (MVP)
   requestContact = async (req: Request, res: Response) => {
     try {
