@@ -116,16 +116,6 @@ const AITagSuggester: React.FC<AITagSuggesterProps> = ({
   };
 
   const addTag = (tag: string) => {
-    console.log('🔧 AI TAG SUGGESTER DEBUG: addTag chamado', {
-      tag,
-      selectedTagsAtuais: selectedTags,
-      maxTags,
-      podeAdicionar: selectedTags.length < maxTags,
-      tagJaExiste: selectedTags.includes(tag),
-      onTagsChangedType: typeof onTagsChanged,
-      timestamp: new Date().toISOString()
-    });
-
     if (selectedTags.length >= maxTags) {
       toast({
         title: "Limite atingido",
@@ -137,14 +127,9 @@ const AITagSuggester: React.FC<AITagSuggesterProps> = ({
 
     if (!selectedTags.includes(tag)) {
       const newTags = [...selectedTags, tag];
-      console.log('🔧 AI TAG SUGGESTER DEBUG: Chamando onTagsChanged...', {
-        tagsAnteriores: selectedTags,
-        tagsNovas: newTags
-      });
       
       try {
         onTagsChanged(newTags);
-        console.log('✅ AI TAG SUGGESTER DEBUG: onTagsChanged executado com sucesso');
         
         // Remover da lista de sugestões
         setAISuggestedTags(aiSuggestedTags.filter(t => t !== tag));
@@ -154,10 +139,10 @@ const AITagSuggester: React.FC<AITagSuggesterProps> = ({
           description: `"${tag}" foi adicionada às suas tags`,
         });
       } catch (error) {
-        console.error('❌ AI TAG SUGGESTER DEBUG: Erro ao executar onTagsChanged:', error);
+        console.error('Erro ao adicionar tag:', error);
         toast({
           title: "Erro",
-          description: "Erro ao adicionar tag: " + (error instanceof Error ? error.message : 'Desconhecido'),
+          description: "Erro ao adicionar tag",
           variant: "destructive",
         });
       }

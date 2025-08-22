@@ -20,7 +20,6 @@ import MinhasContribuicoes from "./app/pages/MinhasContribuicoes"; // ✨ CONTRI
 import ContribuicoesPorTipo from "./app/pages/ContribuicoesPorTipo"; // ✨ MENU DINÂMICO
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
-import TesteIA from "./pages/TesteIA";
 
 const queryClient = new QueryClient();
 
@@ -54,7 +53,6 @@ const App = () => (
             <Route path="tags-management" element={<TagsManagement />} />
             <Route path="contribuicoes/:tipoId" element={<ContribuicoesPorTipo />} />
             <Route path="minhas-contribuicoes" element={<MinhasContribuicoes />} />
-            <Route path="teste-ia" element={<TesteIA />} />
           </Route>
           
           {/* 404 */}

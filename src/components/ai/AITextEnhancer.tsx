@@ -106,19 +106,8 @@ const AITextEnhancer: React.FC<AITextEnhancerProps> = ({
   };
 
   const handleAcceptSuggestion = () => {
-    console.log('🔧 AI ENHANCER DEBUG: handleAcceptSuggestion iniciado', {
-      hasSuggestion: !!suggestion,
-      suggestionLength: suggestion.length,
-      suggestionPreview: suggestion.substring(0, 100) + '...',
-      onTextChangedType: typeof onTextChanged,
-      timestamp: new Date().toISOString()
-    });
-    
     try {
-      console.log('🔧 AI ENHANCER DEBUG: Chamando onTextChanged...');
       onTextChanged(suggestion);
-      console.log('✅ AI ENHANCER DEBUG: onTextChanged executado com sucesso');
-      
       setShowSuggestion(false);
       setSuggestion('');
       
@@ -127,10 +116,10 @@ const AITextEnhancer: React.FC<AITextEnhancerProps> = ({
         description: "Texto atualizado com sucesso",
       });
     } catch (error) {
-      console.error('❌ AI ENHANCER DEBUG: Erro ao executar onTextChanged:', error);
+      console.error('Erro ao aplicar sugestão:', error);
       toast({
         title: "Erro",
-        description: "Erro ao aplicar sugestão: " + (error instanceof Error ? error.message : 'Desconhecido'),
+        description: "Erro ao aplicar sugestão",
         variant: "destructive",
       });
     }
@@ -257,9 +246,12 @@ const AITextEnhancer: React.FC<AITextEnhancerProps> = ({
       )}
 
       {/* Tooltip Explicativo */}
-      {canUseAI && !showSuggestion && (
+      {!disabled && !showSuggestion && (
         <small className="text-muted d-block mt-1" style={{ fontSize: '11px' }}>
-          💡 A IA pode melhorar clareza, gramática e impacto do seu texto
+          {canUseAI ? 
+            "💡 A IA pode melhorar clareza, gramática e impacto do seu texto" :
+            `✍️ Escreva mais ${20 - originalText.length} caracteres para usar IA`
+          }
         </small>
       )}
     </div>

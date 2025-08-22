@@ -55,7 +55,8 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
   const [selectedTipo, setSelectedTipo] = useState<TipoContribuicao | null>(null);
   const [loading, setLoading] = useState(false);
   const [availableTags, setAvailableTags] = useState<any[]>([]); // Tags do sistema para IA
-  const [isFormInitialized, setIsFormInitialized] = useState(false); // 🔧 Flag para controlar inicialização
+  const [isFormInitialized, setIsFormInitialized] = useState(false); // Flag para controlar inicialização
+  const [showAIComponents, setShowAIComponents] = useState(false); // 🔧 Controlar exibição de IA independentemente
   const { toast } = useToast();
   const { user } = useAuth();
 
@@ -107,21 +108,12 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
   }, [isOpen]);
 
   useEffect(() => {
-    console.log('🔧 USEEFFECT DEBUG: useEffect de inicialização disparado', {
-      editingContribuicao: !!editingContribuicao,
-      tipoPreSelecionado: !!tipoPreSelecionado,
-      isFormInitialized,
-      isOpen,
-      timestamp: new Date().toISOString()
-    });
-
     // Só inicializar quando modal abre e ainda não foi inicializado
     if (!isOpen) {
       return;
     }
 
     if (editingContribuicao && !isFormInitialized) {
-      console.log('🔧 USEEFFECT DEBUG: Inicializando para edição');
       setFormData({
         tipoContribuicaoId: editingContribuicao.tipoContribuicaoId,
         descricao: editingContribuicao.descricao,
@@ -131,8 +123,12 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
       const tipo = tiposDisponiveis.find(t => t.id === editingContribuicao.tipoContribuicaoId);
       setSelectedTipo(tipo || null);
       setIsFormInitialized(true);
+      
+      // Mostrar IA se já há texto suficiente
+      if (editingContribuicao.descricao.trim().length >= 20) {
+        setShowAIComponents(true);
+      }
     } else if (tipoPreSelecionado && !isFormInitialized) {
-      console.log('🔧 USEEFFECT DEBUG: Inicializando com tipo pré-selecionado');
       // ✨ NOVO: Configurar com tipo pré-selecionado
       setFormData({
         tipoContribuicaoId: tipoPreSelecionado.id,
@@ -154,26 +150,23 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
       });
       setSelectedTipo(tipoPreSelecionado);
       setIsFormInitialized(true);
+      
+      // Mostrar IA se há texto modelo suficiente
+      const textoModelo = tipoPreSelecionado.textoModelo || '';
+      if (textoModelo.trim().length >= 20) {
+        setShowAIComponents(true);
+      }
     } else if (!editingContribuicao && !tipoPreSelecionado && !isFormInitialized) {
-      console.log('🔧 USEEFFECT DEBUG: Resetando formulário');
       resetForm();
       setIsFormInitialized(true);
     }
   }, [editingContribuicao, tiposDisponiveis, tipoPreSelecionado, isOpen, isFormInitialized]);
 
-  // 🔧 Handler robusto para texto (DOM + State)
+  // Handler robusto para texto (DOM + State)
   const handleTextChange = useCallback((newText: string) => {
-    console.log('🔧 MODAL DEBUG: handleTextChange chamado', {
-      textoNovo: newText.substring(0, 50) + '...',
-      tamanhoNovo: newText.length,
-      estadoAtual: formDataRef.current.descricao.substring(0, 50) + '...',
-      timestamp: new Date().toISOString()
-    });
-    
     try {
       // 1. Atualizar DOM diretamente para feedback imediato
       if (textareaRef.current) {
-        console.log('🔧 MODAL DEBUG: Atualizando DOM diretamente...');
         textareaRef.current.value = newText;
         textareaRef.current.focus();
         // Posicionar cursor no final
@@ -181,53 +174,36 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
       }
       
       // 2. Atualizar estado React
-      setFormData(prev => {
-        console.log('🔧 MODAL DEBUG: setFormData executado', {
-          prevDescricao: prev.descricao.substring(0, 50) + '...',
-          novaDescricao: newText.substring(0, 50) + '...',
-          mudou: prev.descricao !== newText
-        });
-        return { ...prev, descricao: newText };
-      });
+      setFormData(prev => ({ ...prev, descricao: newText }));
       
-      // 3. Disparar evento para garantir consistência
+      // 3. Mostrar componentes de IA quando texto atingir mínimo (e manter visíveis)
+      if (newText.trim().length >= 20 && !showAIComponents) {
+        setShowAIComponents(true);
+      }
+      
+      // 4. Disparar evento para garantir consistência
       if (textareaRef.current) {
         const event = new Event('input', { bubbles: true });
         textareaRef.current.dispatchEvent(event);
       }
-      
-      console.log('✅ MODAL DEBUG: handleTextChange completo com sucesso');
     } catch (error) {
-      console.error('❌ MODAL DEBUG: Erro em handleTextChange:', error);
+      console.error('Erro em handleTextChange:', error);
     }
-  }, []);
+  }, [showAIComponents]);
 
   const handleTagsChange = useCallback((newTags: string[]) => {
-    console.log('🔧 MODAL DEBUG: handleTagsChange chamado', {
-      tagsNovas: newTags,
-      quantidadeNova: newTags.length,
-      timestamp: new Date().toISOString()
-    });
-    
-    setFormData(prev => {
-      console.log('🔧 MODAL DEBUG: setFormData para tags executado', {
-        prevTags: prev.tags,
-        novasTags: newTags,
-        mudou: JSON.stringify(prev.tags) !== JSON.stringify(newTags)
-      });
-      return { ...prev, tags: newTags };
-    });
-  }, []); // Sem dependências para evitar stale closure
+    setFormData(prev => ({ ...prev, tags: newTags }));
+  }, []);
 
   const resetForm = () => {
-    console.log('🔧 RESET DEBUG: Resetando formulário');
     setFormData({
       tipoContribuicaoId: '',
       descricao: '',
       tags: []
     });
     setSelectedTipo(null);
-    setIsFormInitialized(false); // 🔧 Reset da flag
+    setIsFormInitialized(false);
+    setShowAIComponents(false); // Reset da flag de IA
   };
 
   const handleTipoChange = (tipoId: string) => {
@@ -327,7 +303,6 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
   };
 
   const handleClose = () => {
-    console.log('🔧 CLOSE DEBUG: Fechando modal');
     onClose();
     resetForm();
   };
@@ -335,9 +310,36 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="modal fade show" style={{display: 'block'}} onClick={handleClose}>
-      <div className="modal-dialog modal-lg" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-content">
+    <div 
+      className="modal fade show" 
+      style={{
+        display: 'block',
+        paddingRight: '17px',
+        overflowX: 'hidden',
+        overflowY: 'auto'
+      }} 
+      onClick={handleClose}
+    >
+      <div 
+        className="modal-dialog modal-lg" 
+        onClick={(e) => e.stopPropagation()} 
+        style={{ 
+          maxHeight: '95vh', 
+          margin: '1rem auto',
+          display: 'flex',
+          alignItems: 'center',
+          minHeight: 'calc(100vh - 2rem)'
+        }}
+      >
+        <div 
+          className="modal-content" 
+          style={{ 
+            maxHeight: '95vh', 
+            display: 'flex', 
+            flexDirection: 'column',
+            width: '100%'
+          }}
+        >
           <div className="modal-header">
             <h5 className="modal-title">
               {editingContribuicao ? 'Editar' : 'Adicionar'} Contribuição
@@ -351,8 +353,16 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
             </button>
           </div>
           
-          <form onSubmit={handleSubmit}>
-            <div className="modal-body">
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <div 
+              className="modal-body" 
+              style={{ 
+                flexGrow: 1, 
+                overflowY: 'auto', 
+                maxHeight: 'calc(95vh - 140px)',
+                padding: '1.5rem'
+              }}
+            >
               {/* Seleção do Tipo */}
               {!editingContribuicao && !ocultarSeletorTipo && (
                 <div className="form-group">
@@ -417,46 +427,44 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
                   id="descricao"
                   rows={6}
                   value={formData.descricao}
-                  onChange={(e) => {
-                    console.log('🔧 TEXTAREA DEBUG: onChange disparado', e.target.value.substring(0, 50) + '...');
-                    handleTextChange(e.target.value);
-                  }}
+                  onChange={(e) => handleTextChange(e.target.value)}
                   required
                   placeholder={selectedTipo?.perguntasModelo || "Descreva sua contribuição..."}
                 />
                 <small className="form-text text-muted">
                   {formData.descricao.length}/1000 caracteres
+                  {selectedTipo && !showAIComponents && formData.descricao.length > 0 && formData.descricao.length < 20 && (
+                    <span className="ml-2 text-primary">
+                      (✨ IA disponível em {20 - formData.descricao.length} caracteres)
+                    </span>
+                  )}
                 </small>
-                
-                {/* 🔧 DEBUG: Mostrar estado atual */}
-                <div className="mt-1 p-1" style={{ fontSize: '10px', backgroundColor: '#f0f0f0', borderRadius: '3px' }}>
-                  <strong>DEBUG Estado:</strong> Descrição: {formData.descricao.length} chars | Tags: {formData.tags.length} items
-                  {formData.tags.length > 0 && ` (${formData.tags.join(', ')})`}
-                </div>
 
-                {/* 🤖 Componente de IA */}
-                {selectedTipo && formData.descricao.trim().length >= 20 && (
+                {/* 🤖 Componente de IA - Persistente após ativação */}
+                {selectedTipo && showAIComponents && (
                   <AITextEnhancer
                     originalText={formData.descricao}
                     onTextChanged={handleTextChange}
                     context={aiContext}
-                    disabled={loading}
+                    disabled={loading || formData.descricao.trim().length < 10}
                     className="mt-2"
                   />
                 )}
               </div>
 
-              {/* Seletor de Tags com IA */}
+              {/* Seletor de Tags com IA - Sempre visível quando há tipo */}
               <div className="form-group">
-                <AITagSuggester
-                  text={formData.descricao}
-                  context={aiContext}
-                  selectedTags={formData.tags}
-                  onTagsChanged={handleTagsChange}
-                  existingTags={availableTags}
-                  disabled={loading}
-                  maxTags={8}
-                />
+                {selectedTipo && (
+                  <AITagSuggester
+                    text={formData.descricao}
+                    context={aiContext}
+                    selectedTags={formData.tags}
+                    onTagsChanged={handleTagsChange}
+                    existingTags={availableTags}
+                    disabled={loading}
+                    maxTags={8}
+                  />
+                )}
                 
                 {/* TagSelector original como fallback */}
                 <div className="mt-2">
@@ -516,7 +524,7 @@ const ContribuicaoModal: React.FC<ContribuicaoModalProps> = ({
               })()}
             </div>
 
-            <div className="modal-footer">
+            <div className="modal-footer" style={{ flexShrink: 0, borderTop: '1px solid #dee2e6' }}>
               <Button 
                 type="button" 
                 theme="light" 
