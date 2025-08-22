@@ -310,7 +310,7 @@ const TiposContribuicaoManagement: React.FC = () => {
                     </div>
                     <div className="col-auto">
                       <div 
-                        className="icon icon-shape text-white rounded-circle shadow"
+                        className="icon-shape-fixed text-white shadow"
                         style={{ backgroundColor: getCategoryColor(categoria) }}
                       >
                         <i className="material-icons">
@@ -346,7 +346,7 @@ const TiposContribuicaoManagement: React.FC = () => {
                     </p>
                   </div>
                   <div className="col-auto">
-                    <div className="icon icon-shape bg-secondary text-white rounded-circle shadow">
+                    <div className="icon-shape-fixed bg-secondary text-white shadow">
                       <i className="material-icons">category</i>
                     </div>
                   </div>

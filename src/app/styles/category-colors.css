@@ -147,6 +147,44 @@
   color: #e83e8c !important;
 }
 
+/* Correção específica para ícones em modais */
+.modal .icon-shape-modal {
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  flex-shrink: 0 !important;
+}
+
+.modal .icon-shape-modal .material-icons {
+  font-size: 20px !important;
+  line-height: 1 !important;
+  display: block !important;
+}
+
+/* Correção para cards de estatísticas em geral */
+.icon-shape-fixed {
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  flex-shrink: 0 !important;
+}
+
+.icon-shape-fixed .material-icons {
+  font-size: 20px !important;
+  line-height: 1 !important;
+  display: block !important;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   .card-categoria-imigrante,
@@ -161,5 +199,18 @@
   .btn-filtro-categoria {
     margin-bottom: 0.5rem;
     width: 100%;
+  }
+
+  .icon-shape-modal,
+  .icon-shape-fixed {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .icon-shape-modal .material-icons,
+  .icon-shape-fixed .material-icons {
+    font-size: 18px !important;
   }
 }

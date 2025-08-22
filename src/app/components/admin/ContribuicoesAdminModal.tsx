@@ -186,7 +186,7 @@ const ContribuicoesAdminModal: React.FC<ContribuicoesAdminModalProps> = ({
                 <div className="col-md-3">
                   <div className="card card-stats">
                     <div className="card-body text-center">
-                      <div className="icon icon-shape bg-primary text-white rounded-circle shadow mx-auto mb-2">
+                      <div className="icon-shape-modal bg-primary text-white shadow mx-auto mb-2">
                         <i className="material-icons">assignment</i>
                       </div>
                       <span className="h4 font-weight-bold">{estatisticas.total}</span>
@@ -197,7 +197,7 @@ const ContribuicoesAdminModal: React.FC<ContribuicoesAdminModalProps> = ({
                 <div className="col-md-3">
                   <div className="card card-stats">
                     <div className="card-body text-center">
-                      <div className="icon icon-shape bg-success text-white rounded-circle shadow mx-auto mb-2">
+                      <div className="icon-shape-modal bg-success text-white shadow mx-auto mb-2">
                         <i className="material-icons">check_circle</i>
                       </div>
                       <span className="h4 font-weight-bold text-success">{estatisticas.ativas}</span>
@@ -208,7 +208,7 @@ const ContribuicoesAdminModal: React.FC<ContribuicoesAdminModalProps> = ({
                 <div className="col-md-3">
                   <div className="card card-stats">
                     <div className="card-body text-center">
-                      <div className="icon icon-shape bg-warning text-white rounded-circle shadow mx-auto mb-2">
+                      <div className="icon-shape-modal bg-warning text-white shadow mx-auto mb-2">
                         <i className="material-icons">visibility_off</i>
                       </div>
                       <span className="h4 font-weight-bold text-warning">{estatisticas.inativas}</span>
@@ -219,7 +219,7 @@ const ContribuicoesAdminModal: React.FC<ContribuicoesAdminModalProps> = ({
                 <div className="col-md-3">
                   <div className="card card-stats">
                     <div className="card-body text-center">
-                      <div className="icon icon-shape bg-info text-white rounded-circle shadow mx-auto mb-2">
+                      <div className="icon-shape-modal bg-info text-white shadow mx-auto mb-2">
                         <i className="material-icons">people</i>
                       </div>
                       <span className="h4 font-weight-bold text-info">{estatisticas.usuarios}</span>

@@ -2,8 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design system oficial Madrilusa - baseado no Manual de Identidade Visual */
+/* Imports devem vir antes dos @layer */
 @import './app/styles/category-colors.css';
+
+/* Design system oficial Madrilusa - baseado no Manual de Identidade Visual */
 
 @layer base {
   :root {
