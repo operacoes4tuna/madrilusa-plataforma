@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Row, Col, Card, CardBody, CardHeader, Button } from 'shards-react';
 import PageTitle from '../components/common/PageTitle';
 import { useToast } from '@/hooks/use-toast';
-import { USER_CATEGORIES } from '../../../shared-types/api.types';
+import { USER_CATEGORIES } from '@/modules/auth/types/auth.types';
 import ContribuicoesAdminModal from '../components/admin/ContribuicoesAdminModal';
 import { 
   getCategoryConfig, 

@@ -4,6 +4,7 @@ import type {
   User, 
   RegisterBasicResponse 
 } from '../../../../shared-types/api.types';
+// USER_CATEGORIES será exportado abaixo junto com outras constantes
 
 // Reexport ALL shared types (atualizado com categorias)
 export type { 

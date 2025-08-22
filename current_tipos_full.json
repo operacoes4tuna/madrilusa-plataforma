@@ -1,0 +1,90 @@
+{
+  "id": "cmelqwm9v0002crcdotzpr5rr",
+  "titulo": "Cursos",
+  "categoria": "ACADEMIA",
+  "contextoIA": "Cursos de formação em técnicas tradicionais portuguesas como viticultura, olivicultura, pastorícia, apicultura, conservação de alimentos, gastronomia regional, gestão de quintas familiares, turismo de aldeia e ofícios artesanais que são fundamentais para a economia rural e preservação cultural dos territórios portugueses.",
+  "textoModelo": "A Escola Superior Agrária de Ponte de Lima oferece o 'Curso de Viticultura e Enoturismo' - 200 horas distribuídas por 4 meses (fins de semana). Programa prático em vinhas do Vinho Verde, técnicas de poda, vindima, vinificação tradicional e criação de experiências enoturísticas. Inclui estágio em quintas locais, prova de vinhos, certificação e apoio na criação de projetos próprios. Formação com produtores reconhecidos da região e networking com setor vitivinícola minhoto.",
+  "tagsModelo": "\"[\\\"Viticultura\\\",\\\"Ponte de Lima\\\",\\\"Enoturismo\\\",\\\"200 horas\\\",\\\"Vinho Verde\\\",\\\"Poda\\\",\\\"Vindima\\\",\\\"Vinificação\\\",\\\"Quintas Locais\\\",\\\"Minhoto\\\"]\"",
+  "perguntasModelo": "Descreva o curso de técnica tradicional portuguesa, incluindo competências práticas desenvolvidas e parcerias com produtores locais. Como o curso prepara para oportunidades na economia rural? Que certificação oferece e como apoia a criação de projetos próprios?"
+}
+{
+  "id": "cmelqwm9w0003crcdpya69730",
+  "titulo": "Eventos",
+  "categoria": "ACADEMIA",
+  "contextoIA": "Eventos académicos focados em saberes tradicionais, conferências sobre desenvolvimento rural sustentável, workshops de preservação cultural, seminários sobre turismo de aldeia, encontros de partilha de boas práticas em agricultura familiar e eventos que promovem o conhecimento tradicional como base para inovação sustentável.",
+  "textoModelo": "A Universidade de Trás-os-Montes organiza o 'Congresso de Saberes Rurais Transmontanos' nos dias 18-19 de novembro, em Bragança. Dois dias dedicados à preservação de tradições como a criação do gado mirandês, produção de enchidos tradicionais, apicultura de montanha e turismo de aldeia. Inclui visitas a aldeias históricas, workshops com mestres locais e feira de produtos regionais. Participação gratuita com almoços tradicionais e networking com produtores e investigadores.",
+  "tagsModelo": "\"[\\\"Trás-os-Montes\\\",\\\"Bragança\\\",\\\"Novembro\\\",\\\"Gado Mirandês\\\",\\\"Enchidos\\\",\\\"Apicultura\\\",\\\"Aldeias Históricas\\\",\\\"Mestres Locais\\\",\\\"Produtos Regionais\\\",\\\"Investigadores\\\"]\"",
+  "perguntasModelo": "Descreva o evento sobre saberes rurais tradicionais, incluindo programa, localização e participantes. Como o evento valoriza e preserva conhecimentos ancestrais? Que oportunidades oferece para jovens interessados em economia rural? Quais são os benefícios da participação?"
+}
+{
+  "id": "cmelqwm9x0004crcd0mgchzur",
+  "titulo": "Eventos",
+  "categoria": "MUNICIPIO",
+  "contextoIA": "Eventos municipais de celebração de tradições locais como festivais gastronómicos, feiras de artesanato, romarias, festas de colheita, mercados tradicionais, celebrações de santos padroeiros e eventos culturais que preservam a identidade local enquanto acolhem e integram a diversidade cultural trazida pelos jovens imigrantes.",
+  "textoModelo": "A Câmara de Amarante organiza a 'Festa da Broa e do Chouriço' nos dias 12-14 de agosto, no Parque Florestal. Três dias de celebração com concurso de broas tradicionais, demonstrações de fumeiro artesanal, música popular e danças regionais. Convidamos jovens imigrantes a participar com especialidades gastronómicas dos seus países, criando uma ponte cultural única. Oferecemos espaço gratuito, apoio na preparação e integração no programa oficial. Oportunidade de conhecer tradições minhotas e partilhar a vossa cultura.",
+  "tagsModelo": "\"[\\\"Amarante\\\",\\\"Agosto\\\",\\\"Broa\\\",\\\"Chouriço\\\",\\\"Fumeiro\\\",\\\"Música Popular\\\",\\\"Danças Regionais\\\",\\\"Ponte Cultural\\\",\\\"Tradições Minhotas\\\",\\\"Parque Florestal\\\"]\"",
+  "perguntasModelo": "Descreva o evento tradicional municipal e como celebra a identidade local. Como podem jovens imigrantes participar e enriquecer o evento? Que tradições locais serão partilhadas? Como o evento promove o intercâmbio cultural e a integração comunitária?"
+}
+{
+  "id": "cmelqwm9t0000crcdzol9j4lj",
+  "titulo": "Habilidades",
+  "categoria": "IMIGRANTE",
+  "contextoIA": "Competências profissionais e pessoais de jovens imigrantes em áreas tradicionais como agricultura, artesanato, gastronomia, turismo rural, construção, serviços de proximidade e ofícios manuais. Valorize experiências em técnicas tradicionais do país de origem, conhecimento de culturas gastronómicas, competências em agricultura sustentável, artesanato tradicional e serviços que enriquecem a oferta turística e cultural dos territórios rurais portugueses.",
+  "textoModelo": "Tenho experiência de 6 anos em agricultura biológica e permacultura no meu país. Conheço técnicas tradicionais de cultivo de hortícolas, compostagem natural e criação de galinhas ao ar livre. Também sei preparar pratos tradicionais da minha cultura que podem enriquecer a oferta gastronómica local. Procuro oportunidades para aplicar estes conhecimentos em quintas ou projetos de turismo rural na região de Viseu ou Guarda, onde possa contribuir para a sustentabilidade e diversidade cultural.",
+  "tagsModelo": "\"[\\\"Agricultura Biológica\\\",\\\"Permacultura\\\",\\\"Hortícolas\\\",\\\"Galinhas\\\",\\\"Gastronomia Tradicional\\\",\\\"Turismo Rural\\\",\\\"Viseu\\\",\\\"Guarda\\\",\\\"Sustentabilidade\\\",\\\"Diversidade Cultural\\\"]\"",
+  "perguntasModelo": "Descreva as suas competências em áreas tradicionais como agricultura, artesanato, gastronomia ou turismo. Que técnicas ou conhecimentos específicos do seu país podem enriquecer os territórios rurais portugueses? Em que regiões de Portugal gostaria de aplicar estas competências? Como vê a sua contribuição para a economia local?"
+}
+{
+  "id": "cmemla3y60008ru2cy5afbacc",
+  "titulo": "Interesse",
+  "categoria": "IMIGRANTE",
+  "contextoIA": "Interesses e aspirações de jovens imigrantes relacionados com a vida rural portuguesa, tradições locais, integração comunitária, aprendizagem de ofícios tradicionais, participação em atividades culturais e contribuição para o desenvolvimento sustentável de pequenas comunidades. Inclua interesse em festivais locais, tradições gastronómicas, artesanato regional, agricultura familiar e preservação do património cultural.",
+  "textoModelo": "Tenho grande interesse em aprender sobre as tradições vinícolas da região do Douro e gostaria de participar nas vindimas e processos tradicionais de produção de vinho. Também me fascina o artesanato em cerâmica de Barcelos e gostaria de aprender estas técnicas com mestres locais. O meu objetivo é integrar-me numa comunidade rural onde possa contribuir durante os festivais locais, aprender português através da convivência diária e eventualmente abrir uma pequena oficina de artesanato que combine técnicas da minha cultura com tradições portuguesas.",
+  "tagsModelo": "\"[\\\"Vindimas\\\",\\\"Douro\\\",\\\"Vinho\\\",\\\"Cerâmica\\\",\\\"Barcelos\\\",\\\"Artesanato\\\",\\\"Festivais\\\",\\\"Português\\\",\\\"Oficina\\\",\\\"Tradições\\\",\\\"Comunidade Rural\\\"]\"",
+  "perguntasModelo": "Que tradições ou atividades portuguesas despertam o seu interesse? Em que regiões gostaria de se estabelecer e porquê? Como pretende contribuir para a comunidade local? Que ofícios ou atividades tradicionais gostaria de aprender? Como vê a integração da sua cultura com as tradições portuguesas?"
+}
+{
+  "id": "cmelqwm9x0005crcdubhaq0g6",
+  "titulo": "Notícias",
+  "categoria": "MUNICIPIO",
+  "contextoIA": "Notícias municipais sobre apoio à agricultura local, abertura de mercados tradicionais, programas de habitação rural, cursos de português em juntas de freguesia, apoio a pequenos negócios familiares, programas de integração comunitária e serviços municipais que facilitam a vida quotidiana de imigrantes em territórios rurais.",
+  "textoModelo": "A Junta de Freguesia de Mértola anuncia a abertura de inscrições para o programa 'Habitação Rural Partilhada' destinado a jovens que queiram fixar-se na aldeia. O programa oferece casas tradicionais restauradas por 200€/mês, apoio na procura de emprego local, aulas de português às terças e quintas na sede da junta, e integração em atividades comunitárias. Inscrições até 30 de junho na junta ou pelo email habitacao@jf-mertola.pt. Prioridade para jovens interessados em agricultura, turismo rural ou artesanato.",
+  "tagsModelo": "\"[\\\"Mértola\\\",\\\"Habitação Rural\\\",\\\"200€\\\",\\\"Casas Tradicionais\\\",\\\"Emprego Local\\\",\\\"Português\\\",\\\"Agricultura\\\",\\\"Turismo Rural\\\",\\\"Artesanato\\\",\\\"Junho\\\"]\"",
+  "perguntasModelo": "Que informação municipal é relevante para jovens imigrantes interessados em fixar-se em territórios rurais? Inclua detalhes sobre apoios habitacionais, cursos, oportunidades locais e serviços de integração. Como esta informação facilita a vida quotidiana e a integração comunitária?"
+}
+{
+  "id": "cmelqwm9u0001crcdh5v0ompq",
+  "titulo": "Oportunidades",
+  "categoria": "EMPRESA",
+  "contextoIA": "Oportunidades de emprego em setores tradicionais da economia rural portuguesa como agricultura, turismo rural, restauração, artesanato, comércio local, serviços de proximidade, construção tradicional e indústrias alimentares. Foque em empresas familiares, cooperativas agrícolas, quintas turísticas, restaurantes regionais e negócios que valorizam a autenticidade, tradições locais e diversidade cultural como vantagem competitiva.",
+  "textoModelo": "A Quinta do Vale Verde, em Monsaraz (Alentejo), procura colaborador para turismo rural e produção de azeite biológico. Oferecemos alojamento na quinta, refeições incluídas, formação em olivicultura tradicional e técnicas de hospitalidade rural. Procuramos pessoa com interesse em agricultura sustentável, facilidade de comunicação com turistas e vontade de aprender sobre tradições alentejanas. Contrato sazonal (março-outubro) com possibilidade de permanência anual. Ambiente familiar e multicultural, com foco na qualidade e autenticidade.",
+  "tagsModelo": "\"[\\\"Turismo Rural\\\",\\\"Monsaraz\\\",\\\"Alentejo\\\",\\\"Azeite Biológico\\\",\\\"Olivicultura\\\",\\\"Hospitalidade\\\",\\\"Sazonal\\\",\\\"Alojamento\\\",\\\"Refeições\\\",\\\"Tradições Alentejanas\\\"]\"",
+  "perguntasModelo": "Descreva a oportunidade em setor tradicional, incluindo localização, tipo de atividade e condições oferecidas. Que competências procura que possam enriquecer o negócio? Como a diversidade cultural beneficia a vossa empresa? Que formação e apoio à integração oferecem?"
+}
+{
+  "id": "cmelr592w0000uyvdfxjwbgqr",
+  "titulo": "Projetos",
+  "categoria": "MUNICIPIO",
+  "contextoIA": "Projetos municipais de valorização do património rural, revitalização de aldeias históricas, dinamização de mercados tradicionais, apoio à agricultura familiar, promoção do turismo de aldeia, preservação de tradições gastronómicas e iniciativas que mantêm viva a identidade cultural dos territórios, beneficiando da perspetiva multicultural de jovens imigrantes.",
+  "textoModelo": "O Município de Monsaraz desenvolve o projeto 'Aldeia Viva' para revitalizar o centro histórico através da recuperação de ofícios tradicionais. Procuramos jovens para colaborar na criação de um centro de artesanato, organização de mercados mensais de produtos locais e desenvolvimento de rotas turísticas pedestres. Oferecemos formação em património local, apoio na criação de micro-negócios, habitação a preço reduzido e integração na comunidade. Duração inicial de 12 meses com possibilidade de estabelecimento permanente.",
+  "tagsModelo": "\"[\\\"Monsaraz\\\",\\\"Aldeia Viva\\\",\\\"Centro Histórico\\\",\\\"Artesanato\\\",\\\"Mercados\\\",\\\"Rotas Pedestres\\\",\\\"Património\\\",\\\"Micro-negócios\\\",\\\"Habitação\\\",\\\"12 meses\\\"]\"",
+  "perguntasModelo": "Descreva o projeto de revitalização rural e como valoriza tradições locais. Que papel específico terão os jovens imigrantes na preservação do património? Que apoio oferece para criação de atividades económicas? Como o projeto promove a integração na comunidade local?"
+}
+{
+  "id": "cmelqwm9y0006crcdbwzo0x5v",
+  "titulo": "Suporte",
+  "categoria": "FAMILIA_ACOLHIMENTO",
+  "contextoIA": "Acolhimento familiar em ambiente rural português, onde jovens imigrantes podem experienciar a vida tradicional portuguesa, aprender sobre agricultura familiar, participar em atividades sazonais como vindimas e colheitas, conhecer tradições gastronómicas, integrar-se em festividades locais e desenvolver laços familiares que facilitam a adaptação cultural profunda aos territórios rurais.",
+  "textoModelo": "A nossa família em Penacova (região de Coimbra) oferece acolhimento familiar para jovem interessado em agricultura e vida rural. Temos quinta com vinha, olival e horta biológica onde pode aprender técnicas tradicionais de cultivo. Oferecemos quarto próprio, refeições em família, participação nas atividades da quinta (vindimas, colheita azeitona, horta) e integração nas festividades locais. Procuramos jovem responsável, interessado em aprender português e partilhar a sua cultura. Acolhimento por 6-12 meses com possibilidade de prolongamento.",
+  "tagsModelo": "\"[\\\"Penacova\\\",\\\"Coimbra\\\",\\\"Quinta\\\",\\\"Vinha\\\",\\\"Olival\\\",\\\"Horta Biológica\\\",\\\"Vindimas\\\",\\\"Azeitona\\\",\\\"6-12 meses\\\",\\\"Festividades Locais\\\"]\"",
+  "perguntasModelo": "Descreva o acolhimento familiar oferecido e como integra o jovem na vida rural portuguesa. Que atividades tradicionais pode partilhar? Como a família contribui para a aprendizagem cultural e linguística? Que perfil de jovem procura e por quanto tempo?"
+}
+{
+  "id": "cmemfturi0000z0aohwkqlq7s",
+  "titulo": "Workshops",
+  "categoria": "ACADEMIA",
+  "contextoIA": "Workshops práticos de aprendizagem de técnicas tradicionais portuguesas como olaria, tecelagem, carpintaria, trabalho em pedra, gastronomia regional, técnicas de conservação alimentar e artesanato local. Foque em workshops que preservam saberes ancestrais enquanto os adaptam às necessidades contemporâneas, oferecendo oportunidades de aprendizagem prática e integração cultural.",
+  "textoModelo": "A Universidade Sénior de Aveiro oferece o workshop 'Olaria Tradicional de Águeda' - 40 horas distribuídas por 8 sábados. Aprenda técnicas centenárias de modelagem, esmaltagem e cozedura com o Mestre João Silva, oleiro com 45 anos de experiência. Workshop inclui materiais, uso do forno tradicional, peças para levar e exposição final na Casa da Cultura. Dirigido a jovens interessados em preservar tradições e eventualmente criar o próprio atelier de cerâmica.",
+  "tagsModelo": "\"[\\\"Olaria\\\",\\\"Águeda\\\",\\\"Aveiro\\\",\\\"40 horas\\\",\\\"Modelagem\\\",\\\"Esmaltagem\\\",\\\"Mestre João Silva\\\",\\\"Forno Tradicional\\\",\\\"Casa da Cultura\\\",\\\"Atelier\\\"]\"",
+  "perguntasModelo": "Descreva o workshop de ofício tradicional, incluindo técnicas ensinadas, duração e mestre formador. Que materiais e equipamentos estão incluídos? Como o workshop preserva tradições locais? Que oportunidades oferece para desenvolver atividade própria na área?"
+}
