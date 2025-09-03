@@ -15,7 +15,8 @@ import familiaRoutes from './modules/familias/familia.routes';
 import adminRoutes from './modules/admin/admin.routes'; // ✨ NOVO: Rotas admin
 import contribuicoesRoutes from './modules/contribuicoes/contribuicoes.routes'; // ✨ SISTEMA CONTRIBUIÇÕES
 import aiRoutes from './modules/ai/ai.routes'; // 🤖 IA: Rotas de inteligência artificial
-import sinergiaRoutes from './modules/sinergia/sinergia.routes'; // 🧠 SINERGIA: Rotas de matching IA
+import sinergiaRoutes from './modules/sinergia/sinergia.routes';
+import sinergiaV2Routes from './modules/sinergia/sinergia-v2.routes'; // ✨ SINERGIA V2 // 🧠 SINERGIA: Rotas de matching IA
 import { dadosProfissionaisRoutes } from './modules/dados-profissionais/dados-profissionais.routes'; // ✨ DADOS PROFISSIONAIS: Rotas para dados estruturados
 import { oportunidadesTrabalhoRoutes } from './modules/oportunidades-trabalho/oportunidades-trabalho.routes'; // ✨ OPORTUNIDADES: Rotas para oportunidades de trabalho
 
@@ -41,7 +42,8 @@ app.use('/api/contribuicoes', contribuicoesRoutes); // ✨ SISTEMA CONTRIBUIÇÕ
 app.use('/api/dados-profissionais', dadosProfissionaisRoutes); // ✨ DADOS PROFISSIONAIS: Rotas para dados estruturados
 app.use('/api/oportunidades-trabalho', oportunidadesTrabalhoRoutes); // ✨ OPORTUNIDADES: Rotas para oportunidades de trabalho
 app.use('/api/ai', aiRoutes); // 🤖 IA: Rotas de inteligência artificial
-app.use('/api/sinergia', sinergiaRoutes); // 🧠 SINERGIA: Rotas de matching IA
+app.use('/api/sinergia', sinergiaRoutes); // 🧠 SINERGIA: Rotas de matching IA (V1)
+app.use('/api/sinergia-v2', sinergiaV2Routes); // 🧠 SINERGIA V2: Matching rigoroso Empresa ↔ Imigrante
 
 // Health check
 app.get('/api/health', (req, res) => {

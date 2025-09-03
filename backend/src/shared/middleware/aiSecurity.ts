@@ -113,12 +113,12 @@ export const aiLogging = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-// Rate limiting específico para SinergIA (ajustado para testes)
+// Rate limiting específico para SinergIA (liberado para desenvolvimento)
 export const sinergiaRateLimit = (req: Request, res: Response, next: NextFunction) => {
   const clientId = req.ip || 'unknown';
   const now = Date.now();
-  const windowMs = 5 * 60 * 1000; // 5 minutos (para testes)
-  const maxRequests = 10; // máximo 10 análises por 5 minutos (para testes)
+  const windowMs = 2 * 60 * 1000; // 2 minutos (desenvolvimento)
+  const maxRequests = 50; // máximo 50 análises por 2 minutos (desenvolvimento)
 
   // Limpar entradas expiradas
   Object.keys(rateLimitStore).forEach(key => {
@@ -147,7 +147,7 @@ export const sinergiaRateLimit = (req: Request, res: Response, next: NextFunctio
     return res.status(429).json({
       success: false,
       error: 'Limite de análises de sinergia excedido',
-      message: `Limite de ${maxRequests} análises por 5 minutos excedido. Tente novamente em ${timeLeft} minutos.`,
+      message: `Limite de ${maxRequests} análises por 2 minutos excedido. Tente novamente em ${timeLeft} minutos.`,
       retryAfter: timeLeft
     });
   }

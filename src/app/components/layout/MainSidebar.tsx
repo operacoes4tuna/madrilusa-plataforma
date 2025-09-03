@@ -192,6 +192,16 @@ const MainSidebar: React.FC = () => {
           htmlAfter: '<span class="badge badge-warning ml-auto" style="font-size: 9px;">IA</span>'
         });
       }
+
+      // ✨ NOVO: SinergIA V2 - apenas para Empresas e Imigrantes
+      if (user?.categoria === 'EMPRESA' || user?.categoria === 'IMIGRANTE') {
+        categoryMenuItems.push({
+          title: 'SinergIA V2',
+          to: '/app/sinergia-v2',
+          iconClass: 'auto_awesome',
+          htmlAfter: '<span class="badge badge-primary ml-auto" style="font-size: 9px;">V2</span>'
+        });
+      }
     }
 
     return categoryMenuItems;
@@ -237,6 +247,18 @@ const MainSidebar: React.FC = () => {
         to: '/app/oportunidades-trabalho-admin',
         iconClass: 'work_outline',
         htmlAfter: ''
+      },
+      {
+        title: 'SinergIA V2',
+        to: '/app/sinergia-v2-admin',
+        iconClass: 'auto_awesome',
+        htmlAfter: '<span class="badge badge-primary ml-auto" style="font-size: 9px;">V2</span>'
+      },
+      {
+        title: 'SinergIA V2 - Tuning',
+        to: '/app/sinergia-v2-tuning',
+        iconClass: 'tune',
+        htmlAfter: '<span class="badge badge-warning ml-auto" style="font-size: 9px;">ML</span>'
       }
     ];
   };

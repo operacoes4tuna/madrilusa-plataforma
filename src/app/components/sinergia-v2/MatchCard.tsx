@@ -1,0 +1,400 @@
+import React, { useState } from 'react';
+import { 
+  Card, 
+  CardBody,
+  Badge,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
+} from 'shards-react';
+import CompatibilityBreakdown from './CompatibilityBreakdown';
+import FeedbackModal from './FeedbackModal';
+// import CompleteProfileModal from './CompleteProfileModal'; // Temporariamente removido
+import type { RigorousMatchFrontend } from '../../../types/sinergia-v2.types';
+
+interface MatchCardProps {
+  match: RigorousMatchFrontend;
+  viewMode: 'opportunity' | 'immigrant'; // Para empresa vendo candidatos ou imigrante vendo oportunidades
+  onRequestContact?: (match: RigorousMatchFrontend) => void;
+  onExportMatch?: (match: RigorousMatchFrontend) => void;
+  className?: string;
+}
+
+const MatchCard: React.FC<MatchCardProps> = ({
+  match,
+  viewMode,
+  onRequestContact,
+  onExportMatch,
+  className = ''
+}) => {
+  const [showBreakdown, setShowBreakdown] = useState(false);
+  const [showJustificativa, setShowJustificativa] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [showCompleteProfile, setShowCompleteProfile] = useState(false);
+
+  const getScoreColor = (score: number): string => {
+    if (score >= 80) return 'success';
+    if (score >= 60) return 'info';
+    if (score >= 40) return 'warning';
+    return 'danger';
+  };
+
+  const getScoreIcon = (score: number): string => {
+    if (score >= 80) return 'star';
+    if (score >= 60) return 'check_circle';
+    if (score >= 40) return 'warning';
+    return 'error';
+  };
+
+  const getCompatibilityLevel = (score: number): string => {
+    if (score >= 80) return 'ALTA';
+    if (score >= 60) return 'BOA';
+    if (score >= 40) return 'MODERADA';
+    return 'BAIXA';
+  };
+
+  const formatDate = (dateString: string): string => {
+    return new Date(dateString).toLocaleDateString('pt-PT', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const hasAIAnalysis = match.tokensUsed > 0;
+  const hasEliminatoryIssues = match.penalizacoes.length > 0;
+
+  return (
+    <>
+      <Card className={`match-card ${className}`}>
+        <CardBody>
+          {/* Header com Score */}
+          <div className="d-flex justify-content-between align-items-start mb-3">
+            <div className="flex-grow-1">
+              {viewMode === 'opportunity' ? (
+                // Empresa vendo candidatos - INFORMAÇÕES COMPLETAS
+                <div>
+                  <h5 className="mb-1">
+                    {match.imigrante?.nomeCompleto || 'Candidato'}
+                  </h5>
+                  <small className="text-muted d-block">
+                    <i className="material-icons mr-1" style={{ fontSize: '14px' }}>location_on</i>
+                    {match.imigrante?.municipioResidencia || 'Localização não informada'}
+                  </small>
+                  <small className="text-muted d-block">
+                    <i className="material-icons mr-1" style={{ fontSize: '14px' }}>email</i>
+                    {match.imigrante?.email}
+                  </small>
+                  {/* NOVOS DADOS COMPLETOS */}
+                  {(match.imigrante as any)?.genero && (
+                    <small className="text-muted d-block">
+                      <i className="material-icons mr-1" style={{ fontSize: '14px' }}>person</i>
+                      {(match.imigrante as any).genero}, {(match.imigrante as any).idade} anos
+                    </small>
+                  )}
+                  {(match.imigrante as any)?.fluenciaPortugues && (
+                    <small className="text-muted d-block">
+                      <i className="material-icons mr-1" style={{ fontSize: '14px' }}>language</i>
+                      Português: {(match.imigrante as any).fluenciaPortugues}
+                    </small>
+                  )}
+                  {(match.imigrante as any)?.transporteProprio !== undefined && (
+                    <small className="text-muted d-block">
+                      <i className="material-icons mr-1" style={{ fontSize: '14px' }}>directions_car</i>
+                      Transporte: {(match.imigrante as any).transporteProprio ? 'Próprio' : 'Não tem'}
+                    </small>
+                  )}
+                </div>
+              ) : (
+                // Imigrante vendo oportunidades - INFORMAÇÕES COMPLETAS
+                <div>
+                  <h5 className="mb-1">
+                    {match.oportunidade?.titulo || 'Oportunidade de Trabalho'}
+                  </h5>
+                  <small className="text-muted d-block">
+                    <i className="material-icons mr-1" style={{ fontSize: '14px' }}>work</i>
+                    {match.oportunidade?.nomeCargo}
+                  </small>
+                  <small className="text-muted d-block">
+                    <i className="material-icons mr-1" style={{ fontSize: '14px' }}>business</i>
+                    {match.oportunidade?.empresa}
+                  </small>
+                  {/* NOVOS DADOS COMPLETOS DA OPORTUNIDADE */}
+                  {(match.dadosEstruturados as any)?.municipioResidencia && (
+                    <small className="text-muted d-block">
+                      <i className="material-icons mr-1" style={{ fontSize: '14px' }}>location_city</i>
+                      Local: {(match.dadosEstruturados as any).municipioResidencia}
+                    </small>
+                  )}
+                  {(match.dadosEstruturados as any)?.genero && (match.dadosEstruturados as any).genero !== 'INDIFERENTE' && (
+                    <small className="text-muted d-block">
+                      <i className="material-icons mr-1" style={{ fontSize: '14px' }}>person_outline</i>
+                      Requisito: {(match.dadosEstruturados as any).genero === 'F' ? 'Feminino' : 'Masculino'}
+                    </small>
+                  )}
+                  {(match.dadosEstruturados as any)?.transporteProprio === 'S' && (
+                    <small className="text-muted d-block">
+                      <i className="material-icons mr-1" style={{ fontSize: '14px' }}>directions_car</i>
+                      Requisito: Transporte próprio obrigatório
+                    </small>
+                  )}
+                  {(match.dadosEstruturados as any)?.fluenciaPortugues === 'S' && (
+                    <small className="text-muted d-block">
+                      <i className="material-icons mr-1" style={{ fontSize: '14px' }}>language</i>
+                      Requisito: Português fluente obrigatório
+                    </small>
+                  )}
+                </div>
+              )}
+            </div>
+            
+            <div className="text-right">
+              <Badge 
+                theme={getScoreColor(match.scoreTotal)}
+                className="mb-2"
+                style={{ fontSize: '16px', padding: '8px 12px' }}
+              >
+                <i className="material-icons mr-1" style={{ fontSize: '18px' }}>
+                  {getScoreIcon(match.scoreTotal)}
+                </i>
+                {match.scoreTotal}%
+              </Badge>
+              <div className="text-muted" style={{ fontSize: '12px' }}>
+                {getCompatibilityLevel(match.scoreTotal)} COMPATIBILIDADE
+              </div>
+            </div>
+          </div>
+
+          {/* Badges de Status */}
+          <div className="mb-3">
+            {hasAIAnalysis && (
+              <Badge theme="info" className="mr-2">
+                <i className="material-icons mr-1" style={{ fontSize: '12px' }}>psychology</i>
+                IA Analisada ({match.tokensUsed} tokens)
+              </Badge>
+            )}
+            
+            {hasEliminatoryIssues && (
+              <Badge theme="danger" className="mr-2">
+                <i className="material-icons mr-1" style={{ fontSize: '12px' }}>warning</i>
+                Critérios Eliminatórios
+              </Badge>
+            )}
+            
+            {match.scoreTotal >= 70 && (
+              <Badge theme="success" className="mr-2">
+                <i className="material-icons mr-1" style={{ fontSize: '12px' }}>recommend</i>
+                Recomendado
+              </Badge>
+            )}
+          </div>
+
+          {/* Matches Highlights */}
+          <div className="mb-3">
+            <small className="text-muted d-block mb-1">Pontos Compatíveis:</small>
+            <div className="d-flex flex-wrap">
+              {match.matchedItems.slice(0, 3).map((item, index) => (
+                <Badge key={index} theme="light" className="mr-1 mb-1" style={{ fontSize: '11px' }}>
+                  <i className="material-icons mr-1" style={{ fontSize: '10px' }}>check</i>
+                  {item}
+                </Badge>
+              ))}
+              {match.matchedItems.length > 3 && (
+                <Badge theme="light" className="mr-1 mb-1" style={{ fontSize: '11px' }}>
+                  +{match.matchedItems.length - 3} mais
+                </Badge>
+              )}
+            </div>
+          </div>
+
+          {/* Pontos de Atenção */}
+          {match.unmatchedItems.length > 0 && (
+            <div className="mb-3">
+              <small className="text-muted d-block mb-1">Pontos de Atenção:</small>
+              <div className="d-flex flex-wrap">
+                {match.unmatchedItems.slice(0, 2).map((item, index) => (
+                  <Badge key={index} theme="warning" className="mr-1 mb-1" style={{ fontSize: '11px' }}>
+                    <i className="material-icons mr-1" style={{ fontSize: '10px' }}>warning</i>
+                    {item}
+                  </Badge>
+                ))}
+                {match.unmatchedItems.length > 2 && (
+                  <Badge theme="warning" className="mr-1 mb-1" style={{ fontSize: '11px' }}>
+                    +{match.unmatchedItems.length - 2} mais
+                  </Badge>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Actions */}
+          <div className="d-flex justify-content-between align-items-center">
+            <div>
+              <Button 
+                size="sm" 
+                theme="outline-primary" 
+                className="mr-2"
+                onClick={() => setShowBreakdown(true)}
+              >
+                <i className="material-icons mr-1" style={{ fontSize: '14px' }}>analytics</i>
+                Detalhes
+              </Button>
+              
+              <Button 
+                size="sm" 
+                theme="outline-secondary" 
+                className="mr-2"
+                onClick={() => setShowJustificativa(true)}
+              >
+                <i className="material-icons mr-1" style={{ fontSize: '14px' }}>description</i>
+                Justificativa
+              </Button>
+              
+              <Button 
+                size="sm" 
+                theme="outline-warning" 
+                className="mr-2"
+                onClick={() => setShowFeedback(true)}
+              >
+                <i className="material-icons mr-1" style={{ fontSize: '14px' }}>feedback</i>
+                Feedback
+              </Button>
+              
+              {/* Temporariamente removido até correção do modal
+              <Button 
+                size="sm" 
+                theme="outline-info" 
+                className="mr-2"
+                onClick={() => setShowCompleteProfile(true)}
+              >
+                <i className="material-icons mr-1" style={{ fontSize: '14px' }}>
+                  {viewMode === 'opportunity' ? 'person' : 'work'}
+                </i>
+                {viewMode === 'opportunity' ? 'Perfil' : 'Detalhes'}
+              </Button>
+              */}
+            </div>
+            
+            <div>
+              {onExportMatch && (
+                <Button 
+                  size="sm" 
+                  theme="outline-info" 
+                  className="mr-2"
+                  onClick={() => onExportMatch(match)}
+                >
+                  <i className="material-icons mr-1" style={{ fontSize: '14px' }}>download</i>
+                  Exportar
+                </Button>
+              )}
+              
+              {onRequestContact && match.scoreTotal >= 40 && (
+                <Button 
+                  size="sm" 
+                  theme="primary"
+                  onClick={() => onRequestContact(match)}
+                >
+                  <i className="material-icons mr-1" style={{ fontSize: '14px' }}>contact_mail</i>
+                  Solicitar Contato
+                </Button>
+              )}
+            </div>
+          </div>
+
+          {/* Metadata */}
+          <div className="mt-3 pt-2 border-top">
+            <small className="text-muted">
+              <i className="material-icons mr-1" style={{ fontSize: '12px' }}>schedule</i>
+              Analisado em {formatDate(match.createdAt)}
+            </small>
+          </div>
+        </CardBody>
+      </Card>
+
+      {/* Modal de Breakdown Detalhado */}
+      <Modal 
+        open={showBreakdown} 
+        toggle={() => setShowBreakdown(false)} 
+        size="xl"
+        style={{ maxHeight: '90vh' }}
+      >
+        <ModalHeader>
+          <div className="d-flex align-items-center">
+            <i className="material-icons mr-2">analytics</i>
+            Análise Detalhada de Compatibilidade
+          </div>
+        </ModalHeader>
+        <ModalBody style={{ maxHeight: 'calc(90vh - 160px)', overflowY: 'auto' }}>
+          <CompatibilityBreakdown 
+            breakdown={match.breakdown}
+            scoreTotal={match.scoreTotal}
+          />
+        </ModalBody>
+        <ModalFooter>
+          <Button theme="secondary" onClick={() => setShowBreakdown(false)}>
+            Fechar
+          </Button>
+        </ModalFooter>
+      </Modal>
+
+      {/* Modal de Justificativa */}
+      <Modal 
+        open={showJustificativa} 
+        toggle={() => setShowJustificativa(false)} 
+        size="lg"
+      >
+        <ModalHeader>
+          <div className="d-flex align-items-center">
+            <i className="material-icons mr-2">description</i>
+            Justificativa da Análise
+          </div>
+        </ModalHeader>
+        <ModalBody>
+          <div style={{ whiteSpace: 'pre-line', lineHeight: '1.6' }}>
+            {match.justificativa}
+          </div>
+          
+          {hasAIAnalysis && (
+            <div className="mt-3 p-3 bg-light rounded">
+              <small className="text-muted">
+                <i className="material-icons mr-1" style={{ fontSize: '14px' }}>psychology</i>
+                Esta análise incluiu processamento por Inteligência Artificial ({match.tokensUsed} tokens utilizados)
+              </small>
+            </div>
+          )}
+        </ModalBody>
+        <ModalFooter>
+          <Button theme="secondary" onClick={() => setShowJustificativa(false)}>
+            Fechar
+          </Button>
+        </ModalFooter>
+      </Modal>
+
+      {/* Modal de Feedback */}
+      <FeedbackModal
+        isOpen={showFeedback}
+        match={match}
+        onClose={() => setShowFeedback(false)}
+        onSubmit={() => {
+          // Callback após envio de feedback
+          console.log('Feedback enviado para match:', match.oportunidadeId, match.imigranteId);
+        }}
+      />
+
+      {/* Modal de Perfil Completo - Temporariamente removido
+      <CompleteProfileModal
+        isOpen={showCompleteProfile}
+        match={match}
+        viewMode={viewMode}
+        onClose={() => setShowCompleteProfile(false)}
+      />
+      */}
+    </>
+  );
+};
+
+export default MatchCard;
