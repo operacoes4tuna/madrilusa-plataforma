@@ -41,6 +41,20 @@ const OportunidadesTrabalho: React.FC = () => {
     }
   }, [user]);
 
+  // Prevenir scroll do body quando modal estiver aberto
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    // Cleanup ao desmontar componente
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showModal]);
+
   const fetchOportunidades = async () => {
     try {
       const response = await fetch(`/api/oportunidades-trabalho/empresa/${user?.id}`);
@@ -429,12 +443,17 @@ const OportunidadesTrabalho: React.FC = () => {
       )}
 
       {/* Modal de Oportunidade */}
-      <Modal open={showModal} toggle={() => setShowModal(false)} size="xl">
+      <Modal 
+        open={showModal} 
+        toggle={() => setShowModal(false)} 
+        size="xl"
+        style={{ maxHeight: '90vh', position: 'fixed', top: '5vh' }}
+      >
         <ModalHeader>
           {editingOportunidade ? 'Editar Oportunidade de Trabalho' : 'Nova Oportunidade de Trabalho'}
         </ModalHeader>
         
-        <ModalBody>
+        <ModalBody style={{ maxHeight: 'calc(90vh - 160px)', overflowY: 'auto' }}>
           <OportunidadeForm
             onSubmit={handleSave}
             editingOportunidade={editingOportunidade}
