@@ -1,7 +1,7 @@
 // Hook para gerenciar configurações do SinergIA V2
 
 import { useState, useEffect } from 'react';
-import { useToast } from '@/components/ui/use-toast';
+// import { useToast } from '@/components/ui/use-toast';
 import { configuracaoSinergiaApi } from '../services/configuracaoSinergia.api';
 import type { 
   ConfiguracaoCompleta,
@@ -27,7 +27,7 @@ export const useConfiguracaoSinergia = () => {
   const [isDirty, setIsDirty] = useState(false);
   const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
 
-  const { toast } = useToast();
+  // const { toast } = useToast();
 
   /**
    * Carregar dados iniciais
@@ -53,11 +53,7 @@ export const useConfiguracaoSinergia = () => {
       setError(errorMessage);
       console.error('Erro ao carregar dados:', errorMessage);
       
-      toast({
-        title: "Erro ao carregar configurações",
-        description: errorMessage,
-        variant: "destructive",
-      });
+      console.error("Erro ao carregar configurações:", errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -96,10 +92,7 @@ export const useConfiguracaoSinergia = () => {
           ativar
         );
         
-        toast({
-          title: "Configuração criada!",
-          description: `Nova configuração "${nome}" criada com sucesso`,
-        });
+        console.log(`Configuração criada: ${nome}`);
       } else if (configuracaoAtiva && statusSistema?.configuracaoAtiva?.id) {
         // Atualizar configuração existente
         await configuracaoSinergiaApi.atualizarConfiguracao(
@@ -110,10 +103,7 @@ export const useConfiguracaoSinergia = () => {
         
         configId = statusSistema.configuracaoAtiva.id;
         
-        toast({
-          title: "Configuração atualizada!",
-          description: "Alterações salvas com sucesso",
-        });
+        console.log("Configuração atualizada com sucesso");
       } else {
         throw new Error('Não é possível determinar se é nova configuração ou atualização');
       }
@@ -131,11 +121,7 @@ export const useConfiguracaoSinergia = () => {
       const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido';
       setError(errorMessage);
       
-      toast({
-        title: "Erro ao salvar",
-        description: errorMessage,
-        variant: "destructive",
-      });
+      console.error("Erro ao salvar:", errorMessage);
     } finally {
       setIsSaving(false);
     }
@@ -151,10 +137,7 @@ export const useConfiguracaoSinergia = () => {
     try {
       await configuracaoSinergiaApi.aplicarTemplate(templateNome, ativar);
       
-      toast({
-        title: "Template aplicado!",
-        description: `Template "${templateNome}" aplicado com sucesso`,
-      });
+      console.log(`Template aplicado: ${templateNome}`);
 
       // Recarregar dados
       await carregarDados();
@@ -163,11 +146,7 @@ export const useConfiguracaoSinergia = () => {
       const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido';
       setError(errorMessage);
       
-      toast({
-        title: "Erro ao aplicar template",
-        description: errorMessage,
-        variant: "destructive",
-      });
+      console.error("Erro ao aplicar template:", errorMessage);
     } finally {
       setIsSaving(false);
     }
@@ -185,10 +164,7 @@ export const useConfiguracaoSinergia = () => {
     try {
       const impacto = await configuracaoSinergiaApi.simularImpacto(configuracaoEditando, amostraSize);
       
-      toast({
-        title: "Simulação concluída",
-        description: `Analisados ${impacto.totalAfetados} casos`,
-      });
+      console.log(`Simulação concluída: ${impacto.totalAfetados} casos analisados`);
 
       return impacto;
       
@@ -196,11 +172,7 @@ export const useConfiguracaoSinergia = () => {
       const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido';
       setError(errorMessage);
       
-      toast({
-        title: "Erro na simulação",
-        description: errorMessage,
-        variant: "destructive",
-      });
+      console.error("Erro na simulação:", errorMessage);
       
       return null;
     } finally {

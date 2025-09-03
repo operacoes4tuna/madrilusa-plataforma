@@ -7,7 +7,6 @@ import {
   Col, 
   Button, 
   Alert,
-  Form,
   FormGroup,
   FormInput,
   InputGroup,
@@ -16,13 +15,6 @@ import {
   Badge
 } from 'shards-react';
 import { useConfiguracaoSinergia } from '@/hooks/useConfiguracaoSinergia';
-
-interface PesoConfig {
-  label: string;
-  key: string;
-  value: number;
-  category: string;
-}
 
 const SinergiaConfigAdmin: React.FC = () => {
   const {
@@ -49,41 +41,7 @@ const SinergiaConfigAdmin: React.FC = () => {
     if (configuracaoAtiva && !configuracaoEditando) {
       atualizarConfiguracaoEditando(configuracaoAtiva);
     }
-  }, [configuracaoAtiva]);
-
-  // Organizar pesos por categoria
-  const pesosPorCategoria = configuracaoEditando ? [
-    {
-      categoria: 'Critérios Demográficos',
-      pesos: [
-        { label: 'Gênero', key: 'genero', value: configuracaoEditando.pesos.genero },
-        { label: 'Idade', key: 'idade', value: configuracaoEditando.pesos.idade },
-        { label: 'Município de Residência', key: 'municipioResidencia', value: configuracaoEditando.pesos.municipioResidencia }
-      ]
-    },
-    {
-      categoria: 'Critérios Essenciais',
-      pesos: [
-        { label: 'Transporte Próprio', key: 'transporteProprio', value: configuracaoEditando.pesos.transporteProprio },
-        { label: 'Fluência em Português', key: 'fluenciaPortugues', value: configuracaoEditando.pesos.fluenciaPortugues }
-      ]
-    },
-    {
-      categoria: 'Critérios Profissionais',
-      pesos: [
-        { label: 'Experiências Profissionais', key: 'experienciasProfissionais', value: configuracaoEditando.pesos.experienciasProfissionais },
-        { label: 'Formação Acadêmica', key: 'formacaoAcademica', value: configuracaoEditando.pesos.formacaoAcademica }
-      ]
-    },
-    {
-      categoria: 'Critérios Complementares',
-      pesos: [
-        { label: 'Idiomas Adicionais', key: 'idiomasAdicionais', value: configuracaoEditando.pesos.idiomasAdicionais },
-        { label: 'Habilidades Específicas', key: 'habilidadesEspecificas', value: configuracaoEditando.pesos.habilidadesEspecificas },
-        { label: 'Características Pessoais', key: 'caracteristicasPessoais', value: configuracaoEditando.pesos.caracteristicasPessoais }
-      ]
-    }
-  ] : [];
+  }, [configuracaoAtiva, configuracaoEditando, atualizarConfiguracaoEditando]);
 
   const handlePesoChange = (key: string, value: number) => {
     if (!configuracaoEditando) return;
@@ -133,7 +91,7 @@ const SinergiaConfigAdmin: React.FC = () => {
       await salvarConfiguracao(
         `Config ${new Date().toLocaleDateString('pt-BR')} ${new Date().toLocaleTimeString('pt-BR')}`,
         'Configuração criada via interface administrativa',
-        false // não ativar automaticamente
+        false
       );
     } catch (error) {
       console.error('Erro ao salvar:', error);
@@ -142,7 +100,7 @@ const SinergiaConfigAdmin: React.FC = () => {
 
   const calcularSomaPesos = () => {
     if (!configuracaoEditando) return 0;
-    return Object.values(configuracaoEditando.pesos).reduce((sum, peso) => sum + peso, 0);
+    return Object.values(configuracaoEditando.pesos).reduce((sum: number, peso: any) => sum + (peso as number), 0);
   };
 
   if (isLoading) {
@@ -262,7 +220,7 @@ const SinergiaConfigAdmin: React.FC = () => {
         </Col>
       </Row>
 
-      {/* Conteúdo das tabs */}
+      {/* Tab: Pesos dos Critérios */}
       {activeTab === 'pesos' && configuracaoEditando && (
         <Card>
           <CardHeader>
@@ -281,42 +239,170 @@ const SinergiaConfigAdmin: React.FC = () => {
               </Alert>
             )}
 
-            {pesosPorCategoria.map((categoria, idx) => (
-              <div key={idx} className="mb-4">
-                <h6 className="mb-3 text-primary">{categoria.categoria}</h6>
-                {categoria.pesos.map((peso) => (
-                  <FormGroup key={peso.key} className="mb-3">
-                    <label htmlFor={peso.key} className="d-flex justify-content-between">
-                      <span>{peso.label}</span>
-                      <Badge theme="light">{peso.value}%</Badge>
-                    </label>
-                    <div className="d-flex align-items-center">
-                      <input
-                        type="range"
-                        className="form-control-range flex-grow-1"
-                        id={peso.key}
-                        min="0"
-                        max="100"
-                        value={peso.value}
-                        onChange={(e) => handlePesoChange(peso.key, parseInt(e.target.value))}
-                      />
-                      <FormInput
-                        type="number"
-                        min="0"
-                        max="100"
-                        value={peso.value}
-                        onChange={(e) => handlePesoChange(peso.key, parseInt(e.target.value) || 0)}
-                        style={{ width: '80px', marginLeft: '10px' }}
-                      />
-                    </div>
-                  </FormGroup>
-                ))}
-              </div>
-            ))}
+            {/* Critérios Demográficos */}
+            <div className="mb-4">
+              <h6 className="mb-3 text-primary">Critérios Demográficos</h6>
+              
+              <FormGroup>
+                <label className="d-flex justify-content-between">
+                  <span>Gênero</span>
+                  <Badge theme="light">{configuracaoEditando.pesos.genero}%</Badge>
+                </label>
+                <FormInput
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={configuracaoEditando.pesos.genero}
+                  onChange={(e) => handlePesoChange('genero', parseInt(e.target.value))}
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <label className="d-flex justify-content-between">
+                  <span>Idade</span>
+                  <Badge theme="light">{configuracaoEditando.pesos.idade}%</Badge>
+                </label>
+                <FormInput
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={configuracaoEditando.pesos.idade}
+                  onChange={(e) => handlePesoChange('idade', parseInt(e.target.value))}
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <label className="d-flex justify-content-between">
+                  <span>Município de Residência</span>
+                  <Badge theme="light">{configuracaoEditando.pesos.municipioResidencia}%</Badge>
+                </label>
+                <FormInput
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={configuracaoEditando.pesos.municipioResidencia}
+                  onChange={(e) => handlePesoChange('municipioResidencia', parseInt(e.target.value))}
+                />
+              </FormGroup>
+            </div>
+
+            {/* Critérios Essenciais */}
+            <div className="mb-4">
+              <h6 className="mb-3 text-primary">Critérios Essenciais</h6>
+              
+              <FormGroup>
+                <label className="d-flex justify-content-between">
+                  <span>Transporte Próprio</span>
+                  <Badge theme="light">{configuracaoEditando.pesos.transporteProprio}%</Badge>
+                </label>
+                <FormInput
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={configuracaoEditando.pesos.transporteProprio}
+                  onChange={(e) => handlePesoChange('transporteProprio', parseInt(e.target.value))}
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <label className="d-flex justify-content-between">
+                  <span>Fluência em Português</span>
+                  <Badge theme="light">{configuracaoEditando.pesos.fluenciaPortugues}%</Badge>
+                </label>
+                <FormInput
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={configuracaoEditando.pesos.fluenciaPortugues}
+                  onChange={(e) => handlePesoChange('fluenciaPortugues', parseInt(e.target.value))}
+                />
+              </FormGroup>
+            </div>
+
+            {/* Critérios Profissionais */}
+            <div className="mb-4">
+              <h6 className="mb-3 text-primary">Critérios Profissionais</h6>
+              
+              <FormGroup>
+                <label className="d-flex justify-content-between">
+                  <span>Experiências Profissionais</span>
+                  <Badge theme="light">{configuracaoEditando.pesos.experienciasProfissionais}%</Badge>
+                </label>
+                <FormInput
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={configuracaoEditando.pesos.experienciasProfissionais}
+                  onChange={(e) => handlePesoChange('experienciasProfissionais', parseInt(e.target.value))}
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <label className="d-flex justify-content-between">
+                  <span>Formação Acadêmica</span>
+                  <Badge theme="light">{configuracaoEditando.pesos.formacaoAcademica}%</Badge>
+                </label>
+                <FormInput
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={configuracaoEditando.pesos.formacaoAcademica}
+                  onChange={(e) => handlePesoChange('formacaoAcademica', parseInt(e.target.value))}
+                />
+              </FormGroup>
+            </div>
+
+            {/* Critérios Complementares */}
+            <div className="mb-4">
+              <h6 className="mb-3 text-primary">Critérios Complementares</h6>
+              
+              <FormGroup>
+                <label className="d-flex justify-content-between">
+                  <span>Idiomas Adicionais</span>
+                  <Badge theme="light">{configuracaoEditando.pesos.idiomasAdicionais}%</Badge>
+                </label>
+                <FormInput
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={configuracaoEditando.pesos.idiomasAdicionais}
+                  onChange={(e) => handlePesoChange('idiomasAdicionais', parseInt(e.target.value))}
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <label className="d-flex justify-content-between">
+                  <span>Habilidades Específicas</span>
+                  <Badge theme="light">{configuracaoEditando.pesos.habilidadesEspecificas}%</Badge>
+                </label>
+                <FormInput
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={configuracaoEditando.pesos.habilidadesEspecificas}
+                  onChange={(e) => handlePesoChange('habilidadesEspecificas', parseInt(e.target.value))}
+                />
+              </FormGroup>
+
+              <FormGroup>
+                <label className="d-flex justify-content-between">
+                  <span>Características Pessoais</span>
+                  <Badge theme="light">{configuracaoEditando.pesos.caracteristicasPessoais}%</Badge>
+                </label>
+                <FormInput
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={configuracaoEditando.pesos.caracteristicasPessoais}
+                  onChange={(e) => handlePesoChange('caracteristicasPessoais', parseInt(e.target.value))}
+                />
+              </FormGroup>
+            </div>
           </CardBody>
         </Card>
       )}
 
+      {/* Tab: Configuração de IA */}
       {activeTab === 'ia' && configuracaoEditando && (
         <Card>
           <CardHeader>🤖 Configuração de Inteligência Artificial</CardHeader>
@@ -325,25 +411,20 @@ const SinergiaConfigAdmin: React.FC = () => {
               <Col md="6">
                 <FormGroup>
                   <label>Habilitar Análise por IA</label>
-                  <div className="custom-control custom-switch">
-                    <input
-                      type="checkbox"
-                      className="custom-control-input"
-                      id="habilitarIA"
-                      checked={configuracaoEditando.iaConfig.habilitada}
-                      onChange={(e) => handleIAConfigChange('habilitada', e.target.checked)}
-                    />
-                    <label className="custom-control-label" htmlFor="habilitarIA">
-                      {configuracaoEditando.iaConfig.habilitada ? 'Habilitada' : 'Desabilitada'}
-                    </label>
-                  </div>
+                  <FormInput
+                    type="select"
+                    value={configuracaoEditando.iaConfig.habilitada ? 'true' : 'false'}
+                    onChange={(e) => handleIAConfigChange('habilitada', e.target.value === 'true')}
+                  >
+                    <option value="true">Habilitada</option>
+                    <option value="false">Desabilitada</option>
+                  </FormInput>
                 </FormGroup>
 
                 <FormGroup>
-                  <label htmlFor="modelo">Modelo de IA</label>
+                  <label>Modelo de IA</label>
                   <FormInput
                     type="select"
-                    id="modelo"
                     value={configuracaoEditando.iaConfig.modelo}
                     onChange={(e) => handleIAConfigChange('modelo', e.target.value)}
                     disabled={!configuracaoEditando.iaConfig.habilitada}
@@ -354,13 +435,11 @@ const SinergiaConfigAdmin: React.FC = () => {
                 </FormGroup>
 
                 <FormGroup>
-                  <label htmlFor="temperatura">
+                  <label>
                     Temperatura: {configuracaoEditando.iaConfig.temperatura}
                   </label>
-                  <input
+                  <FormInput
                     type="range"
-                    className="form-control-range"
-                    id="temperatura"
                     min="0"
                     max="1"
                     step="0.1"
@@ -376,10 +455,9 @@ const SinergiaConfigAdmin: React.FC = () => {
 
               <Col md="6">
                 <FormGroup>
-                  <label htmlFor="maxTokens">Máximo de Tokens</label>
+                  <label>Máximo de Tokens</label>
                   <FormInput
                     type="number"
-                    id="maxTokens"
                     min="500"
                     max="4000"
                     value={configuracaoEditando.iaConfig.maxTokens}
@@ -389,13 +467,11 @@ const SinergiaConfigAdmin: React.FC = () => {
                 </FormGroup>
 
                 <FormGroup>
-                  <label htmlFor="threshold">
+                  <label>
                     Threshold Mínimo: {configuracaoEditando.iaConfig.thresholdMinimo}%
                   </label>
-                  <input
+                  <FormInput
                     type="range"
-                    className="form-control-range"
-                    id="threshold"
                     min="0"
                     max="100"
                     value={configuracaoEditando.iaConfig.thresholdMinimo}
@@ -408,14 +484,13 @@ const SinergiaConfigAdmin: React.FC = () => {
                 </FormGroup>
 
                 <FormGroup>
-                  <label htmlFor="custoMaximo">Custo Máximo por Análise</label>
+                  <label>Custo Máximo por Análise</label>
                   <InputGroup>
                     <InputGroupAddon type="prepend">
                       <InputGroupText>$</InputGroupText>
                     </InputGroupAddon>
                     <FormInput
                       type="number"
-                      id="custoMaximo"
                       min="0.01"
                       max="1.00"
                       step="0.01"
@@ -439,6 +514,7 @@ const SinergiaConfigAdmin: React.FC = () => {
         </Card>
       )}
 
+      {/* Tab: Critérios Eliminatórios */}
       {activeTab === 'eliminatorios' && configuracaoEditando && (
         <Card>
           <CardHeader>🚫 Critérios Eliminatórios</CardHeader>
@@ -452,18 +528,15 @@ const SinergiaConfigAdmin: React.FC = () => {
             <div className="mb-4 p-3 border rounded">
               <h6>Gênero</h6>
               <FormGroup>
-                <div className="custom-control custom-switch">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="generoAtivo"
-                    checked={configuracaoEditando.eliminatorios.genero.ativo}
-                    onChange={(e) => handleEliminatorioChange('genero', 'ativo', e.target.checked)}
-                  />
-                  <label className="custom-control-label" htmlFor="generoAtivo">
-                    {configuracaoEditando.eliminatorios.genero.ativo ? 'Ativo' : 'Inativo'}
-                  </label>
-                </div>
+                <label>Status</label>
+                <FormInput
+                  type="select"
+                  value={configuracaoEditando.eliminatorios.genero.ativo ? 'true' : 'false'}
+                  onChange={(e) => handleEliminatorioChange('genero', 'ativo', e.target.value === 'true')}
+                >
+                  <option value="true">Ativo</option>
+                  <option value="false">Inativo</option>
+                </FormInput>
               </FormGroup>
               {configuracaoEditando.eliminatorios.genero.ativo && (
                 <FormGroup>
@@ -485,18 +558,15 @@ const SinergiaConfigAdmin: React.FC = () => {
             <div className="mb-4 p-3 border rounded">
               <h6>Transporte Próprio</h6>
               <FormGroup>
-                <div className="custom-control custom-switch">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="transporteAtivo"
-                    checked={configuracaoEditando.eliminatorios.transporteProprio.ativo}
-                    onChange={(e) => handleEliminatorioChange('transporteProprio', 'ativo', e.target.checked)}
-                  />
-                  <label className="custom-control-label" htmlFor="transporteAtivo">
-                    {configuracaoEditando.eliminatorios.transporteProprio.ativo ? 'Ativo' : 'Inativo'}
-                  </label>
-                </div>
+                <label>Status</label>
+                <FormInput
+                  type="select"
+                  value={configuracaoEditando.eliminatorios.transporteProprio.ativo ? 'true' : 'false'}
+                  onChange={(e) => handleEliminatorioChange('transporteProprio', 'ativo', e.target.value === 'true')}
+                >
+                  <option value="true">Ativo</option>
+                  <option value="false">Inativo</option>
+                </FormInput>
               </FormGroup>
               {configuracaoEditando.eliminatorios.transporteProprio.ativo && (
                 <small className="text-muted">
@@ -509,18 +579,15 @@ const SinergiaConfigAdmin: React.FC = () => {
             <div className="mb-4 p-3 border rounded">
               <h6>Fluência em Português</h6>
               <FormGroup>
-                <div className="custom-control custom-switch">
-                  <input
-                    type="checkbox"
-                    className="custom-control-input"
-                    id="fluenciaAtivo"
-                    checked={configuracaoEditando.eliminatorios.fluenciaPortugues.ativo}
-                    onChange={(e) => handleEliminatorioChange('fluenciaPortugues', 'ativo', e.target.checked)}
-                  />
-                  <label className="custom-control-label" htmlFor="fluenciaAtivo">
-                    {configuracaoEditando.eliminatorios.fluenciaPortugues.ativo ? 'Ativo' : 'Inativo'}
-                  </label>
-                </div>
+                <label>Status</label>
+                <FormInput
+                  type="select"
+                  value={configuracaoEditando.eliminatorios.fluenciaPortugues.ativo ? 'true' : 'false'}
+                  onChange={(e) => handleEliminatorioChange('fluenciaPortugues', 'ativo', e.target.value === 'true')}
+                >
+                  <option value="true">Ativo</option>
+                  <option value="false">Inativo</option>
+                </FormInput>
               </FormGroup>
               {configuracaoEditando.eliminatorios.fluenciaPortugues.ativo && (
                 <FormGroup>
@@ -543,6 +610,7 @@ const SinergiaConfigAdmin: React.FC = () => {
         </Card>
       )}
 
+      {/* Tab: Simulação */}
       {activeTab === 'simulacao' && (
         <Card>
           <CardHeader>🧪 Simulação de Impacto</CardHeader>

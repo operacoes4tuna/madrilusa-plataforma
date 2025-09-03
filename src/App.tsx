@@ -25,7 +25,7 @@ import SinergIA from "./app/pages/SinergIA";
 import SinergiaV2 from "./app/pages/SinergiaV2"; // ✨ SINERGIA V2
 import SinergiaV2Admin from "./app/pages/SinergiaV2Admin"; // ✨ SINERGIA V2 ADMIN
 import SinergiaV2Tuning from "./app/pages/SinergiaV2Tuning"; // ✨ SINERGIA V2 TUNING
-import SinergiaConfigAdmin from "./app/pages/SinergiaConfigAdmin"; // 🎛️ SINERGIA CONFIG ADMIN
+import SinergiaConfigAdminSimple from "./app/pages/SinergiaConfigAdminSimple"; // 🎛️ SINERGIA CONFIG ADMIN
 import SinergiaConfigTest from "./app/pages/SinergiaConfigTest"; // 🧪 TESTE CONFIG APIS
 import DadosProfissionaisAdmin from "./app/pages/DadosProfissionaisAdmin"; // ✨ DADOS PROFISSIONAIS ADMIN
 import ExperienciasProfissionais from "./app/pages/ExperienciasProfissionais"; // ✨ DADOS PROFISSIONAIS
@@ -70,7 +70,7 @@ const App = () => (
             <Route path="sinergia-v2" element={<SinergiaV2 />} />
             <Route path="sinergia-v2-admin" element={<SinergiaV2Admin />} />
             <Route path="sinergia-v2-tuning" element={<SinergiaV2Tuning />} />
-            <Route path="sinergia-config-admin" element={<SinergiaConfigAdmin />} />
+            <Route path="sinergia-config-admin" element={<SinergiaConfigAdminSimple />} />
             <Route path="sinergia-config-test" element={<SinergiaConfigTest />} />
             <Route path="dados-profissionais-admin" element={<DadosProfissionaisAdmin />} />
             <Route path="dados-profissionais/experiencias" element={<ExperienciasProfissionais />} />
