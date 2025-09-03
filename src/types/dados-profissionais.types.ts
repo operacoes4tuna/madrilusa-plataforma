@@ -41,7 +41,7 @@ export interface IdiomaFormData {
 }
 
 // Estados do formulário
-export type ModalTipo = 'normal' | 'experiencia' | 'formacao' | 'idioma';
+export type ModalTipo = 'normal' | 'experiencia' | 'formacao' | 'idioma' | 'oportunidade_trabalho';
 
 // Props para componentes
 export interface DadoProfissionalCardProps {

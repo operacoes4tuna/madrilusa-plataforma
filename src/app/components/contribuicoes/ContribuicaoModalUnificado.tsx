@@ -19,6 +19,8 @@ import type {
   FormacaoFormData,
   IdiomaFormData
 } from '../../../types/dados-profissionais.types';
+import type { OportunidadeFormData } from '../../../types/oportunidades-trabalho.types';
+import OportunidadeForm from '../oportunidades-trabalho/OportunidadeForm';
 
 interface ContribuicaoModalUnificadoProps {
   isOpen: boolean;
@@ -48,6 +50,7 @@ const ContribuicaoModalUnificado: React.FC<ContribuicaoModalUnificadoProps> = ({
         case 'experiencia': return 'Editar Experiência Profissional';
         case 'formacao': return 'Editar Formação';
         case 'idioma': return 'Editar Idioma';
+        case 'oportunidade_trabalho': return 'Editar Oportunidade de Trabalho';
         default: return 'Editar';
       }
     } else {
@@ -56,6 +59,7 @@ const ContribuicaoModalUnificado: React.FC<ContribuicaoModalUnificadoProps> = ({
         case 'experiencia': return 'Nova Experiência Profissional';
         case 'formacao': return 'Nova Formação';
         case 'idioma': return 'Novo Idioma';
+        case 'oportunidade_trabalho': return 'Nova Oportunidade de Trabalho';
         default: return 'Novo';
       }
     }

@@ -231,6 +231,12 @@ const MainSidebar: React.FC = () => {
         to: '/app/dados-profissionais-admin',
         iconClass: 'work',
         htmlAfter: ''
+      },
+      {
+        title: 'Oportunidades de Trabalho',
+        to: '/app/oportunidades-trabalho-admin',
+        iconClass: 'work_outline',
+        htmlAfter: ''
       }
     ];
   };
