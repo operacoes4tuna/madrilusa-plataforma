@@ -233,4 +233,38 @@
   .app-title-h2 {
     font-size: 20px;
   }
+}
+
+/* Correção para FormSelect cortados no macOS/Chrome */
+.custom-form-control.form-control-select,
+select.form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2714%27%20height%3D%278%27%20viewBox%3D%270%200%2014%208%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%3Cpath%20d%3D%27M1%201l6%206%206-6%27%20stroke%3D%27%23333%27%20stroke-width%3D%272%27%20fill%3D%27none%27%20fill-rule%3D%27evenodd%27/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+  padding-right: 36px !important;
+  min-height: 38px;
+  line-height: 1.5;
+}
+
+/* Garantir altura consistente para todos os form controls */
+.form-control,
+.custom-select {
+  min-height: 38px;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
+
+/* Correção específica para dropdowns em containers com overflow */
+.form-group {
+  position: relative;
+}
+
+/* Garantir que labels não cortem o conteúdo */
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
 } 

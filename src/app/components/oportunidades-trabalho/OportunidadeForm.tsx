@@ -279,6 +279,7 @@ const OportunidadeForm: React.FC<OportunidadeFormProps> = ({
                     id="genero"
                     value={formData.genero}
                     onChange={(e) => updateFormData('genero', e.target.value)}
+                    className="form-control"
                   >
                     {OPCOES_GENERO_OPORTUNIDADE.map((opcao) => (
                       <option key={opcao} value={opcao}>
@@ -322,6 +323,7 @@ const OportunidadeForm: React.FC<OportunidadeFormProps> = ({
                     id="transporteProprio"
                     value={formData.transporteProprio}
                     onChange={(e) => updateFormData('transporteProprio', e.target.value)}
+                    className="form-control"
                   >
                     {OPCOES_BINARIAS_OPORTUNIDADE.map((opcao) => (
                       <option key={opcao} value={opcao}>
@@ -339,6 +341,7 @@ const OportunidadeForm: React.FC<OportunidadeFormProps> = ({
                     id="fluenciaPortugues"
                     value={formData.fluenciaPortugues}
                     onChange={(e) => updateFormData('fluenciaPortugues', e.target.value)}
+                    className="form-control"
                   >
                     {OPCOES_BINARIAS_OPORTUNIDADE.map((opcao) => (
                       <option key={opcao} value={opcao}>
@@ -413,6 +416,7 @@ const OportunidadeForm: React.FC<OportunidadeFormProps> = ({
                     id="nivelEscolaridade"
                     value={formData.nivelEscolaridade}
                     onChange={(e) => updateFormData('nivelEscolaridade', e.target.value)}
+                    className="form-control"
                   >
                     {NIVEIS_ESCOLARIDADE_OPORTUNIDADE.map((nivel) => (
                       <option key={nivel} value={nivel}>

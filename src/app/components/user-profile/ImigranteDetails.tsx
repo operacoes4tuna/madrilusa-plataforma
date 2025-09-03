@@ -423,6 +423,7 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
                     name="genero"
                     value={formData.genero}
                     onChange={handleInputChange}
+                    className="form-control"
                   >
                     <option value="">Selecione o género</option>
                     <option value="F">Feminino</option>
@@ -439,6 +440,7 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
                     name="fluenciaPortugues"
                     value={formData.fluenciaPortugues}
                     onChange={handleInputChange}
+                    className="form-control"
                   >
                     <option value="">Selecione o nível</option>
                     <option value="Básica">Básica</option>

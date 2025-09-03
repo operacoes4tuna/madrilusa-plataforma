@@ -248,6 +248,7 @@ const DadosProfissionaisAdmin: React.FC = () => {
                         setFiltroTipo(e.target.value);
                         handleFilterChange();
                       }}
+                      className="form-control"
                     >
                       <option value="">Todos os tipos</option>
                       <option value="experiencia">Experiências</option>
@@ -266,6 +267,7 @@ const DadosProfissionaisAdmin: React.FC = () => {
                         setFiltroAtivo(e.target.value);
                         handleFilterChange();
                       }}
+                      className="form-control"
                     >
                       <option value="">Todos</option>
                       <option value="true">Ativos</option>

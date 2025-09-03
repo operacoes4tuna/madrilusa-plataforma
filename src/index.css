@@ -1,5 +1,6 @@
 /* Imports devem vir antes dos @layer */
 @import './app/styles/category-colors.css';
+@import './app/styles/app-theme.css';
 
 @tailwind base;
 @tailwind components;
@@ -140,5 +141,57 @@
 
   .bg-gradient-subtle {
     background: var(--gradient-subtle);
+  }
+}
+
+/* Correção global para selects cortados no macOS/Chrome */
+@layer components {
+  /* Reset e correção para todos os selects */
+  select,
+  .form-select,
+  .custom-select,
+  select.form-control,
+  .custom-form-control.form-control-select {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2712%27%20height%3D%277%27%20viewBox%3D%270%200%2012%207%27%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%3E%3Cpath%20d%3D%27M1%201l5%205%205-5%27%20stroke%3D%27%23666%27%20stroke-width%3D%271.5%27%20fill%3D%27none%27%20fill-rule%3D%27evenodd%27/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.75rem center !important;
+    background-size: 12px !important;
+    padding-right: 2.5rem !important;
+    min-height: 38px !important;
+    height: auto !important;
+    line-height: 1.5 !important;
+    border-radius: 0.25rem !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Garantir que o texto não seja cortado */
+  select option,
+  .form-select option {
+    padding: 0.5rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  /* Fix específico para WebKit/Safari */
+  @supports (-webkit-appearance: none) {
+    select.form-control,
+    .custom-form-control.form-control-select {
+      padding-top: 0.5rem !important;
+      padding-bottom: 0.5rem !important;
+    }
+  }
+  
+  /* Correção para form groups */
+  .form-group {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
   }
 }

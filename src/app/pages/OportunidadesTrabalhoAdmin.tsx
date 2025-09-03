@@ -271,6 +271,7 @@ const OportunidadesTrabalhoAdmin: React.FC = () => {
                         setFiltroStatus(e.target.value);
                         handleFilterChange();
                       }}
+                      className="form-control"
                     >
                       <option value="">Todas</option>
                       <option value="true">Ativas</option>
@@ -288,6 +289,7 @@ const OportunidadesTrabalhoAdmin: React.FC = () => {
                         setFiltroGenero(e.target.value);
                         handleFilterChange();
                       }}
+                      className="form-control"
                     >
                       <option value="">Todos</option>
                       {OPCOES_GENERO_OPORTUNIDADE.map((opcao) => (
@@ -308,6 +310,7 @@ const OportunidadesTrabalhoAdmin: React.FC = () => {
                         setFiltroEscolaridade(e.target.value);
                         handleFilterChange();
                       }}
+                      className="form-control"
                     >
                       <option value="">Todas</option>
                       {NIVEIS_ESCOLARIDADE_OPORTUNIDADE.map((nivel) => (

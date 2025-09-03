@@ -92,6 +92,7 @@ const IdiomaField: React.FC<IdiomaFieldProps> = ({
                   id={`nivel-${index}`}
                   value={idioma.nivel}
                   onChange={(e) => updateIdioma(index, 'nivel', e.target.value)}
+                  className="form-control"
                 >
                   {NIVEIS_IDIOMA.map((nivel) => (
                     <option key={nivel} value={nivel}>

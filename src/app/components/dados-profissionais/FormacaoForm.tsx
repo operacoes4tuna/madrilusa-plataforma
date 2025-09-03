@@ -110,6 +110,7 @@ const FormacaoForm: React.FC<FormacaoFormProps> = ({
                 value={form.nivelEscolaridade}
                 onChange={(e) => updateFormacao(index, 'nivelEscolaridade', e.target.value)}
                 required
+                className="form-control"
               >
                 {NIVEIS_ESCOLARIDADE.map((nivel) => (
                   <option key={nivel} value={nivel}>

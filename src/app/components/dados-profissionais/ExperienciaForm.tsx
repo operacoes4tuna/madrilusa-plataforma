@@ -131,6 +131,7 @@ const ExperienciaForm: React.FC<ExperienciaFormProps> = ({
                 value={exp.tempoNoCargo}
                 onChange={(e) => updateExperiencia(index, 'tempoNoCargo', e.target.value)}
                 required
+                className="form-control"
               >
                 {TEMPOS_CARGO.map((tempo) => (
                   <option key={tempo} value={tempo}>

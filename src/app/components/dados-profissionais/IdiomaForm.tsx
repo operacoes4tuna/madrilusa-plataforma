@@ -145,6 +145,7 @@ const IdiomaForm: React.FC<IdiomaFormProps> = ({
                 value={idioma.nivel}
                 onChange={(e) => updateIdioma(index, 'nivel', e.target.value)}
                 required
+                className="form-control"
               >
                 {NIVEIS_IDIOMA.map((nivel) => (
                   <option key={nivel} value={nivel}>
