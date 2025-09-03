@@ -220,6 +220,55 @@ model DadosProfissionaisImigrante {
   @@map("dados_profissionais_imigrante")
 }
 
+// ✨ SISTEMA CONFIGURAÇÃO SINERGIA V2: Configurações paramétricas do algoritmo
+model ConfiguracaoSinergia {
+  id            String   @id @default(cuid())
+  versao        Int      @default(1)
+  ativa         Boolean  @default(false)
+  nome          String   // Ex: "Configuração Rigorosa v2"
+  descricao     String?
+  
+  // Configurações de Pesos (JSON com ScoringWeights)
+  pesos         String   // JSON: { genero: 10, idade: 10, municipio: 15, ... }
+  
+  // Critérios Eliminatórios (JSON)
+  eliminatorios String   // JSON: { genero: { ativo: boolean, condicoes: {...} }, ... }
+  
+  // Configurações de IA (JSON)
+  iaConfig      String   // JSON: { habilitada: boolean, threshold: number, pesoIA: number, ... }
+  
+  // Configurações de Pré-filtros (JSON)
+  prefiltros    String   // JSON: Regras de pré-filtro configuráveis
+  
+  // Configurações de Scoring (JSON)
+  scoringRules  String   // JSON: Regras específicas por critério
+  
+  // Configurações de Limites (JSON)
+  limites       String   @default("{\"maxCandidatosPorAnalise\":100,\"timeoutAnalise\":30,\"cacheResultados\":true,\"tempoCache\":10}")   // JSON: Limites de performance e cache
+  
+  // Metadados
+  criadoPor     String   // userId do admin
+  atualizadoPor String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@index([ativa])
+  @@map("configuracao_sinergia")
+}
+
+model HistoricoConfiguracaoSinergia {
+  id              String   @id @default(cuid())
+  configuracaoId  String
+  snapshot        String   // JSON: Cópia completa da configuração
+  acao            String   // 'criada', 'editada', 'ativada', 'desativada'
+  usuarioId       String
+  motivo          String?
+  createdAt       DateTime @default(now())
+  
+  @@index([configuracaoId])
+  @@map("historico_configuracao_sinergia")
+}
+
 // ✨ NOVO: Oportunidades de trabalho estruturadas para empresas
 model OportunidadeTrabalho {
   id                    String   @id @default(cuid())

@@ -11,11 +11,16 @@ import type {
 } from './sinergia-v2.types';
 import { DEFAULT_WEIGHTS } from './sinergia-v2.types';
 import { SinergiaV2AnalyticsService } from './sinergia-v2-analytics.service';
+import { configuracaoSinergiaService } from './configuracao-sinergia.service';
+import type { ConfiguracaoCompleta } from './sinergia-config.types';
 
 export class SinergiaV2Service {
   private openai: OpenAI;
   private weights: ScoringWeights;
   private analytics: SinergiaV2AnalyticsService;
+  private configCache: ConfiguracaoCompleta | null = null;
+  private configCacheExpiry: number = 0;
+  private readonly CONFIG_CACHE_DURATION = 5 * 60 * 1000; // 5 minutos
 
   constructor() {
     this.openai = new OpenAI({
@@ -23,6 +28,48 @@ export class SinergiaV2Service {
     });
     this.weights = DEFAULT_WEIGHTS;
     this.analytics = SinergiaV2AnalyticsService.getInstance();
+  }
+
+  /**
+   * Busca configuração ativa com cache
+   */
+  private async getConfiguracao(): Promise<ConfiguracaoCompleta> {
+    try {
+      // Verifica cache
+      if (this.configCache && this.configCacheExpiry > Date.now()) {
+        return this.configCache;
+      }
+
+      // Busca nova configuração
+      const config = await configuracaoSinergiaService.getConfiguracaoAtiva();
+      
+      // Atualiza cache
+      this.configCache = config;
+      this.configCacheExpiry = Date.now() + this.CONFIG_CACHE_DURATION;
+      
+      // Atualiza pesos locais para compatibilidade
+      this.weights = config.pesos;
+      
+      console.log('🎛️  SINERGIA V2: Configuração atualizada');
+      return config;
+
+    } catch (error) {
+      console.error('❌ SINERGIA V2: Erro ao buscar configuração, usando padrão:', error);
+      
+      // Fallback para configuração padrão
+      const defaultConfig = await configuracaoSinergiaService.getConfiguracaoAtiva();
+      this.weights = defaultConfig.pesos;
+      return defaultConfig;
+    }
+  }
+
+  /**
+   * Limpa cache de configuração (usado quando configuração é alterada)
+   */
+  public limparCacheConfiguracao(): void {
+    this.configCache = null;
+    this.configCacheExpiry = 0;
+    console.log('🗑️  SINERGIA V2: Cache de configuração limpo');
   }
 
   /**
@@ -48,7 +95,7 @@ export class SinergiaV2Service {
       console.log(`📊 Encontrados ${imigrantes.length} imigrantes para análise`);
 
       // 3. Pré-filtro para eliminar incompatibilidades absolutas
-      const candidatesPreFiltered = this.preFilterCandidates(oportunidade, imigrantes);
+      const candidatesPreFiltered = await this.preFilterCandidates(oportunidade, imigrantes);
       console.log(`🔍 Pré-filtro: ${candidatesPreFiltered.length} candidatos viáveis`);
 
       // 4. Análise rigorosa para cada candidato
@@ -129,31 +176,40 @@ export class SinergiaV2Service {
 
   /**
    * Pré-filtro para eliminar incompatibilidades absolutas (sem IA)
+   * Agora usa configuração parametrizável
    */
-  private preFilterCandidates(
+  private async preFilterCandidates(
     oportunidade: OportunidadeCompleteData,
     imigrantes: ImigranteCompleteProfile[]
-  ): ImigranteCompleteProfile[] {
+  ): Promise<ImigranteCompleteProfile[]> {
+    const config = await this.getConfiguracao();
+    
     return imigrantes.filter(imigrante => {
-      // 1. Filtro por género (se especificado)
-      if (oportunidade.genero && oportunidade.genero !== 'INDIFERENTE') {
-        if (!imigrante.genero || imigrante.genero !== oportunidade.genero) {
-          return false;
+      // 1. Filtro por género (configurável)
+      if (config.prefiltros.genero.ativo && config.prefiltros.genero.eliminarSeNaoCorresponder) {
+        if (oportunidade.genero && oportunidade.genero !== 'INDIFERENTE') {
+          if (!imigrante.genero || imigrante.genero !== oportunidade.genero) {
+            return false;
+          }
         }
       }
 
-      // 2. Filtro por transporte (se obrigatório)
-      if (oportunidade.transporteProprio === 'S') {
-        if (!imigrante.transporteProprio) {
-          return false;
+      // 2. Filtro por transporte (configurável)
+      if (config.prefiltros.transporteProprio.ativo && config.prefiltros.transporteProprio.eliminarSeObrigatorioENaoTem) {
+        if (oportunidade.transporteProprio === 'S') {
+          if (!imigrante.transporteProprio) {
+            return false;
+          }
         }
       }
 
-      // 3. Filtro por fluência (se obrigatório)
-      if (oportunidade.fluenciaPortugues === 'S') {
-        const niveisAceitaveis = ['Avançada', 'Fluente'];
-        if (!imigrante.fluenciaPortugues || !niveisAceitaveis.includes(imigrante.fluenciaPortugues)) {
-          return false;
+      // 3. Filtro por fluência (configurável)
+      if (config.prefiltros.fluenciaPortugues.ativo && config.prefiltros.fluenciaPortugues.eliminarSeObrigatorioENaoTem) {
+        if (oportunidade.fluenciaPortugues === 'S') {
+          const niveisAceitaveis = config.prefiltros.fluenciaPortugues.niveisMinimos;
+          if (!imigrante.fluenciaPortugues || !niveisAceitaveis.includes(imigrante.fluenciaPortugues)) {
+            return false;
+          }
         }
       }
 
@@ -163,6 +219,7 @@ export class SinergiaV2Service {
 
   /**
    * Análise rigorosa de matching entre oportunidade e imigrante
+   * Agora usa configuração parametrizável
    */
   private async analyzeRigorousMatch(
     oportunidade: OportunidadeCompleteData,
@@ -170,27 +227,30 @@ export class SinergiaV2Service {
     options: MatchOptions
   ): Promise<RigorousMatch> {
     const startTime = Date.now();
+    const config = await this.getConfiguracao();
 
-    // 1. Calcular scores estruturados (sem IA)
-    const breakdown = this.calculateStructuredScore(oportunidade, imigrante);
+    // 1. Calcular scores estruturados (sem IA) usando configuração
+    const breakdown = this.calculateStructuredScore(oportunidade, imigrante, config);
 
-    // 2. Calcular score total ponderado
-    const scoreTotal = this.calculateWeightedScore(breakdown);
+    // 2. Calcular score total ponderado usando pesos da configuração
+    const scoreTotal = this.calculateWeightedScore(breakdown, config.pesos);
 
-    // 3. Análise semântica com IA (apenas se score > 40% para economia)
+    // 3. Análise semântica com IA (configurável)
     let semanticAnalysis: SemanticAnalysis | null = null;
     let tokensUsed = 0;
     let finalScore = scoreTotal;
 
-    if (options.useAI !== false && scoreTotal >= 40) {
+    if (options.useAI !== false && config.iaConfig.habilitada && scoreTotal >= config.iaConfig.thresholdMinimo) {
       try {
-        semanticAnalysis = await this.analyzeSemanticCompatibility(oportunidade, imigrante, breakdown);
+        semanticAnalysis = await this.analyzeSemanticCompatibility(oportunidade, imigrante, breakdown, config.iaConfig);
         tokensUsed = semanticAnalysis.tokensUsed;
         
-        // Combinar score estruturado com análise semântica (70% estruturado + 30% IA)
+        // Combinar score estruturado com análise semântica usando peso configurável
         if (semanticAnalysis.tokensUsed > 0) { // Só se IA foi usada
-          finalScore = Math.round((scoreTotal * 0.7) + (semanticAnalysis.score * 0.3));
-          console.log(`🔄 Score ajustado: ${scoreTotal} → ${finalScore} (com IA)`);
+          const pesoEstruturado = (100 - config.iaConfig.pesoIA) / 100;
+          const pesoIA = config.iaConfig.pesoIA / 100;
+          finalScore = Math.round((scoreTotal * pesoEstruturado) + (semanticAnalysis.score * pesoIA));
+          console.log(`🔄 Score ajustado: ${scoreTotal} → ${finalScore} (com IA ${config.iaConfig.pesoIA}%)`);
         }
       } catch (error) {
         console.warn('⚠️ Erro na análise semântica, continuando sem IA:', error);
@@ -271,10 +331,12 @@ export class SinergiaV2Service {
 
   /**
    * Calcular scores estruturados sem IA
+   * Agora usa configuração parametrizável
    */
   private calculateStructuredScore(
     oportunidade: OportunidadeCompleteData,
-    imigrante: ImigranteCompleteProfile
+    imigrante: ImigranteCompleteProfile,
+    config: ConfiguracaoCompleta
   ): MatchingCriteria {
     
     // 1. GÉNERO
@@ -486,32 +548,35 @@ export class SinergiaV2Service {
 
   /**
    * Calcular score total ponderado
+   * Agora usa pesos configuráveis
    */
-  private calculateWeightedScore(breakdown: MatchingCriteria): number {
-    const totalWeight = Object.values(this.weights).reduce((sum, weight) => sum + weight, 0);
+  private calculateWeightedScore(breakdown: MatchingCriteria, weights: ScoringWeights): number {
+    const totalWeight = Object.values(weights).reduce((sum, weight) => sum + weight, 0);
     
     let weightedSum = 0;
-    weightedSum += breakdown.genero.score * (this.weights.genero / totalWeight);
-    weightedSum += breakdown.idade.score * (this.weights.idade / totalWeight);
-    weightedSum += breakdown.municipio.score * (this.weights.municipio / totalWeight);
-    weightedSum += breakdown.transporteProprio.score * (this.weights.transporteProprio / totalWeight);
-    weightedSum += breakdown.fluenciaPortugues.score * (this.weights.fluenciaPortugues / totalWeight);
-    weightedSum += breakdown.experiencias.score * (this.weights.experiencias / totalWeight);
-    weightedSum += breakdown.formacao.score * (this.weights.formacao / totalWeight);
-    weightedSum += breakdown.idiomas.score * (this.weights.idiomas / totalWeight);
-    weightedSum += breakdown.habilidades.score * (this.weights.habilidades / totalWeight);
-    weightedSum += breakdown.caracteristicas.score * (this.weights.caracteristicas / totalWeight);
+    weightedSum += breakdown.genero.score * (weights.genero / totalWeight);
+    weightedSum += breakdown.idade.score * (weights.idade / totalWeight);
+    weightedSum += breakdown.municipio.score * (weights.municipio / totalWeight);
+    weightedSum += breakdown.transporteProprio.score * (weights.transporteProprio / totalWeight);
+    weightedSum += breakdown.fluenciaPortugues.score * (weights.fluenciaPortugues / totalWeight);
+    weightedSum += breakdown.experiencias.score * (weights.experiencias / totalWeight);
+    weightedSum += breakdown.formacao.score * (weights.formacao / totalWeight);
+    weightedSum += breakdown.idiomas.score * (weights.idiomas / totalWeight);
+    weightedSum += breakdown.habilidades.score * (weights.habilidades / totalWeight);
+    weightedSum += breakdown.caracteristicas.score * (weights.caracteristicas / totalWeight);
 
     return Math.round(weightedSum);
   }
 
   /**
    * Análise semântica com IA (apenas para scores altos)
+   * Agora usa configuração de IA parametrizável
    */
   private async analyzeSemanticCompatibility(
     oportunidade: OportunidadeCompleteData,
     imigrante: ImigranteCompleteProfile,
-    structuredScore: MatchingCriteria
+    structuredScore: MatchingCriteria,
+    iaConfig: any
   ): Promise<SemanticAnalysis> {
     const startTime = Date.now();
     

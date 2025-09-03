@@ -25,6 +25,7 @@ import SinergIA from "./app/pages/SinergIA";
 import SinergiaV2 from "./app/pages/SinergiaV2"; // ✨ SINERGIA V2
 import SinergiaV2Admin from "./app/pages/SinergiaV2Admin"; // ✨ SINERGIA V2 ADMIN
 import SinergiaV2Tuning from "./app/pages/SinergiaV2Tuning"; // ✨ SINERGIA V2 TUNING
+// import SinergiaConfigAdmin from "./app/pages/SinergiaConfigAdmin"; // 🎛️ SINERGIA CONFIG ADMIN
 import DadosProfissionaisAdmin from "./app/pages/DadosProfissionaisAdmin"; // ✨ DADOS PROFISSIONAIS ADMIN
 import ExperienciasProfissionais from "./app/pages/ExperienciasProfissionais"; // ✨ DADOS PROFISSIONAIS
 import FormacaoAcademica from "./app/pages/FormacaoAcademica"; // ✨ DADOS PROFISSIONAIS
@@ -68,6 +69,7 @@ const App = () => (
             <Route path="sinergia-v2" element={<SinergiaV2 />} />
             <Route path="sinergia-v2-admin" element={<SinergiaV2Admin />} />
             <Route path="sinergia-v2-tuning" element={<SinergiaV2Tuning />} />
+            {/* <Route path="sinergia-config-admin" element={<SinergiaConfigAdmin />} /> */}
             <Route path="dados-profissionais-admin" element={<DadosProfissionaisAdmin />} />
             <Route path="dados-profissionais/experiencias" element={<ExperienciasProfissionais />} />
             <Route path="dados-profissionais/formacao" element={<FormacaoAcademica />} />

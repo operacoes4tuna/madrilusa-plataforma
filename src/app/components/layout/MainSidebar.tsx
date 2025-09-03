@@ -259,7 +259,13 @@ const MainSidebar: React.FC = () => {
         to: '/app/sinergia-v2-tuning',
         iconClass: 'tune',
         htmlAfter: '<span class="badge badge-warning ml-auto" style="font-size: 9px;">ML</span>'
-      }
+      },
+      // {
+      //   title: 'SinergIA - Configuração',
+      //   to: '/app/sinergia-config-admin',
+      //   iconClass: 'settings',
+      //   htmlAfter: '<span class="badge badge-info ml-auto" style="font-size: 9px;">CONFIG</span>'
+      // }
     ];
   };
   
