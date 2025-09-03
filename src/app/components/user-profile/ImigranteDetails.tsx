@@ -15,7 +15,7 @@ import {
 } from 'shards-react';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
-import type { PerfilImigrante, NACIONALIDADES, OBJETIVOS_IMIGRANTE } from '@/modules/auth/types/auth.types';
+import type { PerfilImigrante, NACIONALIDADES, OBJETIVOS_IMIGRANTE, GENEROS, FLUENCIA_PORTUGUES } from '@/modules/auth/types/auth.types';
 
 interface ImigranteDetailsProps {
   title?: string;
@@ -39,7 +39,14 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
     objetivos: [] as string[], // Array de objetivos selecionados
     objetivoOutros: '',
     mensagem: '',
-    aceitaNotificacoes: false // Aceita receber notificações
+    aceitaNotificacoes: false, // Aceita receber notificações
+    
+    // ✨ NOVOS CAMPOS - Informações Adicionais
+    genero: '',
+    municipioResidencia: '',
+    transporteProprio: false,
+    possibilidadeMudancaMorada: false,
+    fluenciaPortugues: ''
   });
 
   // Buscar nacionalidades disponíveis
@@ -98,7 +105,14 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
             objetivos: perfil.objetivos || [],
             objetivoOutros: perfil.objetivoOutros || '',
             mensagem: perfil.mensagem || '',
-            aceitaNotificacoes: perfil.aceitaNotificacoes || false
+            aceitaNotificacoes: perfil.aceitaNotificacoes || false,
+            
+            // ✨ NOVOS CAMPOS - Informações Adicionais
+            genero: perfil.genero || '',
+            municipioResidencia: perfil.municipioResidencia || '',
+            transporteProprio: perfil.transporteProprio || false,
+            possibilidadeMudancaMorada: perfil.possibilidadeMudancaMorada || false,
+            fluenciaPortugues: perfil.fluenciaPortugues || ''
           });
         }
       } catch (error) {
@@ -387,6 +401,101 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
                     onChange={handleInputChange}
                     placeholder="Informações adicionais que gostaria de compartilhar"
                   />
+                </FormGroup>
+              </Col>
+            </Row>
+
+            {/* ✨ NOVOS CAMPOS - Informações Adicionais */}
+            <Row>
+              <Col md="12">
+                <h5 style={{ borderTop: '1px solid #dee2e6', paddingTop: '20px', marginTop: '20px', marginBottom: '20px' }}>
+                  Informações Adicionais
+                </h5>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md="6">
+                <FormGroup>
+                  <label htmlFor="genero">Género</label>
+                  <FormSelect
+                    id="genero"
+                    name="genero"
+                    value={formData.genero}
+                    onChange={handleInputChange}
+                  >
+                    <option value="">Selecione o género</option>
+                    <option value="F">Feminino</option>
+                    <option value="M">Masculino</option>
+                    <option value="Outro">Outro</option>
+                  </FormSelect>
+                </FormGroup>
+              </Col>
+              <Col md="6">
+                <FormGroup>
+                  <label htmlFor="fluenciaPortugues">Fluência em Português</label>
+                  <FormSelect
+                    id="fluenciaPortugues"
+                    name="fluenciaPortugues"
+                    value={formData.fluenciaPortugues}
+                    onChange={handleInputChange}
+                  >
+                    <option value="">Selecione o nível</option>
+                    <option value="Básica">Básica</option>
+                    <option value="Intermediária">Intermediária</option>
+                    <option value="Avançada">Avançada</option>
+                    <option value="Fluente">Fluente</option>
+                  </FormSelect>
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md="12">
+                <FormGroup>
+                  <label htmlFor="municipioResidencia">Município de Residência</label>
+                  <FormInput
+                    id="municipioResidencia"
+                    name="municipioResidencia"
+                    value={formData.municipioResidencia}
+                    onChange={handleInputChange}
+                    placeholder="Digite o município onde reside"
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md="6">
+                <FormGroup>
+                  <div style={{ marginTop: '10px' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', fontWeight: 'normal' }}>
+                      <input
+                        type="checkbox"
+                        name="transporteProprio"
+                        checked={formData.transporteProprio}
+                        onChange={(e) => setFormData(prev => ({ ...prev, transporteProprio: e.target.checked }))}
+                        style={{ marginRight: '8px' }}
+                      />
+                      Tenho transporte próprio
+                    </label>
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col md="6">
+                <FormGroup>
+                  <div style={{ marginTop: '10px' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', fontWeight: 'normal' }}>
+                      <input
+                        type="checkbox"
+                        name="possibilidadeMudancaMorada"
+                        checked={formData.possibilidadeMudancaMorada}
+                        onChange={(e) => setFormData(prev => ({ ...prev, possibilidadeMudancaMorada: e.target.checked }))}
+                        style={{ marginRight: '8px' }}
+                      />
+                      Possibilidade de mudança de morada
+                    </label>
+                  </div>
                 </FormGroup>
               </Col>
             </Row>

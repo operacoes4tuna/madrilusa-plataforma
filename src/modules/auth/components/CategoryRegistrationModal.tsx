@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +17,9 @@ import {
   USER_CATEGORIES,
   BasicRegistrationFormData,
   ImigranteRegistrationFormData,
-  NACIONALIDADES
+  NACIONALIDADES,
+  GENEROS,
+  FLUENCIA_PORTUGUES
 } from "../types/auth.types";
 
 // Interface para formulário de empresa
@@ -83,6 +85,13 @@ const imigranteRegistrationSchema = z.object({
   objetivoOutros: z.string().optional(),
   mensagem: z.string().optional(),
   aceitaNotificacoes: z.boolean().optional(),
+  
+  // ✨ NOVOS CAMPOS - Informações Adicionais
+  genero: z.string().optional(),
+  municipioResidencia: z.string().optional(),
+  transporteProprio: z.boolean().optional(),
+  possibilidadeMudancaMorada: z.boolean().optional(),
+  fluenciaPortugues: z.string().optional(),
 });
 
 // Schema de validação para Etapa 2 (Empresa)
@@ -172,7 +181,14 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
       objetivos: [],
       objetivoOutros: "",
       mensagem: "",
-      aceitaNotificacoes: false
+      aceitaNotificacoes: false,
+      
+      // ✨ NOVOS CAMPOS - Informações Adicionais
+      genero: "",
+      municipioResidencia: "",
+      transporteProprio: false,
+      possibilidadeMudancaMorada: false,
+      fluenciaPortugues: ""
     }
   });
 
@@ -1160,6 +1176,88 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
                 placeholder="Informações adicionais que gostaria de compartilhar"
                 rows={3}
               />
+            </div>
+
+            {/* ✨ NOVOS CAMPOS - Informações Adicionais */}
+            <div className="border-t pt-4 mt-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Informações Adicionais</h3>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="genero">Género</Label>
+                  <Select 
+                    onValueChange={(value) => imigranteForm.setValue("genero", value)}
+                    defaultValue={imigranteForm.watch("genero")}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione o género" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {GENEROS.map((genero) => (
+                        <SelectItem key={genero} value={genero}>
+                          {genero === 'F' ? 'Feminino' : genero === 'M' ? 'Masculino' : 'Outro'}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="fluenciaPortugues">Fluência em Português</Label>
+                  <Select 
+                    onValueChange={(value) => imigranteForm.setValue("fluenciaPortugues", value)}
+                    defaultValue={imigranteForm.watch("fluenciaPortugues")}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione o nível" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {FLUENCIA_PORTUGUES.map((nivel) => (
+                        <SelectItem key={nivel} value={nivel}>
+                          {nivel}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="mt-4">
+                <Label htmlFor="municipioResidencia">Município de Residência</Label>
+                <Input
+                  id="municipioResidencia"
+                  {...imigranteForm.register("municipioResidencia")}
+                  placeholder="Digite o município onde reside"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="transporteProprio"
+                    checked={imigranteForm.watch("transporteProprio") || false}
+                    onCheckedChange={(checked) => {
+                      imigranteForm.setValue("transporteProprio", checked as boolean);
+                    }}
+                  />
+                  <Label htmlFor="transporteProprio" className="text-sm font-normal">
+                    Tenho transporte próprio
+                  </Label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="possibilidadeMudancaMorada"
+                    checked={imigranteForm.watch("possibilidadeMudancaMorada") || false}
+                    onCheckedChange={(checked) => {
+                      imigranteForm.setValue("possibilidadeMudancaMorada", checked as boolean);
+                    }}
+                  />
+                  <Label htmlFor="possibilidadeMudancaMorada" className="text-sm font-normal">
+                    Possibilidade de mudança de morada
+                  </Label>
+                </div>
+              </div>
             </div>
 
             <div className="flex items-center space-x-2">

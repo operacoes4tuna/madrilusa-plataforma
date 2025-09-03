@@ -9,6 +9,14 @@ export interface PerfilImigrante {
   objetivoOutros?: string;
   mensagem?: string;
   aceitaNotificacoes?: boolean; // Aceita receber notificações
+  
+  // ✨ NOVOS CAMPOS - Informações Adicionais
+  genero?: Genero;
+  municipioResidencia?: string;
+  transporteProprio?: boolean;
+  possibilidadeMudancaMorada?: boolean;
+  fluenciaPortugues?: FluenciaPortugues;
+  
   createdAt: Date;
   updatedAt: Date;
 }
@@ -21,6 +29,13 @@ export interface CreatePerfilImigranteRequest {
   objetivoOutros?: string;
   mensagem?: string;
   aceitaNotificacoes?: boolean; // Aceita receber notificações
+  
+  // ✨ NOVOS CAMPOS - Informações Adicionais
+  genero?: Genero;
+  municipioResidencia?: string;
+  transporteProprio?: boolean;
+  possibilidadeMudancaMorada?: boolean;
+  fluenciaPortugues?: FluenciaPortugues;
 }
 
 export interface UpdatePerfilImigranteRequest {
@@ -30,6 +45,13 @@ export interface UpdatePerfilImigranteRequest {
   objetivoOutros?: string;
   mensagem?: string;
   aceitaNotificacoes?: boolean; // Aceita receber notificações
+  
+  // ✨ NOVOS CAMPOS - Informações Adicionais
+  genero?: Genero;
+  municipioResidencia?: string;
+  transporteProprio?: boolean;
+  possibilidadeMudancaMorada?: boolean;
+  fluenciaPortugues?: FluenciaPortugues;
 }
 
 export interface PerfilImigranteResponse {
@@ -228,4 +250,22 @@ export const OBJETIVOS_IMIGRANTE = [
   'Emprego',
   'Formação',
   'Regularização'
-] as const; 
+] as const;
+
+// ✨ NOVOS ENUMS: Campos adicionais para imigrantes
+export const GENEROS = [
+  'F',
+  'M', 
+  'Outro'
+] as const;
+
+export type Genero = typeof GENEROS[number];
+
+export const FLUENCIA_PORTUGUES = [
+  'Básica',
+  'Intermediária', 
+  'Avançada',
+  'Fluente'
+] as const;
+
+export type FluenciaPortugues = typeof FLUENCIA_PORTUGUES[number]; 

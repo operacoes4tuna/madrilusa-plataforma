@@ -51,6 +51,14 @@ export interface PerfilImigrante {
   objetivoOutros?: string; // Mantido como string para texto livre
   mensagem?: string;
   aceitaNotificacoes?: boolean; // ✨ NOVO: aceita receber notificações
+  
+  // ✨ NOVOS CAMPOS - Informações Adicionais
+  genero?: Genero;
+  municipioResidencia?: string;
+  transporteProprio?: boolean;
+  possibilidadeMudancaMorada?: boolean;
+  fluenciaPortugues?: FluenciaPortugues;
+  
   createdAt: Date;
   updatedAt: Date;
 }
@@ -63,6 +71,13 @@ export interface CreatePerfilImigranteRequest {
   objetivoOutros?: string;
   mensagem?: string;
   aceitaNotificacoes?: boolean; // ✨ NOVO: aceita receber notificações
+  
+  // ✨ NOVOS CAMPOS - Informações Adicionais
+  genero?: Genero;
+  municipioResidencia?: string;
+  transporteProprio?: boolean;
+  possibilidadeMudancaMorada?: boolean;
+  fluenciaPortugues?: FluenciaPortugues;
 }
 
 export interface UpdatePerfilImigranteRequest {
@@ -72,6 +87,13 @@ export interface UpdatePerfilImigranteRequest {
   objetivoOutros?: string;
   mensagem?: string;
   aceitaNotificacoes?: boolean; // ✨ NOVO: aceita receber notificações
+  
+  // ✨ NOVOS CAMPOS - Informações Adicionais
+  genero?: Genero;
+  municipioResidencia?: string;
+  transporteProprio?: boolean;
+  possibilidadeMudancaMorada?: boolean;
+  fluenciaPortugues?: FluenciaPortugues;
 }
 
 // ✨ FASE 2: Perfil específico de Empresa
@@ -300,6 +322,13 @@ export interface RegisterImigranteCompleteRequest {
   objetivoRegularizacao?: string;
   objetivoOutros?: string;
   mensagem?: string;
+  
+  // ✨ NOVOS CAMPOS - Informações Adicionais
+  genero?: Genero;
+  municipioResidencia?: string;
+  transporteProprio?: boolean;
+  possibilidadeMudancaMorada?: boolean;
+  fluenciaPortugues?: FluenciaPortugues;
 }
 
 // ✨ FASE 2: Registro completo de empresa
@@ -560,6 +589,24 @@ export const OBJETIVOS_IMIGRANTE = [
 ] as const;
 
 export type ObjetivoImigrante = typeof OBJETIVOS_IMIGRANTE[number];
+
+// ✨ NOVOS ENUMS: Campos adicionais para imigrantes
+export const GENEROS = [
+  'F',
+  'M', 
+  'Outro'
+] as const;
+
+export type Genero = typeof GENEROS[number];
+
+export const FLUENCIA_PORTUGUES = [
+  'Básica',
+  'Intermediária', 
+  'Avançada',
+  'Fluente'
+] as const;
+
+export type FluenciaPortugues = typeof FLUENCIA_PORTUGUES[number];
 
 // ✨ SISTEMA CONTRIBUIÇÕES: Interfaces para tipos de contribuição
 export interface TipoContribuicao {

@@ -52,6 +52,14 @@ model PerfilImigrante {
   objetivoOutros        String?  // Descrição de outros objetivos (texto livre)
   mensagem              String?  // Campo opcional adicional
   aceitaNotificacoes    Boolean  @default(false) // Aceita receber notificações de oportunidades
+  
+  // ✨ NOVOS CAMPOS - Informações Adicionais
+  genero                    String?  // 'F', 'M', 'Outro'
+  municipioResidencia       String?  // Município onde reside
+  transporteProprio         Boolean  @default(false) // Tem transporte próprio
+  possibilidadeMudancaMorada Boolean @default(false) // Pode mudar de morada
+  fluenciaPortugues         String?  // 'Básica', 'Intermediária', 'Avançada', 'Fluente'
+  
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
   

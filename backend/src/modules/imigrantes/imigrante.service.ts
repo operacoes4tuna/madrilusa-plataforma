@@ -43,7 +43,14 @@ export class ImigranteService {
         objetivos: data.objetivos ? JSON.stringify(data.objetivos) : null,
         objetivoOutros: data.objetivoOutros || null,
         mensagem: data.mensagem || null,
-        aceitaNotificacoes: data.aceitaNotificacoes || false
+        aceitaNotificacoes: data.aceitaNotificacoes || false,
+        
+        // ✨ NOVOS CAMPOS - Informações Adicionais
+        genero: data.genero || null,
+        municipioResidencia: data.municipioResidencia || null,
+        transporteProprio: data.transporteProprio || false,
+        possibilidadeMudancaMorada: data.possibilidadeMudancaMorada || false,
+        fluenciaPortugues: data.fluenciaPortugues || null
       }
     });
 
@@ -133,6 +140,23 @@ export class ImigranteService {
     }
     if (data.aceitaNotificacoes !== undefined) {
       updateData.aceitaNotificacoes = data.aceitaNotificacoes;
+    }
+    
+    // ✨ NOVOS CAMPOS - Informações Adicionais
+    if (data.genero !== undefined) {
+      updateData.genero = data.genero;
+    }
+    if (data.municipioResidencia !== undefined) {
+      updateData.municipioResidencia = data.municipioResidencia;
+    }
+    if (data.transporteProprio !== undefined) {
+      updateData.transporteProprio = data.transporteProprio;
+    }
+    if (data.possibilidadeMudancaMorada !== undefined) {
+      updateData.possibilidadeMudancaMorada = data.possibilidadeMudancaMorada;
+    }
+    if (data.fluenciaPortugues !== undefined) {
+      updateData.fluenciaPortugues = data.fluenciaPortugues;
     }
 
     // Atualizar perfil

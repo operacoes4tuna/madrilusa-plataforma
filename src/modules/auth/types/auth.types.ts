@@ -56,13 +56,19 @@ export type {
   RegisterFamiliaCompleteRequest,
   
   // ✨ NOVOS: Nacionalidades
-  Nacionalidade
+  Nacionalidade,
+  
+  // ✨ NOVOS ENUMS: Campos adicionais
+  Genero,
+  FluenciaPortugues
 } from '../../../../shared-types/api.types';
 
 // ✨ NOVO: Reexportar valores (constantes)
 export { 
   USER_CATEGORIES,
-  NACIONALIDADES 
+  NACIONALIDADES,
+  GENEROS,
+  FLUENCIA_PORTUGUES
 } from '../../../../shared-types/api.types';
 
 // Frontend-specific types (únicos do frontend)
@@ -98,6 +104,13 @@ export interface ImigranteRegistrationFormData {
   objetivoOutros?: string;
   mensagem?: string;
   aceitaNotificacoes?: boolean; // Aceita receber notificações
+  
+  // ✨ NOVOS CAMPOS - Informações Adicionais
+  genero?: string; // 'F', 'M', 'Outro'
+  municipioResidencia?: string;
+  transporteProprio?: boolean;
+  possibilidadeMudancaMorada?: boolean;
+  fluenciaPortugues?: string; // 'Básica', 'Intermediária', 'Avançada', 'Fluente'
 }
 
 export interface CategoryRegistrationState {

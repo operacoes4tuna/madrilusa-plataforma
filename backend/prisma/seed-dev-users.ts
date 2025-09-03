@@ -46,7 +46,14 @@ async function createDevUsers() {
         dataNascimento: new Date('1995-06-15'),
         objetivos: JSON.stringify(["Emprego", "Formação"]),
         mensagem: "Busco oportunidades de integração profissional em Portugal. Tenho formação em tecnologia e experiência internacional.",
-        aceitaNotificacoes: true
+        aceitaNotificacoes: true,
+        
+        // ✨ NOVOS CAMPOS - Informações Adicionais
+        genero: "M",
+        municipioResidencia: "Lisboa",
+        transporteProprio: true,
+        possibilidadeMudancaMorada: true,
+        fluenciaPortugues: "Intermediária"
       },
       contribuicoes: [
         {
