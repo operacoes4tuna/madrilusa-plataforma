@@ -1,4 +1,4 @@
-// Componente para Configurar IA do SinergIA V2
+// Componente para Configurar IA do SinergIA Madrilusa V2
 
 import React, { useState } from 'react';
 import type { IAConfiguration } from '../../../types/sinergia-config.types';

@@ -188,10 +188,10 @@ const SinergiaV2: React.FC = () => {
     return (
       <Container fluid className="main-content-container px-4">
         <Row noGutters className="page-header py-4">
-          <PageTitle 
-            title="SinergIA V2" 
-            subtitle="Sistema de matching rigoroso disponível apenas para Empresas e Imigrantes"
-          />
+                  <PageTitle 
+          title="SinergIA Madrilusa V2" 
+          subtitle="Sistema de matching rigoroso disponível apenas para Empresas e Imigrantes"
+        />
         </Row>
         <Row>
           <Col>
@@ -202,7 +202,7 @@ const SinergiaV2: React.FC = () => {
                 </i>
                 <h4 className="mt-3 text-muted">Acesso Restrito</h4>
                 <p className="text-muted">
-                  O SinergIA V2 está disponível apenas para usuários das categorias Empresa e Imigrante.
+                  O SinergIA Madrilusa V2 está disponível apenas para usuários das categorias Empresa e Imigrante.
                 </p>
               </CardBody>
             </Card>
@@ -216,7 +216,7 @@ const SinergiaV2: React.FC = () => {
     <Container fluid className="main-content-container px-4">
       <Row noGutters className="page-header py-4">
         <PageTitle 
-          title="SinergIA V2" 
+          title="SinergIA Madrilusa V2" 
           subtitle={isEmpresa ? 
             "Encontre os candidatos ideais com matching rigoroso baseado em IA" :
             "Descubra oportunidades compatíveis com seu perfil profissional"

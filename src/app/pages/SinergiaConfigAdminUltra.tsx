@@ -123,7 +123,7 @@ const SinergiaConfigAdminUltra: React.FC = () => {
     <div>
       <Row className="page-header py-4">
         <Col>
-          <h2 className="mb-0">🎛️ Configuração do SinergIA V2</h2>
+          <h2 className="mb-0">🎛️ Configuração do SinergIA Madrilusa V2</h2>
           <p className="text-muted">Sistema de matching parametrizável Empresa ↔ Imigrante</p>
         </Col>
       </Row>

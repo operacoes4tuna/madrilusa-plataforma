@@ -91,7 +91,7 @@ const SinergiaV2Admin: React.FC = () => {
       <Container fluid className="main-content-container px-4">
         <Row noGutters className="page-header py-4">
           <PageTitle 
-            title="SinergIA V2 - Admin" 
+            title="SinergIA Madrilusa V2 - Admin" 
             subtitle="Dashboard administrativo e métricas do sistema"
           />
         </Row>
@@ -116,7 +116,7 @@ const SinergiaV2Admin: React.FC = () => {
       <Container fluid className="main-content-container px-4">
         <Row noGutters className="page-header py-4">
           <PageTitle 
-            title="SinergIA V2 - Admin" 
+            title="SinergIA Madrilusa V2 - Admin" 
             subtitle="Dashboard administrativo e métricas do sistema"
           />
         </Row>
@@ -150,7 +150,7 @@ const SinergiaV2Admin: React.FC = () => {
       <Row noGutters className="page-header py-4">
         <div className="col">
           <PageTitle 
-            title="SinergIA V2 - Dashboard Admin" 
+            title="SinergIA Madrilusa V2 - Dashboard Admin" 
             subtitle="Monitoramento avançado do sistema de matching rigoroso"
           />
         </div>

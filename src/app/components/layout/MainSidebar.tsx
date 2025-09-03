@@ -183,23 +183,23 @@ const MainSidebar: React.FC = () => {
         });
       }
 
-      // ✨ NOVO: SinergIA - disponível para todas as categorias
-      if (tiposDisponiveis.length > 0) {
-        categoryMenuItems.push({
-          title: 'SinergIA Madrilusa',
-          to: '/app/sinergia',
-          iconClass: 'psychology',
-          htmlAfter: '<span class="badge badge-warning ml-auto" style="font-size: 9px;">IA</span>'
-        });
-      }
+      // ✨ OCULTO: SinergIA Madrilusa - mantido no código mas não exibido
+      // if (tiposDisponiveis.length > 0) {
+      //   categoryMenuItems.push({
+      //     title: 'SinergIA Madrilusa',
+      //     to: '/app/sinergia',
+      //     iconClass: 'psychology',
+      //     htmlAfter: '<span class="badge badge-warning ml-auto" style="font-size: 9px;">IA</span>'
+      //   });
+      // }
 
-      // ✨ NOVO: SinergIA V2 - apenas para Empresas e Imigrantes
+      // ✨ RENOMEADO: SinergIA Madrilusa V2 - apenas para Empresas e Imigrantes
       if (user?.categoria === 'EMPRESA' || user?.categoria === 'IMIGRANTE') {
         categoryMenuItems.push({
-          title: 'SinergIA V2',
+          title: 'SinergIA Madrilusa V2',
           to: '/app/sinergia-v2',
           iconClass: 'auto_awesome',
-          htmlAfter: '<span class="badge badge-primary ml-auto" style="font-size: 9px;">V2</span>'
+          htmlAfter: '<span class="badge badge-warning ml-auto" style="font-size: 9px;">IA</span>'
         });
       }
     }
@@ -249,16 +249,16 @@ const MainSidebar: React.FC = () => {
         htmlAfter: ''
       },
       {
-        title: 'SinergIA V2',
+        title: 'SinergIA Madrilusa V2',
         to: '/app/sinergia-v2-admin',
         iconClass: 'auto_awesome',
-        htmlAfter: '<span class="badge badge-primary ml-auto" style="font-size: 9px;">V2</span>'
+        htmlAfter: '<span class="badge badge-warning ml-auto" style="font-size: 9px;">IA</span>'
       },
       {
         title: 'SinergIA V2 - Tuning',
         to: '/app/sinergia-v2-tuning',
         iconClass: 'tune',
-        htmlAfter: '<span class="badge badge-warning ml-auto" style="font-size: 9px;">ML</span>'
+        htmlAfter: '<span class="badge badge-warning ml-auto" style="font-size: 9px;">IA</span>'
       },
       {
         title: 'SinergIA - Configuração',
