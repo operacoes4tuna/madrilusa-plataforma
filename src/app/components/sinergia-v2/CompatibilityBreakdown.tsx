@@ -6,17 +6,19 @@ import {
   Progress,
   Badge
 } from 'shards-react';
-import type { MatchingCriteriaFrontend } from '../../../types/sinergia-v2.types';
+import type { MatchingCriteriaFrontend, RigorousMatchFrontend } from '../../../types/sinergia-v2.types';
 
 interface CompatibilityBreakdownProps {
   breakdown: MatchingCriteriaFrontend;
   scoreTotal: number;
+  match?: RigorousMatchFrontend;
   className?: string;
 }
 
 const CompatibilityBreakdown: React.FC<CompatibilityBreakdownProps> = ({
   breakdown,
   scoreTotal,
+  match,
   className = ''
 }) => {
   
@@ -34,6 +36,34 @@ const CompatibilityBreakdown: React.FC<CompatibilityBreakdownProps> = ({
     return 'cancel';
   };
 
+  // Funções auxiliares para formatar valores de comparação
+  const formatGenero = (value?: string | null): string => {
+    if (!value) return 'Não informado';
+    if (value === 'M') return 'Masculino';
+    if (value === 'F') return 'Feminino';
+    if (value === 'INDIFERENTE') return 'Indiferente';
+    return value;
+  };
+
+  const formatTransporte = (value?: string | boolean | null): string => {
+    if (value === undefined || value === null) return 'Não informado';
+    if (typeof value === 'boolean') return value ? 'Sim' : 'Não';
+    if (value === 'S') return 'Sim';
+    if (value === 'N') return 'Não';
+    return 'Não informado';
+  };
+
+  const formatFluencia = (value?: string | null): string => {
+    if (!value) return 'Não informado';
+    if (value === 'S') return 'Sim';
+    if (value === 'N') return 'Não';
+    if (value === 'BASICO') return 'Básico';
+    if (value === 'INTERMEDIARIO') return 'Intermediário';
+    if (value === 'FLUENTE') return 'Fluente';
+    if (value === 'NATIVO') return 'Nativo';
+    return value;
+  };
+
   const criteriaData = [
     {
       title: 'Critérios Demográficos',
@@ -45,7 +75,9 @@ const CompatibilityBreakdown: React.FC<CompatibilityBreakdownProps> = ({
           match: breakdown.genero.match,
           required: breakdown.genero.required,
           details: breakdown.genero.details,
-          weight: '10%'
+          weight: '10%',
+          exigido: formatGenero(match?.oportunidade?.genero),
+          obtido: formatGenero(match?.imigrante?.genero)
         },
         {
           name: 'Município',
@@ -53,7 +85,9 @@ const CompatibilityBreakdown: React.FC<CompatibilityBreakdownProps> = ({
           match: breakdown.municipio.match,
           required: false,
           details: breakdown.municipio.details,
-          weight: '15%'
+          weight: '15%',
+          exigido: match?.oportunidade?.municipioResidencia || 'Não especificado',
+          obtido: match?.imigrante?.municipioResidencia || 'Não informado'
         },
         {
           name: 'Idade',
@@ -61,7 +95,9 @@ const CompatibilityBreakdown: React.FC<CompatibilityBreakdownProps> = ({
           match: breakdown.idade.match,
           required: false,
           details: breakdown.idade.details,
-          weight: '10%'
+          weight: '10%',
+          exigido: match?.oportunidade?.idade || 'Não especificado',
+          obtido: match?.imigrante?.idade ? `${match.imigrante.idade} anos` : 'Não informado'
         }
       ]
     },
@@ -75,7 +111,9 @@ const CompatibilityBreakdown: React.FC<CompatibilityBreakdownProps> = ({
           match: breakdown.transporteProprio.match,
           required: breakdown.transporteProprio.required,
           details: breakdown.transporteProprio.details,
-          weight: '10%'
+          weight: '10%',
+          exigido: formatTransporte(match?.oportunidade?.transporteProprio),
+          obtido: formatTransporte(match?.imigrante?.transporteProprio)
         },
         {
           name: 'Fluência Português',
@@ -83,7 +121,9 @@ const CompatibilityBreakdown: React.FC<CompatibilityBreakdownProps> = ({
           match: breakdown.fluenciaPortugues.match,
           required: false,
           details: breakdown.fluenciaPortugues.details,
-          weight: '15%'
+          weight: '15%',
+          exigido: formatFluencia(match?.oportunidade?.fluenciaPortugues),
+          obtido: formatFluencia(match?.imigrante?.fluenciaPortugues)
         }
       ]
     },
@@ -224,6 +264,30 @@ const CompatibilityBreakdown: React.FC<CompatibilityBreakdownProps> = ({
                 />
                 
                 <small className="text-muted d-block">{item.details}</small>
+                
+                {/* Comparação Visual - Exigido vs Obtido */}
+                {match && item.exigido && item.obtido && (
+                  <div className="mt-2 p-2 bg-light rounded">
+                    <div className="row">
+                      <div className="col-6">
+                        <small className="text-muted d-block">
+                          <strong>Exigido:</strong>
+                        </small>
+                        <small className={item.match ? 'text-success' : 'text-danger'}>
+                          {item.exigido}
+                        </small>
+                      </div>
+                      <div className="col-6">
+                        <small className="text-muted d-block">
+                          <strong>Candidato:</strong>
+                        </small>
+                        <small className={item.match ? 'text-success' : 'text-danger'}>
+                          {item.obtido}
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 
                 {item.extra && (
                   <small className="text-info d-block mt-1">

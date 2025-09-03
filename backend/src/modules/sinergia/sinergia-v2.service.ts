@@ -366,45 +366,55 @@ export class SinergiaV2Service {
       matchedItems,
       unmatchedItems,
       penalizacoes,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
       
-      // DADOS COMPLETOS PARA DESENVOLVIMENTO/TESTES - COMENTADO TEMPORARIAMENTE
-      // oportunidade: {
-      //   titulo: oportunidade.titulo,
-      //   nomeCargo: oportunidade.nomeCargo,
-      //   nomeProfissao: oportunidade.nomeProfissao,
-      //   descricaoCargo: oportunidade.descricaoCargo,
-      //   empresa: (oportunidade as any).user?.nomeCompleto || 'Empresa',
-      //   municipioResidencia: oportunidade.municipioResidencia,
-      //   genero: oportunidade.genero,
-      //   idade: oportunidade.idade,
-      //   transporteProprio: oportunidade.transporteProprio,
-      //   fluenciaPortugues: oportunidade.fluenciaPortugues,
-      //   denominacoes: oportunidade.denominacoes,
-      //   experienciasAceitas: oportunidade.experienciasAceitas,
-      //   areasFormacao: oportunidade.areasFormacao,
-      //   habilidades: oportunidade.habilidades,
-      //   caracteristicas: oportunidade.caracteristicas,
-      //   idiomasPreferenciais: oportunidade.idiomasPreferenciais,
-      //   nivelEscolaridade: oportunidade.nivelEscolaridade
-      // },
-      // 
-      // imigrante: {
-      //   nomeCompleto: imigrante.nomeCompleto,
-      //   email: imigrante.email,
-      //   municipioResidencia: imigrante.municipioResidencia,
-      //   genero: imigrante.genero,
-      //   idade: imigrante.idade,
-      //   transporteProprio: imigrante.transporteProprio,
-      //   fluenciaPortugues: imigrante.fluenciaPortugues,
-      //   objetivos: imigrante.objetivos,
-      //   experiencias: imigrante.experiencias,
-      //   formacoes: imigrante.formacoes,
-      //   idiomas: imigrante.idiomas,
-      //   habilidades: imigrante.habilidades,
-      //   contribuicoesTexto: imigrante.contribuicoesTexto,
-      //   interesses: imigrante.interesses
-      // }
+      // DADOS COMPLETOS PARA MELHOR VISUALIZAÇÃO
+      oportunidade: {
+        titulo: oportunidade.titulo,
+        nomeCargo: oportunidade.nomeCargo,
+        nomeProfissao: oportunidade.nomeProfissao,
+        descricaoCargo: oportunidade.descricaoCargo,
+        empresa: (oportunidade as any).user?.nomeCompleto || 'Empresa',
+        municipioResidencia: oportunidade.municipioResidencia,
+        genero: oportunidade.genero,
+        idade: oportunidade.idade,
+        transporteProprio: oportunidade.transporteProprio,
+        fluenciaPortugues: oportunidade.fluenciaPortugues,
+        denominacoes: oportunidade.denominacoes,
+        experienciasAceitas: oportunidade.experienciasAceitas,
+        areasFormacao: oportunidade.areasFormacao,
+        habilidades: oportunidade.habilidades,
+        caracteristicas: oportunidade.caracteristicas,
+        idiomasPreferenciais: oportunidade.idiomasPreferenciais,
+        nivelEscolaridade: oportunidade.nivelEscolaridade
+      },
+      
+      imigrante: {
+        nomeCompleto: imigrante.nomeCompleto,
+        email: imigrante.email,
+        municipioResidencia: imigrante.municipioResidencia,
+        genero: imigrante.genero,
+        idade: imigrante.idade,
+        transporteProprio: imigrante.transporteProprio,
+        fluenciaPortugues: imigrante.fluenciaPortugues,
+        objetivos: imigrante.objetivos,
+        experiencias: imigrante.experiencias,
+        formacoes: imigrante.formacoes,
+        idiomas: imigrante.idiomas,
+        habilidades: imigrante.habilidades,
+        contribuicoesTexto: imigrante.contribuicoesTexto,
+        interesses: imigrante.interesses
+      },
+      
+      // DADOS ESTRUTURADOS PARA COMPARAÇÃO VISUAL
+      dadosEstruturados: {
+        empresa: (oportunidade as any).user?.nomeCompleto || 'Empresa',
+        municipioResidencia: oportunidade.municipioResidencia,
+        genero: oportunidade.genero,
+        idade: oportunidade.idade,
+        transporteProprio: oportunidade.transporteProprio,
+        fluenciaPortugues: oportunidade.fluenciaPortugues
+      }
     };
   }
 

@@ -134,6 +134,16 @@ export interface RigorousMatchFrontend {
     contribuicoesTexto: string[];
     interesses: string[];
   };
+  
+  // Dados estruturados para comparação visual
+  dadosEstruturados?: {
+    empresa: string;
+    municipioResidencia?: string | null;
+    genero: string | null;
+    idade?: string | null;
+    transporteProprio: string | null;  
+    fluenciaPortugues: string | null;
+  };
 }
 
 export interface MatchAnalysisOptions {

@@ -88,6 +88,71 @@ export interface RigorousMatch {
   unmatchedItems: string[];
   penalizacoes: string[];
   createdAt: string;
+  
+  // Dados completos para visualização
+  oportunidade?: {
+    titulo: string;
+    nomeCargo: string;
+    nomeProfissao?: string;
+    descricaoCargo?: string;
+    empresa: string;
+    municipioResidencia?: string | null;
+    genero: string | null;
+    idade?: string | null;
+    transporteProprio: string | null;
+    fluenciaPortugues: string | null;
+    denominacoes: string[];
+    experienciasAceitas: string[];
+    areasFormacao: string[];
+    habilidades: string[];
+    caracteristicas: string[];
+    idiomasPreferenciais: { idioma: string; nivel: string; }[];
+    nivelEscolaridade?: string;
+  };
+  
+  imigrante?: {
+    nomeCompleto: string;
+    email: string;
+    municipioResidencia?: string;
+    genero?: string;
+    idade?: number;
+    transporteProprio?: boolean;
+    fluenciaPortugues?: string;
+    objetivos: string[];
+    experiencias: Array<{
+      cargo: string;
+      empresa: string;
+      descricao: string;
+      dataInicio: Date;
+      dataFim?: Date;
+      atual: boolean;
+    }>;
+    formacoes: Array<{
+      curso: string;
+      instituicao: string;
+      nivel: string;
+      status: string;
+      dataInicio: Date;
+      dataFim?: Date;
+    }>;
+    idiomas: Array<{
+      idioma: string;
+      nivel: string;
+    }>;
+    habilidades: string[];
+    contribuicoesTexto: string[];
+    interesses: string[];
+  };
+  
+  // Dados estruturados para comparação visual
+  dadosEstruturados?: {
+    empresa: string;
+    municipioResidencia?: string | null;
+    genero: string | null;
+    idade?: string | null;
+    transporteProprio: string | null;
+    fluenciaPortugues: string | null;
+  };
 }
 
 export interface ImigranteCompleteProfile {

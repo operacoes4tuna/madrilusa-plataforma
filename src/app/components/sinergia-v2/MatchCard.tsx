@@ -90,22 +90,22 @@ const MatchCard: React.FC<MatchCardProps> = ({
                     {match.imigrante?.email}
                   </small>
                   {/* NOVOS DADOS COMPLETOS */}
-                  {(match.imigrante as any)?.genero && (
+                  {match.imigrante?.genero && (
                     <small className="text-muted d-block">
                       <i className="material-icons mr-1" style={{ fontSize: '14px' }}>person</i>
-                      {(match.imigrante as any).genero}, {(match.imigrante as any).idade} anos
+                      {match.imigrante.genero}, {match.imigrante.idade} anos
                     </small>
                   )}
-                  {(match.imigrante as any)?.fluenciaPortugues && (
+                  {match.imigrante?.fluenciaPortugues && (
                     <small className="text-muted d-block">
                       <i className="material-icons mr-1" style={{ fontSize: '14px' }}>language</i>
-                      Português: {(match.imigrante as any).fluenciaPortugues}
+                      Português: {match.imigrante.fluenciaPortugues}
                     </small>
                   )}
-                  {(match.imigrante as any)?.transporteProprio !== undefined && (
+                  {match.imigrante?.transporteProprio !== undefined && (
                     <small className="text-muted d-block">
                       <i className="material-icons mr-1" style={{ fontSize: '14px' }}>directions_car</i>
-                      Transporte: {(match.imigrante as any).transporteProprio ? 'Próprio' : 'Não tem'}
+                      Transporte: {match.imigrante.transporteProprio ? 'Próprio' : 'Não tem'}
                     </small>
                   )}
                 </div>
@@ -121,28 +121,28 @@ const MatchCard: React.FC<MatchCardProps> = ({
                   </small>
                   <small className="text-muted d-block">
                     <i className="material-icons mr-1" style={{ fontSize: '14px' }}>business</i>
-                    {match.oportunidade?.empresa}
+                    {match.oportunidade?.empresa || match.dadosEstruturados?.empresa || 'Empresa não informada'}
                   </small>
                   {/* NOVOS DADOS COMPLETOS DA OPORTUNIDADE */}
-                  {(match.dadosEstruturados as any)?.municipioResidencia && (
+                  {match.dadosEstruturados?.municipioResidencia && (
                     <small className="text-muted d-block">
                       <i className="material-icons mr-1" style={{ fontSize: '14px' }}>location_city</i>
-                      Local: {(match.dadosEstruturados as any).municipioResidencia}
+                      Local: {match.dadosEstruturados.municipioResidencia}
                     </small>
                   )}
-                  {(match.dadosEstruturados as any)?.genero && (match.dadosEstruturados as any).genero !== 'INDIFERENTE' && (
+                  {match.dadosEstruturados?.genero && match.dadosEstruturados.genero !== 'INDIFERENTE' && (
                     <small className="text-muted d-block">
                       <i className="material-icons mr-1" style={{ fontSize: '14px' }}>person_outline</i>
-                      Requisito: {(match.dadosEstruturados as any).genero === 'F' ? 'Feminino' : 'Masculino'}
+                      Requisito: {match.dadosEstruturados.genero === 'F' ? 'Feminino' : 'Masculino'}
                     </small>
                   )}
-                  {(match.dadosEstruturados as any)?.transporteProprio === 'S' && (
+                  {match.dadosEstruturados?.transporteProprio === 'S' && (
                     <small className="text-muted d-block">
                       <i className="material-icons mr-1" style={{ fontSize: '14px' }}>directions_car</i>
                       Requisito: Transporte próprio obrigatório
                     </small>
                   )}
-                  {(match.dadosEstruturados as any)?.fluenciaPortugues === 'S' && (
+                  {match.dadosEstruturados?.fluenciaPortugues === 'S' && (
                     <small className="text-muted d-block">
                       <i className="material-icons mr-1" style={{ fontSize: '14px' }}>language</i>
                       Requisito: Português fluente obrigatório
@@ -332,6 +332,7 @@ const MatchCard: React.FC<MatchCardProps> = ({
           <CompatibilityBreakdown 
             breakdown={match.breakdown}
             scoreTotal={match.scoreTotal}
+            match={match}
           />
         </ModalBody>
         <ModalFooter>
