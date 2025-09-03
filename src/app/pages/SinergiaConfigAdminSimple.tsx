@@ -38,12 +38,39 @@ const SinergiaConfigAdminSimple: React.FC = () => {
     custoMaximoPorAnalise: 0.10
   });
 
+  const [eliminatorios, setEliminatorios] = useState({
+    genero: {
+      ativo: false,
+      condicao: 'especifico',
+      valores: []
+    },
+    transporteProprio: {
+      ativo: true,
+      eliminarSemTransporte: true
+    },
+    fluenciaPortugues: {
+      ativo: true,
+      nivelMinimo: 'basico',
+      eliminarAbaixoNivel: true
+    }
+  });
+
   const handlePesoChange = (key: string, value: number) => {
     setPesos(prev => ({ ...prev, [key]: value }));
   };
 
   const handleIAConfigChange = (key: string, value: any) => {
     setIaConfig(prev => ({ ...prev, [key]: value }));
+  };
+
+  const handleEliminatorioChange = (criterio: string, field: string, value: any) => {
+    setEliminatorios(prev => ({
+      ...prev,
+      [criterio]: {
+        ...prev[criterio],
+        [field]: value
+      }
+    }));
   };
 
   const calcularSomaPesos = () => {
@@ -101,6 +128,12 @@ const SinergiaConfigAdminSimple: React.FC = () => {
               onClick={() => setActiveTab('ia')}
             >
               🤖 Configuração de IA
+            </button>
+            <button
+              className={`nav-link ${activeTab === 'eliminatorios' ? 'active' : ''}`}
+              onClick={() => setActiveTab('eliminatorios')}
+            >
+              🚫 Critérios Eliminatórios
             </button>
           </div>
         </Col>
@@ -337,11 +370,222 @@ const SinergiaConfigAdminSimple: React.FC = () => {
         </Card>
       )}
 
+      {/* Tab: Critérios Eliminatórios */}
+      {activeTab === 'eliminatorios' && (
+        <Card>
+          <CardHeader>🚫 Critérios Eliminatórios</CardHeader>
+          <CardBody>
+            <Alert theme="warning" className="mb-4">
+              <strong>⚠️ Atenção:</strong> Critérios eliminatórios excluem candidatos automaticamente, 
+              independente da pontuação em outros critérios.
+            </Alert>
+
+            {/* Critério: Gênero */}
+            <div className="mb-4 p-3 border rounded">
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h6 className="mb-0">👤 Gênero</h6>
+                <Badge theme={eliminatorios.genero.ativo ? 'danger' : 'secondary'}>
+                  {eliminatorios.genero.ativo ? 'ATIVO' : 'INATIVO'}
+                </Badge>
+              </div>
+              
+              <FormGroup>
+                <label>Status do Critério</label>
+                <FormInput
+                  type="select"
+                  value={eliminatorios.genero.ativo ? 'true' : 'false'}
+                  onChange={(e) => handleEliminatorioChange('genero', 'ativo', e.target.value === 'true')}
+                >
+                  <option value="false">Inativo - Não elimina por gênero</option>
+                  <option value="true">Ativo - Elimina por gênero</option>
+                </FormInput>
+              </FormGroup>
+
+              {eliminatorios.genero.ativo && (
+                <FormGroup>
+                  <label>Condição de Eliminação</label>
+                  <FormInput
+                    type="select"
+                    value={eliminatorios.genero.condicao}
+                    onChange={(e) => handleEliminatorioChange('genero', 'condicao', e.target.value)}
+                  >
+                    <option value="especifico">Eliminar se não for gênero específico da vaga</option>
+                    <option value="obrigatorio">Eliminar se gênero não foi informado</option>
+                    <option value="sempre">Sempre eliminar se não corresponder exatamente</option>
+                  </FormInput>
+                  <small className="form-text text-muted">
+                    {eliminatorios.genero.condicao === 'especifico' && 'Elimina candidatos cujo gênero não corresponde ao exigido pela vaga'}
+                    {eliminatorios.genero.condicao === 'obrigatorio' && 'Elimina candidatos que não informaram o gênero'}
+                    {eliminatorios.genero.condicao === 'sempre' && 'Eliminação rigorosa - deve corresponder exatamente'}
+                  </small>
+                </FormGroup>
+              )}
+            </div>
+
+            {/* Critério: Transporte Próprio */}
+            <div className="mb-4 p-3 border rounded">
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h6 className="mb-0">🚗 Transporte Próprio</h6>
+                <Badge theme={eliminatorios.transporteProprio.ativo ? 'danger' : 'secondary'}>
+                  {eliminatorios.transporteProprio.ativo ? 'ATIVO' : 'INATIVO'}
+                </Badge>
+              </div>
+              
+              <FormGroup>
+                <label>Status do Critério</label>
+                <FormInput
+                  type="select"
+                  value={eliminatorios.transporteProprio.ativo ? 'true' : 'false'}
+                  onChange={(e) => handleEliminatorioChange('transporteProprio', 'ativo', e.target.value === 'true')}
+                >
+                  <option value="false">Inativo - Não elimina por transporte</option>
+                  <option value="true">Ativo - Elimina por falta de transporte</option>
+                </FormInput>
+              </FormGroup>
+
+              {eliminatorios.transporteProprio.ativo && (
+                <div>
+                  <FormGroup>
+                    <label>Configuração de Eliminação</label>
+                    <FormInput
+                      type="select"
+                      value={eliminatorios.transporteProprio.eliminarSemTransporte ? 'true' : 'false'}
+                      onChange={(e) => handleEliminatorioChange('transporteProprio', 'eliminarSemTransporte', e.target.value === 'true')}
+                    >
+                      <option value="false">Não eliminar - Apenas reduzir pontuação</option>
+                      <option value="true">Eliminar candidatos sem transporte quando vaga exige</option>
+                    </FormInput>
+                  </FormGroup>
+                  
+                  <Alert theme="info" className="mt-2">
+                    <small>
+                      <strong>Como funciona:</strong> Quando uma oportunidade de trabalho marca "transporte próprio obrigatório", 
+                      candidatos sem transporte serão automaticamente eliminados.
+                    </small>
+                  </Alert>
+                </div>
+              )}
+            </div>
+
+            {/* Critério: Fluência em Português */}
+            <div className="mb-4 p-3 border rounded">
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h6 className="mb-0">🇵🇹 Fluência em Português</h6>
+                <Badge theme={eliminatorios.fluenciaPortugues.ativo ? 'danger' : 'secondary'}>
+                  {eliminatorios.fluenciaPortugues.ativo ? 'ATIVO' : 'INATIVO'}
+                </Badge>
+              </div>
+              
+              <FormGroup>
+                <label>Status do Critério</label>
+                <FormInput
+                  type="select"
+                  value={eliminatorios.fluenciaPortugues.ativo ? 'true' : 'false'}
+                  onChange={(e) => handleEliminatorioChange('fluenciaPortugues', 'ativo', e.target.value === 'true')}
+                >
+                  <option value="false">Inativo - Não elimina por fluência</option>
+                  <option value="true">Ativo - Elimina por fluência insuficiente</option>
+                </FormInput>
+              </FormGroup>
+
+              {eliminatorios.fluenciaPortugues.ativo && (
+                <div>
+                  <FormGroup>
+                    <label>Nível Mínimo Aceitável</label>
+                    <FormInput
+                      type="select"
+                      value={eliminatorios.fluenciaPortugues.nivelMinimo}
+                      onChange={(e) => handleEliminatorioChange('fluenciaPortugues', 'nivelMinimo', e.target.value)}
+                    >
+                      <option value="nenhum">Nenhum - Aceita todos os níveis</option>
+                      <option value="basico">Básico - Elimina quem não tem pelo menos básico</option>
+                      <option value="intermediario">Intermediário - Elimina abaixo de intermediário</option>
+                      <option value="avancado">Avançado - Elimina abaixo de avançado</option>
+                      <option value="fluente">Fluente - Só aceita fluentes</option>
+                    </FormInput>
+                  </FormGroup>
+
+                  <FormGroup>
+                    <label>Ação para Candidatos Abaixo do Nível</label>
+                    <FormInput
+                      type="select"
+                      value={eliminatorios.fluenciaPortugues.eliminarAbaixoNivel ? 'true' : 'false'}
+                      onChange={(e) => handleEliminatorioChange('fluenciaPortugues', 'eliminarAbaixoNivel', e.target.value === 'true')}
+                    >
+                      <option value="false">Apenas reduzir pontuação - Não eliminar</option>
+                      <option value="true">Eliminar automaticamente abaixo do nível mínimo</option>
+                    </FormInput>
+                  </FormGroup>
+
+                  <Alert theme="info" className="mt-2">
+                    <small>
+                      <strong>Nível atual selecionado:</strong> {eliminatorios.fluenciaPortugues.nivelMinimo.toUpperCase()}<br />
+                      <strong>Eliminará:</strong> Candidatos com fluência abaixo de "{eliminatorios.fluenciaPortugues.nivelMinimo}"
+                    </small>
+                  </Alert>
+                </div>
+              )}
+            </div>
+
+            {/* Resumo dos Critérios Ativos */}
+            <div className="mt-4 p-3 bg-light rounded">
+              <h6>📊 Resumo dos Critérios Eliminatórios</h6>
+              <div className="row">
+                <div className="col-md-4">
+                  <div className="text-center">
+                    <Badge theme={eliminatorios.genero.ativo ? 'danger' : 'success'} className="mb-2">
+                      Gênero: {eliminatorios.genero.ativo ? 'ATIVO' : 'INATIVO'}
+                    </Badge>
+                    {eliminatorios.genero.ativo && (
+                      <div className="small text-muted">
+                        Condição: {eliminatorios.genero.condicao}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="text-center">
+                    <Badge theme={eliminatorios.transporteProprio.ativo ? 'danger' : 'success'} className="mb-2">
+                      Transporte: {eliminatorios.transporteProprio.ativo ? 'ATIVO' : 'INATIVO'}
+                    </Badge>
+                    {eliminatorios.transporteProprio.ativo && (
+                      <div className="small text-muted">
+                        Elimina sem transporte
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="text-center">
+                    <Badge theme={eliminatorios.fluenciaPortugues.ativo ? 'danger' : 'success'} className="mb-2">
+                      Fluência: {eliminatorios.fluenciaPortugues.ativo ? 'ATIVO' : 'INATIVO'}
+                    </Badge>
+                    {eliminatorios.fluenciaPortugues.ativo && (
+                      <div className="small text-muted">
+                        Mín: {eliminatorios.fluenciaPortugues.nivelMinimo}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+              
+              {(eliminatorios.genero.ativo || eliminatorios.transporteProprio.ativo || eliminatorios.fluenciaPortugues.ativo) && (
+                <Alert theme="warning" className="mt-3 mb-0">
+                  <strong>⚠️ Cuidado:</strong> Critérios eliminatórios podem reduzir drasticamente o número de matches. 
+                  Use com moderação para não excluir candidatos qualificados.
+                </Alert>
+              )}
+            </div>
+          </CardBody>
+        </Card>
+      )}
+
       <Alert theme="success" className="mt-4">
         <strong>✅ Painel Administrativo Funcionando!</strong><br />
         <small>
           • Edição de pesos em tempo real<br />
           • Configuração de IA parametrizável<br />
+          • Critérios eliminatórios configuráveis<br />
           • Validação automática (soma = 100%)<br />
           • Interface totalmente funcional
         </small>
