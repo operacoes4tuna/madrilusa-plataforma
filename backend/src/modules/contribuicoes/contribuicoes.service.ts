@@ -10,6 +10,7 @@ import {
 } from './contribuicoes.types';
 import type { ContribuicaoUnificada } from '../../../shared-types/api.types';
 import { dadosProfissionaisService } from '../dados-profissionais/dados-profissionais.service';
+import { oportunidadesTrabalhoService } from '../oportunidades-trabalho/oportunidades-trabalho.service';
 
 // Helper para padronizar tags no retorno
 function formatTagsForResponse(contribuicao: any) {
@@ -291,15 +292,19 @@ export const contribuicoesService = {
       // Buscar contribuições normais
       const contribuicoesNormais = await this.getContribuicoesByUser(userId);
       
-      // Buscar dados profissionais (apenas para imigrantes)
+      // Buscar dados específicos por categoria
       const user = await prisma.user.findUnique({
         where: { id: userId },
         select: { categoria: true }
       });
 
       let dadosProfissionais: any[] = [];
+      let oportunidadesTrabalho: any[] = [];
+      
       if (user?.categoria === 'IMIGRANTE') {
         dadosProfissionais = await dadosProfissionaisService.getByUser(userId);
+      } else if (user?.categoria === 'EMPRESA') {
+        oportunidadesTrabalho = await oportunidadesTrabalhoService.getByEmpresa(userId);
       }
 
       // Converter contribuições normais para formato unificado
@@ -330,8 +335,22 @@ export const contribuicoesService = {
         user: dado.user
       }));
 
+      // Converter oportunidades de trabalho para formato unificado
+      const oportunidadesUnificadas: ContribuicaoUnificada[] = oportunidadesTrabalho.map(oportunidade => ({
+        id: oportunidade.id,
+        tipo: 'oportunidade_trabalho' as const,
+        titulo: oportunidade.titulo,
+        descricao: this.generateDescricaoFromOportunidade(oportunidade),
+        tags: this.generateTagsFromOportunidade(oportunidade),
+        createdAt: oportunidade.createdAt,
+        updatedAt: oportunidade.updatedAt,
+        userId: oportunidade.userId,
+        dadosEstruturados: oportunidade,
+        user: oportunidade.user
+      }));
+
       // Unificar e ordenar por data de criação (mais recentes primeiro)
-      const todasContribuicoes = [...contribuicoesUnificadas, ...dadosProfissionaisUnificados];
+      const todasContribuicoes = [...contribuicoesUnificadas, ...dadosProfissionaisUnificados, ...oportunidadesUnificadas];
       todasContribuicoes.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
       return todasContribuicoes;
@@ -375,6 +394,47 @@ export const contribuicoesService = {
       case 'idioma':
         tags.push(dados.idioma, dados.nivel);
         break;
+    }
+    
+    return tags.filter(tag => tag && tag.trim() !== '');
+  },
+
+  // Helper para gerar descrição de oportunidades de trabalho
+  generateDescricaoFromOportunidade(oportunidade: any): string {
+    const criterios = [];
+    
+    if (oportunidade.genero && oportunidade.genero !== 'INDIFERENTE') {
+      criterios.push(`Género: ${oportunidade.genero}`);
+    }
+    if (oportunidade.idade) {
+      criterios.push(`Idade: ${oportunidade.idade}`);
+    }
+    if (oportunidade.municipioResidencia) {
+      criterios.push(`Local: ${oportunidade.municipioResidencia}`);
+    }
+    if (oportunidade.nivelEscolaridade && oportunidade.nivelEscolaridade !== 'Indiferente') {
+      criterios.push(`Escolaridade: ${oportunidade.nivelEscolaridade}`);
+    }
+
+    const descricaoBase = oportunidade.descricaoCargo || `Oportunidade para ${oportunidade.nomeCargo}`;
+    const criteriosTexto = criterios.length > 0 ? ` | ${criterios.join(' • ')}` : '';
+    
+    return `${descricaoBase}${criteriosTexto}`;
+  },
+
+  // Helper para gerar tags de oportunidades de trabalho
+  generateTagsFromOportunidade(oportunidade: any): string[] {
+    const tags: string[] = ['oportunidade_trabalho', oportunidade.nomeCargo];
+    
+    if (oportunidade.nomeProfissao) tags.push(oportunidade.nomeProfissao);
+    if (oportunidade.municipioResidencia) tags.push(oportunidade.municipioResidencia);
+    if (oportunidade.nivelEscolaridade && oportunidade.nivelEscolaridade !== 'Indiferente') {
+      tags.push(oportunidade.nivelEscolaridade);
+    }
+    
+    // Adicionar habilidades se existirem
+    if (oportunidade.habilidades && oportunidade.habilidades.length > 0) {
+      tags.push(...oportunidade.habilidades.slice(0, 3)); // Primeiras 3 habilidades
     }
     
     return tags.filter(tag => tag && tag.trim() !== '');

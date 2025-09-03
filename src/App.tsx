@@ -26,6 +26,7 @@ import DadosProfissionaisAdmin from "./app/pages/DadosProfissionaisAdmin"; // �
 import ExperienciasProfissionais from "./app/pages/ExperienciasProfissionais"; // ✨ DADOS PROFISSIONAIS
 import FormacaoAcademica from "./app/pages/FormacaoAcademica"; // ✨ DADOS PROFISSIONAIS
 import IdiomasConhecidos from "./app/pages/IdiomasConhecidos"; // ✨ DADOS PROFISSIONAIS
+import OportunidadesTrabalho from "./app/pages/OportunidadesTrabalho"; // ✨ OPORTUNIDADES TRABALHO
 
 const queryClient = new QueryClient();
 
@@ -64,6 +65,7 @@ const App = () => (
             <Route path="dados-profissionais/experiencias" element={<ExperienciasProfissionais />} />
             <Route path="dados-profissionais/formacao" element={<FormacaoAcademica />} />
             <Route path="dados-profissionais/idiomas" element={<IdiomasConhecidos />} />
+            <Route path="oportunidades-trabalho" element={<OportunidadesTrabalho />} />
           </Route>
           
           {/* 404 */}

@@ -608,6 +608,132 @@ export const FLUENCIA_PORTUGUES = [
 
 export type FluenciaPortugues = typeof FLUENCIA_PORTUGUES[number];
 
+// ✨ OPORTUNIDADES DE TRABALHO: Tipos para oportunidades de empresas
+export const OPCOES_GENERO_OPORTUNIDADE = [
+  'F',
+  'M', 
+  'INDIFERENTE'
+] as const;
+
+export type GeneroOportunidade = typeof OPCOES_GENERO_OPORTUNIDADE[number];
+
+export const OPCOES_BINARIAS_OPORTUNIDADE = [
+  'S',
+  'N',
+  'INDIFERENTE'
+] as const;
+
+export type OpcaoBinariaOportunidade = typeof OPCOES_BINARIAS_OPORTUNIDADE[number];
+
+export const NIVEIS_ESCOLARIDADE_OPORTUNIDADE = [
+  'Ensino Básico',
+  'Ensino Secundário',
+  'Ensino Profissional', 
+  'Licenciatura',
+  'Mestrado',
+  'Doutoramento',
+  'Indiferente'
+] as const;
+
+export type NivelEscolaridadeOportunidade = typeof NIVEIS_ESCOLARIDADE_OPORTUNIDADE[number];
+
+// Interfaces para estruturas de dados JSON
+export interface IdiomaOportunidade {
+  idioma: string;
+  nivel: NivelIdioma; // Reutilizar dos dados profissionais
+}
+
+// Interface principal da oportunidade
+export interface OportunidadeTrabalho {
+  id: string;
+  userId: string;
+  titulo: string;
+  ativo: boolean;
+  
+  // Critérios básicos
+  genero?: GeneroOportunidade;
+  idade?: string;
+  municipioResidencia?: string;
+  transporteProprio?: OpcaoBinariaOportunidade;
+  fluenciaPortugues?: OpcaoBinariaOportunidade;
+  
+  // Cargo/Profissão
+  nomeCargo: string;
+  nomeProfissao?: string;
+  descricaoCargo?: string;
+  denominacoes?: string[]; // Array processado do JSON
+  
+  // Experiências e formação
+  experienciasAceitas?: string[];
+  nivelEscolaridade?: NivelEscolaridadeOportunidade;
+  areasFormacao?: string[];
+  
+  // Idiomas, habilidades e características
+  idiomasPreferenciais?: IdiomaOportunidade[];
+  habilidades?: string[];
+  caracteristicas?: string[];
+  
+  // Metadados
+  visualizacoes: number;
+  createdAt: Date;
+  updatedAt: Date;
+  
+  // Relações
+  user?: User;
+}
+
+// Requests para API
+export interface CreateOportunidadeTrabalhoRequest {
+  titulo: string;
+  
+  // Critérios básicos (opcionais)
+  genero?: GeneroOportunidade;
+  idade?: string;
+  municipioResidencia?: string;
+  transporteProprio?: OpcaoBinariaOportunidade;
+  fluenciaPortugues?: OpcaoBinariaOportunidade;
+  
+  // Cargo/Profissão
+  nomeCargo: string;
+  nomeProfissao?: string;
+  descricaoCargo?: string;
+  denominacoes?: string[];
+  
+  // Arrays de dados
+  experienciasAceitas?: string[];
+  nivelEscolaridade?: NivelEscolaridadeOportunidade;
+  areasFormacao?: string[];
+  idiomasPreferenciais?: IdiomaOportunidade[];
+  habilidades?: string[];
+  caracteristicas?: string[];
+}
+
+export interface UpdateOportunidadeTrabalhoRequest {
+  titulo?: string;
+  ativo?: boolean;
+  
+  // Critérios básicos
+  genero?: GeneroOportunidade;
+  idade?: string;
+  municipioResidencia?: string;
+  transporteProprio?: OpcaoBinariaOportunidade;
+  fluenciaPortugues?: OpcaoBinariaOportunidade;
+  
+  // Cargo/Profissão
+  nomeCargo?: string;
+  nomeProfissao?: string;
+  descricaoCargo?: string;
+  denominacoes?: string[];
+  
+  // Arrays de dados
+  experienciasAceitas?: string[];
+  nivelEscolaridade?: NivelEscolaridadeOportunidade;
+  areasFormacao?: string[];
+  idiomasPreferenciais?: IdiomaOportunidade[];
+  habilidades?: string[];
+  caracteristicas?: string[];
+}
+
 // ✨ DADOS PROFISSIONAIS: Tipos para dados estruturados de imigrantes
 export const TIPOS_DADO_PROFISSIONAL = [
   'experiencia',
@@ -695,10 +821,10 @@ export interface UpdateDadoProfissionalRequest {
   ativo?: boolean;
 }
 
-// Interface unificada para contribuições + dados profissionais
+// Interface unificada para contribuições + dados profissionais + oportunidades
 export interface ContribuicaoUnificada {
   id: string;
-  tipo: 'contribuicao_normal' | TipoDadoProfissional;
+  tipo: 'contribuicao_normal' | TipoDadoProfissional | 'oportunidade_trabalho';
   titulo: string;
   descricao: string;
   tags: string[];
@@ -706,8 +832,8 @@ export interface ContribuicaoUnificada {
   updatedAt: Date;
   userId: string;
   
-  // Dados específicos (apenas para tipos estruturados)
-  dadosEstruturados?: DadosProfissionaisUnion;
+  // Dados específicos (para tipos estruturados)
+  dadosEstruturados?: DadosProfissionaisUnion | OportunidadeTrabalho;
   
   // Dados originais (para contribuições normais)
   tipoContribuicao?: TipoContribuicao;

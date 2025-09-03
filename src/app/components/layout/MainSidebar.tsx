@@ -173,6 +173,16 @@ const MainSidebar: React.FC = () => {
         );
       }
 
+      // ✨ NOVO: Oportunidades de Trabalho específicas para Empresas
+      if (user?.categoria === 'EMPRESA') {
+        categoryMenuItems.push({
+          title: 'Oportunidades de Trabalho',
+          to: '/app/oportunidades-trabalho',
+          iconClass: 'work_outline',
+          htmlAfter: ''
+        });
+      }
+
       // ✨ NOVO: SinergIA - disponível para todas as categorias
       if (tiposDisponiveis.length > 0) {
         categoryMenuItems.push({

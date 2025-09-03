@@ -42,6 +42,9 @@ model User {
   // ✨ NOVO: Dados profissionais estruturados para imigrantes
   dadosProfissionais DadosProfissionaisImigrante[]
   
+  // ✨ NOVO: Oportunidades de trabalho para empresas
+  oportunidadesTrabalho OportunidadeTrabalho[]
+  
   @@map("users")
 }
 
@@ -215,4 +218,49 @@ model DadosProfissionaisImigrante {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   @@map("dados_profissionais_imigrante")
+}
+
+// ✨ NOVO: Oportunidades de trabalho estruturadas para empresas
+model OportunidadeTrabalho {
+  id                    String   @id @default(cuid())
+  userId                String   // FK para User (empresa)
+  titulo                String   // Nome do cargo/oportunidade
+  ativo                 Boolean  @default(true)
+  
+  // Critérios Básicos de Seleção
+  genero                String?  // 'F', 'M', 'INDIFERENTE'
+  idade                 String?  // Faixa etária ou específica
+  municipioResidencia   String?  // Município preferencial
+  transporteProprio     String?  // 'S', 'N', 'INDIFERENTE'
+  fluenciaPortugues     String?  // 'S', 'N', 'INDIFERENTE'
+  
+  // Informações do Cargo/Profissão
+  nomeCargo             String   // Nome específico do cargo
+  nomeProfissao         String?  // Profissão geral
+  descricaoCargo        String?  // Descrição detalhada
+  denominacoes          String?  // JSON array - outras denominações
+  
+  // Experiências Aceitas (JSON array de strings)
+  experienciasAceitas   String?  // JSON array de experiências
+  
+  // Formação Requerida
+  nivelEscolaridade     String?  // Nível mínimo de escolaridade
+  areasFormacao         String?  // JSON array - áreas de formação aceitas
+  
+  // Idiomas Preferenciais (JSON array de objetos {idioma, nivel})
+  idiomasPreferenciais  String?  // JSON array de idiomas com níveis
+  
+  // Competências e Personalidade (JSON arrays)
+  habilidades           String?  // JSON array - habilidades desejadas
+  caracteristicas       String?  // JSON array - características de personalidade
+  
+  // Metadados
+  visualizacoes         Int      @default(0) // Contador de visualizações
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  // Relação com User (empresa)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("oportunidades_trabalho")
 } 

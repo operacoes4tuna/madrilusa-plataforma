@@ -6,18 +6,23 @@ import type {
   DadosFormacao, 
   DadosIdioma 
 } from '../../../types/dados-profissionais.types';
+import type { OportunidadeTrabalho } from '../../../types/oportunidades-trabalho.types';
 
 interface ContribuicaoCardUnificadoProps {
   contribuicao: ContribuicaoUnificada;
   onEdit: (contribuicao: ContribuicaoUnificada) => void;
   onDelete: (id: string, titulo: string) => void;
+  onToggleStatus?: (id: string, ativo: boolean) => void;
+  onDuplicate?: (id: string) => void;
   showActions?: boolean;
 }
 
 const ContribuicaoCardUnificado: React.FC<ContribuicaoCardUnificadoProps> = ({ 
   contribuicao, 
   onEdit, 
-  onDelete, 
+  onDelete,
+  onToggleStatus,
+  onDuplicate,
   showActions = true 
 }) => {
 
@@ -31,6 +36,8 @@ const ContribuicaoCardUnificado: React.FC<ContribuicaoCardUnificadoProps> = ({
         return 'school';
       case 'idioma':
         return 'language';
+      case 'oportunidade_trabalho':
+        return 'work_outline';
       default:
         return 'assignment';
     }
@@ -46,6 +53,8 @@ const ContribuicaoCardUnificado: React.FC<ContribuicaoCardUnificadoProps> = ({
         return '#F5A623'; // Laranja Madrilusa
       case 'idioma':
         return '#6f42c1'; // Roxo
+      case 'oportunidade_trabalho':
+        return '#fd7e14'; // Laranja escuro
       default:
         return '#6c757d';
     }
@@ -147,6 +156,43 @@ const ContribuicaoCardUnificado: React.FC<ContribuicaoCardUnificadoProps> = ({
           </div>
         );
         
+      case 'oportunidade_trabalho':
+        const oportunidade = contribuicao.dadosEstruturados as OportunidadeTrabalho;
+        return (
+          <div>
+            <div className="mb-2">
+              <strong className="d-block">{oportunidade.nomeCargo}</strong>
+              {oportunidade.nomeProfissao && (
+                <span className="text-muted">{oportunidade.nomeProfissao}</span>
+              )}
+            </div>
+            <div className="mb-2">
+              <small className="text-muted">
+                {oportunidade.descricaoCargo?.substring(0, 100)}
+                {oportunidade.descricaoCargo && oportunidade.descricaoCargo.length > 100 && '...'}
+              </small>
+            </div>
+            <div className="d-flex flex-wrap">
+              {oportunidade.municipioResidencia && (
+                <Badge theme="secondary" className="mr-1 mb-1">
+                  <i className="material-icons mr-1" style={{ fontSize: '12px' }}>place</i>
+                  {oportunidade.municipioResidencia}
+                </Badge>
+              )}
+              {oportunidade.nivelEscolaridade && oportunidade.nivelEscolaridade !== 'Indiferente' && (
+                <Badge theme="warning" className="mr-1 mb-1">
+                  <i className="material-icons mr-1" style={{ fontSize: '12px' }}>school</i>
+                  {oportunidade.nivelEscolaridade}
+                </Badge>
+              )}
+              <Badge theme="info" className="mr-1 mb-1">
+                <i className="material-icons mr-1" style={{ fontSize: '12px' }}>visibility</i>
+                {oportunidade.visualizacoes} visualizações
+              </Badge>
+            </div>
+          </div>
+        );
+        
       default:
         return (
           <div>
@@ -198,6 +244,37 @@ const ContribuicaoCardUnificado: React.FC<ContribuicaoCardUnificadoProps> = ({
               <i className="material-icons mr-1" style={{ fontSize: '14px' }}>edit</i>
               Editar
             </Button>
+            
+            {/* Botões específicos para oportunidades de trabalho */}
+            {contribuicao.tipo === 'oportunidade_trabalho' && (
+              <>
+                <Button 
+                  size="sm" 
+                  theme="outline-info"
+                  className="mr-2"
+                  onClick={() => onDuplicate && onDuplicate(contribuicao.id)}
+                >
+                  <i className="material-icons mr-1" style={{ fontSize: '14px' }}>content_copy</i>
+                  Duplicar
+                </Button>
+                
+                <Button 
+                  size="sm" 
+                  theme={(contribuicao.dadosEstruturados as OportunidadeTrabalho)?.ativo ? "outline-warning" : "outline-success"}
+                  className="mr-2"
+                  onClick={() => {
+                    const oportunidade = contribuicao.dadosEstruturados as OportunidadeTrabalho;
+                    onToggleStatus && onToggleStatus(contribuicao.id, !oportunidade.ativo);
+                  }}
+                >
+                  <i className="material-icons mr-1" style={{ fontSize: '14px' }}>
+                    {(contribuicao.dadosEstruturados as OportunidadeTrabalho)?.ativo ? 'pause' : 'play_arrow'}
+                  </i>
+                  {(contribuicao.dadosEstruturados as OportunidadeTrabalho)?.ativo ? 'Inativar' : 'Ativar'}
+                </Button>
+              </>
+            )}
+            
             <Button 
               size="sm" 
               theme="outline-danger"

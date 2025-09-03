@@ -17,6 +17,7 @@ import contribuicoesRoutes from './modules/contribuicoes/contribuicoes.routes'; 
 import aiRoutes from './modules/ai/ai.routes'; // 🤖 IA: Rotas de inteligência artificial
 import sinergiaRoutes from './modules/sinergia/sinergia.routes'; // 🧠 SINERGIA: Rotas de matching IA
 import { dadosProfissionaisRoutes } from './modules/dados-profissionais/dados-profissionais.routes'; // ✨ DADOS PROFISSIONAIS: Rotas para dados estruturados
+import { oportunidadesTrabalhoRoutes } from './modules/oportunidades-trabalho/oportunidades-trabalho.routes'; // ✨ OPORTUNIDADES: Rotas para oportunidades de trabalho
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use('/api/familias', familiaRoutes); // ✨ FASE 5: Rotas de famílias
 app.use('/api/admin', adminRoutes); // ✨ ADMIN: Rotas de administração
 app.use('/api/contribuicoes', contribuicoesRoutes); // ✨ SISTEMA CONTRIBUIÇÕES: Rotas de contribuições
 app.use('/api/dados-profissionais', dadosProfissionaisRoutes); // ✨ DADOS PROFISSIONAIS: Rotas para dados estruturados
+app.use('/api/oportunidades-trabalho', oportunidadesTrabalhoRoutes); // ✨ OPORTUNIDADES: Rotas para oportunidades de trabalho
 app.use('/api/ai', aiRoutes); // 🤖 IA: Rotas de inteligência artificial
 app.use('/api/sinergia', sinergiaRoutes); // 🧠 SINERGIA: Rotas de matching IA
 
