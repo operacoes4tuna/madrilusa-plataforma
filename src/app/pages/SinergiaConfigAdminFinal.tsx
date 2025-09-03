@@ -37,9 +37,14 @@ const SinergiaConfigAdminFinal: React.FC = () => {
   });
 
   const [eliminatorios, setEliminatorios] = useState({
-    genero: { ativo: false, condicao: 'especifico' },
-    transporteProprio: { ativo: true, eliminar: true },
-    fluenciaPortugues: { ativo: true, nivelMinimo: 'basico', eliminar: true }
+    genero: false,
+    idade: false,
+    municipioResidencia: false,
+    transporteProprio: true,
+    fluenciaPortugues: true,
+    experienciasProfissionais: false,
+    formacaoAcademica: false,
+    idiomasAdicionais: false
   });
 
   const handlePesoChange = (key: string, value: number) => {
@@ -50,10 +55,10 @@ const SinergiaConfigAdminFinal: React.FC = () => {
     setIaConfig(prev => ({ ...prev, [key]: value }));
   };
 
-  const handleEliminatorioChange = (criterio: string, field: string, value: any) => {
+  const handleEliminatorioChange = (criterio: string, value: boolean) => {
     setEliminatorios(prev => ({
       ...prev,
-      [criterio]: { ...prev[criterio], [field]: value }
+      [criterio]: value
     }));
   };
 
@@ -109,12 +114,7 @@ const SinergiaConfigAdminFinal: React.FC = () => {
             >
               🤖 Configuração de IA
             </button>
-            <button
-              className={`nav-link ${activeTab === 'eliminatorios' ? 'active' : ''}`}
-              onClick={() => setActiveTab('eliminatorios')}
-            >
-              🚫 Critérios Eliminatórios
-            </button>
+
           </div>
         </Col>
       </Row>
@@ -124,78 +124,183 @@ const SinergiaConfigAdminFinal: React.FC = () => {
         <Card>
           <CardHeader>
             <div className="d-flex justify-content-between align-items-center">
-              <h5 className="mb-0">⚖️ Configuração de Pesos</h5>
-              <Badge theme={calcularSomaPesos() === 100 ? 'success' : 'danger'}>
-                Soma: {calcularSomaPesos()}%
-              </Badge>
+              <h5 className="mb-0">⚖️ Configuração de Pesos e Critérios Eliminatórios</h5>
+              <div className="d-flex align-items-center">
+                <Badge theme="danger" className="mr-2">
+                  🚫 {Object.values(eliminatorios).filter(Boolean).length} Eliminatórios
+                </Badge>
+                <Badge theme={calcularSomaPesos() === 100 ? 'success' : 'danger'}>
+                  Soma: {calcularSomaPesos()}%
+                </Badge>
+              </div>
             </div>
           </CardHeader>
           <CardBody>
-            {calcularSomaPesos() !== 100 && (
-              <Alert theme="warning" className="mb-4">
-                <strong>⚠️ Atenção:</strong> A soma dos pesos deve ser exatamente 100%. 
-                Atual: {calcularSomaPesos()}%
+            <div className="mb-4">
+              {calcularSomaPesos() !== 100 && (
+                <Alert theme="warning" className="mb-3">
+                  <strong>⚠️ Atenção:</strong> A soma dos pesos deve ser exatamente 100%. 
+                  Atual: {calcularSomaPesos()}%
+                </Alert>
+              )}
+              
+              <Alert theme="info">
+                <strong>💡 Como funciona:</strong><br />
+                • <strong>Peso:</strong> Define a importância do critério na pontuação final (0-100%)<br />
+                • <strong>🚫 Eliminatório:</strong> Se marcado, candidatos que não atendem este critério são automaticamente eliminados, independente da pontuação total
               </Alert>
-            )}
+            </div>
 
             <div className="row">
               <div className="col-md-6">
                 <h6 className="mb-3 text-primary">Critérios Demográficos</h6>
                 
                 <FormGroup>
-                  <label className="d-flex justify-content-between">
-                    <span>👤 Gênero</span>
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <div className="d-flex align-items-center">
+                      <span className="mr-2">👤 Gênero</span>
+                      {eliminatorios.genero && (
+                        <Badge theme="danger" className="mr-2">🚫 ELIMINATÓRIO</Badge>
+                      )}
+                    </div>
                     <Badge theme="light">{pesos.genero}%</Badge>
-                  </label>
+                  </div>
+                  
                   <FormInput
                     type="range"
                     min="0"
                     max="100"
                     value={pesos.genero}
                     onChange={(e) => handlePesoChange('genero', parseInt(e.target.value))}
+                    className="mb-2"
                   />
+                  
+                  <div className="d-flex align-items-center">
+                    <FormInput
+                      type="select"
+                      value={eliminatorios.genero ? 'true' : 'false'}
+                      onChange={(e) => handleEliminatorioChange('genero', e.target.value === 'true')}
+                      className="mr-2"
+                      style={{ width: 'auto', fontSize: '0.875rem' }}
+                    >
+                      <option value="false">📊 Apenas Pontuação</option>
+                      <option value="true">🚫 Eliminatório</option>
+                    </FormInput>
+                    <small className="text-muted">
+                      {eliminatorios.genero ? 'Elimina se não corresponder' : 'Só reduz pontuação'}
+                    </small>
+                  </div>
                 </FormGroup>
 
                 <FormGroup>
-                  <label className="d-flex justify-content-between">
-                    <span>🎂 Idade</span>
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <div className="d-flex align-items-center">
+                      <span className="mr-2">🎂 Idade</span>
+                      {eliminatorios.idade && (
+                        <Badge theme="danger" className="mr-2">🚫 ELIMINATÓRIO</Badge>
+                      )}
+                    </div>
                     <Badge theme="light">{pesos.idade}%</Badge>
-                  </label>
+                  </div>
+                  
                   <FormInput
                     type="range"
                     min="0"
                     max="100"
                     value={pesos.idade}
                     onChange={(e) => handlePesoChange('idade', parseInt(e.target.value))}
+                    className="mb-2"
                   />
+                  
+                  <div className="d-flex align-items-center">
+                    <FormInput
+                      type="select"
+                      value={eliminatorios.idade ? 'true' : 'false'}
+                      onChange={(e) => handleEliminatorioChange('idade', e.target.value === 'true')}
+                      className="mr-2"
+                      style={{ width: 'auto', fontSize: '0.875rem' }}
+                    >
+                      <option value="false">📊 Apenas Pontuação</option>
+                      <option value="true">🚫 Eliminatório</option>
+                    </FormInput>
+                    <small className="text-muted">
+                      {eliminatorios.idade ? 'Elimina por faixa etária' : 'Só reduz pontuação'}
+                    </small>
+                  </div>
                 </FormGroup>
 
                 <FormGroup>
-                  <label className="d-flex justify-content-between">
-                    <span>🏙️ Município</span>
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <div className="d-flex align-items-center">
+                      <span className="mr-2">🏙️ Município</span>
+                      {eliminatorios.municipioResidencia && (
+                        <Badge theme="danger" className="mr-2">🚫 ELIMINATÓRIO</Badge>
+                      )}
+                    </div>
                     <Badge theme="light">{pesos.municipioResidencia}%</Badge>
-                  </label>
+                  </div>
+                  
                   <FormInput
                     type="range"
                     min="0"
                     max="100"
                     value={pesos.municipioResidencia}
                     onChange={(e) => handlePesoChange('municipioResidencia', parseInt(e.target.value))}
+                    className="mb-2"
                   />
+                  
+                  <div className="d-flex align-items-center">
+                    <FormInput
+                      type="select"
+                      value={eliminatorios.municipioResidencia ? 'true' : 'false'}
+                      onChange={(e) => handleEliminatorioChange('municipioResidencia', e.target.value === 'true')}
+                      className="mr-2"
+                      style={{ width: 'auto', fontSize: '0.875rem' }}
+                    >
+                      <option value="false">📊 Apenas Pontuação</option>
+                      <option value="true">🚫 Eliminatório</option>
+                    </FormInput>
+                    <small className="text-muted">
+                      {eliminatorios.municipioResidencia ? 'Elimina se município diferente' : 'Só reduz pontuação'}
+                    </small>
+                  </div>
                 </FormGroup>
 
                 <FormGroup>
-                  <label className="d-flex justify-content-between">
-                    <span>🚗 Transporte</span>
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <div className="d-flex align-items-center">
+                      <span className="mr-2">🚗 Transporte</span>
+                      {eliminatorios.transporteProprio && (
+                        <Badge theme="danger" className="mr-2">🚫 ELIMINATÓRIO</Badge>
+                      )}
+                    </div>
                     <Badge theme="light">{pesos.transporteProprio}%</Badge>
-                  </label>
+                  </div>
+                  
                   <FormInput
                     type="range"
                     min="0"
                     max="100"
                     value={pesos.transporteProprio}
                     onChange={(e) => handlePesoChange('transporteProprio', parseInt(e.target.value))}
+                    className="mb-2"
                   />
+                  
+                  <div className="d-flex align-items-center">
+                    <FormInput
+                      type="select"
+                      value={eliminatorios.transporteProprio ? 'true' : 'false'}
+                      onChange={(e) => handleEliminatorioChange('transporteProprio', e.target.value === 'true')}
+                      className="mr-2"
+                      style={{ width: 'auto', fontSize: '0.875rem' }}
+                    >
+                      <option value="false">📊 Apenas Pontuação</option>
+                      <option value="true">🚫 Eliminatório</option>
+                    </FormInput>
+                    <small className="text-muted">
+                      {eliminatorios.transporteProprio ? 'Elimina sem transporte próprio' : 'Só reduz pontuação'}
+                    </small>
+                  </div>
                 </FormGroup>
               </div>
 
@@ -203,59 +308,151 @@ const SinergiaConfigAdminFinal: React.FC = () => {
                 <h6 className="mb-3 text-primary">Critérios Profissionais</h6>
                 
                 <FormGroup>
-                  <label className="d-flex justify-content-between">
-                    <span>🇵🇹 Fluência Português</span>
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <div className="d-flex align-items-center">
+                      <span className="mr-2">🇵🇹 Fluência Português</span>
+                      {eliminatorios.fluenciaPortugues && (
+                        <Badge theme="danger" className="mr-2">🚫 ELIMINATÓRIO</Badge>
+                      )}
+                    </div>
                     <Badge theme="light">{pesos.fluenciaPortugues}%</Badge>
-                  </label>
+                  </div>
+                  
                   <FormInput
                     type="range"
                     min="0"
                     max="100"
                     value={pesos.fluenciaPortugues}
                     onChange={(e) => handlePesoChange('fluenciaPortugues', parseInt(e.target.value))}
+                    className="mb-2"
                   />
+                  
+                  <div className="d-flex align-items-center">
+                    <FormInput
+                      type="select"
+                      value={eliminatorios.fluenciaPortugues ? 'true' : 'false'}
+                      onChange={(e) => handleEliminatorioChange('fluenciaPortugues', e.target.value === 'true')}
+                      className="mr-2"
+                      style={{ width: 'auto', fontSize: '0.875rem' }}
+                    >
+                      <option value="false">📊 Apenas Pontuação</option>
+                      <option value="true">🚫 Eliminatório</option>
+                    </FormInput>
+                    <small className="text-muted">
+                      {eliminatorios.fluenciaPortugues ? 'Elimina por fluência insuficiente' : 'Só reduz pontuação'}
+                    </small>
+                  </div>
                 </FormGroup>
 
                 <FormGroup>
-                  <label className="d-flex justify-content-between">
-                    <span>💼 Experiência</span>
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <div className="d-flex align-items-center">
+                      <span className="mr-2">💼 Experiência</span>
+                      {eliminatorios.experienciasProfissionais && (
+                        <Badge theme="danger" className="mr-2">🚫 ELIMINATÓRIO</Badge>
+                      )}
+                    </div>
                     <Badge theme="light">{pesos.experienciasProfissionais}%</Badge>
-                  </label>
+                  </div>
+                  
                   <FormInput
                     type="range"
                     min="0"
                     max="100"
                     value={pesos.experienciasProfissionais}
                     onChange={(e) => handlePesoChange('experienciasProfissionais', parseInt(e.target.value))}
+                    className="mb-2"
                   />
+                  
+                  <div className="d-flex align-items-center">
+                    <FormInput
+                      type="select"
+                      value={eliminatorios.experienciasProfissionais ? 'true' : 'false'}
+                      onChange={(e) => handleEliminatorioChange('experienciasProfissionais', e.target.value === 'true')}
+                      className="mr-2"
+                      style={{ width: 'auto', fontSize: '0.875rem' }}
+                    >
+                      <option value="false">📊 Apenas Pontuação</option>
+                      <option value="true">🚫 Eliminatório</option>
+                    </FormInput>
+                    <small className="text-muted">
+                      {eliminatorios.experienciasProfissionais ? 'Elimina sem experiência mínima' : 'Só reduz pontuação'}
+                    </small>
+                  </div>
                 </FormGroup>
 
                 <FormGroup>
-                  <label className="d-flex justify-content-between">
-                    <span>🎓 Formação</span>
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <div className="d-flex align-items-center">
+                      <span className="mr-2">🎓 Formação</span>
+                      {eliminatorios.formacaoAcademica && (
+                        <Badge theme="danger" className="mr-2">🚫 ELIMINATÓRIO</Badge>
+                      )}
+                    </div>
                     <Badge theme="light">{pesos.formacaoAcademica}%</Badge>
-                  </label>
+                  </div>
+                  
                   <FormInput
                     type="range"
                     min="0"
                     max="100"
                     value={pesos.formacaoAcademica}
                     onChange={(e) => handlePesoChange('formacaoAcademica', parseInt(e.target.value))}
+                    className="mb-2"
                   />
+                  
+                  <div className="d-flex align-items-center">
+                    <FormInput
+                      type="select"
+                      value={eliminatorios.formacaoAcademica ? 'true' : 'false'}
+                      onChange={(e) => handleEliminatorioChange('formacaoAcademica', e.target.value === 'true')}
+                      className="mr-2"
+                      style={{ width: 'auto', fontSize: '0.875rem' }}
+                    >
+                      <option value="false">📊 Apenas Pontuação</option>
+                      <option value="true">🚫 Eliminatório</option>
+                    </FormInput>
+                    <small className="text-muted">
+                      {eliminatorios.formacaoAcademica ? 'Elimina sem formação adequada' : 'Só reduz pontuação'}
+                    </small>
+                  </div>
                 </FormGroup>
 
                 <FormGroup>
-                  <label className="d-flex justify-content-between">
-                    <span>🗣️ Idiomas</span>
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <div className="d-flex align-items-center">
+                      <span className="mr-2">🗣️ Idiomas</span>
+                      {eliminatorios.idiomasAdicionais && (
+                        <Badge theme="danger" className="mr-2">🚫 ELIMINATÓRIO</Badge>
+                      )}
+                    </div>
                     <Badge theme="light">{pesos.idiomasAdicionais}%</Badge>
-                  </label>
+                  </div>
+                  
                   <FormInput
                     type="range"
                     min="0"
                     max="100"
                     value={pesos.idiomasAdicionais}
                     onChange={(e) => handlePesoChange('idiomasAdicionais', parseInt(e.target.value))}
+                    className="mb-2"
                   />
+                  
+                  <div className="d-flex align-items-center">
+                    <FormInput
+                      type="select"
+                      value={eliminatorios.idiomasAdicionais ? 'true' : 'false'}
+                      onChange={(e) => handleEliminatorioChange('idiomasAdicionais', e.target.value === 'true')}
+                      className="mr-2"
+                      style={{ width: 'auto', fontSize: '0.875rem' }}
+                    >
+                      <option value="false">📊 Apenas Pontuação</option>
+                      <option value="true">🚫 Eliminatório</option>
+                    </FormInput>
+                    <small className="text-muted">
+                      {eliminatorios.idiomasAdicionais ? 'Elimina sem idiomas obrigatórios' : 'Só reduz pontuação'}
+                    </small>
+                  </div>
                 </FormGroup>
               </div>
             </div>
@@ -363,174 +560,17 @@ const SinergiaConfigAdminFinal: React.FC = () => {
         </Card>
       )}
 
-      {/* TAB: Critérios Eliminatórios */}
-      {activeTab === 'eliminatorios' && (
-        <Card>
-          <CardHeader>🚫 Critérios Eliminatórios</CardHeader>
-          <CardBody>
-            <Alert theme="warning" className="mb-4">
-              <strong>⚠️ Atenção:</strong> Critérios eliminatórios excluem candidatos automaticamente, 
-              independente da pontuação.
-            </Alert>
 
-            <div className="row">
-              <div className="col-md-4">
-                <div className="p-3 border rounded">
-                  <h6>👤 Gênero</h6>
-                  <Badge theme={eliminatorios.genero.ativo ? 'danger' : 'secondary'} className="mb-2">
-                    {eliminatorios.genero.ativo ? 'ATIVO' : 'INATIVO'}
-                  </Badge>
-                  
-                  <FormGroup>
-                    <label>Status</label>
-                    <FormInput
-                      type="select"
-                      value={eliminatorios.genero.ativo ? 'true' : 'false'}
-                      onChange={(e) => handleEliminatorioChange('genero', 'ativo', e.target.value === 'true')}
-                    >
-                      <option value="false">Inativo</option>
-                      <option value="true">Ativo</option>
-                    </FormInput>
-                  </FormGroup>
-
-                  {eliminatorios.genero.ativo && (
-                    <FormGroup>
-                      <label>Condição</label>
-                      <FormInput
-                        type="select"
-                        value={eliminatorios.genero.condicao}
-                        onChange={(e) => handleEliminatorioChange('genero', 'condicao', e.target.value)}
-                      >
-                        <option value="especifico">Específico da vaga</option>
-                        <option value="obrigatorio">Obrigatório informar</option>
-                        <option value="sempre">Sempre rigoroso</option>
-                      </FormInput>
-                    </FormGroup>
-                  )}
-                </div>
-              </div>
-
-              <div className="col-md-4">
-                <div className="p-3 border rounded">
-                  <h6>🚗 Transporte</h6>
-                  <Badge theme={eliminatorios.transporteProprio.ativo ? 'danger' : 'secondary'} className="mb-2">
-                    {eliminatorios.transporteProprio.ativo ? 'ATIVO' : 'INATIVO'}
-                  </Badge>
-                  
-                  <FormGroup>
-                    <label>Status</label>
-                    <FormInput
-                      type="select"
-                      value={eliminatorios.transporteProprio.ativo ? 'true' : 'false'}
-                      onChange={(e) => handleEliminatorioChange('transporteProprio', 'ativo', e.target.value === 'true')}
-                    >
-                      <option value="false">Inativo</option>
-                      <option value="true">Ativo</option>
-                    </FormInput>
-                  </FormGroup>
-
-                  {eliminatorios.transporteProprio.ativo && (
-                    <FormGroup>
-                      <label>Ação</label>
-                      <FormInput
-                        type="select"
-                        value={eliminatorios.transporteProprio.eliminar ? 'true' : 'false'}
-                        onChange={(e) => handleEliminatorioChange('transporteProprio', 'eliminar', e.target.value === 'true')}
-                      >
-                        <option value="false">Só reduzir pontuação</option>
-                        <option value="true">Eliminar sem transporte</option>
-                      </FormInput>
-                    </FormGroup>
-                  )}
-                </div>
-              </div>
-
-              <div className="col-md-4">
-                <div className="p-3 border rounded">
-                  <h6>🇵🇹 Fluência</h6>
-                  <Badge theme={eliminatorios.fluenciaPortugues.ativo ? 'danger' : 'secondary'} className="mb-2">
-                    {eliminatorios.fluenciaPortugues.ativo ? 'ATIVO' : 'INATIVO'}
-                  </Badge>
-                  
-                  <FormGroup>
-                    <label>Status</label>
-                    <FormInput
-                      type="select"
-                      value={eliminatorios.fluenciaPortugues.ativo ? 'true' : 'false'}
-                      onChange={(e) => handleEliminatorioChange('fluenciaPortugues', 'ativo', e.target.value === 'true')}
-                    >
-                      <option value="false">Inativo</option>
-                      <option value="true">Ativo</option>
-                    </FormInput>
-                  </FormGroup>
-
-                  {eliminatorios.fluenciaPortugues.ativo && (
-                    <>
-                      <FormGroup>
-                        <label>Nível Mínimo</label>
-                        <FormInput
-                          type="select"
-                          value={eliminatorios.fluenciaPortugues.nivelMinimo}
-                          onChange={(e) => handleEliminatorioChange('fluenciaPortugues', 'nivelMinimo', e.target.value)}
-                        >
-                          <option value="basico">Básico</option>
-                          <option value="intermediario">Intermediário</option>
-                          <option value="avancado">Avançado</option>
-                          <option value="fluente">Fluente</option>
-                        </FormInput>
-                      </FormGroup>
-
-                      <FormGroup>
-                        <label>Ação</label>
-                        <FormInput
-                          type="select"
-                          value={eliminatorios.fluenciaPortugues.eliminar ? 'true' : 'false'}
-                          onChange={(e) => handleEliminatorioChange('fluenciaPortugues', 'eliminar', e.target.value === 'true')}
-                        >
-                          <option value="false">Só reduzir pontuação</option>
-                          <option value="true">Eliminar abaixo nível</option>
-                        </FormInput>
-                      </FormGroup>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Resumo */}
-            <div className="mt-4 p-3 bg-light rounded">
-              <h6>📊 Resumo dos Critérios Ativos</h6>
-              <div className="d-flex justify-content-around">
-                <div>
-                  <Badge theme={eliminatorios.genero.ativo ? 'danger' : 'success'}>
-                    Gênero: {eliminatorios.genero.ativo ? 'ATIVO' : 'INATIVO'}
-                  </Badge>
-                </div>
-                <div>
-                  <Badge theme={eliminatorios.transporteProprio.ativo ? 'danger' : 'success'}>
-                    Transporte: {eliminatorios.transporteProprio.ativo ? 'ATIVO' : 'INATIVO'}
-                  </Badge>
-                </div>
-                <div>
-                  <Badge theme={eliminatorios.fluenciaPortugues.ativo ? 'danger' : 'success'}>
-                    Fluência: {eliminatorios.fluenciaPortugues.ativo ? 'ATIVO' : 'INATIVO'}
-                  </Badge>
-                </div>
-              </div>
-            </div>
-          </CardBody>
-        </Card>
-      )}
 
       {/* Status Final */}
       <Alert theme="success" className="mt-4">
         <strong>✅ Painel Administrativo Totalmente Funcional!</strong><br />
         <small>
           • ⚖️ Edição de pesos em tempo real com validação automática<br />
+          • 🚫 Critérios eliminatórios integrados em cada item<br />
           • 🤖 Configuração completa de IA (modelo, temperatura, custos)<br />
-          • 🚫 Critérios eliminatórios configuráveis por tipo<br />
           • 💾 Sistema de salvamento integrado<br />
-          • 📊 Interface limpa e intuitiva
+          • 📊 Interface unificada e intuitiva
         </small>
       </Alert>
     </div>
