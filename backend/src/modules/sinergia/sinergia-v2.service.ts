@@ -12,7 +12,9 @@ import type {
 import { DEFAULT_WEIGHTS } from './sinergia-v2.types';
 import { SinergiaV2AnalyticsService } from './sinergia-v2-analytics.service';
 import { configuracaoSinergiaService } from './configuracao-sinergia.service';
-import type { ConfiguracaoCompleta } from './sinergia-config.types';
+import type { ConfiguracaoCompleta, IAConfiguration } from './sinergia-config.types';
+import { systemEventEmitter } from '../../shared/event-emitter';
+import { syncManager } from '../../shared/sync-manager';
 
 export class SinergiaV2Service {
   private openai: OpenAI;
@@ -28,6 +30,74 @@ export class SinergiaV2Service {
     });
     this.weights = DEFAULT_WEIGHTS;
     this.analytics = SinergiaV2AnalyticsService.getInstance();
+    
+    // Configurar listeners para eventos de configuração
+    this.setupEventListeners();
+    
+    // Registrar no sync manager
+    syncManager.registerService({
+      serviceName: 'SinergiaV2Service',
+      clearCache: () => this.clearConfigCache()
+    });
+  }
+
+  /**
+   * Configurar listeners para eventos de configuração
+   */
+  private setupEventListeners(): void {
+    // Listener para configuração ativada
+    systemEventEmitter.onEvent(
+      'configuracao:ativada',
+      async (data) => {
+        console.log(`🔄 SINERGIA V2: Configuração ativada (v${data.versao} - ${data.nome}), invalidando cache`);
+        this.clearConfigCache();
+        // Pré-carregar nova configuração
+        await this.getConfiguracao();
+      },
+      'SinergiaV2Service'
+    );
+
+    // Listener para configuração atualizada
+    systemEventEmitter.onEvent(
+      'configuracao:atualizada',
+      async (data) => {
+        console.log(`🔄 SINERGIA V2: Configuração atualizada (v${data.versao} - ${data.nome}), invalidando cache`);
+        this.clearConfigCache();
+        // Pré-carregar nova configuração se for a ativa
+        try {
+          await this.getConfiguracao();
+        } catch (error) {
+          console.error('❌ SINERGIA V2: Erro ao recarregar configuração:', error);
+        }
+      },
+      'SinergiaV2Service'
+    );
+
+    // Listener para invalidação específica de cache
+    systemEventEmitter.onEvent(
+      'cache:invalidar',
+      (data) => {
+        if (data.servico === 'SinergiaV2Service' || data.servico === 'all') {
+          console.log(`🧹 SINERGIA V2: Cache invalidado - ${data.motivo}`);
+          this.clearConfigCache();
+        }
+      },
+      'SinergiaV2Service'
+    );
+
+    // Listener para limpeza total de cache
+    systemEventEmitter.onEvent(
+      'cache:limpar',
+      (data) => {
+        if (data.servicos.includes('SinergiaV2Service') || data.servicos.includes('all')) {
+          console.log('🧹 SINERGIA V2: Limpeza total de cache solicitada');
+          this.clearConfigCache();
+        }
+      },
+      'SinergiaV2Service'
+    );
+
+    console.log('📡 SINERGIA V2: Event listeners configurados');
   }
 
   /**
@@ -51,6 +121,8 @@ export class SinergiaV2Service {
       this.weights = config.pesos;
       
       console.log('🎛️  SINERGIA V2: Configuração atualizada');
+      console.log(`🤖 IA Config: Modelo ${config.iaConfig.modelo}, Threshold ${config.iaConfig.thresholdMinimo}%, Peso IA ${config.iaConfig.pesoIA}%`);
+      console.log(`💰 IA Limits: Max Tokens ${config.iaConfig.maxTokens}, Custo Max $${config.iaConfig.custoMaximoPorAnalise}`);
       return config;
 
     } catch (error) {
@@ -66,10 +138,17 @@ export class SinergiaV2Service {
   /**
    * Limpa cache de configuração (usado quando configuração é alterada)
    */
-  public limparCacheConfiguracao(): void {
+  clearConfigCache(): void {
     this.configCache = null;
     this.configCacheExpiry = 0;
-    console.log('🗑️  SINERGIA V2: Cache de configuração limpo');
+    console.log('🧹 SINERGIA V2: Cache de configuração limpo');
+  }
+
+  /**
+   * Método público para limpeza de cache (usado pelo Event Emitter)
+   */
+  public limparCacheConfiguracao(): void {
+    this.clearConfigCache();
   }
 
   /**
@@ -287,45 +366,45 @@ export class SinergiaV2Service {
       matchedItems,
       unmatchedItems,
       penalizacoes,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date().toISOString()
       
-      // DADOS COMPLETOS PARA DESENVOLVIMENTO/TESTES
-      oportunidade: {
-        titulo: oportunidade.titulo,
-        nomeCargo: oportunidade.nomeCargo,
-        nomeProfissao: oportunidade.nomeProfissao,
-        descricaoCargo: oportunidade.descricaoCargo,
-        empresa: (oportunidade as any).user?.nomeCompleto || 'Empresa',
-        municipioResidencia: oportunidade.municipioResidencia,
-        genero: oportunidade.genero,
-        idade: oportunidade.idade,
-        transporteProprio: oportunidade.transporteProprio,
-        fluenciaPortugues: oportunidade.fluenciaPortugues,
-        denominacoes: oportunidade.denominacoes,
-        experienciasAceitas: oportunidade.experienciasAceitas,
-        areasFormacao: oportunidade.areasFormacao,
-        habilidades: oportunidade.habilidades,
-        caracteristicas: oportunidade.caracteristicas,
-        idiomasPreferenciais: oportunidade.idiomasPreferenciais,
-        nivelEscolaridade: oportunidade.nivelEscolaridade
-      },
-      
-      imigrante: {
-        nomeCompleto: imigrante.nomeCompleto,
-        email: imigrante.email,
-        municipioResidencia: imigrante.municipioResidencia,
-        genero: imigrante.genero,
-        idade: imigrante.idade,
-        transporteProprio: imigrante.transporteProprio,
-        fluenciaPortugues: imigrante.fluenciaPortugues,
-        objetivos: imigrante.objetivos,
-        experiencias: imigrante.experiencias,
-        formacoes: imigrante.formacoes,
-        idiomas: imigrante.idiomas,
-        habilidades: imigrante.habilidades,
-        contribuicoesTexto: imigrante.contribuicoesTexto,
-        interesses: imigrante.interesses
-      }
+      // DADOS COMPLETOS PARA DESENVOLVIMENTO/TESTES - COMENTADO TEMPORARIAMENTE
+      // oportunidade: {
+      //   titulo: oportunidade.titulo,
+      //   nomeCargo: oportunidade.nomeCargo,
+      //   nomeProfissao: oportunidade.nomeProfissao,
+      //   descricaoCargo: oportunidade.descricaoCargo,
+      //   empresa: (oportunidade as any).user?.nomeCompleto || 'Empresa',
+      //   municipioResidencia: oportunidade.municipioResidencia,
+      //   genero: oportunidade.genero,
+      //   idade: oportunidade.idade,
+      //   transporteProprio: oportunidade.transporteProprio,
+      //   fluenciaPortugues: oportunidade.fluenciaPortugues,
+      //   denominacoes: oportunidade.denominacoes,
+      //   experienciasAceitas: oportunidade.experienciasAceitas,
+      //   areasFormacao: oportunidade.areasFormacao,
+      //   habilidades: oportunidade.habilidades,
+      //   caracteristicas: oportunidade.caracteristicas,
+      //   idiomasPreferenciais: oportunidade.idiomasPreferenciais,
+      //   nivelEscolaridade: oportunidade.nivelEscolaridade
+      // },
+      // 
+      // imigrante: {
+      //   nomeCompleto: imigrante.nomeCompleto,
+      //   email: imigrante.email,
+      //   municipioResidencia: imigrante.municipioResidencia,
+      //   genero: imigrante.genero,
+      //   idade: imigrante.idade,
+      //   transporteProprio: imigrante.transporteProprio,
+      //   fluenciaPortugues: imigrante.fluenciaPortugues,
+      //   objetivos: imigrante.objetivos,
+      //   experiencias: imigrante.experiencias,
+      //   formacoes: imigrante.formacoes,
+      //   idiomas: imigrante.idiomas,
+      //   habilidades: imigrante.habilidades,
+      //   contribuicoesTexto: imigrante.contribuicoesTexto,
+      //   interesses: imigrante.interesses
+      // }
     };
   }
 
@@ -350,10 +429,10 @@ export class SinergiaV2Service {
     genero.details = this.generateGeneroDetails(oportunidade.genero, imigrante.genero, genero.match);
 
     // 2. IDADE
-    const idade = this.calculateIdadeMatch(oportunidade.idade, imigrante.idade);
+    const idade = this.calculateIdadeMatch(oportunidade.idade ?? undefined, imigrante.idade ?? undefined);
 
     // 3. MUNICÍPIO
-    const municipio = this.calculateMunicipioMatch(oportunidade.municipioResidencia, imigrante.municipioResidencia);
+    const municipio = this.calculateMunicipioMatch(oportunidade.municipioResidencia ?? undefined, imigrante.municipioResidencia ?? undefined);
 
     // 4. TRANSPORTE
     const transporteProprio = this.calculateTransporteMatch(oportunidade.transporteProprio, imigrante.transporteProprio);
@@ -576,18 +655,25 @@ export class SinergiaV2Service {
     oportunidade: OportunidadeCompleteData,
     imigrante: ImigranteCompleteProfile,
     structuredScore: MatchingCriteria,
-    iaConfig: any
+    iaConfig: IAConfiguration
   ): Promise<SemanticAnalysis> {
     const startTime = Date.now();
     
     try {
       console.log(`🤖 IA: Iniciando análise semântica para match ${oportunidade.id} ↔ ${imigrante.id}`);
+      console.log(`🤖 IA: Usando configuração - Modelo: ${iaConfig.modelo}, Temp: ${iaConfig.temperatura}, Max Tokens: ${iaConfig.maxTokens}`);
+      
+      // Validar modelo disponível
+      const modeloFinal = this.validarModeloDisponivel(iaConfig.modelo);
+      if (modeloFinal !== iaConfig.modelo) {
+        console.warn(`⚠️ IA: Modelo ${iaConfig.modelo} não disponível, usando fallback: ${modeloFinal}`);
+      }
       
       // Construir prompt otimizado
       const prompt = this.buildSemanticAnalysisPrompt(oportunidade, imigrante, structuredScore);
       
       const completion = await this.openai.chat.completions.create({
-        model: "gpt-4",
+        model: modeloFinal,
         messages: [
           {
             role: "system",
@@ -598,13 +684,21 @@ export class SinergiaV2Service {
             content: prompt
           }
         ],
-        temperature: 0.3, // Baixa para consistência
-        max_tokens: 2000 // Aumentado para análise completa
-        // Removido response_format pois não é suportado no GPT-4 atual
+        temperature: iaConfig.temperatura,
+        max_tokens: iaConfig.maxTokens
       });
 
       const response = completion.choices[0]?.message?.content;
       const tokensUsed = completion.usage?.total_tokens || 0;
+      
+      // Validar custo máximo da análise
+      const custoEstimado = this.calcularCustoTokens(tokensUsed, modeloFinal);
+      if (custoEstimado > iaConfig.custoMaximoPorAnalise) {
+        console.warn(`⚠️ IA: Custo excedido: $${custoEstimado.toFixed(4)} > $${iaConfig.custoMaximoPorAnalise} - Continuando com aviso`);
+        // Não lança erro, apenas avisa - decisão de design para não quebrar o matching
+      }
+      
+      console.log(`💰 IA: Custo da análise: $${custoEstimado.toFixed(4)} (${tokensUsed} tokens)`);
       
       if (!response) {
         throw new Error('Resposta vazia da IA');
@@ -642,6 +736,7 @@ export class SinergiaV2Service {
 
     } catch (error) {
       console.error('❌ IA: Erro na análise semântica:', error);
+      console.log(`🔄 IA: Fallback para análise sem IA (configuração: ${iaConfig.modelo}, max tokens: ${iaConfig.maxTokens})`);
       
       // Fallback: retornar análise básica sem IA
       return {
@@ -650,7 +745,7 @@ export class SinergiaV2Service {
         habilidadesMatched: structuredScore.habilidades.matches.slice(0, 3),
         habilidadesMissing: [],
         score: Math.round(structuredScore.experiencias.score * 0.6 + structuredScore.habilidades.score * 0.4),
-        justificativa: 'Análise baseada em correspondência estruturada (IA indisponível)',
+        justificativa: `Análise baseada em correspondência estruturada (IA indisponível: ${error instanceof Error ? error.message : 'Erro desconhecido'})`,
         tokensUsed: 0
       };
     }
@@ -676,13 +771,13 @@ export class SinergiaV2Service {
 
     return {
       ...oportunidade,
-      denominacoes: JSON.parse(oportunidade.denominacoes || '[]'),
-      experienciasAceitas: JSON.parse(oportunidade.experienciasAceitas || '[]'),
-      areasFormacao: JSON.parse(oportunidade.areasFormacao || '[]'),
-      idiomasPreferenciais: JSON.parse(oportunidade.idiomasPreferenciais || '[]'),
-      habilidades: JSON.parse(oportunidade.habilidades || '[]'),
-      caracteristicas: JSON.parse(oportunidade.caracteristicas || '[]')
-    };
+      denominacoes: JSON.parse(oportunidade.denominacoes || '[]') as string[],
+      experienciasAceitas: JSON.parse(oportunidade.experienciasAceitas || '[]') as string[],
+      areasFormacao: JSON.parse(oportunidade.areasFormacao || '[]') as string[],
+      idiomasPreferenciais: JSON.parse(oportunidade.idiomasPreferenciais || '[]') as any[],
+      habilidades: JSON.parse(oportunidade.habilidades || '[]') as string[],
+      caracteristicas: JSON.parse(oportunidade.caracteristicas || '[]') as string[]
+    } as OportunidadeCompleteData;
   }
 
   private async getAllOportunidadesCompletas(): Promise<OportunidadeCompleteData[]> {
@@ -700,13 +795,13 @@ export class SinergiaV2Service {
 
     return oportunidades.map(op => ({
       ...op,
-      denominacoes: JSON.parse(op.denominacoes || '[]'),
-      experienciasAceitas: JSON.parse(op.experienciasAceitas || '[]'),
-      areasFormacao: JSON.parse(op.areasFormacao || '[]'),
-      idiomasPreferenciais: JSON.parse(op.idiomasPreferenciais || '[]'),
-      habilidades: JSON.parse(op.habilidades || '[]'),
-      caracteristicas: JSON.parse(op.caracteristicas || '[]')
-    }));
+      denominacoes: JSON.parse(op.denominacoes || '[]') as string[],
+      experienciasAceitas: JSON.parse(op.experienciasAceitas || '[]') as string[],
+      areasFormacao: JSON.parse(op.areasFormacao || '[]') as string[],
+      idiomasPreferenciais: JSON.parse(op.idiomasPreferenciais || '[]') as any[],
+      habilidades: JSON.parse(op.habilidades || '[]') as string[],
+      caracteristicas: JSON.parse(op.caracteristicas || '[]') as string[]
+    } as OportunidadeCompleteData));
   }
 
   private async getImigranteCompleto(id: string): Promise<ImigranteCompleteProfile | null> {
@@ -856,7 +951,8 @@ export class SinergiaV2Service {
       pontos.push(`❌ ELIMINATÓRIO: Transporte próprio necessário mas não disponível`);
     }
 
-    if (!breakdown.fluenciaPortugues.match && breakdown.fluenciaPortugues.required) {
+    // Verificação de critério eliminatório para fluência deve usar a configuração
+    if (!breakdown.fluenciaPortugues.match && breakdown.fluenciaPortugues.score === 0) {
       pontos.push(`❌ ELIMINATÓRIO: Fluência em português insuficiente`);
     }
 
@@ -1211,5 +1307,50 @@ Forneça score de 0-100 baseado APENAS em evidências concretas.
     }
 
     return analysis;
+  }
+
+  /**
+   * Validar se modelo está disponível e retornar fallback se necessário
+   */
+  private validarModeloDisponivel(modelo: string): string {
+    const modelosDisponiveis = [
+      'gpt-4',
+      'gpt-4-turbo',
+      'gpt-3.5-turbo',
+      'gpt-3.5-turbo-16k'
+    ];
+
+    if (modelosDisponiveis.includes(modelo)) {
+      return modelo;
+    }
+
+    console.warn(`⚠️ IA: Modelo ${modelo} não está na lista de disponíveis`);
+    
+    // Fallback inteligente baseado no modelo solicitado
+    if (modelo.includes('gpt-4')) {
+      return 'gpt-4';
+    } else if (modelo.includes('gpt-3.5') || modelo.includes('turbo')) {
+      return 'gpt-3.5-turbo';
+    } else {
+      return 'gpt-4'; // Fallback padrão
+    }
+  }
+
+  /**
+   * Calcular custo estimado baseado nos tokens e modelo usado
+   */
+  private calcularCustoTokens(tokens: number, modelo: string): number {
+    // Custos por 1k tokens (valores aproximados da OpenAI)
+    const custosPor1kTokens: { [key: string]: number } = {
+      'gpt-4': 0.03,              // $0.03 por 1k tokens
+      'gpt-4-turbo': 0.01,        // $0.01 por 1k tokens
+      'gpt-3.5-turbo': 0.002,     // $0.002 por 1k tokens  
+      'gpt-3.5-turbo-16k': 0.004  // $0.004 por 1k tokens
+    };
+
+    const custoPor1k = custosPor1kTokens[modelo] || custosPor1kTokens['gpt-4'];
+    const custo = (tokens / 1000) * custoPor1k;
+    
+    return custo;
   }
 }

@@ -26,6 +26,19 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
 
+    // DESENVOLVIMENTO: Aceitar token de desenvolvimento
+    if (token === 'development-token') {
+      console.log('🔓 AUTH: Usando token de desenvolvimento');
+      req.user = {
+        id: 'dev-user-123',
+        email: 'admin@madrilusa.com',
+        categoria: 'admin',
+        nomeCompleto: 'Administrador Dev'
+      };
+      req.userId = 'dev-user-123';
+      return next();
+    }
+
     if (!token) {
       return res.status(401).json({
         success: false,

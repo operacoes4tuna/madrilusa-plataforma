@@ -22,25 +22,25 @@ export type {
   UpdatePerfilImigranteRequest,
   PerfilImigranteResponse,
   
-  // ✨ FASE 2: Tipos para empresa
+  // Tipos para empresa
   PerfilEmpresa,
   CreatePerfilEmpresaRequest,
   UpdatePerfilEmpresaRequest,
   PerfilEmpresaResponse,
   
-  // ✨ FASE 3: Tipos para município
+  // Tipos para município
   PerfilMunicipio,
   CreatePerfilMunicipioRequest,
   UpdatePerfilMunicipioRequest,
   PerfilMunicipioResponse,
   
-  // ✨ FASE 4: Tipos para academia
+  // Tipos para academia
   PerfilAcademia,
   CreatePerfilAcademiaRequest,
   UpdatePerfilAcademiaRequest,
   PerfilAcademiaResponse,
   
-  // ✨ FASE 5: Tipos para família
+  // Tipos para família
   PerfilFamilia,
   CreatePerfilFamiliaRequest,
   UpdatePerfilFamiliaRequest,
@@ -63,13 +63,26 @@ export type {
   FluenciaPortugues
 } from '../../../../shared-types/api.types';
 
-// ✨ NOVO: Reexportar valores (constantes)
-export { 
-  USER_CATEGORIES,
-  NACIONALIDADES,
-  GENEROS,
-  FLUENCIA_PORTUGUES
-} from '../../../../shared-types/api.types';
+// ✨ NOVO: Definições locais para evitar problemas de import
+export const USER_CATEGORIES = {
+  IMIGRANTE: 'IMIGRANTE',
+  EMPRESA: 'EMPRESA', 
+  MUNICIPIO: 'MUNICIPIO',
+  ACADEMIA: 'ACADEMIA',
+  FAMILIA_ACOLHIMENTO: 'FAMILIA_ACOLHIMENTO',
+  ADMIN: 'ADMIN'
+} as const;
+
+export const NACIONALIDADES = [
+  'Portuguesa', 'Angolana', 'Brasileira', 'Cabo-verdiana', 'Guineense',
+  'Macaense', 'Moçambicana', 'São-tomense', 'Timorense', 'Outra'
+] as const;
+
+export const GENEROS = ['F', 'M', 'Outro'] as const;
+
+export const FLUENCIA_PORTUGUES = [
+  'Básica', 'Intermediária', 'Avançada', 'Fluente'
+] as const;
 
 // Frontend-specific types (únicos do frontend)
 export interface AuthFormData {

@@ -260,12 +260,18 @@ const MainSidebar: React.FC = () => {
         iconClass: 'tune',
         htmlAfter: '<span class="badge badge-warning ml-auto" style="font-size: 9px;">ML</span>'
       },
-      // {
-      //   title: 'SinergIA - Configuração',
-      //   to: '/app/sinergia-config-admin',
-      //   iconClass: 'settings',
-      //   htmlAfter: '<span class="badge badge-info ml-auto" style="font-size: 9px;">CONFIG</span>'
-      // }
+      {
+        title: 'SinergIA - Configuração',
+        to: '/app/sinergia-config-admin',
+        iconClass: 'settings',
+        htmlAfter: '<span class="badge badge-success ml-auto" style="font-size: 9px;">ATIVO</span>'
+      },
+      {
+        title: 'SinergIA - Teste APIs',
+        to: '/app/sinergia-config-test',
+        iconClass: 'science',
+        htmlAfter: '<span class="badge badge-primary ml-auto" style="font-size: 9px;">TEST</span>'
+      }
     ];
   };
   

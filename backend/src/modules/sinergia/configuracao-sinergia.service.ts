@@ -9,6 +9,8 @@ import type {
   ValidationResult
 } from './sinergia-config.types';
 import { DEFAULT_CONFIGURATION, TEMPLATES_CONFIGURACAO } from './sinergia-config.types';
+import { systemEventEmitter, notifyConfigurationChange } from '../../shared/event-emitter';
+import { syncManager } from '../../shared/sync-manager';
 
 const prisma = new PrismaClient();
 
@@ -18,7 +20,47 @@ export class ConfiguracaoSinergiaService {
   private cacheExpiry: Map<string, number> = new Map();
   private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutos
 
-  private constructor() {}
+  private constructor() {
+    // Configurar listeners para eventos
+    this.setupEventListeners();
+    
+    // Registrar no sync manager
+    syncManager.registerService({
+      serviceName: 'ConfiguracaoSinergiaService',
+      clearCache: () => this.clearCache()
+    });
+  }
+
+  /**
+   * Configurar listeners para eventos de cache
+   */
+  private setupEventListeners(): void {
+    // Listener para invalidação de cache
+    systemEventEmitter.onEvent(
+      'cache:invalidar',
+      (data) => {
+        if (data.servico === 'ConfiguracaoSinergiaService' || data.servico === 'all') {
+          console.log(`🧹 CONFIGURACAO SINERGIA: Cache invalidado - ${data.motivo}`);
+          this.limparCache();
+        }
+      },
+      'ConfiguracaoSinergiaService'
+    );
+
+    // Listener para limpeza total de cache
+    systemEventEmitter.onEvent(
+      'cache:limpar',
+      (data) => {
+        if (data.servicos.includes('ConfiguracaoSinergiaService') || data.servicos.includes('all')) {
+          console.log('🧹 CONFIGURACAO SINERGIA: Limpeza total de cache solicitada');
+          this.limparCache();
+        }
+      },
+      'ConfiguracaoSinergiaService'
+    );
+
+    console.log('📡 CONFIGURACAO SINERGIA: Event listeners configurados');
+  }
 
   static getInstance(): ConfiguracaoSinergiaService {
     if (!ConfiguracaoSinergiaService.instance) {
@@ -114,7 +156,10 @@ export class ConfiguracaoSinergiaService {
         orderBy: { versao: 'desc' }
       });
 
-      return configs;
+      return configs.map(config => ({
+        ...config,
+        descricao: config.descricao ?? undefined
+      }));
 
     } catch (error) {
       console.error('❌ CONFIG: Erro ao listar configurações:', error);
@@ -183,9 +228,12 @@ export class ConfiguracaoSinergiaService {
         return nova.id;
       });
 
-      // Limpa cache se ativou
+      // Emitir evento e limpar cache
       if (ativar) {
+        notifyConfigurationChange('ativada', resultado, novaVersao, nome);
         this.limparCache();
+      } else {
+        notifyConfigurationChange('criada', resultado, novaVersao, nome);
       }
 
       console.log(`✅ CONFIG: Configuração criada - ${nome} v${novaVersao} (${ativar ? 'ATIVA' : 'inativa'})`);
@@ -248,6 +296,16 @@ export class ConfiguracaoSinergiaService {
           }
         });
       });
+
+      // Buscar dados para notificação
+      const configAtivada = await prisma.configuracaoSinergia.findUnique({
+        where: { id: configuracaoId }
+      });
+
+      if (configAtivada) {
+        // Emitir evento de ativação
+        notifyConfigurationChange('ativada', configuracaoId, configAtivada.versao, configAtivada.nome);
+      }
 
       // Limpa cache
       this.limparCache();
@@ -474,7 +532,7 @@ export class ConfiguracaoSinergiaService {
         orderBy: { createdAt: 'desc' }
       });
 
-      return historico;
+      return historico as HistoricoConfiguracaoSinergiaBD[];
 
     } catch (error) {
       console.error('❌ CONFIG: Erro ao buscar histórico:', error);
@@ -613,6 +671,13 @@ export class ConfiguracaoSinergiaService {
     this.cache.clear();
     this.cacheExpiry.clear();
     console.log('🗑️  CONFIG: Cache limpo');
+  }
+
+  /**
+   * Método público para limpeza de cache (usado pelo Event Emitter)
+   */
+  public clearCache(): void {
+    this.limparCache();
   }
 
   private setNestedProperty(obj: any, path: string, value: any): void {
