@@ -149,6 +149,30 @@ const MainSidebar: React.FC = () => {
         });
       });
 
+      // ✨ NOVO: Dados Profissionais específicos para Imigrantes
+      if (user?.categoria === 'IMIGRANTE') {
+        categoryMenuItems.push(
+          {
+            title: 'Experiências Profissionais',
+            to: '/app/dados-profissionais/experiencias',
+            iconClass: 'work',
+            htmlAfter: ''
+          },
+          {
+            title: 'Formação',
+            to: '/app/dados-profissionais/formacao',
+            iconClass: 'school',
+            htmlAfter: ''
+          },
+          {
+            title: 'Idiomas',
+            to: '/app/dados-profissionais/idiomas',
+            iconClass: 'language',
+            htmlAfter: ''
+          }
+        );
+      }
+
       // ✨ NOVO: SinergIA - disponível para todas as categorias
       if (tiposDisponiveis.length > 0) {
         categoryMenuItems.push({
@@ -190,6 +214,12 @@ const MainSidebar: React.FC = () => {
         title: 'Gestão de Tags',
         to: '/app/tags-management',
         iconClass: 'local_offer',
+        htmlAfter: ''
+      },
+      {
+        title: 'Dados Profissionais',
+        to: '/app/dados-profissionais-admin',
+        iconClass: 'work',
         htmlAfter: ''
       }
     ];

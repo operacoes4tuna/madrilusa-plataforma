@@ -262,6 +262,101 @@ async function createDevUsers() {
         }
       }
 
+      // ✨ NOVO: Adicionar dados profissionais para imigrantes
+      if (user.categoria === 'IMIGRANTE') {
+        console.log(`📋 Criando dados profissionais para ${user.nomeCompleto}...`);
+        
+        // Experiências profissionais
+        const experiencias = [
+          {
+            cargo: "Desenvolvedor Frontend",
+            empresa: "Tech Solutions Ltda",
+            tempoNoCargo: "2 a 5 anos"
+          },
+          {
+            cargo: "Designer Gráfico",
+            empresa: "Creative Studio",
+            tempoNoCargo: "1 a 2 anos"
+          }
+        ];
+
+        // Formações
+        const formacoes = [
+          {
+            nivelEscolaridade: "Licenciatura",
+            curso: "Engenharia Informática",
+            instituicao: "Universidade de Lisboa",
+            dataTermino: "2022-07-15"
+          },
+          {
+            nivelEscolaridade: "Ensino Secundário",
+            curso: "",
+            instituicao: "Escola Secundária Central",
+            dataTermino: "2018-06-20"
+          }
+        ];
+
+        // Idiomas
+        const idiomas = [
+          {
+            idioma: "Inglês",
+            nivel: "Avançado"
+          },
+          {
+            idioma: "Espanhol",
+            nivel: "Intermédio"
+          },
+          {
+            idioma: "Francês",
+            nivel: "Básico"
+          }
+        ];
+
+        // Criar experiências
+        for (let i = 0; i < experiencias.length; i++) {
+          const exp = experiencias[i];
+          await prisma.dadosProfissionaisImigrante.create({
+            data: {
+              userId: createdUser.id,
+              tipo: 'experiencia',
+              dados: JSON.stringify(exp),
+              titulo: `${exp.cargo} na ${exp.empresa}`,
+              ordem: i + 1
+            }
+          });
+        }
+
+        // Criar formações
+        for (let i = 0; i < formacoes.length; i++) {
+          const form = formacoes[i];
+          await prisma.dadosProfissionaisImigrante.create({
+            data: {
+              userId: createdUser.id,
+              tipo: 'formacao',
+              dados: JSON.stringify(form),
+              titulo: `${form.curso || form.nivelEscolaridade}${form.instituicao ? ` - ${form.instituicao}` : ''}`,
+              ordem: i + 1
+            }
+          });
+        }
+
+        // Criar idiomas
+        for (let i = 0; i < idiomas.length; i++) {
+          const idioma = idiomas[i];
+          await prisma.dadosProfissionaisImigrante.create({
+            data: {
+              userId: createdUser.id,
+              tipo: 'idioma',
+              dados: JSON.stringify(idioma),
+              titulo: `${idioma.idioma} (${idioma.nivel})`,
+              ordem: i + 1
+            }
+          });
+        }
+
+        console.log(`✨ ${experiencias.length} experiências, ${formacoes.length} formações e ${idiomas.length} idiomas criados!`);
+      }
+
       console.log(`🎉 Usuário ${user.categoria} configurado completamente!\n`);
     }
 

@@ -17,10 +17,15 @@ import UserManagement from "./app/pages/UserManagement"; // ✨ ADMIN
 import TiposContribuicaoManagement from "./app/pages/TiposContribuicaoManagement"; // ✨ CONTRIBUIÇÕES
 import TagsManagement from "./app/pages/TagsManagement"; // ✨ CONTRIBUIÇÕES
 import MinhasContribuicoes from "./app/pages/MinhasContribuicoes"; // ✨ CONTRIBUIÇÕES USUÁRIO
+import MinhasContribuicoesUnificadas from "./app/pages/MinhasContribuicoesUnificadas"; // ✨ CONTRIBUIÇÕES UNIFICADAS
 import ContribuicoesPorTipo from "./app/pages/ContribuicoesPorTipo"; // ✨ MENU DINÂMICO
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 import SinergIA from "./app/pages/SinergIA";
+import DadosProfissionaisAdmin from "./app/pages/DadosProfissionaisAdmin"; // ✨ DADOS PROFISSIONAIS ADMIN
+import ExperienciasProfissionais from "./app/pages/ExperienciasProfissionais"; // ✨ DADOS PROFISSIONAIS
+import FormacaoAcademica from "./app/pages/FormacaoAcademica"; // ✨ DADOS PROFISSIONAIS
+import IdiomasConhecidos from "./app/pages/IdiomasConhecidos"; // ✨ DADOS PROFISSIONAIS
 
 const queryClient = new QueryClient();
 
@@ -53,8 +58,12 @@ const App = () => (
             <Route path="tipos-contribuicao" element={<TiposContribuicaoManagement />} />
             <Route path="tags-management" element={<TagsManagement />} />
             <Route path="contribuicoes/:tipoId" element={<ContribuicoesPorTipo />} />
-            <Route path="minhas-contribuicoes" element={<MinhasContribuicoes />} />
+            <Route path="minhas-contribuicoes" element={<MinhasContribuicoesUnificadas />} />
             <Route path="sinergia" element={<SinergIA />} />
+            <Route path="dados-profissionais-admin" element={<DadosProfissionaisAdmin />} />
+            <Route path="dados-profissionais/experiencias" element={<ExperienciasProfissionais />} />
+            <Route path="dados-profissionais/formacao" element={<FormacaoAcademica />} />
+            <Route path="dados-profissionais/idiomas" element={<IdiomasConhecidos />} />
           </Route>
           
           {/* 404 */}

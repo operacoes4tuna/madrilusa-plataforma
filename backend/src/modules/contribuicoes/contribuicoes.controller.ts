@@ -210,6 +210,42 @@ export const contribuicoesController = {
     }
   },
 
+  // Buscar todas as contribuições unificadas (normais + dados profissionais)
+  async getTodasContribuicoes(req: Request, res: Response) {
+    try {
+      const { userId } = req.params;
+
+      if (!userId) {
+        return res.status(400).json({
+          success: false,
+          error: 'ID do usuário é obrigatório'
+        });
+      }
+
+      const contribuicoesUnificadas = await contribuicoesService.getContribuicoesUnificadas(userId);
+
+      res.json({
+        success: true,
+        data: contribuicoesUnificadas,
+        message: `${contribuicoesUnificadas.length} contribuições encontradas`
+      });
+    } catch (error) {
+      console.error('Erro ao buscar contribuições unificadas:', error);
+      
+      if (error instanceof Error) {
+        return res.status(400).json({
+          success: false,
+          error: error.message
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'Erro interno do servidor'
+      });
+    }
+  },
+
   // ===== TIPOS DE CONTRIBUIÇÃO =====
 
   async getTiposDisponiveis(req: Request, res: Response) {

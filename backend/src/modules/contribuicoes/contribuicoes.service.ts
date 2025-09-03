@@ -8,6 +8,8 @@ import {
   TagSistemaCreateData,
   TagSistemaUpdateData
 } from './contribuicoes.types';
+import type { ContribuicaoUnificada } from '../../../shared-types/api.types';
+import { dadosProfissionaisService } from '../dados-profissionais/dados-profissionais.service';
 
 // Helper para padronizar tags no retorno
 function formatTagsForResponse(contribuicao: any) {
@@ -279,6 +281,103 @@ export const contribuicoesService = {
     return await prisma.tipoContribuicao.delete({
       where: { id }
     });
+  },
+
+  // ===== CONTRIBUIÇÕES UNIFICADAS =====
+
+  // Buscar todas as contribuições (normais + dados profissionais) de um usuário
+  async getContribuicoesUnificadas(userId: string): Promise<ContribuicaoUnificada[]> {
+    try {
+      // Buscar contribuições normais
+      const contribuicoesNormais = await this.getContribuicoesByUser(userId);
+      
+      // Buscar dados profissionais (apenas para imigrantes)
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { categoria: true }
+      });
+
+      let dadosProfissionais: any[] = [];
+      if (user?.categoria === 'IMIGRANTE') {
+        dadosProfissionais = await dadosProfissionaisService.getByUser(userId);
+      }
+
+      // Converter contribuições normais para formato unificado
+      const contribuicoesUnificadas: ContribuicaoUnificada[] = contribuicoesNormais.map(contrib => ({
+        id: contrib.id,
+        tipo: 'contribuicao_normal' as const,
+        titulo: contrib.tipoContribuicao?.titulo || 'Contribuição',
+        descricao: contrib.descricao,
+        tags: contrib.tags || [],
+        createdAt: contrib.createdAt,
+        updatedAt: contrib.updatedAt,
+        userId: contrib.userId,
+        tipoContribuicao: contrib.tipoContribuicao,
+        user: contrib.user
+      }));
+
+      // Converter dados profissionais para formato unificado
+      const dadosProfissionaisUnificados: ContribuicaoUnificada[] = dadosProfissionais.map(dado => ({
+        id: dado.id,
+        tipo: dado.tipo,
+        titulo: dado.titulo,
+        descricao: this.generateDescricaoFromDados(dado.tipo, dado.dados),
+        tags: this.generateTagsFromDados(dado.tipo, dado.dados),
+        createdAt: dado.createdAt,
+        updatedAt: dado.updatedAt,
+        userId: dado.userId,
+        dadosEstruturados: dado.dados,
+        user: dado.user
+      }));
+
+      // Unificar e ordenar por data de criação (mais recentes primeiro)
+      const todasContribuicoes = [...contribuicoesUnificadas, ...dadosProfissionaisUnificados];
+      todasContribuicoes.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+      return todasContribuicoes;
+
+    } catch (error) {
+      console.error('Erro ao buscar contribuições unificadas:', error);
+      throw new Error('Não foi possível buscar contribuições unificadas');
+    }
+  },
+
+  // Helper para gerar descrição textual dos dados estruturados
+  generateDescricaoFromDados(tipo: string, dados: any): string {
+    switch (tipo) {
+      case 'experiencia':
+        return `Experiência como ${dados.cargo} na ${dados.empresa} por ${dados.tempoNoCargo}`;
+      case 'formacao':
+        const formacao = `${dados.curso || dados.nivelEscolaridade}`;
+        const instituicao = dados.instituicao ? ` na ${dados.instituicao}` : '';
+        const dataTermino = dados.dataTermino ? ` (concluído em ${dados.dataTermino})` : '';
+        return `${formacao}${instituicao}${dataTermino}`;
+      case 'idioma':
+        return `Idioma ${dados.idioma} com nível ${dados.nivel}`;
+      default:
+        return 'Dado profissional';
+    }
+  },
+
+  // Helper para gerar tags dos dados estruturados
+  generateTagsFromDados(tipo: string, dados: any): string[] {
+    const tags: string[] = [tipo];
+    
+    switch (tipo) {
+      case 'experiencia':
+        tags.push(dados.cargo, dados.empresa, dados.tempoNoCargo);
+        break;
+      case 'formacao':
+        tags.push(dados.nivelEscolaridade);
+        if (dados.curso) tags.push(dados.curso);
+        if (dados.instituicao) tags.push(dados.instituicao);
+        break;
+      case 'idioma':
+        tags.push(dados.idioma, dados.nivel);
+        break;
+    }
+    
+    return tags.filter(tag => tag && tag.trim() !== '');
   },
 
   // ===== TAGS DO SISTEMA =====

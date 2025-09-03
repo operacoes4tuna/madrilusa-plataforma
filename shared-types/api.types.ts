@@ -608,6 +608,112 @@ export const FLUENCIA_PORTUGUES = [
 
 export type FluenciaPortugues = typeof FLUENCIA_PORTUGUES[number];
 
+// ✨ DADOS PROFISSIONAIS: Tipos para dados estruturados de imigrantes
+export const TIPOS_DADO_PROFISSIONAL = [
+  'experiencia',
+  'formacao', 
+  'idioma'
+] as const;
+
+export type TipoDadoProfissional = typeof TIPOS_DADO_PROFISSIONAL[number];
+
+export const NIVEIS_ESCOLARIDADE = [
+  'Ensino Básico',
+  'Ensino Secundário',
+  'Ensino Profissional',
+  'Licenciatura',
+  'Mestrado',
+  'Doutoramento',
+  'Outro'
+] as const;
+
+export type NivelEscolaridade = typeof NIVEIS_ESCOLARIDADE[number];
+
+export const NIVEIS_IDIOMA = [
+  'Básico',
+  'Intermédio',
+  'Avançado'
+] as const;
+
+export type NivelIdioma = typeof NIVEIS_IDIOMA[number];
+
+export const TEMPOS_CARGO = [
+  'Menos de 6 meses',
+  '6 meses a 1 ano',
+  '1 a 2 anos',
+  '2 a 5 anos',
+  'Mais de 5 anos'
+] as const;
+
+export type TempoCargo = typeof TEMPOS_CARGO[number];
+
+// Interfaces para dados específicos por tipo
+export interface DadosExperiencia {
+  cargo: string;
+  empresa: string;
+  tempoNoCargo: TempoCargo;
+}
+
+export interface DadosFormacao {
+  nivelEscolaridade: NivelEscolaridade;
+  curso?: string;
+  instituicao?: string;
+  dataTermino?: string;
+}
+
+export interface DadosIdioma {
+  idioma: string;
+  nivel: NivelIdioma;
+}
+
+export type DadosProfissionaisUnion = DadosExperiencia | DadosFormacao | DadosIdioma;
+
+// Interface principal
+export interface DadoProfissionalImigrante {
+  id: string;
+  userId: string;
+  tipo: TipoDadoProfissional;
+  dados: DadosProfissionaisUnion;
+  titulo: string;
+  ordem: number;
+  ativo: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Requests
+export interface CreateDadoProfissionalRequest {
+  tipo: TipoDadoProfissional;
+  dados: DadosProfissionaisUnion;
+  ordem?: number;
+}
+
+export interface UpdateDadoProfissionalRequest {
+  dados?: DadosProfissionaisUnion;
+  titulo?: string;
+  ordem?: number;
+  ativo?: boolean;
+}
+
+// Interface unificada para contribuições + dados profissionais
+export interface ContribuicaoUnificada {
+  id: string;
+  tipo: 'contribuicao_normal' | TipoDadoProfissional;
+  titulo: string;
+  descricao: string;
+  tags: string[];
+  createdAt: Date;
+  updatedAt: Date;
+  userId: string;
+  
+  // Dados específicos (apenas para tipos estruturados)
+  dadosEstruturados?: DadosProfissionaisUnion;
+  
+  // Dados originais (para contribuições normais)
+  tipoContribuicao?: TipoContribuicao;
+  user?: User;
+}
+
 // ✨ SISTEMA CONTRIBUIÇÕES: Interfaces para tipos de contribuição
 export interface TipoContribuicao {
   id: string;

@@ -8,6 +8,7 @@ const router = Router();
 // Contribuições do usuário
 router.post('/user/:userId', contribuicoesController.createContribuicao);
 router.get('/user/:userId', contribuicoesController.getMinhasContribuicoes);
+router.get('/user/:userId/todas', contribuicoesController.getTodasContribuicoes); // ✨ NOVO: Endpoint unificado
 router.get('/user/:userId/formatadas', contribuicoesController.getContribuicoesComTipo);
 router.get('/user/:userId/tipos-disponiveis', contribuicoesController.getTiposParaUsuario);
 router.get('/user/:userId/tipo/:tipoId', contribuicoesController.getContribuicoesPorTipo);
