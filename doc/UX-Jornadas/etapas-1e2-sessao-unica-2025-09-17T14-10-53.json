@@ -1,0 +1,278 @@
+{
+  "sessao": "ETAPAS 1+2 - Sessão Única",
+  "timestamp": "2025-09-17T14-10-53",
+  "etapa1": {
+    "dadosPreenchidos": {
+      "nome": "Maria Santos Oliveira",
+      "email": "maria.santos.1758118253784@madrilusa.demo",
+      "telefone": "+351912345678",
+      "senha": "[preenchida]"
+    },
+    "camposMapeados": [
+      {
+        "etapa": 1,
+        "indice": 0,
+        "tagName": "input",
+        "tipo": "email",
+        "name": "",
+        "id": "",
+        "placeholder": "Vosso e-mail",
+        "obrigatorio": true,
+        "visivel": true
+      },
+      {
+        "etapa": 1,
+        "indice": 1,
+        "tagName": "input",
+        "tipo": "input",
+        "name": "nomeCompleto",
+        "id": "nomeCompleto",
+        "placeholder": "Digite seu nome completo",
+        "obrigatorio": false,
+        "visivel": true
+      },
+      {
+        "etapa": 1,
+        "indice": 2,
+        "tagName": "input",
+        "tipo": "email",
+        "name": "email",
+        "id": "email",
+        "placeholder": "Digite seu email",
+        "obrigatorio": false,
+        "visivel": true
+      },
+      {
+        "etapa": 1,
+        "indice": 3,
+        "tagName": "input",
+        "tipo": "input",
+        "name": "telemovel",
+        "id": "telemovel",
+        "placeholder": "+351 912 345 678",
+        "obrigatorio": false,
+        "visivel": true
+      },
+      {
+        "etapa": 1,
+        "indice": 4,
+        "tagName": "input",
+        "tipo": "password",
+        "name": "senha",
+        "id": "senha",
+        "placeholder": "Mínimo 6 caracteres",
+        "obrigatorio": false,
+        "visivel": true
+      }
+    ],
+    "screenshots": [
+      "sessao-02-modal-inicial.png",
+      "sessao-03-etapa1-preenchida.png"
+    ],
+    "observacoes": [
+      "Etapa 1 executada em sessão contínua"
+    ]
+  },
+  "etapa2": {
+    "dadosPreenchidos": {
+      "data nascimento": "1995-03-15"
+    },
+    "camposMapeados": [
+      {
+        "etapa": 2,
+        "indice": 0,
+        "tagName": "input",
+        "tipo": "email",
+        "name": "",
+        "id": "",
+        "placeholder": "Vosso e-mail",
+        "obrigatorio": true,
+        "valorPreenchido": "",
+        "visivel": true
+      },
+      {
+        "etapa": 2,
+        "indice": 1,
+        "tagName": "input",
+        "tipo": "input",
+        "name": "nacionalidade",
+        "id": "nacionalidade",
+        "placeholder": "Digite ou selecione sua nacionalidade",
+        "obrigatorio": false,
+        "valorPreenchido": "",
+        "visivel": true
+      },
+      {
+        "etapa": 2,
+        "indice": 2,
+        "tagName": "input",
+        "tipo": "date",
+        "name": "dataNascimento",
+        "id": "dataNascimento",
+        "placeholder": "",
+        "obrigatorio": false,
+        "valorPreenchido": "",
+        "visivel": true
+      },
+      {
+        "etapa": 2,
+        "indice": 3,
+        "tagName": "input",
+        "tipo": "checkbox",
+        "name": "",
+        "id": "",
+        "placeholder": "",
+        "obrigatorio": false,
+        "valorPreenchido": "on",
+        "visivel": true
+      },
+      {
+        "etapa": 2,
+        "indice": 4,
+        "tagName": "input",
+        "tipo": "checkbox",
+        "name": "",
+        "id": "",
+        "placeholder": "",
+        "obrigatorio": false,
+        "valorPreenchido": "on",
+        "visivel": true
+      },
+      {
+        "etapa": 2,
+        "indice": 5,
+        "tagName": "input",
+        "tipo": "checkbox",
+        "name": "",
+        "id": "",
+        "placeholder": "",
+        "obrigatorio": false,
+        "valorPreenchido": "on",
+        "visivel": true
+      },
+      {
+        "etapa": 2,
+        "indice": 6,
+        "tagName": "textarea",
+        "tipo": "textarea",
+        "name": "objetivoOutros",
+        "id": "objetivoOutros",
+        "placeholder": "Outros objetivos ou necessidades específicas",
+        "obrigatorio": false,
+        "valorPreenchido": "",
+        "visivel": true
+      },
+      {
+        "etapa": 2,
+        "indice": 7,
+        "tagName": "textarea",
+        "tipo": "textarea",
+        "name": "mensagem",
+        "id": "mensagem",
+        "placeholder": "Informações adicionais que gostaria de compartilhar",
+        "obrigatorio": false,
+        "valorPreenchido": "",
+        "visivel": true
+      },
+      {
+        "etapa": 2,
+        "indice": 8,
+        "tagName": "select",
+        "tipo": "select",
+        "name": "",
+        "id": "",
+        "placeholder": "",
+        "obrigatorio": false,
+        "valorPreenchido": "F",
+        "visivel": true
+      },
+      {
+        "etapa": 2,
+        "indice": 9,
+        "tagName": "select",
+        "tipo": "select",
+        "name": "",
+        "id": "",
+        "placeholder": "",
+        "obrigatorio": false,
+        "valorPreenchido": "Básica",
+        "visivel": true
+      },
+      {
+        "etapa": 2,
+        "indice": 10,
+        "tagName": "input",
+        "tipo": "input",
+        "name": "municipioResidencia",
+        "id": "municipioResidencia",
+        "placeholder": "Digite o município onde reside",
+        "obrigatorio": false,
+        "valorPreenchido": "",
+        "visivel": true
+      },
+      {
+        "etapa": 2,
+        "indice": 11,
+        "tagName": "input",
+        "tipo": "checkbox",
+        "name": "",
+        "id": "",
+        "placeholder": "",
+        "obrigatorio": false,
+        "valorPreenchido": "on",
+        "visivel": true
+      },
+      {
+        "etapa": 2,
+        "indice": 12,
+        "tagName": "input",
+        "tipo": "checkbox",
+        "name": "",
+        "id": "",
+        "placeholder": "",
+        "obrigatorio": false,
+        "valorPreenchido": "on",
+        "visivel": true
+      },
+      {
+        "etapa": 2,
+        "indice": 13,
+        "tagName": "input",
+        "tipo": "checkbox",
+        "name": "",
+        "id": "",
+        "placeholder": "",
+        "obrigatorio": false,
+        "valorPreenchido": "on",
+        "visivel": true
+      },
+      {
+        "etapa": 2,
+        "indice": 14,
+        "tagName": "input",
+        "tipo": "checkbox",
+        "name": "",
+        "id": "",
+        "placeholder": "",
+        "obrigatorio": true,
+        "valorPreenchido": "on",
+        "visivel": true
+      }
+    ],
+    "screenshots": [
+      "sessao-04-apos-avancar.png",
+      "sessao-05-etapa2-final.png"
+    ],
+    "observacoes": [
+      "Etapa 2 executada em continuidade da sessão"
+    ]
+  },
+  "fluxoCompleto": {
+    "screenshots": [
+      "sessao-01-home-inicial.png"
+    ],
+    "observacoes": [
+      "Sessão única mantida entre etapas 1 e 2"
+    ]
+  }
+}

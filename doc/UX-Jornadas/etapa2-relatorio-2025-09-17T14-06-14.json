@@ -1,0 +1,81 @@
+{
+  "etapa": "2 - Dados Complementares",
+  "timestamp": "2025-09-17T14-06-14",
+  "dadosPreenchidos": {
+    "pais": "Brasil",
+    "cidade": "São Paulo",
+    "dataManascimento": "1995-03-15",
+    "genero": "Feminino",
+    "estadoCivil": "Solteira",
+    "categoria": "IMIGRANTE",
+    "telefone": "+351912345678",
+    "morada": "Rua das Flores, 123, Lisboa"
+  },
+  "camposEncontrados": [
+    {
+      "indice": 0,
+      "tagName": "input",
+      "tipo": "email",
+      "name": "",
+      "id": "",
+      "placeholder": "Vosso e-mail",
+      "obrigatorio": true,
+      "valorAtual": "",
+      "visivel": true
+    },
+    {
+      "indice": 1,
+      "tagName": "input",
+      "tipo": "input",
+      "name": "nomeCompleto",
+      "id": "nomeCompleto",
+      "placeholder": "Digite seu nome completo",
+      "obrigatorio": false,
+      "valorAtual": "",
+      "visivel": true
+    },
+    {
+      "indice": 2,
+      "tagName": "input",
+      "tipo": "email",
+      "name": "email",
+      "id": "email",
+      "placeholder": "Digite seu email",
+      "obrigatorio": false,
+      "valorAtual": "",
+      "visivel": true
+    },
+    {
+      "indice": 3,
+      "tagName": "input",
+      "tipo": "input",
+      "name": "telemovel",
+      "id": "telemovel",
+      "placeholder": "+351 912 345 678",
+      "obrigatorio": false,
+      "valorAtual": "",
+      "visivel": true
+    },
+    {
+      "indice": 4,
+      "tagName": "input",
+      "tipo": "password",
+      "name": "senha",
+      "id": "senha",
+      "placeholder": "Mínimo 6 caracteres",
+      "obrigatorio": false,
+      "valorAtual": "",
+      "visivel": true
+    }
+  ],
+  "screenshots": [
+    "etapa2-01-estado-inicial.png",
+    "etapa2-02-apos-continuar.png",
+    "etapa2-04-campos-preenchidos.png"
+  ],
+  "observacoes": [
+    "Etapa 2 concluída - Dados complementares mapeados e preenchidos"
+  ],
+  "scrollsRealizados": 0,
+  "status": "CONCLUÍDA"
+}

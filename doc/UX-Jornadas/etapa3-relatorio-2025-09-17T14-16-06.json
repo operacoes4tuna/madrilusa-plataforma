@@ -1,0 +1,29 @@
+{
+  "etapa": "3 - Dashboard Inicial",
+  "timestamp": "2025-09-17T14-16-06",
+  "modalFinalizado": false,
+  "redirecionamento": {
+    "urlEsperada": "http://localhost:8080/app/dashboard",
+    "urlReal": "",
+    "sucesso": false
+  },
+  "usuarioLogado": {
+    "nomeVisivel": "",
+    "posicao": "",
+    "detectado": false
+  },
+  "estruturaDashboard": {
+    "menus": [],
+    "botoes": [],
+    "secoes": []
+  },
+  "screenshots": [
+    "etapa3-01-inicio.png",
+    "etapa3-02-apos-finalizacao.png"
+  ],
+  "observacoes": [
+    "Botão de finalização não encontrado no modal",
+    "Permanecemos na URL: http://localhost:8080/",
+    "Etapa 3 concluída - Dashboard inicial mapeado"
+  ]
+}

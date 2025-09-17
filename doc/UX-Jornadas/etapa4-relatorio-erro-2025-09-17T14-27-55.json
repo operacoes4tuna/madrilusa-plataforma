@@ -1,0 +1,48 @@
+{
+  "etapa": "4 - Seção Habilidades",
+  "timestamp": "2025-09-17T14-27-55",
+  "navegacao": {
+    "dashboardAcessado": true,
+    "botaoHabilidadesClicado": true,
+    "modalHabilidadeAberto": true
+  },
+  "modalHabilidade": {
+    "camposMapeados": [
+      {
+        "indice": 0,
+        "tagName": "textarea",
+        "tipo": "textarea",
+        "name": "",
+        "id": "descricao",
+        "placeholder": "Descreva as suas competências em áreas tradicionais como agricultura, artesanato, gastronomia ou turismo. Que técnicas ou conhecimentos específicos do seu país podem enriquecer os territórios rurais portugueses? Em que regiões de Portugal gostaria de aplicar estas competências? Como vê a sua contribuição para a economia local?",
+        "obrigatorio": true,
+        "visivel": true
+      },
+      {
+        "indice": 1,
+        "tagName": "input",
+        "tipo": "text",
+        "name": "",
+        "id": "",
+        "placeholder": "Digite para buscar ou criar tags...",
+        "obrigatorio": false,
+        "visivel": true
+      }
+    ],
+    "dadosPreenchidos": {},
+    "habilidadeCriada": false,
+    "listaAtualizada": false
+  },
+  "screenshots": [
+    "etapa4-01-dashboard-inicial.png",
+    "etapa4-02-pagina-habilidades.png",
+    "etapa4-03-apos-clicar-adicionar.png",
+    "etapa4-03-modal-habilidade-aberto.png",
+    "etapa4-04-modal-preenchido.png",
+    "etapa4-erro-2025-09-17T14-27-55.png"
+  ],
+  "observacoes": [
+    "Navegou para: http://localhost:8080/app/contribuicoes/cmelqwm9t0000crcdzol9j4lj",
+    "ERRO: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\"Criar\")')\u001b[22m\n\u001b[2m    - locator resolved to <button disabled type=\"submit\" class=\"btn btn-primary\">Criar</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not enabled\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+  ]
+}

@@ -1,0 +1,1206 @@
+{
+  "usuario": "sofia.teste.1758094245255@madrilusa.demo",
+  "inicio": "2025-09-17T07:30:45.256Z",
+  "etapas": [
+    {
+      "nome": "Dashboard Principal",
+      "url": "http://localhost:8081/app",
+      "timestamp": "2025-09-17T07:31:35.100Z",
+      "campos": 1,
+      "camposObrigatorios": 1,
+      "sucesso": true
+    },
+    {
+      "nome": "Perfil do Imigrante",
+      "url": "http://localhost:8081/app/perfil-imigrante",
+      "timestamp": "2025-09-17T07:31:43.300Z",
+      "campos": 1,
+      "camposObrigatorios": 1,
+      "sucesso": true
+    },
+    {
+      "nome": "Experiências Profissionais",
+      "url": "http://localhost:8081/app/experiencias-profissionais",
+      "timestamp": "2025-09-17T07:31:49.369Z",
+      "campos": 0,
+      "camposObrigatorios": 0,
+      "sucesso": true
+    },
+    {
+      "nome": "Formação Acadêmica",
+      "url": "http://localhost:8081/app/formacao-academica",
+      "timestamp": "2025-09-17T07:31:55.448Z",
+      "campos": 0,
+      "camposObrigatorios": 0,
+      "sucesso": true
+    },
+    {
+      "nome": "Idiomas Conhecidos",
+      "url": "http://localhost:8081/app/idiomas-conhecidos",
+      "timestamp": "2025-09-17T07:32:01.561Z",
+      "campos": 0,
+      "camposObrigatorios": 0,
+      "sucesso": true
+    },
+    {
+      "nome": "Dados Profissionais",
+      "url": "http://localhost:8081/app/dados-profissionais",
+      "timestamp": "2025-09-17T07:32:07.663Z",
+      "campos": 0,
+      "camposObrigatorios": 0,
+      "sucesso": true
+    },
+    {
+      "nome": "Minhas Contribuições",
+      "url": "http://localhost:8081/app/minhas-contribuicoes",
+      "timestamp": "2025-09-17T07:32:16.715Z",
+      "campos": 1,
+      "camposObrigatorios": 1,
+      "sucesso": true
+    },
+    {
+      "nome": "SinergIA Madrilusa",
+      "url": "http://localhost:8081/app/sinergia",
+      "timestamp": "2025-09-17T07:32:25.334Z",
+      "campos": 1,
+      "camposObrigatorios": 1,
+      "sucesso": true
+    }
+  ],
+  "formularios": [
+    {
+      "nome": "Cadastro Inicial",
+      "setor": "cadastro",
+      "url": "http://localhost:8081/",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "h1": "Inovação e empreendedorismo social para jovens imigrantes",
+      "h2": "Bem-vindos ao Madrilusa",
+      "timestamp": "2025-09-17T07:31:08.072Z",
+      "campos": [
+        {
+          "tipo": "input",
+          "inputType": "email",
+          "nome": "",
+          "id": "",
+          "placeholder": "Vosso e-mail",
+          "required": true,
+          "value": "",
+          "className": "flex h-10 w-full rounded-md border border-input px-3 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-lg py-3 bg-white text-foreground border-none",
+          "label": "",
+          "disabled": false,
+          "readonly": false
+        }
+      ],
+      "botoes": [
+        {
+          "texto": "Home",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Sobre",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Para quem",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "FAQ",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Contactos",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Inscreva-se",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] bg-primary text-primary-foreground hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Login",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-12 px-6 py-3 rounded-lg min-w-[140px]",
+          "disabled": false
+        },
+        {
+          "texto": "Juntem-se a nós",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap ring-offset-background duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary-glow shadow-glow hover:scale-105 transition-transform h-14 rounded-lg px-10 text-base font-semibold",
+          "disabled": false
+        },
+        {
+          "texto": "Sabe Mais",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-card-custom hover:shadow-elegant h-11 rounded-md px-8 bg-primary text-primary-foreground hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Ver Perguntas Frequentes",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-11 rounded-md px-8",
+          "disabled": false
+        },
+        {
+          "texto": "Faça parte desta missão",
+          "type": "submit",
+          "className": "bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary-glow transition-colors",
+          "disabled": false
+        },
+        {
+          "texto": "Registe-se e faça parte",
+          "type": "submit",
+          "className": "bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary-glow transition-colors",
+          "disabled": false
+        },
+        {
+          "texto": "Ver FAQ Detalhado por Categoria",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-card-custom hover:shadow-elegant h-11 rounded-md px-8 bg-primary text-primary-foreground hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Qual é a duração do projecto Madrilusa?",
+          "type": "button",
+          "className": "flex flex-1 items-center justify-between py-4 transition-all [&[data-state=open]>svg]:rotate-180 text-left text-lg font-semibold text-secondary hover:no-underline",
+          "disabled": false
+        },
+        {
+          "texto": "Em que regiões o projecto actua?",
+          "type": "button",
+          "className": "flex flex-1 items-center justify-between py-4 transition-all [&[data-state=open]>svg]:rotate-180 text-left text-lg font-semibold text-secondary hover:no-underline",
+          "disabled": false
+        },
+        {
+          "texto": "O projecto tem algum custo para os participantes?",
+          "type": "button",
+          "className": "flex flex-1 items-center justify-between py-4 transition-all [&[data-state=open]>svg]:rotate-180 text-left text-lg font-semibold text-secondary hover:no-underline",
+          "disabled": false
+        },
+        {
+          "texto": "Contactar-nos",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 shadow-card-custom hover:shadow-elegant h-11 rounded-md px-8 gap-2",
+          "disabled": false
+        },
+        {
+          "texto": "Subscrever",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-11 rounded-md w-full sm:w-auto bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold py-3 px-8",
+          "disabled": false
+        },
+        {
+          "texto": "Política de Privacidade",
+          "type": "submit",
+          "className": "text-muted-foreground hover:text-primary transition-colors",
+          "disabled": false
+        },
+        {
+          "texto": "Termos de Uso",
+          "type": "submit",
+          "className": "text-muted-foreground hover:text-primary transition-colors",
+          "disabled": false
+        }
+      ],
+      "estatisticas": {
+        "totalCampos": 1,
+        "camposObrigatorios": 1,
+        "camposOpcionais": 0,
+        "totalBotoes": 25
+      }
+    },
+    {
+      "nome": "Dashboard Principal",
+      "setor": "secoes",
+      "url": "http://localhost:8081/",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "h1": "Inovação e empreendedorismo social para jovens imigrantes",
+      "h2": "Bem-vindos ao Madrilusa",
+      "timestamp": "2025-09-17T07:31:35.100Z",
+      "campos": [
+        {
+          "tipo": "input",
+          "inputType": "email",
+          "nome": "",
+          "id": "",
+          "placeholder": "Vosso e-mail",
+          "required": true,
+          "value": "",
+          "className": "flex h-10 w-full rounded-md border border-input px-3 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-lg py-3 bg-white text-foreground border-none",
+          "label": "",
+          "disabled": false,
+          "readonly": false
+        }
+      ],
+      "botoes": [
+        {
+          "texto": "Home",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Sobre",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Para quem",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "FAQ",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Contactos",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Inscreva-se",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] bg-primary text-primary-foreground hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Login",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-12 px-6 py-3 rounded-lg min-w-[140px]",
+          "disabled": false
+        },
+        {
+          "texto": "Juntem-se a nós",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap ring-offset-background duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary-glow shadow-glow hover:scale-105 transition-transform h-14 rounded-lg px-10 text-base font-semibold",
+          "disabled": false
+        },
+        {
+          "texto": "Sabe Mais",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-card-custom hover:shadow-elegant h-11 rounded-md px-8 bg-primary text-primary-foreground hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Ver Perguntas Frequentes",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-11 rounded-md px-8",
+          "disabled": false
+        },
+        {
+          "texto": "Faça parte desta missão",
+          "type": "submit",
+          "className": "bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary-glow transition-colors",
+          "disabled": false
+        },
+        {
+          "texto": "Registe-se e faça parte",
+          "type": "submit",
+          "className": "bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary-glow transition-colors",
+          "disabled": false
+        },
+        {
+          "texto": "Ver FAQ Detalhado por Categoria",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-card-custom hover:shadow-elegant h-11 rounded-md px-8 bg-primary text-primary-foreground hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Qual é a duração do projecto Madrilusa?",
+          "type": "button",
+          "className": "flex flex-1 items-center justify-between py-4 transition-all [&[data-state=open]>svg]:rotate-180 text-left text-lg font-semibold text-secondary hover:no-underline",
+          "disabled": false
+        },
+        {
+          "texto": "Em que regiões o projecto actua?",
+          "type": "button",
+          "className": "flex flex-1 items-center justify-between py-4 transition-all [&[data-state=open]>svg]:rotate-180 text-left text-lg font-semibold text-secondary hover:no-underline",
+          "disabled": false
+        },
+        {
+          "texto": "O projecto tem algum custo para os participantes?",
+          "type": "button",
+          "className": "flex flex-1 items-center justify-between py-4 transition-all [&[data-state=open]>svg]:rotate-180 text-left text-lg font-semibold text-secondary hover:no-underline",
+          "disabled": false
+        },
+        {
+          "texto": "Contactar-nos",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 shadow-card-custom hover:shadow-elegant h-11 rounded-md px-8 gap-2",
+          "disabled": false
+        },
+        {
+          "texto": "Subscrever",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-11 rounded-md w-full sm:w-auto bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold py-3 px-8",
+          "disabled": false
+        },
+        {
+          "texto": "Política de Privacidade",
+          "type": "submit",
+          "className": "text-muted-foreground hover:text-primary transition-colors",
+          "disabled": false
+        },
+        {
+          "texto": "Termos de Uso",
+          "type": "submit",
+          "className": "text-muted-foreground hover:text-primary transition-colors",
+          "disabled": false
+        }
+      ],
+      "estatisticas": {
+        "totalCampos": 1,
+        "camposObrigatorios": 1,
+        "camposOpcionais": 0,
+        "totalBotoes": 25
+      }
+    },
+    {
+      "nome": "Perfil do Imigrante",
+      "setor": "secoes",
+      "url": "http://localhost:8081/",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "h1": "Inovação e empreendedorismo social para jovens imigrantes",
+      "h2": "Bem-vindos ao Madrilusa",
+      "timestamp": "2025-09-17T07:31:41.753Z",
+      "campos": [
+        {
+          "tipo": "input",
+          "inputType": "email",
+          "nome": "",
+          "id": "",
+          "placeholder": "Vosso e-mail",
+          "required": true,
+          "value": "",
+          "className": "flex h-10 w-full rounded-md border border-input px-3 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-lg py-3 bg-white text-foreground border-none",
+          "label": "",
+          "disabled": false,
+          "readonly": false
+        }
+      ],
+      "botoes": [
+        {
+          "texto": "Home",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Sobre",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Para quem",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "FAQ",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Contactos",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Inscreva-se",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] bg-primary text-primary-foreground hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Login",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-12 px-6 py-3 rounded-lg min-w-[140px]",
+          "disabled": false
+        },
+        {
+          "texto": "Juntem-se a nós",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap ring-offset-background duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary-glow shadow-glow hover:scale-105 transition-transform h-14 rounded-lg px-10 text-base font-semibold",
+          "disabled": false
+        },
+        {
+          "texto": "Sabe Mais",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-card-custom hover:shadow-elegant h-11 rounded-md px-8 bg-primary text-primary-foreground hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Ver Perguntas Frequentes",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-11 rounded-md px-8",
+          "disabled": false
+        },
+        {
+          "texto": "Faça parte desta missão",
+          "type": "submit",
+          "className": "bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary-glow transition-colors",
+          "disabled": false
+        },
+        {
+          "texto": "Registe-se e faça parte",
+          "type": "submit",
+          "className": "bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary-glow transition-colors",
+          "disabled": false
+        },
+        {
+          "texto": "Ver FAQ Detalhado por Categoria",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-card-custom hover:shadow-elegant h-11 rounded-md px-8 bg-primary text-primary-foreground hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Qual é a duração do projecto Madrilusa?",
+          "type": "button",
+          "className": "flex flex-1 items-center justify-between py-4 transition-all [&[data-state=open]>svg]:rotate-180 text-left text-lg font-semibold text-secondary hover:no-underline",
+          "disabled": false
+        },
+        {
+          "texto": "Em que regiões o projecto actua?",
+          "type": "button",
+          "className": "flex flex-1 items-center justify-between py-4 transition-all [&[data-state=open]>svg]:rotate-180 text-left text-lg font-semibold text-secondary hover:no-underline",
+          "disabled": false
+        },
+        {
+          "texto": "O projecto tem algum custo para os participantes?",
+          "type": "button",
+          "className": "flex flex-1 items-center justify-between py-4 transition-all [&[data-state=open]>svg]:rotate-180 text-left text-lg font-semibold text-secondary hover:no-underline",
+          "disabled": false
+        },
+        {
+          "texto": "Contactar-nos",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 shadow-card-custom hover:shadow-elegant h-11 rounded-md px-8 gap-2",
+          "disabled": false
+        },
+        {
+          "texto": "Subscrever",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-11 rounded-md w-full sm:w-auto bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold py-3 px-8",
+          "disabled": false
+        },
+        {
+          "texto": "Política de Privacidade",
+          "type": "submit",
+          "className": "text-muted-foreground hover:text-primary transition-colors",
+          "disabled": false
+        },
+        {
+          "texto": "Termos de Uso",
+          "type": "submit",
+          "className": "text-muted-foreground hover:text-primary transition-colors",
+          "disabled": false
+        }
+      ],
+      "estatisticas": {
+        "totalCampos": 1,
+        "camposObrigatorios": 1,
+        "camposOpcionais": 0,
+        "totalBotoes": 25
+      }
+    },
+    {
+      "nome": "Experiências Profissionais",
+      "setor": "secoes",
+      "url": "http://localhost:8081/app/experiencias-profissionais",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "h1": "404",
+      "h2": "",
+      "timestamp": "2025-09-17T07:31:49.368Z",
+      "campos": [],
+      "botoes": [],
+      "estatisticas": {
+        "totalCampos": 0,
+        "camposObrigatorios": 0,
+        "camposOpcionais": 0,
+        "totalBotoes": 0
+      }
+    },
+    {
+      "nome": "Formação Acadêmica",
+      "setor": "secoes",
+      "url": "http://localhost:8081/app/formacao-academica",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "h1": "404",
+      "h2": "",
+      "timestamp": "2025-09-17T07:31:55.448Z",
+      "campos": [],
+      "botoes": [],
+      "estatisticas": {
+        "totalCampos": 0,
+        "camposObrigatorios": 0,
+        "camposOpcionais": 0,
+        "totalBotoes": 0
+      }
+    },
+    {
+      "nome": "Idiomas Conhecidos",
+      "setor": "secoes",
+      "url": "http://localhost:8081/app/idiomas-conhecidos",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "h1": "404",
+      "h2": "",
+      "timestamp": "2025-09-17T07:32:01.561Z",
+      "campos": [],
+      "botoes": [],
+      "estatisticas": {
+        "totalCampos": 0,
+        "camposObrigatorios": 0,
+        "camposOpcionais": 0,
+        "totalBotoes": 0
+      }
+    },
+    {
+      "nome": "Dados Profissionais",
+      "setor": "secoes",
+      "url": "http://localhost:8081/app/dados-profissionais",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "h1": "404",
+      "h2": "",
+      "timestamp": "2025-09-17T07:32:07.663Z",
+      "campos": [],
+      "botoes": [],
+      "estatisticas": {
+        "totalCampos": 0,
+        "camposObrigatorios": 0,
+        "camposOpcionais": 0,
+        "totalBotoes": 0
+      }
+    },
+    {
+      "nome": "Minhas Contribuições",
+      "setor": "secoes",
+      "url": "http://localhost:8081/",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "h1": "Inovação e empreendedorismo social para jovens imigrantes",
+      "h2": "Bem-vindos ao Madrilusa",
+      "timestamp": "2025-09-17T07:32:16.714Z",
+      "campos": [
+        {
+          "tipo": "input",
+          "inputType": "email",
+          "nome": "",
+          "id": "",
+          "placeholder": "Vosso e-mail",
+          "required": true,
+          "value": "",
+          "className": "flex h-10 w-full rounded-md border border-input px-3 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-lg py-3 bg-white text-foreground border-none",
+          "label": "",
+          "disabled": false,
+          "readonly": false
+        }
+      ],
+      "botoes": [
+        {
+          "texto": "Home",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Sobre",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Para quem",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "FAQ",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Contactos",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Inscreva-se",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] bg-primary text-primary-foreground hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Login",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-12 px-6 py-3 rounded-lg min-w-[140px]",
+          "disabled": false
+        },
+        {
+          "texto": "Juntem-se a nós",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap ring-offset-background duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary-glow shadow-glow hover:scale-105 transition-transform h-14 rounded-lg px-10 text-base font-semibold",
+          "disabled": false
+        },
+        {
+          "texto": "Sabe Mais",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-card-custom hover:shadow-elegant h-11 rounded-md px-8 bg-primary text-primary-foreground hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Ver Perguntas Frequentes",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-11 rounded-md px-8",
+          "disabled": false
+        },
+        {
+          "texto": "Faça parte desta missão",
+          "type": "submit",
+          "className": "bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary-glow transition-colors",
+          "disabled": false
+        },
+        {
+          "texto": "Registe-se e faça parte",
+          "type": "submit",
+          "className": "bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary-glow transition-colors",
+          "disabled": false
+        },
+        {
+          "texto": "Ver FAQ Detalhado por Categoria",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-card-custom hover:shadow-elegant h-11 rounded-md px-8 bg-primary text-primary-foreground hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Qual é a duração do projecto Madrilusa?",
+          "type": "button",
+          "className": "flex flex-1 items-center justify-between py-4 transition-all [&[data-state=open]>svg]:rotate-180 text-left text-lg font-semibold text-secondary hover:no-underline",
+          "disabled": false
+        },
+        {
+          "texto": "Em que regiões o projecto actua?",
+          "type": "button",
+          "className": "flex flex-1 items-center justify-between py-4 transition-all [&[data-state=open]>svg]:rotate-180 text-left text-lg font-semibold text-secondary hover:no-underline",
+          "disabled": false
+        },
+        {
+          "texto": "O projecto tem algum custo para os participantes?",
+          "type": "button",
+          "className": "flex flex-1 items-center justify-between py-4 transition-all [&[data-state=open]>svg]:rotate-180 text-left text-lg font-semibold text-secondary hover:no-underline",
+          "disabled": false
+        },
+        {
+          "texto": "Contactar-nos",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 shadow-card-custom hover:shadow-elegant h-11 rounded-md px-8 gap-2",
+          "disabled": false
+        },
+        {
+          "texto": "Subscrever",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-11 rounded-md w-full sm:w-auto bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold py-3 px-8",
+          "disabled": false
+        },
+        {
+          "texto": "Política de Privacidade",
+          "type": "submit",
+          "className": "text-muted-foreground hover:text-primary transition-colors",
+          "disabled": false
+        },
+        {
+          "texto": "Termos de Uso",
+          "type": "submit",
+          "className": "text-muted-foreground hover:text-primary transition-colors",
+          "disabled": false
+        }
+      ],
+      "estatisticas": {
+        "totalCampos": 1,
+        "camposObrigatorios": 1,
+        "camposOpcionais": 0,
+        "totalBotoes": 25
+      }
+    },
+    {
+      "nome": "SinergIA Madrilusa",
+      "setor": "secoes",
+      "url": "http://localhost:8081/",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "h1": "Inovação e empreendedorismo social para jovens imigrantes",
+      "h2": "Bem-vindos ao Madrilusa",
+      "timestamp": "2025-09-17T07:32:25.334Z",
+      "campos": [
+        {
+          "tipo": "input",
+          "inputType": "email",
+          "nome": "",
+          "id": "",
+          "placeholder": "Vosso e-mail",
+          "required": true,
+          "value": "",
+          "className": "flex h-10 w-full rounded-md border border-input px-3 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-lg py-3 bg-white text-foreground border-none",
+          "label": "",
+          "disabled": false,
+          "readonly": false
+        }
+      ],
+      "botoes": [
+        {
+          "texto": "Home",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Sobre",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Para quem",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "FAQ",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Contactos",
+          "type": "submit",
+          "className": "text-foreground hover:text-primary transition-colors duration-300 relative group font-medium",
+          "disabled": false
+        },
+        {
+          "texto": "Inscreva-se",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] bg-primary text-primary-foreground hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Login",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-12 px-6 py-3 rounded-lg min-w-[140px]",
+          "disabled": false
+        },
+        {
+          "texto": "Juntem-se a nós",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap ring-offset-background duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary-glow shadow-glow hover:scale-105 transition-transform h-14 rounded-lg px-10 text-base font-semibold",
+          "disabled": false
+        },
+        {
+          "texto": "Sabe Mais",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-card-custom hover:shadow-elegant h-11 rounded-md px-8 bg-primary text-primary-foreground hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Registar-me",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-card-custom hover:shadow-elegant h-12 px-6 py-3 rounded-lg min-w-[140px] w-full mt-auto bg-primary hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Ver Perguntas Frequentes",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-11 rounded-md px-8",
+          "disabled": false
+        },
+        {
+          "texto": "Faça parte desta missão",
+          "type": "submit",
+          "className": "bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary-glow transition-colors",
+          "disabled": false
+        },
+        {
+          "texto": "Registe-se e faça parte",
+          "type": "submit",
+          "className": "bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary-glow transition-colors",
+          "disabled": false
+        },
+        {
+          "texto": "Ver FAQ Detalhado por Categoria",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-card-custom hover:shadow-elegant h-11 rounded-md px-8 bg-primary text-primary-foreground hover:bg-primary-glow",
+          "disabled": false
+        },
+        {
+          "texto": "Qual é a duração do projecto Madrilusa?",
+          "type": "button",
+          "className": "flex flex-1 items-center justify-between py-4 transition-all [&[data-state=open]>svg]:rotate-180 text-left text-lg font-semibold text-secondary hover:no-underline",
+          "disabled": false
+        },
+        {
+          "texto": "Em que regiões o projecto actua?",
+          "type": "button",
+          "className": "flex flex-1 items-center justify-between py-4 transition-all [&[data-state=open]>svg]:rotate-180 text-left text-lg font-semibold text-secondary hover:no-underline",
+          "disabled": false
+        },
+        {
+          "texto": "O projecto tem algum custo para os participantes?",
+          "type": "button",
+          "className": "flex flex-1 items-center justify-between py-4 transition-all [&[data-state=open]>svg]:rotate-180 text-left text-lg font-semibold text-secondary hover:no-underline",
+          "disabled": false
+        },
+        {
+          "texto": "Contactar-nos",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 shadow-card-custom hover:shadow-elegant h-11 rounded-md px-8 gap-2",
+          "disabled": false
+        },
+        {
+          "texto": "Subscrever",
+          "type": "submit",
+          "className": "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-11 rounded-md w-full sm:w-auto bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold py-3 px-8",
+          "disabled": false
+        },
+        {
+          "texto": "Política de Privacidade",
+          "type": "submit",
+          "className": "text-muted-foreground hover:text-primary transition-colors",
+          "disabled": false
+        },
+        {
+          "texto": "Termos de Uso",
+          "type": "submit",
+          "className": "text-muted-foreground hover:text-primary transition-colors",
+          "disabled": false
+        }
+      ],
+      "estatisticas": {
+        "totalCampos": 1,
+        "camposObrigatorios": 1,
+        "camposOpcionais": 0,
+        "totalBotoes": 25
+      }
+    }
+  ],
+  "campos": [],
+  "screenshots": [
+    {
+      "numero": 1,
+      "nome": "home-inicial",
+      "arquivo": "01-cadastro-home-inicial-2025-09-17T07-30-52-258Z.png",
+      "descricao": "Página inicial - antes do cadastro",
+      "setor": "cadastro",
+      "url": "http://localhost:8081/",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "timestamp": "2025-09-17T07:30:52.920Z"
+    },
+    {
+      "numero": 2,
+      "nome": "procurando-cadastro",
+      "arquivo": "02-cadastro-procurando-cadastro-2025-09-17T07-30-55-272Z.png",
+      "descricao": "Procurando opções de cadastro",
+      "setor": "cadastro",
+      "url": "http://localhost:8081/",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "timestamp": "2025-09-17T07:30:55.848Z"
+    },
+    {
+      "numero": 3,
+      "nome": "categoria-selecionada",
+      "arquivo": "03-cadastro-categoria-selecionada-2025-09-17T07-31-01-796Z.png",
+      "descricao": "Categoria Imigrante selecionada",
+      "setor": "cadastro",
+      "url": "http://localhost:8081/",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "timestamp": "2025-09-17T07:31:02.952Z"
+    },
+    {
+      "numero": 4,
+      "nome": "formulario-preenchido",
+      "arquivo": "04-cadastro-formulario-preenchido-2025-09-17T07-31-17-621Z.png",
+      "descricao": "Formulário de cadastro preenchido",
+      "setor": "cadastro",
+      "url": "http://localhost:8081/",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "timestamp": "2025-09-17T07:31:18.360Z"
+    },
+    {
+      "numero": 5,
+      "nome": "apos-cadastro",
+      "arquivo": "05-cadastro-apos-cadastro-2025-09-17T07-31-27-575Z.png",
+      "descricao": "Estado após submissão do cadastro",
+      "setor": "cadastro",
+      "url": "http://localhost:8081/",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "timestamp": "2025-09-17T07:31:28.230Z"
+    },
+    {
+      "numero": 6,
+      "nome": "secao-dashboard-principal",
+      "arquivo": "06-secoes-secao-dashboard-principal-2025-09-17T07-31-32-465Z.png",
+      "descricao": "Seção: Dashboard Principal",
+      "setor": "secoes",
+      "url": "http://localhost:8081/",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "timestamp": "2025-09-17T07:31:33.089Z"
+    },
+    {
+      "numero": 7,
+      "nome": "secao-perfil-do-imigrante",
+      "arquivo": "07-secoes-secao-perfil-do-imigrante-2025-09-17T07-31-39-137Z.png",
+      "descricao": "Seção: Perfil do Imigrante",
+      "setor": "secoes",
+      "url": "http://localhost:8081/",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "timestamp": "2025-09-17T07:31:39.741Z"
+    },
+    {
+      "numero": 8,
+      "nome": "perfil-do-imigrante-preenchido",
+      "arquivo": "08-preenchimento-perfil-do-imigrante-preenchido-2025-09-17T07-31-42-765Z.png",
+      "descricao": "Perfil do Imigrante com dados simulados",
+      "setor": "preenchimento",
+      "url": "http://localhost:8081/",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "timestamp": "2025-09-17T07:31:43.300Z"
+    },
+    {
+      "numero": 9,
+      "nome": "secao-experiências-profissionais",
+      "arquivo": "09-secoes-secao-experiências-profissionais-2025-09-17T07-31-47-266Z.png",
+      "descricao": "Seção: Experiências Profissionais",
+      "setor": "secoes",
+      "url": "http://localhost:8081/app/experiencias-profissionais",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "timestamp": "2025-09-17T07:31:47.362Z"
+    },
+    {
+      "numero": 10,
+      "nome": "secao-formação-acadêmica",
+      "arquivo": "10-secoes-secao-formação-acadêmica-2025-09-17T07-31-53-374Z.png",
+      "descricao": "Seção: Formação Acadêmica",
+      "setor": "secoes",
+      "url": "http://localhost:8081/app/formacao-academica",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "timestamp": "2025-09-17T07:31:53.441Z"
+    },
+    {
+      "numero": 11,
+      "nome": "secao-idiomas-conhecidos",
+      "arquivo": "11-secoes-secao-idiomas-conhecidos-2025-09-17T07-31-59-457Z.png",
+      "descricao": "Seção: Idiomas Conhecidos",
+      "setor": "secoes",
+      "url": "http://localhost:8081/app/idiomas-conhecidos",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "timestamp": "2025-09-17T07:31:59.550Z"
+    },
+    {
+      "numero": 12,
+      "nome": "secao-dados-profissionais",
+      "arquivo": "12-secoes-secao-dados-profissionais-2025-09-17T07-32-05-561Z.png",
+      "descricao": "Seção: Dados Profissionais",
+      "setor": "secoes",
+      "url": "http://localhost:8081/app/dados-profissionais",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "timestamp": "2025-09-17T07:32:05.654Z"
+    },
+    {
+      "numero": 13,
+      "nome": "secao-minhas-contribuições",
+      "arquivo": "13-secoes-secao-minhas-contribuições-2025-09-17T07-32-11-757Z.png",
+      "descricao": "Seção: Minhas Contribuições",
+      "setor": "secoes",
+      "url": "http://localhost:8081/",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "timestamp": "2025-09-17T07:32:12.383Z"
+    },
+    {
+      "numero": 14,
+      "nome": "secao-sinergia-madrilusa",
+      "arquivo": "14-secoes-secao-sinergia-madrilusa-2025-09-17T07-32-22-536Z.png",
+      "descricao": "Seção: SinergIA Madrilusa",
+      "setor": "secoes",
+      "url": "http://localhost:8081/",
+      "titulo": "Madrilusa - Inovação e empreendedorismo social para jovens imigrantes",
+      "timestamp": "2025-09-17T07:32:23.313Z"
+    }
+  ],
+  "problemas": [],
+  "estatisticas": {
+    "duracaoTotal": 100,
+    "totalEtapas": 8,
+    "etapasSucesso": 8,
+    "taxaSucesso": 100,
+    "totalFormularios": 9,
+    "totalCampos": 5,
+    "camposObrigatorios": 5,
+    "camposOpcionais": 0,
+    "totalScreenshots": 14,
+    "totalProblemas": 0
+  }
+}

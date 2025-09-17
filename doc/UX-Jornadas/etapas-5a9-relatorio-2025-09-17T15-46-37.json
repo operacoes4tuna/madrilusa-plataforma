@@ -1,0 +1,66 @@
+{
+  "etapas": {
+    "etapa5_interesses": {
+      "menu_clicado": false,
+      "modal_aberto": false,
+      "item_criado": false,
+      "campos": [],
+      "screenshots": [
+        "etapa5-01-pagina-interesses.png"
+      ]
+    },
+    "etapa6_personalidade": {
+      "menu_clicado": false,
+      "modal_aberto": false,
+      "item_criado": false,
+      "campos": [],
+      "screenshots": [
+        "etapa6-01-pagina-personalidade.png"
+      ]
+    },
+    "etapa7_experiencias": {
+      "menu_clicado": false,
+      "modal_aberto": false,
+      "item_criado": false,
+      "campos": [],
+      "screenshots": [
+        "etapa7-01-pagina-experiencias.png"
+      ]
+    },
+    "etapa8_formacao": {
+      "menu_clicado": false,
+      "modal_aberto": false,
+      "item_criado": false,
+      "campos": [],
+      "screenshots": [
+        "etapa8-01-pagina-formacao.png"
+      ]
+    },
+    "etapa9_idiomas": {
+      "menu_clicado": false,
+      "modal_aberto": false,
+      "item_criado": false,
+      "campos": [],
+      "screenshots": [
+        "etapa9-01-pagina-idiomas.png"
+      ]
+    }
+  },
+  "timestamp": "2025-09-17T15-46-37",
+  "login": {
+    "sucesso": true
+  },
+  "observacoes": [
+    "Modal interesses não abriu após clicar no botão",
+    "Modal personalidade não abriu após clicar no botão",
+    "Modal experiencias não abriu após clicar no botão",
+    "Modal formacao não abriu após clicar no botão",
+    "Modal idiomas não abriu após clicar no botão"
+  ],
+  "estatisticas": {
+    "total_campos_mapeados": 0,
+    "total_itens_criados": 0,
+    "total_screenshots": 5,
+    "secoes_completas": 0
+  }
+}

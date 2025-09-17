@@ -1,0 +1,59 @@
+{
+  "etapa": "3 - Dashboard Inicial",
+  "timestamp": "2025-09-17T14-18-09",
+  "modalFinalizado": false,
+  "redirecionamento": {
+    "urlEsperada": "http://localhost:8080/app/dashboard",
+    "urlReal": "http://localhost:8080/app/dashboard",
+    "sucesso": true
+  },
+  "usuarioLogado": {
+    "nomeVisivel": "Maria Santos Oliveira",
+    "posicao": "Superior da tela (y: 28)",
+    "detectado": true
+  },
+  "estruturaDashboard": {
+    "menus": [
+      {
+        "indice": 1,
+        "texto": "menu",
+        "href": "#",
+        "visivel": true
+      }
+    ],
+    "botoes": [
+      {
+        "indice": 0,
+        "texto": "Ver Todas",
+        "visivel": true
+      },
+      {
+        "indice": 1,
+        "texto": "listGerir Habilidades",
+        "visivel": true
+      },
+      {
+        "indice": 2,
+        "texto": "addAdicionar Habilidade",
+        "visivel": true
+      }
+    ],
+    "secoes": [
+      {
+        "indice": 0,
+        "texto": "Dashboard",
+        "elemento": "h2",
+        "visivel": true
+      }
+    ]
+  },
+  "screenshots": [
+    "etapa3-01-inicio.png",
+    "etapa3-02-apos-finalizacao.png",
+    "etapa3-03-dashboard-mapeado.png"
+  ],
+  "observacoes": [
+    "Login realizado com usuário existente Maria Santos",
+    "Etapa 3 concluída - Dashboard inicial mapeado"
+  ]
+}

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jornada Completa de Cadastro - Imigrante</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 0; background: #f5f7fa; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #F5A623, #4A90A4); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; text-align: center; }
+        .header h1 { margin: 0; font-size: 2.5em; }
+        .header p { margin: 10px 0 0 0; opacity: 0.9; font-size: 1.2em; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0; }
+        .stat-card { background: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .stat-value { font-size: 3em; font-weight: bold; color: #F5A623; margin: 0; }
+        .stat-label { color: #666; font-size: 1em; margin-top: 10px; }
+        .section { background: white; margin: 25px 0; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .section h2 { color: #4A90A4; margin-top: 0; border-bottom: 3px solid #4A90A4; padding-bottom: 15px; }
+        .formulario { background: #f8f9fa; margin: 20px 0; padding: 25px; border-radius: 8px; border-left: 4px solid #F5A623; }
+        .formulario h3 { color: #333; margin-top: 0; }
+        .campo { margin: 10px 0; padding: 12px; background: white; border-radius: 6px; border-left: 3px solid #ddd; }
+        .campo.obrigatorio { border-left-color: #dc3545; }
+        .campo.opcional { border-left-color: #28a745; }
+        .etapa { margin: 15px 0; padding: 20px; border-radius: 8px; border-left: 4px solid #4A90A4; }
+        .etapa.sucesso { background: #f8fff8; border-left-color: #28a745; }
+        .etapa.erro { background: hsl(0, 100%, 98%); border-left-color: #dc3545; }
+        .problema { background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; margin: 10px 0; border-radius: 6px; }
+        .screenshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; margin: 20px 0; }
+        .screenshot { background: #f8f9fa; padding: 20px; border-radius: 8px; }
+        .setor-cadastro { border-left: 4px solid #F5A623; }
+        .setor-secoes { border-left: 4px solid #4A90A4; }
+        .setor-preenchimento { border-left: 4px solid #28a745; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Jornada Completa de Cadastro</h1>
+            <p>Mapeamento Automático da Experiência do Imigrante - Do Zero ao Perfil Completo</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value">8</div>
+                <div class="stat-label">Etapas Mapeadas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">5</div>
+                <div class="stat-label">Campos Encontrados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">5</div>
+                <div class="stat-label">Campos Obrigatórios</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Taxa de Sucesso</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">2min</div>
+                <div class="stat-label">Duração Total</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>👤 Informações da Jornada</h2>
+            <p><strong>Novo Usuário:</strong> Sofia Fernandes Costa</p>
+            <p><strong>Email:</strong> sofia.teste.1758094245255@madrilusa.demo</p>
+            <p><strong>Início:</strong> 17/09/2025, 04:30:45</p>
+            <p><strong>Duração:</strong> 100s (2 minutos)</p>
+        </div>
+
+        <div class="section">
+            <h2>📋 Formulários e Campos Mapeados</h2>
+            
+                <div class="formulario">
+                    <h3>Cadastro Inicial (cadastro)</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/</p>
+                    <p><strong>Campos:</strong> 1 total | 1 obrigatórios | 0 opcionais</p>
+
+                    
+                        <h4>📝 Campos Identificados:</h4>
+                        
+                            <div class="campo obrigatorio">
+                                <strong>Vosso e-mail</strong>
+                                <br><small>Tipo: input/email | 🔴 OBRIGATÓRIO</small>
+                            </div>
+                        
+                    
+
+                    
+                        <h4>🎯 Botões Disponíveis:</h4>
+                        <p><span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Home</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Sobre</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Para quem</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">FAQ</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Contactos</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Inscreva-se</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Login</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Juntem-se a nós</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Sabe Mais</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Ver Perguntas Frequentes</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Faça parte desta missão</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registe-se e faça parte</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Ver FAQ Detalhado por Categoria</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Qual é a duração do projecto Madrilusa?</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Em que regiões o projecto actua?</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">O projecto tem algum custo para os participantes?</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Contactar-nos</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Subscrever</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Política de Privacidade</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Termos de Uso</span></p>
+                    
+                </div>
+            
+                <div class="formulario">
+                    <h3>Dashboard Principal (secoes)</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/</p>
+                    <p><strong>Campos:</strong> 1 total | 1 obrigatórios | 0 opcionais</p>
+
+                    
+                        <h4>📝 Campos Identificados:</h4>
+                        
+                            <div class="campo obrigatorio">
+                                <strong>Vosso e-mail</strong>
+                                <br><small>Tipo: input/email | 🔴 OBRIGATÓRIO</small>
+                            </div>
+                        
+                    
+
+                    
+                        <h4>🎯 Botões Disponíveis:</h4>
+                        <p><span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Home</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Sobre</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Para quem</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">FAQ</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Contactos</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Inscreva-se</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Login</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Juntem-se a nós</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Sabe Mais</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Ver Perguntas Frequentes</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Faça parte desta missão</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registe-se e faça parte</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Ver FAQ Detalhado por Categoria</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Qual é a duração do projecto Madrilusa?</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Em que regiões o projecto actua?</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">O projecto tem algum custo para os participantes?</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Contactar-nos</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Subscrever</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Política de Privacidade</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Termos de Uso</span></p>
+                    
+                </div>
+            
+                <div class="formulario">
+                    <h3>Perfil do Imigrante (secoes)</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/</p>
+                    <p><strong>Campos:</strong> 1 total | 1 obrigatórios | 0 opcionais</p>
+
+                    
+                        <h4>📝 Campos Identificados:</h4>
+                        
+                            <div class="campo obrigatorio">
+                                <strong>Vosso e-mail</strong>
+                                <br><small>Tipo: input/email | 🔴 OBRIGATÓRIO</small>
+                            </div>
+                        
+                    
+
+                    
+                        <h4>🎯 Botões Disponíveis:</h4>
+                        <p><span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Home</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Sobre</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Para quem</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">FAQ</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Contactos</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Inscreva-se</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Login</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Juntem-se a nós</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Sabe Mais</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Ver Perguntas Frequentes</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Faça parte desta missão</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registe-se e faça parte</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Ver FAQ Detalhado por Categoria</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Qual é a duração do projecto Madrilusa?</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Em que regiões o projecto actua?</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">O projecto tem algum custo para os participantes?</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Contactar-nos</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Subscrever</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Política de Privacidade</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Termos de Uso</span></p>
+                    
+                </div>
+            
+                <div class="formulario">
+                    <h3>Experiências Profissionais (secoes)</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/app/experiencias-profissionais</p>
+                    <p><strong>Campos:</strong> 0 total | 0 obrigatórios | 0 opcionais</p>
+
+                    
+
+                    
+                </div>
+            
+                <div class="formulario">
+                    <h3>Formação Acadêmica (secoes)</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/app/formacao-academica</p>
+                    <p><strong>Campos:</strong> 0 total | 0 obrigatórios | 0 opcionais</p>
+
+                    
+
+                    
+                </div>
+            
+                <div class="formulario">
+                    <h3>Idiomas Conhecidos (secoes)</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/app/idiomas-conhecidos</p>
+                    <p><strong>Campos:</strong> 0 total | 0 obrigatórios | 0 opcionais</p>
+
+                    
+
+                    
+                </div>
+            
+                <div class="formulario">
+                    <h3>Dados Profissionais (secoes)</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/app/dados-profissionais</p>
+                    <p><strong>Campos:</strong> 0 total | 0 obrigatórios | 0 opcionais</p>
+
+                    
+
+                    
+                </div>
+            
+                <div class="formulario">
+                    <h3>Minhas Contribuições (secoes)</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/</p>
+                    <p><strong>Campos:</strong> 1 total | 1 obrigatórios | 0 opcionais</p>
+
+                    
+                        <h4>📝 Campos Identificados:</h4>
+                        
+                            <div class="campo obrigatorio">
+                                <strong>Vosso e-mail</strong>
+                                <br><small>Tipo: input/email | 🔴 OBRIGATÓRIO</small>
+                            </div>
+                        
+                    
+
+                    
+                        <h4>🎯 Botões Disponíveis:</h4>
+                        <p><span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Home</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Sobre</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Para quem</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">FAQ</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Contactos</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Inscreva-se</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Login</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Juntem-se a nós</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Sabe Mais</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Ver Perguntas Frequentes</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Faça parte desta missão</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registe-se e faça parte</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Ver FAQ Detalhado por Categoria</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Qual é a duração do projecto Madrilusa?</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Em que regiões o projecto actua?</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">O projecto tem algum custo para os participantes?</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Contactar-nos</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Subscrever</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Política de Privacidade</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Termos de Uso</span></p>
+                    
+                </div>
+            
+                <div class="formulario">
+                    <h3>SinergIA Madrilusa (secoes)</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/</p>
+                    <p><strong>Campos:</strong> 1 total | 1 obrigatórios | 0 opcionais</p>
+
+                    
+                        <h4>📝 Campos Identificados:</h4>
+                        
+                            <div class="campo obrigatorio">
+                                <strong>Vosso e-mail</strong>
+                                <br><small>Tipo: input/email | 🔴 OBRIGATÓRIO</small>
+                            </div>
+                        
+                    
+
+                    
+                        <h4>🎯 Botões Disponíveis:</h4>
+                        <p><span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Home</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Sobre</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Para quem</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">FAQ</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Contactos</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Inscreva-se</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Login</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Juntem-se a nós</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Sabe Mais</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registar-me</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Ver Perguntas Frequentes</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Faça parte desta missão</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Registe-se e faça parte</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Ver FAQ Detalhado por Categoria</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Qual é a duração do projecto Madrilusa?</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Em que regiões o projecto actua?</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">O projecto tem algum custo para os participantes?</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Contactar-nos</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Subscrever</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Política de Privacidade</span> <span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 2px;">Termos de Uso</span></p>
+                    
+                </div>
+            
+        </div>
+
+        <div class="section">
+            <h2>🚀 Etapas da Jornada</h2>
+            
+                <div class="etapa sucesso">
+                    <h3>Dashboard Principal ✅</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/app</p>
+                    <p><strong>Campos:</strong> 1 | <strong>Obrigatórios:</strong> 1</p>
+                    
+                    <small>17/09/2025, 04:31:35</small>
+                </div>
+            
+                <div class="etapa sucesso">
+                    <h3>Perfil do Imigrante ✅</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/app/perfil-imigrante</p>
+                    <p><strong>Campos:</strong> 1 | <strong>Obrigatórios:</strong> 1</p>
+                    
+                    <small>17/09/2025, 04:31:43</small>
+                </div>
+            
+                <div class="etapa sucesso">
+                    <h3>Experiências Profissionais ✅</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/app/experiencias-profissionais</p>
+                    <p><strong>Campos:</strong> 0 | <strong>Obrigatórios:</strong> 0</p>
+                    
+                    <small>17/09/2025, 04:31:49</small>
+                </div>
+            
+                <div class="etapa sucesso">
+                    <h3>Formação Acadêmica ✅</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/app/formacao-academica</p>
+                    <p><strong>Campos:</strong> 0 | <strong>Obrigatórios:</strong> 0</p>
+                    
+                    <small>17/09/2025, 04:31:55</small>
+                </div>
+            
+                <div class="etapa sucesso">
+                    <h3>Idiomas Conhecidos ✅</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/app/idiomas-conhecidos</p>
+                    <p><strong>Campos:</strong> 0 | <strong>Obrigatórios:</strong> 0</p>
+                    
+                    <small>17/09/2025, 04:32:01</small>
+                </div>
+            
+                <div class="etapa sucesso">
+                    <h3>Dados Profissionais ✅</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/app/dados-profissionais</p>
+                    <p><strong>Campos:</strong> 0 | <strong>Obrigatórios:</strong> 0</p>
+                    
+                    <small>17/09/2025, 04:32:07</small>
+                </div>
+            
+                <div class="etapa sucesso">
+                    <h3>Minhas Contribuições ✅</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/app/minhas-contribuicoes</p>
+                    <p><strong>Campos:</strong> 1 | <strong>Obrigatórios:</strong> 1</p>
+                    
+                    <small>17/09/2025, 04:32:16</small>
+                </div>
+            
+                <div class="etapa sucesso">
+                    <h3>SinergIA Madrilusa ✅</h3>
+                    <p><strong>URL:</strong> http://localhost:8081/app/sinergia</p>
+                    <p><strong>Campos:</strong> 1 | <strong>Obrigatórios:</strong> 1</p>
+                    
+                    <small>17/09/2025, 04:32:25</small>
+                </div>
+            
+        </div>
+
+        
+
+        <div class="section">
+            <h2>📸 Screenshots da Jornada</h2>
+            <div class="screenshot-grid">
+                
+                    <div class="screenshot setor-cadastro">
+                        <h4>home-inicial</h4>
+                        <p><strong>Setor:</strong> cadastro</p>
+                        <p>Página inicial - antes do cadastro</p>
+                        <p><strong>Arquivo:</strong> 01-cadastro-home-inicial-2025-09-17T07-30-52-258Z.png</p>
+                        <p><strong>URL:</strong> http://localhost:8081/</p>
+                        <small>17/09/2025, 04:30:52</small>
+                    </div>
+                
+                    <div class="screenshot setor-cadastro">
+                        <h4>procurando-cadastro</h4>
+                        <p><strong>Setor:</strong> cadastro</p>
+                        <p>Procurando opções de cadastro</p>
+                        <p><strong>Arquivo:</strong> 02-cadastro-procurando-cadastro-2025-09-17T07-30-55-272Z.png</p>
+                        <p><strong>URL:</strong> http://localhost:8081/</p>
+                        <small>17/09/2025, 04:30:55</small>
+                    </div>
+                
+                    <div class="screenshot setor-cadastro">
+                        <h4>categoria-selecionada</h4>
+                        <p><strong>Setor:</strong> cadastro</p>
+                        <p>Categoria Imigrante selecionada</p>
+                        <p><strong>Arquivo:</strong> 03-cadastro-categoria-selecionada-2025-09-17T07-31-01-796Z.png</p>
+                        <p><strong>URL:</strong> http://localhost:8081/</p>
+                        <small>17/09/2025, 04:31:02</small>
+                    </div>
+                
+                    <div class="screenshot setor-cadastro">
+                        <h4>formulario-preenchido</h4>
+                        <p><strong>Setor:</strong> cadastro</p>
+                        <p>Formulário de cadastro preenchido</p>
+                        <p><strong>Arquivo:</strong> 04-cadastro-formulario-preenchido-2025-09-17T07-31-17-621Z.png</p>
+                        <p><strong>URL:</strong> http://localhost:8081/</p>
+                        <small>17/09/2025, 04:31:18</small>
+                    </div>
+                
+                    <div class="screenshot setor-cadastro">
+                        <h4>apos-cadastro</h4>
+                        <p><strong>Setor:</strong> cadastro</p>
+                        <p>Estado após submissão do cadastro</p>
+                        <p><strong>Arquivo:</strong> 05-cadastro-apos-cadastro-2025-09-17T07-31-27-575Z.png</p>
+                        <p><strong>URL:</strong> http://localhost:8081/</p>
+                        <small>17/09/2025, 04:31:28</small>
+                    </div>
+                
+                    <div class="screenshot setor-secoes">
+                        <h4>secao-dashboard-principal</h4>
+                        <p><strong>Setor:</strong> secoes</p>
+                        <p>Seção: Dashboard Principal</p>
+                        <p><strong>Arquivo:</strong> 06-secoes-secao-dashboard-principal-2025-09-17T07-31-32-465Z.png</p>
+                        <p><strong>URL:</strong> http://localhost:8081/</p>
+                        <small>17/09/2025, 04:31:33</small>
+                    </div>
+                
+                    <div class="screenshot setor-secoes">
+                        <h4>secao-perfil-do-imigrante</h4>
+                        <p><strong>Setor:</strong> secoes</p>
+                        <p>Seção: Perfil do Imigrante</p>
+                        <p><strong>Arquivo:</strong> 07-secoes-secao-perfil-do-imigrante-2025-09-17T07-31-39-137Z.png</p>
+                        <p><strong>URL:</strong> http://localhost:8081/</p>
+                        <small>17/09/2025, 04:31:39</small>
+                    </div>
+                
+                    <div class="screenshot setor-preenchimento">
+                        <h4>perfil-do-imigrante-preenchido</h4>
+                        <p><strong>Setor:</strong> preenchimento</p>
+                        <p>Perfil do Imigrante com dados simulados</p>
+                        <p><strong>Arquivo:</strong> 08-preenchimento-perfil-do-imigrante-preenchido-2025-09-17T07-31-42-765Z.png</p>
+                        <p><strong>URL:</strong> http://localhost:8081/</p>
+                        <small>17/09/2025, 04:31:43</small>
+                    </div>
+                
+                    <div class="screenshot setor-secoes">
+                        <h4>secao-experiências-profissionais</h4>
+                        <p><strong>Setor:</strong> secoes</p>
+                        <p>Seção: Experiências Profissionais</p>
+                        <p><strong>Arquivo:</strong> 09-secoes-secao-experiências-profissionais-2025-09-17T07-31-47-266Z.png</p>
+                        <p><strong>URL:</strong> http://localhost:8081/app/experiencias-profissionais</p>
+                        <small>17/09/2025, 04:31:47</small>
+                    </div>
+                
+                    <div class="screenshot setor-secoes">
+                        <h4>secao-formação-acadêmica</h4>
+                        <p><strong>Setor:</strong> secoes</p>
+                        <p>Seção: Formação Acadêmica</p>
+                        <p><strong>Arquivo:</strong> 10-secoes-secao-formação-acadêmica-2025-09-17T07-31-53-374Z.png</p>
+                        <p><strong>URL:</strong> http://localhost:8081/app/formacao-academica</p>
+                        <small>17/09/2025, 04:31:53</small>
+                    </div>
+                
+                    <div class="screenshot setor-secoes">
+                        <h4>secao-idiomas-conhecidos</h4>
+                        <p><strong>Setor:</strong> secoes</p>
+                        <p>Seção: Idiomas Conhecidos</p>
+                        <p><strong>Arquivo:</strong> 11-secoes-secao-idiomas-conhecidos-2025-09-17T07-31-59-457Z.png</p>
+                        <p><strong>URL:</strong> http://localhost:8081/app/idiomas-conhecidos</p>
+                        <small>17/09/2025, 04:31:59</small>
+                    </div>
+                
+                    <div class="screenshot setor-secoes">
+                        <h4>secao-dados-profissionais</h4>
+                        <p><strong>Setor:</strong> secoes</p>
+                        <p>Seção: Dados Profissionais</p>
+                        <p><strong>Arquivo:</strong> 12-secoes-secao-dados-profissionais-2025-09-17T07-32-05-561Z.png</p>
+                        <p><strong>URL:</strong> http://localhost:8081/app/dados-profissionais</p>
+                        <small>17/09/2025, 04:32:05</small>
+                    </div>
+                
+                    <div class="screenshot setor-secoes">
+                        <h4>secao-minhas-contribuições</h4>
+                        <p><strong>Setor:</strong> secoes</p>
+                        <p>Seção: Minhas Contribuições</p>
+                        <p><strong>Arquivo:</strong> 13-secoes-secao-minhas-contribuições-2025-09-17T07-32-11-757Z.png</p>
+                        <p><strong>URL:</strong> http://localhost:8081/</p>
+                        <small>17/09/2025, 04:32:12</small>
+                    </div>
+                
+                    <div class="screenshot setor-secoes">
+                        <h4>secao-sinergia-madrilusa</h4>
+                        <p><strong>Setor:</strong> secoes</p>
+                        <p>Seção: SinergIA Madrilusa</p>
+                        <p><strong>Arquivo:</strong> 14-secoes-secao-sinergia-madrilusa-2025-09-17T07-32-22-536Z.png</p>
+                        <p><strong>URL:</strong> http://localhost:8081/</p>
+                        <small>17/09/2025, 04:32:23</small>
+                    </div>
+                
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📊 Estatísticas Finais</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div>
+                    <h3>📋 Mapeamento</h3>
+                    <p>Etapas: <strong>8</strong></p>
+                    <p>Formulários: <strong>9</strong></p>
+                    <p>Taxa de sucesso: <strong>100%</strong></p>
+                </div>
+                <div>
+                    <h3>📝 Campos</h3>
+                    <p>Total: <strong>5</strong></p>
+                    <p>Obrigatórios: <strong>5</strong></p>
+                    <p>Opcionais: <strong>0</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

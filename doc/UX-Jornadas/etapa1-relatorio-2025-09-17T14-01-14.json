@@ -1,0 +1,67 @@
+{
+  "etapa": "1 - Registro Dados Básicos",
+  "timestamp": "2025-09-17T14-01-14",
+  "url_inicial": "http://localhost:8080",
+  "dadosPreenchidos": {
+    "nomeCompleto": "Maria Santos Oliveira",
+    "email": "maria.santos.1758117674188@madrilusa.demo",
+    "senha": "MinhaSenh@123!",
+    "confirmarSenha": "MinhaSenh@123!"
+  },
+  "camposMapeados": [
+    {
+      "indice": 0,
+      "tipo": "email",
+      "name": "",
+      "id": "",
+      "placeholder": "Vosso e-mail",
+      "obrigatorio": true,
+      "visivel": true
+    },
+    {
+      "indice": 1,
+      "tipo": "input",
+      "name": "nomeCompleto",
+      "id": "nomeCompleto",
+      "placeholder": "Digite seu nome completo",
+      "obrigatorio": false,
+      "visivel": true
+    },
+    {
+      "indice": 2,
+      "tipo": "email",
+      "name": "email",
+      "id": "email",
+      "placeholder": "Digite seu email",
+      "obrigatorio": false,
+      "visivel": true
+    },
+    {
+      "indice": 3,
+      "tipo": "input",
+      "name": "telemovel",
+      "id": "telemovel",
+      "placeholder": "+351 912 345 678",
+      "obrigatorio": false,
+      "visivel": true
+    },
+    {
+      "indice": 4,
+      "tipo": "password",
+      "name": "senha",
+      "id": "senha",
+      "placeholder": "Mínimo 6 caracteres",
+      "obrigatorio": false,
+      "visivel": true
+    }
+  ],
+  "screenshots": [
+    "etapa1-01-home-inicial.png",
+    "etapa1-02-modal-dados-basicos.png",
+    "etapa1-03-modal-preenchido.png"
+  ],
+  "observacoes": [
+    "Etapa 1 concluída com sucesso - Modal de dados básicos mapeado e preenchido"
+  ],
+  "status": "CONCLUÍDA"
+}
