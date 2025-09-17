@@ -88,7 +88,7 @@ export const LoginForm = ({ onToggleMode }: LoginFormProps) => {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" data-testid="login-form">
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input
@@ -97,6 +97,7 @@ export const LoginForm = ({ onToggleMode }: LoginFormProps) => {
             {...register('email')}
             placeholder="seu.email@exemplo.com"
             className={errors.email ? 'border-destructive' : ''}
+            data-testid="login-email"
           />
           {errors.email && (
             <p className="text-sm text-destructive">{errors.email.message}</p>
@@ -111,6 +112,7 @@ export const LoginForm = ({ onToggleMode }: LoginFormProps) => {
             {...register('senha')}
             placeholder="Sua senha"
             className={errors.senha ? 'border-destructive' : ''}
+            data-testid="login-password"
           />
           {errors.senha && (
             <p className="text-sm text-destructive">{errors.senha.message}</p>
@@ -121,6 +123,7 @@ export const LoginForm = ({ onToggleMode }: LoginFormProps) => {
           type="submit"
           className="w-full bg-primary hover:bg-primary-glow"
           disabled={isLoggingIn}
+          data-testid="login-submit"
         >
           {isLoggingIn ? 'Entrando...' : 'Entrar'}
         </Button>

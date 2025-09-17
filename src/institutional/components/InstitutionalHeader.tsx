@@ -180,11 +180,12 @@ const Header = () => {
                 >
                   Inscreva-se
                 </Button>
-                <Button 
-                  variant="secondary" 
+                <Button
+                  variant="secondary"
                   size="rectangular"
                   onClick={openLoginModal}
-                  data-login-button
+                  data-login-button="true"
+                  data-testid="header-login-button"
                 >
                   Login
                 </Button>
@@ -270,12 +271,13 @@ const Header = () => {
                     >
                       Inscreva-se
                     </Button>
-                    <Button 
-                      variant="secondary" 
-                      size="rectangular" 
+                    <Button
+                      variant="secondary"
+                      size="rectangular"
                       className="w-full"
                       onClick={openLoginModal}
-                      data-login-button
+                      data-login-button="true"
+                      data-testid="mobile-login-button"
                     >
                       Login
                     </Button>

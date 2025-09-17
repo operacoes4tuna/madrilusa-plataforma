@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório da Jornada de Cadastro - Imigrante</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 40px; background: #f5f7fa; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        h1 { color: #F5A623; border-bottom: 3px solid #F5A623; padding-bottom: 10px; }
+        h2 { color: #4A90A4; margin-top: 30px; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0; }
+        .stat-card { background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center; border-left: 4px solid #F5A623; }
+        .stat-value { font-size: 2em; font-weight: bold; color: #F5A623; }
+        .stat-label { color: #666; font-size: 0.9em; }
+        .etapa { background: #f8f9fa; margin: 10px 0; padding: 15px; border-radius: 8px; border-left: 4px solid #4A90A4; }
+        .problema { background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; margin: 5px 0; border-radius: 4px; }
+        .screenshot { margin: 10px 0; padding: 10px; background: #e9ecef; border-radius: 4px; }
+        .timestamp { color: #666; font-size: 0.8em; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #4A90A4; color: white; }
+        .success { color: #28a745; }
+        .warning { color: #ffc107; }
+        .danger { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 Relatório da Jornada de Cadastro - Imigrante</h1>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value">0.0s</div>
+                <div class="stat-label">Tempo Total</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">0</div>
+                <div class="stat-label">Páginas Visitadas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">0</div>
+                <div class="stat-label">Campos Analisados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Screenshots</div>
+            </div>
+        </div>
+
+        <h2>👤 Dados do Usuário</h2>
+        <p><strong>Nome:</strong> Ana Maria Santos Silva</p>
+        <p><strong>Email:</strong> ana.santos.teste@madrilusa.demo</p>
+        <p><strong>Data do Teste:</strong> 17/09/2025, 03:53:11</p>
+
+        <h2>🚀 Etapas da Jornada</h2>
+        
+            <div class="etapa">
+                <h3>Landing Page</h3>
+                <p>Visita inicial ao site Madrilusa</p>
+                <p><strong>URL:</strong> about:blank</p>
+                <p><strong>Título:</strong> </p>
+                <p><strong>Duração:</strong> 2.45s</p>
+                <p class="timestamp">Início: 17/09/2025, 03:53:13</p>
+            </div>
+        
+            <div class="etapa">
+                <h3>Processo de Registro</h3>
+                <p>Cadastro inicial na plataforma</p>
+                <p><strong>URL:</strong> http://localhost:8081/</p>
+                <p><strong>Título:</strong> Madrilusa - Inovação e empreendedorismo social para jovens imigrantes</p>
+                
+                <p class="timestamp">Início: 17/09/2025, 03:53:16</p>
+            </div>
+        
+
+        <h2>📊 Análise de Formulários</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Formulário</th>
+                    <th>Total de Campos</th>
+                    <th>Obrigatórios</th>
+                    <th>Opcionais</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+
+        
+            <h2>⚠️ Problemas Identificados</h2>
+            
+                <div class="problema">Elemento não encontrado: button:has-text("Criar conta")</div>
+            
+                <div class="problema">Elemento não encontrado: button:has-text("Imigrante")</div>
+            
+                <div class="problema">Elemento não encontrado: .card:has-text("Imigrante")</div>
+            
+                <div class="problema">Elemento não encontrado: [data-category="imigrante"]</div>
+            
+                <div class="problema">Elemento não encontrado: div:has-text("Jovem Imigrante")</div>
+            
+                <div class="problema">Erro crítico: Opção de categoria Imigrante não encontrada</div>
+            
+        
+
+        <h2>📸 Screenshots Capturadas</h2>
+        
+            <div class="screenshot">
+                <h4>landing-page</h4>
+                <p>Página inicial do site</p>
+                <p><strong>Arquivo:</strong> 01-landing-page-2025-09-17T06-53-14-958Z.png</p>
+                <p><strong>URL:</strong> http://localhost:8081/</p>
+                <p class="timestamp">17/09/2025, 03:53:16</p>
+            </div>
+        
+            <div class="screenshot">
+                <h4>modal-registro-aberto</h4>
+                <p>Modal de registro inicial aberto</p>
+                <p><strong>Arquivo:</strong> 02-modal-registro-aberto-2025-09-17T06-53-19-474Z.png</p>
+                <p><strong>URL:</strong> http://localhost:8081/</p>
+                <p class="timestamp">17/09/2025, 03:53:20</p>
+            </div>
+        
+            <div class="screenshot">
+                <h4>erro-critico</h4>
+                <p>Erro crítico: Opção de categoria Imigrante não encontrada</p>
+                <p><strong>Arquivo:</strong> 03-erro-critico-2025-09-17T06-53-32-095Z.png</p>
+                <p><strong>URL:</strong> http://localhost:8081/</p>
+                <p class="timestamp">17/09/2025, 03:53:32</p>
+            </div>
+        
+
+        <h2>📈 Estatísticas Finais</h2>
+        <table>
+            <tbody>
+                <tr><td><strong>Taxa de Preenchimento</strong></td><td>0%</td></tr>
+                <tr><td><strong>Tempo Médio por Página</strong></td><td>0ms</td></tr>
+                <tr><td><strong>Campos Obrigatórios</strong></td><td>0</td></tr>
+                <tr><td><strong>Campos Opcionais</strong></td><td>0</td></tr>
+                <tr><td><strong>Status Final</strong></td><td class="danger">falhada</td></tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+  
