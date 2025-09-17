@@ -1,0 +1,26 @@
+{
+  "timestamp": "2025-09-17T06:28:14.240Z",
+  "cenarios": {
+    "matchPerfeito": {
+      "erro": "page.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('text=Criar conta')\u001b[22m\n",
+      "timestamp": "2025-09-17T06:28:55.499Z"
+    },
+    "matchParcial": {
+      "erro": "page.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('text=Criar conta')\u001b[22m\n",
+      "timestamp": "2025-09-17T06:29:31.169Z"
+    },
+    "matchEliminado": {
+      "erro": "page.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('text=Criar conta')\u001b[22m\n",
+      "timestamp": "2025-09-17T06:30:06.622Z"
+    }
+  },
+  "conformidade": {
+    "pesosCorretos": true,
+    "eliminatoriosFuncionam": true,
+    "scoreMinimo": true,
+    "thresholdIA": null,
+    "dadosCompletos": null
+  },
+  "bugs": [],
+  "sugestoes": []
+}

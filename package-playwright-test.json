@@ -1,0 +1,40 @@
+{
+  "name": "madrilusa-sinergia-v2-playwright-tests",
+  "version": "1.0.0",
+  "description": "Testes automatizados para validação do sistema SinergIA V2 - Madrilusa",
+  "main": "playwright-sinergia-v2-test.js",
+  "scripts": {
+    "test": "node playwright-sinergia-v2-test.js",
+    "test:headless": "HEADLESS=true node playwright-sinergia-v2-test.js",
+    "test:debug": "DEBUG=true node playwright-sinergia-v2-test.js",
+    "install-playwright": "playwright install chromium",
+    "test:full": "npm run install-playwright && npm run test"
+  },
+  "keywords": [
+    "playwright",
+    "testing",
+    "automation",
+    "sinergia",
+    "madrilusa",
+    "e2e"
+  ],
+  "author": "Sistema Madrilusa",
+  "license": "MIT",
+  "dependencies": {
+    "playwright": "^1.40.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "local"
+  },
+  "bugs": {
+    "url": "https://github.com/anthropics/claude-code/issues"
+  },
+  "homepage": "http://localhost:8080"
+}

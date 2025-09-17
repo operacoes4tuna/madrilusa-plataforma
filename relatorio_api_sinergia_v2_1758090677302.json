@@ -1,0 +1,138 @@
+{
+  "timestamp": "2025-09-17T06:31:17.185Z",
+  "testes": {},
+  "configuracaoAtiva": {
+    "erro": "HTTP 401: Unauthorized"
+  },
+  "health": {
+    "status": 200,
+    "ok": true,
+    "data": {
+      "success": true,
+      "data": {
+        "status": "healthy",
+        "version": "2.0",
+        "features": [
+          "Rigorous matching algorithm",
+          "Structured data analysis",
+          "Token optimization",
+          "Detailed breakdowns",
+          "Performance metrics"
+        ],
+        "timestamp": "2025-09-17T06:31:17.269Z"
+      },
+      "message": "SinergIA V2 está operacional"
+    },
+    "timestamp": "2025-09-17T06:31:17.279Z"
+  },
+  "metricas": {
+    "custo": {
+      "totalTokensToday": 4200,
+      "totalCostToday": 0.16379999999999997,
+      "averageTokensPerAnalysis": 1400,
+      "totalAnalysesToday": 3,
+      "aiUsageRate": 100,
+      "costTrend": "stable"
+    },
+    "performance": {
+      "averageProcessingTime": 9029.333333333334,
+      "averageScore": 48,
+      "scoreDistribution": {
+        "0-20": 0,
+        "21-40": 0,
+        "41-60": 3,
+        "61-80": 0,
+        "81-100": 0
+      },
+      "topMissingCriteria": [
+        {
+          "criteria": "Experiência específica",
+          "frequency": 45
+        },
+        {
+          "criteria": "Transporte próprio",
+          "frequency": 32
+        },
+        {
+          "criteria": "Localização geográfica",
+          "frequency": 28
+        },
+        {
+          "criteria": "Fluência em português",
+          "frequency": 22
+        },
+        {
+          "criteria": "Formação acadêmica",
+          "frequency": 18
+        }
+      ]
+    },
+    "estatisticas": {
+      "cost": {
+        "totalTokensToday": 4200,
+        "totalCostToday": 0.16379999999999997,
+        "averageTokensPerAnalysis": 1400,
+        "totalAnalysesToday": 3,
+        "aiUsageRate": 100,
+        "costTrend": "stable"
+      },
+      "performance": {
+        "averageProcessingTime": 9029.333333333334,
+        "averageScore": 48,
+        "scoreDistribution": {
+          "0-20": 0,
+          "21-40": 0,
+          "41-60": 3,
+          "61-80": 0,
+          "81-100": 0
+        },
+        "topMissingCriteria": [
+          {
+            "criteria": "Experiência específica",
+            "frequency": 45
+          },
+          {
+            "criteria": "Transporte próprio",
+            "frequency": 32
+          },
+          {
+            "criteria": "Localização geográfica",
+            "frequency": 28
+          },
+          {
+            "criteria": "Fluência em português",
+            "frequency": 22
+          },
+          {
+            "criteria": "Formação acadêmica",
+            "frequency": 18
+          }
+        ]
+      },
+      "system": {
+        "bufferSize": 3,
+        "oldestRecord": "2025-09-17T06:09:55.370Z",
+        "newestRecord": "2025-09-17T06:10:12.586Z"
+      },
+      "recommendations": [
+        "Considere aumentar o threshold mínimo para uso de IA (atualmente 40%)",
+        "Prompts podem ser otimizados para reduzir consumo de tokens",
+        "Score médio baixo - revisar critérios de matching ou dados de entrada",
+        "Tempo de processamento alto - otimizar consultas ao banco de dados"
+      ]
+    }
+  },
+  "conformidade": {
+    "configuracaoValida": false,
+    "healthOK": true,
+    "metricasDisponiveis": true
+  },
+  "bugs": [
+    "Erro ao acessar configuração: HTTP 401: Unauthorized"
+  ],
+  "conclusoes": [
+    "⚠️ Sistema SinergIA V2 está funcionando mas precisa de atenção",
+    "🐛 1 bugs identificados que precisam de atenção"
+  ],
+  "scoreConformidade": 60
+}
