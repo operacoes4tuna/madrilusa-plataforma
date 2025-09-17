@@ -8,10 +8,10 @@ import {
   CardBody,
   CardHeader 
 } from 'shards-react';
-import type { 
-  DadosIdioma, 
+import type {
+  DadosIdioma,
   IdiomaFormData,
-  ContribuicaoUnificada 
+  ContribuicaoUnificada
 } from '../../../types/dados-profissionais.types';
 import { NIVEIS_IDIOMA } from '../../../types/dados-profissionais.types';
 

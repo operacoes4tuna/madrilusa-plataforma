@@ -8,14 +8,14 @@ export type {
   CreateOportunidadeTrabalhoRequest,
   UpdateOportunidadeTrabalhoRequest,
   ContribuicaoUnificada
-} from '../../shared-types/api.types';
+} from '../../shared-types/api.types.ts';
 
 export {
   OPCOES_GENERO_OPORTUNIDADE,
   OPCOES_BINARIAS_OPORTUNIDADE,
   NIVEIS_ESCOLARIDADE_OPORTUNIDADE,
   NIVEIS_IDIOMA
-} from '../../shared-types/api.types';
+} from '../../shared-types/api.types.ts';
 
 // Tipos específicos para o frontend
 export interface OportunidadeFormData {

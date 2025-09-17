@@ -20,7 +20,7 @@ import { useToast } from '@/hooks/use-toast';
 import type { 
   ContribuicaoUnificada,
   TipoDadoProfissional 
-} from '../../types/dados-profissionais.types';
+} from '../../../types/dados-profissionais.types';
 
 interface DadosProfissionaisStats {
   totalDados: number;

@@ -8,10 +8,10 @@ import {
   CardBody,
   CardHeader 
 } from 'shards-react';
-import type { 
-  DadosExperiencia, 
+import type {
+  DadosExperiencia,
   ExperienciaFormData,
-  ContribuicaoUnificada 
+  ContribuicaoUnificada
 } from '../../../types/dados-profissionais.types';
 import { TEMPOS_CARGO } from '../../../types/dados-profissionais.types';
 

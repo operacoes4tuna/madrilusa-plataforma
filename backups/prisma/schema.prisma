@@ -1,0 +1,315 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  nomeCompleto String
+  email        String   @unique
+  senha        String   // Hash será implementado futuramente
+  telemovel    String?  // Telemóvel do usuário (opcional)
+  foto         String?  // URL da foto do usuário (opcional)
+  categoria    String?  // ✨ NOVO: categoria do usuário (IMIGRANTE, EMPRESA, MUNICIPIO, ACADEMIA, FAMILIA_ACOLHIMENTO)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  // ✨ NOVO: Relação com perfil específico de imigrante
+  perfilImigrante PerfilImigrante?
+  
+  // ✨ FASE 2: Relação com perfil específico de empresa
+  perfilEmpresa PerfilEmpresa?
+  
+  // ✨ FASE 3: Relação com perfil específico de município
+  perfilMunicipio PerfilMunicipio?
+  
+  // ✨ FASE 4: Relação com perfil específico de academia
+  perfilAcademia PerfilAcademia?
+  
+  // ✨ FASE 5: Relação com perfil específico de família
+  perfilFamilia PerfilFamilia?
+  
+  // ✨ SISTEMA CONTRIBUIÇÕES: Relação 1:N com contribuições do usuário
+  contribuicoes Contribuicao[]
+  
+  // ✨ NOVO: Dados profissionais estruturados para imigrantes
+  dadosProfissionais DadosProfissionaisImigrante[]
+  
+  // ✨ NOVO: Oportunidades de trabalho para empresas
+  oportunidadesTrabalho OportunidadeTrabalho[]
+  
+  @@map("users")
+}
+
+// ✨ NOVO: Perfil específico de Imigrante (FASE 1)
+model PerfilImigrante {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  nacionalidade         String
+  dataNascimento        DateTime
+  objetivos             String?  // JSON array dos objetivos selecionados (Emprego, Formação, Regularização)
+  objetivoOutros        String?  // Descrição de outros objetivos (texto livre)
+  mensagem              String?  // Campo opcional adicional
+  aceitaNotificacoes    Boolean  @default(false) // Aceita receber notificações de oportunidades
+  
+  // ✨ NOVOS CAMPOS - Informações Adicionais
+  genero                    String?  // 'F', 'M', 'Outro'
+  municipioResidencia       String?  // Município onde reside
+  transporteProprio         Boolean  @default(false) // Tem transporte próprio
+  possibilidadeMudancaMorada Boolean @default(false) // Pode mudar de morada
+  fluenciaPortugues         String?  // 'Básica', 'Intermediária', 'Avançada', 'Fluente'
+  
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  // Relação com User (1:1 com cascade delete)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("perfis_imigrante")
+}
+
+// ✨ FASE 2: Perfil específico de Empresa
+model PerfilEmpresa {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  nomeEmpresa       String   // ✨ Obrigatório: Nome da empresa
+  pessoaContacto    String?  // ✨ Opcional: Nome do responsável
+  morada            String?  // ✨ Opcional: Endereço da empresa
+  observacoes       String?  // ✨ Opcional: Vagas, requisitos, detalhes
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relação com User (1:1 com cascade delete)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("perfis_empresa")
+}
+
+// ✨ FASE 3: Perfil específico de Município
+model PerfilMunicipio {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  nomeMunicipio         String?  // ✨ Opcional: Nome do município
+  distrito              String?  // ✨ Opcional: Distrito/Região administrativa
+  pessoaContacto        String?  // ✨ Opcional: Pessoa de contacto institucional
+  funcaoCargo           String?  // ✨ Opcional: Função/Cargo do responsável
+  projetosApoio         String?  // ✨ Opcional: Projetos de apoio existentes (CLAIM, CLDS, etc.)
+  disponibilidadeAcoes  String?  // ✨ Opcional: Disponibilidade para acolher ações locais
+  observacoes           String?  // ✨ Opcional: Horários, espaços, eventos locais
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  // Relação com User (1:1 com cascade delete)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("perfis_municipio")
+}
+
+// ✨ FASE 4: Perfil específico de Academia
+model PerfilAcademia {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  nomeAcademia      String   // ✨ Obrigatório: Nome da Academia/Instituição
+  tipoAcademia      String?  // ✨ Opcional: Tipo (escola, universidade, centro, etc.)
+  regiao            String?  // ✨ Opcional: Região/Zona de atuação
+  pessoaContacto    String?  // ✨ Opcional: Nome do responsável
+  emailInstitucional String? // ✨ Opcional: Email institucional
+  telefone          String?  // ✨ Opcional: Telefone de contacto
+  ofertaFormativa   String?  // ✨ Opcional: Descrição dos cursos oferecidos
+  website           String?  // ✨ Opcional: URL do site oficial
+  observacoes       String?  // ✨ Opcional: Informações adicionais
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relação com User (1:1 com cascade delete)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("perfis_academia")
+}
+
+// ✨ FASE 5: Perfil específico de Família de Acolhimento
+model PerfilFamilia {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  moradaCompleta      String   // ✨ Obrigatório: Morada com freguesia e concelho
+  quantidadePessoas   String?  // ✨ Opcional: Ex: "1 adulto + 1 criança"
+  tiposAcolhimento    String?  // ✨ Opcional: Tipos disponíveis (JSON ou separado por vírgulas)
+  duracaoAcolhimento  String?  // ✨ Opcional: Durações disponíveis (JSON ou separado por vírgulas)
+  observacoes         String?  // ✨ Opcional: Preferências, condições especiais, horários
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  
+  // Relação com User (1:1 com cascade delete)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("perfis_familia")
+}
+
+// ✨ SISTEMA CONTRIBUIÇÕES: Tabela para tipos de contribuição configuráveis pelo admin
+model TipoContribuicao {
+  id              String   @id @default(cuid())
+  titulo          String   // Ex: "Habilidades", "Oportunidades"
+  categoria       String   // IMIGRANTE, EMPRESA, MUNICIPIO, ACADEMIA, FAMILIA_ACOLHIMENTO
+  contextoIA      String?  // Orientações para IA
+  textoModelo     String?  // Exemplo de descrição
+  tagsModelo      String?  // Tags sugeridas (JSON array)
+  perguntasModelo String?  // Texto orientativo para o usuário
+  ativo           Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Relação 1:N com contribuições dos usuários
+  contribuicoes Contribuicao[]
+  
+  @@map("tipos_contribuicao")
+}
+
+// ✨ SISTEMA CONTRIBUIÇÕES: Tabela para contribuições específicas dos usuários
+model Contribuicao {
+  id                  String   @id @default(cuid())
+  userId              String   // FK para User
+  tipoContribuicaoId  String   // FK para TipoContribuicao
+  descricao           String   // Conteúdo preenchido pelo usuário
+  tags                String?  // Tags selecionadas (JSON array)
+  ativo               Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  
+  // Relações
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tipoContribuicao TipoContribuicao @relation(fields: [tipoContribuicaoId], references: [id])
+  
+  @@map("contribuicoes")
+}
+
+// ✨ SISTEMA CONTRIBUIÇÕES: Tabela para tags compartilhadas do sistema
+model TagSistema {
+  id        String   @id @default(cuid())
+  nome      String   @unique // Ex: "JavaScript", "Atendimento", "Marketing"
+  cor       String?  // Cor hex para UI (opcional)
+  categoria String?  // Categoria opcional para organização
+  usos      Int      @default(0) // Contador de uso
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("tags_sistema")
+}
+
+// ✨ NOVO: Dados profissionais estruturados para imigrantes
+model DadosProfissionaisImigrante {
+  id        String   @id @default(cuid())
+  userId    String   // FK para User
+  tipo      String   // 'experiencia', 'formacao', 'idioma'
+  dados     String   // JSON string com dados específicos por tipo
+  titulo    String   // Título para exibição (ex: "Desenvolvedor na Tech Corp")
+  ordem     Int      @default(0) // Para ordenação na UI
+  ativo     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relação com User
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("dados_profissionais_imigrante")
+}
+
+// ✨ SISTEMA CONFIGURAÇÃO SINERGIA V2: Configurações paramétricas do algoritmo
+model ConfiguracaoSinergia {
+  id            String   @id @default(cuid())
+  versao        Int      @default(1)
+  ativa         Boolean  @default(false)
+  nome          String   // Ex: "Configuração Rigorosa v2"
+  descricao     String?
+  
+  // Configurações de Pesos (JSON com ScoringWeights)
+  pesos         String   // JSON: { genero: 10, idade: 10, municipio: 15, ... }
+  
+  // Critérios Eliminatórios (JSON)
+  eliminatorios String   // JSON: { genero: { ativo: boolean, condicoes: {...} }, ... }
+  
+  // Configurações de IA (JSON)
+  iaConfig      String   // JSON: { habilitada: boolean, threshold: number, pesoIA: number, ... }
+  
+  // Configurações de Pré-filtros (JSON)
+  prefiltros    String   // JSON: Regras de pré-filtro configuráveis
+  
+  // Configurações de Scoring (JSON)
+  scoringRules  String   // JSON: Regras específicas por critério
+  
+  // Configurações de Limites (JSON)
+  limites       String   @default("{\"maxCandidatosPorAnalise\":100,\"timeoutAnalise\":30,\"cacheResultados\":true,\"tempoCache\":10}")   // JSON: Limites de performance e cache
+  
+  // Metadados
+  criadoPor     String   // userId do admin
+  atualizadoPor String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@index([ativa])
+  @@map("configuracao_sinergia")
+}
+
+model HistoricoConfiguracaoSinergia {
+  id              String   @id @default(cuid())
+  configuracaoId  String
+  snapshot        String   // JSON: Cópia completa da configuração
+  acao            String   // 'criada', 'editada', 'ativada', 'desativada'
+  usuarioId       String
+  motivo          String?
+  createdAt       DateTime @default(now())
+  
+  @@index([configuracaoId])
+  @@map("historico_configuracao_sinergia")
+}
+
+// ✨ NOVO: Oportunidades de trabalho estruturadas para empresas
+model OportunidadeTrabalho {
+  id                    String   @id @default(cuid())
+  userId                String   // FK para User (empresa)
+  titulo                String   // Nome do cargo/oportunidade
+  ativo                 Boolean  @default(true)
+  
+  // Critérios Básicos de Seleção
+  genero                String?  // 'F', 'M', 'INDIFERENTE'
+  idade                 String?  // Faixa etária ou específica
+  municipioResidencia   String?  // Município preferencial
+  transporteProprio     String?  // 'S', 'N', 'INDIFERENTE'
+  fluenciaPortugues     String?  // 'S', 'N', 'INDIFERENTE'
+  
+  // Informações do Cargo/Profissão
+  nomeCargo             String   // Nome específico do cargo
+  nomeProfissao         String?  // Profissão geral
+  descricaoCargo        String?  // Descrição detalhada
+  denominacoes          String?  // JSON array - outras denominações
+  
+  // Experiências Aceitas (JSON array de strings)
+  experienciasAceitas   String?  // JSON array de experiências
+  
+  // Formação Requerida
+  nivelEscolaridade     String?  // Nível mínimo de escolaridade
+  areasFormacao         String?  // JSON array - áreas de formação aceitas
+  
+  // Idiomas Preferenciais (JSON array de objetos {idioma, nivel})
+  idiomasPreferenciais  String?  // JSON array de idiomas com níveis
+  
+  // Competências e Personalidade (JSON arrays)
+  habilidades           String?  // JSON array - habilidades desejadas
+  caracteristicas       String?  // JSON array - características de personalidade
+  
+  // Metadados
+  visualizacoes         Int      @default(0) // Contador de visualizações
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  
+  // Relação com User (empresa)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("oportunidades_trabalho")
+} 

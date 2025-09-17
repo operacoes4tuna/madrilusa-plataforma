@@ -18,7 +18,7 @@ import type {
   ExperienciaFormData,
   FormacaoFormData,
   IdiomaFormData
-} from '../../../types/dados-profissionais.types';
+} from '../../../../types/dados-profissionais.types';
 import type { OportunidadeFormData } from '../../../types/oportunidades-trabalho.types';
 import OportunidadeForm from '../oportunidades-trabalho/OportunidadeForm';
 

@@ -16,7 +16,9 @@ export default defineConfig({
     }
   },
   plugins: [
-    react(),
+    react({
+      jsxRuntime: 'automatic',
+    }),
   ],
   resolve: {
     alias: {

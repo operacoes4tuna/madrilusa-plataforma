@@ -12,14 +12,14 @@ export type {
   CreateDadoProfissionalRequest,
   UpdateDadoProfissionalRequest,
   ContribuicaoUnificada
-} from '../../shared-types/api.types';
+} from '../../shared-types/api.types.ts';
 
 export {
   TIPOS_DADO_PROFISSIONAL,
   NIVEIS_ESCOLARIDADE,
   NIVEIS_IDIOMA,
   TEMPOS_CARGO
-} from '../../shared-types/api.types';
+} from '../../shared-types/api.types.ts';
 
 // Tipos específicos para o frontend
 export interface DadoProfissionalFormData {

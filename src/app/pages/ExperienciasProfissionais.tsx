@@ -5,7 +5,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
 import ContribuicaoCardUnificado from '../components/contribuicoes/ContribuicaoCardUnificado';
 import ContribuicaoModalUnificado from '../components/contribuicoes/ContribuicaoModalUnificado';
-import type { ContribuicaoUnificada } from '../../types/dados-profissionais.types';
+import type { ContribuicaoUnificada } from '../../../types/dados-profissionais.types';
 
 const ExperienciasProfissionais: React.FC = () => {
   const [experiencias, setExperiencias] = useState<ContribuicaoUnificada[]>([]);

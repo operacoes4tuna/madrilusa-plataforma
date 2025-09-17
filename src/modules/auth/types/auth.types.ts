@@ -3,7 +3,7 @@ import type {
   UserCategory, 
   User, 
   RegisterBasicResponse 
-} from '../../../../shared-types/api.types';
+} from '../../../../shared-types/api.types.ts';
 // USER_CATEGORIES será exportado abaixo junto com outras constantes
 
 // Reexport ALL shared types (atualizado com categorias)
@@ -61,7 +61,7 @@ export type {
   // ✨ NOVOS ENUMS: Campos adicionais
   Genero,
   FluenciaPortugues
-} from '../../../../shared-types/api.types';
+} from '../../../../shared-types/api.types.ts';
 
 // ✨ NOVO: Definições locais para evitar problemas de import
 export const USER_CATEGORIES = {

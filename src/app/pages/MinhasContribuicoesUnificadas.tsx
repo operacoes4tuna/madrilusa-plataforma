@@ -8,7 +8,7 @@ import ContribuicaoModalUnificado from '../components/contribuicoes/Contribuicao
 import type { 
   ContribuicaoUnificada, 
   ModalTipo 
-} from '../../types/dados-profissionais.types';
+} from '../../../types/dados-profissionais.types';
 
 interface TipoContribuicao {
   id: string;

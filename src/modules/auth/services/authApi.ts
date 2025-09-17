@@ -1,4 +1,4 @@
-import { RegisterRequest, LoginRequest, ApiResponse } from '../../../../shared-types/api.types';
+import { RegisterRequest, LoginRequest, ApiResponse } from '../../../../shared-types/api.types.ts';
 
 export const authApi = {
   register: async (data: RegisterRequest): Promise<ApiResponse> => {

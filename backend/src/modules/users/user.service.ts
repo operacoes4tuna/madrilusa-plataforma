@@ -44,9 +44,27 @@ export const userService = {
   },
 
   async getUserByEmail(email: string) {
-    return await prisma.user.findUnique({
+    console.log('🔍 DEBUG - Testando conexão Prisma');
+
+    // Primeiro, vamos contar todos os usuários
+    const totalUsers = await prisma.user.count();
+    console.log('🔍 DEBUG - Total de usuários no banco:', totalUsers);
+
+    // Listar todos os emails que existem
+    const allUsers = await prisma.user.findMany({
+      select: { email: true, nomeCompleto: true, categoria: true }
+    });
+    console.log('🔍 DEBUG - Todos os usuários:', allUsers);
+
+    console.log('🔍 DEBUG - Procurando por email:', email.toLowerCase());
+
+    const result = await prisma.user.findUnique({
       where: { email: email.toLowerCase() },
     });
+
+    console.log('🔍 DEBUG - Resultado da busca:', result ? `Encontrado: ${result.email}` : 'Não encontrado');
+
+    return result;
   },
 
   // ✨ ATUALIZADO: createUser agora aceita categoria

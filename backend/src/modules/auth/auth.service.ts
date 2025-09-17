@@ -88,7 +88,7 @@ export const authService = {
   async login(data: LoginRequest) {
     // Buscar usuário com senha
     const user = await userService.getUserByEmail(data.email);
-    
+
     if (!user) {
       throw new Error('Credenciais inválidas');
     }

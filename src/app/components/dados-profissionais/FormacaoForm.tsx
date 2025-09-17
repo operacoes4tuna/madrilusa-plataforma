@@ -8,10 +8,10 @@ import {
   CardBody,
   CardHeader 
 } from 'shards-react';
-import type { 
-  DadosFormacao, 
+import type {
+  DadosFormacao,
   FormacaoFormData,
-  ContribuicaoUnificada 
+  ContribuicaoUnificada
 } from '../../../types/dados-profissionais.types';
 import { NIVEIS_ESCOLARIDADE } from '../../../types/dados-profissionais.types';
 

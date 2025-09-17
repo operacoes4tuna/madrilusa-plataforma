@@ -5,7 +5,7 @@ import type {
   DadosExperiencia, 
   DadosFormacao, 
   DadosIdioma 
-} from '../../../types/dados-profissionais.types';
+} from '../../../../types/dados-profissionais.types';
 import type { OportunidadeTrabalho } from '../../../types/oportunidades-trabalho.types';
 
 interface ContribuicaoCardUnificadoProps {

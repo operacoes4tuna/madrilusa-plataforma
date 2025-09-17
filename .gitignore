@@ -19,6 +19,17 @@ backend/.env
 backend/*.db
 backend/*.db-journal
 
+# EXCEÇÕES PARA DESENVOLVIMENTO MADRILUSA
+# Permitir arquivos de configuração para redeploy fácil
+!.madrilusa-dev/
+!.madrilusa-dev/.env.development
+!.madrilusa-dev/.env.template
+!.madrilusa-dev/dev-seed.db
+!.madrilusa-dev/setup-instructions.md
+!.madrilusa-dev/quick-start.sh
+!.madrilusa-dev/backup-current.cjs
+!.madrilusa-dev/COMMANDS_REFERENCE.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -29,3 +40,14 @@ backend/*.db-journal
 *.njsproj
 *.sln
 *.sw?
+
+# Claude Code session files
+.claude-session
+.claude-*
+*.claude
+claude-workspace.json
+
+# Development temp files
+.dev-notes.md
+.temp-*
+*.tmp
