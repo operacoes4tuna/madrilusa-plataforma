@@ -1,0 +1,40 @@
+# Use Node.js 18 Alpine
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Install dependencies for SQLite and Prisma
+RUN apk add --no-cache openssl sqlite
+
+# Copy package files
+COPY backend/package*.json ./
+
+# Install npm dependencies
+RUN npm install
+
+# Copy backend source code
+COPY backend/ .
+
+# Generate Prisma client
+RUN npx prisma generate
+
+# Build TypeScript
+RUN npm run build
+
+# Create data directory for SQLite
+RUN mkdir -p /app/data
+
+# Set proper permissions
+RUN chown -R node:node /app
+USER node
+
+# Expose port
+EXPOSE 3001
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:3001/health || exit 1
+
+# Start the application
+CMD ["npm", "start"]
