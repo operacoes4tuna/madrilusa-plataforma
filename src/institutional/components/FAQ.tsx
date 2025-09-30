@@ -79,6 +79,16 @@ const FAQ = () => {
       name: "Adritem", 
       email: "madrilusa@adritem.pt",
       phone: "(+351) 937 342 173"
+    },
+    {
+      name: "Adraces", 
+      email: "apoio-imigrantes@adraces.pt",
+      phone: "(+351) 272 540 200"
+    },
+    {
+      name: "CoraNE", 
+      email: "terrafria@corane.pt",
+      phone: "(+351) 273 332 925"
     }
   ];
 

@@ -34,7 +34,7 @@ const Activities = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-secondary mb-6">
-            As acções do projecto incluem
+            As ações do projecto incluem
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             Através de uma abordagem integrada, desenvolvemos múltiplas iniciativas que promovem 

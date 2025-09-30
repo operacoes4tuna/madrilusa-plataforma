@@ -22,7 +22,7 @@ const About = () => {
             <div className="text-lg text-white/90 leading-relaxed space-y-6">
               <p>
                 O projecto Madrilusa é uma iniciativa de Inovação e Empreendedorismo Social promovida 
-                em parceria entre a <strong className="text-primary">ADRITEM</strong> com a{" "}
+                em parceria entre a <strong className="text-primary">ADRITEM</strong>, {" "}
                 <strong className="text-primary">Federação Minha Terra</strong>, a{" "}
                 <strong className="text-primary">CoraNE</strong> e a{" "}
                 <strong className="text-primary">ADRACES</strong>.
@@ -122,15 +122,13 @@ const About = () => {
                     <li>Parceiros locais, autarquias, associações e empresas</li>
                     <li>Promoção de oficinas, estágios, espaços culturais</li>
                     <li>Acções de mentoria e momentos de convívio intercultural</li>
-                    <li>Objectivo: inclusão quando todos têm lugar à mesa</li>
-                    <li>Abertura de portas e janelas para um futuro mais justo, diverso e digno</li>
                   </ul>
                 </div>
 
                 <div className="bg-primary/20 rounded-lg p-6 mt-8">
                   <p className="text-primary font-semibold text-center text-lg">
-                    "Mais do que uma intervenção social, somos uma rede de partilha, capacitação 
-                    e envolvimento comunitário onde todos têm lugar à mesa."
+                    "Para além de uma intervenção social, somos um espaço de encontro,
+                    partilha e capacitação, onde cada pessoa tem valor e pertence."
                   </p>
                 </div>
               </div>
