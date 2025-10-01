@@ -101,6 +101,36 @@ madrilusasite/
 ### **📝 Política de Documentação**
 > **🚨 IMPORTANTE:** Toda documentação (.md) deve ser criada APENAS na pasta `doc/`. Não criar arquivos .md na raiz do projeto para manter a organização.
 
+### **🤖 Agentes Especializados Claude Code**
+
+O projeto conta com agentes especializados para tarefas específicas:
+
+#### **Homepage Editor Agent** (`homepage-editor`)
+- **Invocação Automática**: Detecta automaticamente edições na home page institucional
+- **Isolamento Total**: Garante que mudanças na home não afetam a plataforma
+- **Validação Visual**: Usa MCP Playwright para confirmar alterações
+- **Documentação**: [Guia Completo](doc/agentes/HOMEPAGE_EDITOR_GUIDE.md)
+
+**Como usar:**
+```bash
+# Automático - apenas solicite:
+"Alterar texto do botão Hero"
+"Configurar links de redes sociais"
+"Adicionar nova seção na home"
+
+# Ou explicitamente:
+/agent homepage-editor "sua solicitação"
+
+# Validar isolamento:
+./scripts/validate-isolation.sh
+```
+
+**Áreas de atuação:**
+- ✅ `/src/institutional/` - Componentes da home
+- ✅ `/src/institutional/components/ui/` - Componentes UI isolados
+- ✅ `/public/institutional-assets/` - Assets exclusivos
+- ❌ `/src/app/` - Plataforma (NUNCA edita)
+
 ---
 
 ## 🚀 Como Executar

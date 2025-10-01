@@ -83,8 +83,8 @@ const Activities = () => {
               Cada acção do Madrilusa é desenhada para criar impacto real na vida das pessoas 
               e no desenvolvimento das comunidades rurais.
             </p>
-            <button 
-              onClick={() => document.getElementById('registrar')?.scrollIntoView({ behavior: 'smooth' })}
+            <button
+              onClick={() => document.getElementById('registration-cards')?.scrollIntoView({ behavior: 'smooth' })}
               className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary-glow transition-colors"
             >
               Registe-se e faça parte

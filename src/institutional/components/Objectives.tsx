@@ -85,8 +85,8 @@ const Objectives = () => {
               Cada objectivo do Madrilusa contribui para uma visão maior: criar comunidades 
               onde a diversidade é valorizada e todos têm oportunidades de crescer e prosperar.
             </p>
-            <button 
-              onClick={() => document.getElementById('registrar')?.scrollIntoView({ behavior: 'smooth' })}
+            <button
+              onClick={() => document.getElementById('registration-cards')?.scrollIntoView({ behavior: 'smooth' })}
               className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary-glow transition-colors"
             >
               Faça parte desta missão

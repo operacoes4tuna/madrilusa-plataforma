@@ -30,13 +30,13 @@ const Hero = () => {
               e empresas que abrem portas
             </p>
             
-            <Button 
-              variant="hero" 
+            <Button
+              variant="hero"
               size="xl"
               className="font-semibold"
-              onClick={() => document.getElementById('registrar')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => document.getElementById('registration-cards')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Juntem-se a nós
+              Junte-se a nós
             </Button>
           </div>
 

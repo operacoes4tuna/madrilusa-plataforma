@@ -290,13 +290,35 @@ doc/02-IA_DEFINICOES_FUNCIONAIS_IA/ # Dossiê completo de IA
 
 ## 🎯 **METODOLOGIA DE TRABALHO**
 
+### **⚠️ IMPORTANTE: Uso Automático de Agentes Especializados**
+
+**SEMPRE** que receber solicitação relacionada à **home page institucional**, você DEVE:
+1. **Invocar automaticamente** o agente `homepage-editor`
+2. **NÃO** fazer edições diretas em `/src/institutional/`
+3. **Deixar o agente** realizar todas as modificações com isolamento garantido
+
+#### Gatilhos para Invocação Automática do homepage-editor:
+- Menções a: home page, landing page, página institucional, site institucional
+- Componentes: Hero, About, FAQ, Footer, Header, RegistrationCards, Objectives, Activities, Newsletter, Target, InstitutionalHeader
+- Elementos: botões da home, links, âncoras, navegação, redes sociais, formulários
+- Edições em: `/src/institutional/`, `institutional-theme.css`, `/public/institutional-assets/`
+- Qualquer modificação visual ou funcional da landing page
+
+#### Exemplo de Uso Automático:
+```
+Usuário: "Alterar o texto do botão Hero"
+Você: [Detecta gatilho "botão Hero" → Invoca homepage-editor automaticamente]
+      O agente homepage-editor foi invocado para realizar esta alteração com isolamento total...
+```
+
 ### **Workflow Consistente**
 1. **📖 Análise**: Ler README.md e documentação relevante
-2. **📋 Planejamento**: Usar TodoWrite para organizar tarefas
-3. **🔍 Investigação**: Verificar padrões existentes no código
-4. **⚙️ Implementação**: Seguir convenções estabelecidas
-5. **✅ Validação**: Executar lint + type-check + testes manuais
-6. **📝 Documentação**: Atualizar status quando necessário
+2. **🤖 Delegação**: Invocar agentes especializados quando apropriado (OBRIGATÓRIO para home page)
+3. **📋 Planejamento**: Usar TodoWrite para organizar tarefas
+4. **🔍 Investigação**: Verificar padrões existentes no código
+5. **⚙️ Implementação**: Seguir convenções estabelecidas (ou delegar ao agente)
+6. **✅ Validação**: Executar lint + type-check + testes manuais
+7. **📝 Documentação**: Atualizar status quando necessário
 
 ### **Checklist Essencial**
 - [ ] Li o contexto em README.md ou CLAUDE.md
@@ -367,6 +389,150 @@ pattern: "**/*Profile*.tsx"
 - Fine-tuning do modelo
 - Análise de sentimento
 - Tradução automática
+
+---
+
+## 🏠 **HOME PAGE INSTITUCIONAL - ISOLAMENTO GARANTIDO**
+
+### 🎯 **Agente Especializado Disponível**
+```bash
+# Para edições na home page, use o agente especializado:
+/agent homepage-editor "sua solicitação aqui"
+```
+
+### 🔒 **ARQUITETURA DE ISOLAMENTO**
+
+O projeto possui **duas aplicações distintas** com isolamento garantido:
+
+#### **1. Home Page Institucional** (`/src/institutional/`)
+- **Propósito**: Marketing e apresentação do projeto
+- **Rota**: `/` (landing page)
+- **UI Framework**: shadcn/ui (isolado)
+- **Estilos**: `institutional-theme.css` com variáveis `--institutional-*`
+- **Assets**: `/public/institutional-assets/`
+
+#### **2. Plataforma Logada** (`/src/app/`)
+- **Propósito**: Sistema completo para usuários registrados
+- **Rotas**: `/app/*` (dashboard, perfis, contribuições, etc.)
+- **UI Framework**: Shards-React
+- **Estilos**: Componentes próprios
+- **Assets**: `/public/logo_madrilusa/` (compartilhado)
+
+### ⚠️ **REGRAS DE SEGURANÇA PARA HOME PAGE**
+
+#### **✅ PODE EDITAR (Áreas Seguras)**
+- `/src/institutional/components/` - Todos os componentes da home
+- `/src/institutional/styles/` - Estilos exclusivos institucionais
+- `/src/institutional/pages/` - Páginas institucionais
+- `/src/institutional/components/ui/` - Componentes UI isolados
+- `/public/institutional-assets/` - Assets exclusivos da home
+
+#### **❌ NUNCA EDITAR (Áreas Proibidas)**
+- `/src/app/` - Plataforma logada
+- `/src/modules/` - Módulos da aplicação
+- `/src/components/ui/` - Componentes UI compartilhados (afeta auth e chatbot)
+- `/src/shared/` - Componentes compartilhados (exceto análise)
+- `backend/` - Backend da aplicação
+
+### 📊 **ANÁLISE DE DEPENDÊNCIAS REALIZADA**
+
+#### **Componentes Compartilhados (Cuidado)**
+1. **Chatbot** (`/src/shared/components/Chatbot.tsx`)
+   - Usado tanto na home quanto na plataforma
+   - Usa componentes UI originais de `@/components/ui/`
+   - **Não editar** - componente genuinamente compartilhado
+
+2. **Módulos de Auth** (`/src/modules/auth/`)
+   - LoginForm e RegisterForm usam `@/components/ui/`
+   - **Não editar** componentes UI originais
+
+3. **Assets de Logo** (Cuidado Especial)
+   - `/public/logo_madrilusa/` - Usado pela plataforma (sidebar)
+   - `/public/institutional-assets/` - Uso exclusivo da home (isolado)
+
+### 🛡️ **COMPONENTES UI ISOLADOS**
+
+Para garantir zero impacto, a home institucional possui **cópias isoladas** dos componentes shadcn/ui:
+
+```
+/src/institutional/components/ui/
+├── button.tsx         # ✅ Isolado
+├── card.tsx          # ✅ Isolado
+├── input.tsx         # ✅ Isolado
+├── accordion.tsx     # ✅ Isolado
+├── dialog.tsx        # ✅ Isolado
+├── select.tsx        # ✅ Isolado
+├── checkbox.tsx      # ✅ Isolado
+├── textarea.tsx      # ✅ Isolado
+└── label.tsx         # ✅ Isolado
+```
+
+**Sempre importar** de caminhos relativos: `import { Button } from "../components/ui/button"`
+
+### 📍 **ESTRUTURA DA HOME PAGE**
+
+```
+LandingPage.tsx (componente principal)
+├── InstitutionalHeader    # Navegação superior
+├── Hero                   # Seção principal com CTA
+├── About                  # "Bem-vindos ao Madrilusa"
+├── RegistrationCards      # Cards de categorias (#como-participar)
+├── Objectives             # Objetivos principais (#como-ajudar)
+├── Target                 # "A quem se destina?"
+├── Activities             # Ações do projeto
+├── FAQ                    # Perguntas frequentes
+├── Newsletter             # Formulário de inscrição
+├── Footer                 # Rodapé e contactos (#contactos)
+└── Chatbot               # Assistente (compartilhado - não editar)
+```
+
+### 🔗 **Âncoras de Navegação**
+- `#home` - Hero section
+- `#sobre` - About section
+- `#como-participar` - RegistrationCards (target para "Junte-se a nós")
+- `#como-ajudar` - Objectives (target para "Faça parte desta missão")
+- `#para-quem` - Target section
+- `#actividades` - Activities section
+- `#faq` - FAQ section
+- `#newsletter` - Newsletter section
+- `#contactos` - Footer section
+
+### ✅ **VALIDAÇÃO DE ISOLAMENTO**
+
+```bash
+# Script de validação automática
+./scripts/validate-isolation.sh
+
+# Validação manual
+grep -r "from.*institutional" src/app/        # Deve retornar vazio
+grep -r "@/components/ui" src/institutional/   # Deve usar UI isolado
+```
+
+### 📝 **CHECKLIST DE SEGURANÇA PARA EDIÇÕES**
+
+Antes de confirmar qualquer mudança na home:
+- [ ] Arquivo editado está em `/src/institutional/`?
+- [ ] Não modifiquei componentes em `@/components/ui/`?
+- [ ] Usei componentes UI de `/src/institutional/components/ui/`?
+- [ ] Validei visualmente com Playwright?
+- [ ] Testei navegação/interações?
+- [ ] Mantive identidade visual Madrilusa?
+- [ ] Executei script de validação?
+
+### 🎨 **IDENTIDADE VISUAL UNIFICADA**
+
+Apesar do isolamento, ambas as aplicações seguem a mesma identidade visual:
+- **Laranja Madrilusa**: `#F5A623`
+- **Azul Turquesa**: `#4A90A4`
+- **Tipografia**: Open Sans, Helvetica Neue
+- **Logos**: Mesma identidade (assets duplicados para segurança)
+
+### 📚 **DOCUMENTAÇÃO ADICIONAL**
+
+- **Agente Homepage**: `.claude/agents/homepage-editor.md`
+- **Componentes UI Isolados**: `src/institutional/components/ui/README.md`
+- **Assets Isolados**: `public/institutional-assets/README.md`
+- **Guia Completo**: `doc/agentes/HOMEPAGE_EDITOR_GUIDE.md`
 
 ---
 
