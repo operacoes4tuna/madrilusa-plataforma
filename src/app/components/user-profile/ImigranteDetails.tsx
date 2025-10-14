@@ -15,7 +15,7 @@ import {
 } from 'shards-react';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
-import type { PerfilImigrante, NACIONALIDADES, OBJETIVOS_IMIGRANTE, GENEROS, FLUENCIA_PORTUGUES } from '@/modules/auth/types/auth.types';
+import type { PerfilImigrante } from '@/modules/auth/types/auth.types';
 
 interface ImigranteDetailsProps {
   title?: string;
@@ -313,10 +313,10 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
                                 borderBottom: '1px solid #eee'
                               }}
                               onMouseEnter={(e) => {
-                                e.target.style.backgroundColor = '#f5f5f5';
+                                (e.target as HTMLDivElement).style.backgroundColor = '#f5f5f5';
                               }}
                               onMouseLeave={(e) => {
-                                e.target.style.backgroundColor = 'white';
+                                (e.target as HTMLDivElement).style.backgroundColor = 'white';
                               }}
                             >
                               {pais}
@@ -355,16 +355,42 @@ const ImigranteDetails: React.FC<ImigranteDetailsProps> = ({
                 <FormGroup>
                   <label>Objetivos *</label>
                   <div style={{ marginTop: '10px' }}>
-                    {['Emprego', 'Formação', 'Regularização'].map((objetivo) => (
-                      <div key={objetivo} style={{ marginBottom: '8px' }}>
-                        <label style={{ display: 'flex', alignItems: 'center', fontWeight: 'normal' }}>
+                    {[
+                      {
+                        value: 'Emprego',
+                        label: 'Emprego',
+                        description: 'Encontrar ofertas de trabalho que se adequem ao teu perfil; Receber apoio para desenvolvimento do currículo, procura ativa de oportunidades e preparação para entrevistas; entre outras'
+                      },
+                      {
+                        value: 'Formação',
+                        label: 'Formação',
+                        description: 'Receber informação sobre cursos em várias áreas como: Informática, Português Língua de Acolhimento, Empreendedorismo, Geriatria, entre outras'
+                      },
+                      {
+                        value: 'LusoAcademia',
+                        label: 'LusoAcademia',
+                        description: 'Receber informação e inscrever-te em atividades artísticas e culturais como clubes de leitura, aulas de artes, workshops de gastronomia, aulas de pilates, visitas em grupo a cidades próximas e feiras culturais'
+                      },
+                      {
+                        value: 'Social',
+                        label: 'Social',
+                        description: 'Pedir informação e encaminhamento para questões relacionadas com regularização, alojamento, transporte, acesso ao sistema de saúde, entre outras'
+                      }
+                    ].map((objetivo) => (
+                      <div key={objetivo.value} style={{ marginBottom: '12px' }}>
+                        <label style={{ display: 'flex', alignItems: 'flex-start', fontWeight: 'normal', cursor: 'pointer' }}>
                           <input
                             type="checkbox"
-                            checked={formData.objetivos.includes(objetivo)}
-                            onChange={() => handleObjetivoChange(objetivo)}
-                            style={{ marginRight: '8px' }}
+                            checked={formData.objetivos.includes(objetivo.value)}
+                            onChange={() => handleObjetivoChange(objetivo.value)}
+                            style={{ marginRight: '8px', marginTop: '3px', flexShrink: 0 }}
                           />
-                          {objetivo}
+                          <div>
+                            <strong>{objetivo.label}</strong>
+                            <div style={{ fontSize: '0.9em', color: '#666', marginTop: '4px' }}>
+                              {objetivo.description}
+                            </div>
+                          </div>
                         </label>
                       </div>
                     ))}
