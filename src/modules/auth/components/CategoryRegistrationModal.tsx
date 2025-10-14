@@ -1135,24 +1135,51 @@ const CategoryRegistrationModal = ({ isOpen, onClose, category }: CategoryRegist
 
             <div>
               <Label>Objetivos *</Label>
-              <div className="space-y-2 mt-2">
-                {['Emprego', 'Formação', 'Regularização'].map((objetivo) => (
-                  <div key={objetivo} className="flex items-center space-x-2">
+              <div className="space-y-3 mt-2">
+                {[
+                  {
+                    value: 'Emprego',
+                    label: 'Emprego',
+                    description: 'Encontrar ofertas de trabalho que se adequem ao teu perfil; Receber apoio para desenvolvimento do currículo, procura ativa de oportunidades e preparação para entrevistas; entre outras'
+                  },
+                  {
+                    value: 'Formação',
+                    label: 'Formação',
+                    description: 'Receber informação sobre cursos em várias áreas como: Informática, Português Língua de Acolhimento, Empreendedorismo, Geriatria, entre outras'
+                  },
+                  {
+                    value: 'LusoAcademia',
+                    label: 'LusoAcademia',
+                    description: 'Receber informação e inscrever-te em atividades artísticas e culturais como clubes de leitura, aulas de artes, workshops de gastronomia, aulas de pilates, visitas em grupo a cidades próximas e feiras culturais'
+                  },
+                  {
+                    value: 'Social',
+                    label: 'Social',
+                    description: 'Pedir informação e encaminhamento para questões relacionadas com regularização, alojamento, transporte, acesso ao sistema de saúde, entre outras'
+                  }
+                ].map((objetivo) => (
+                  <div key={objetivo.value} className="flex items-start space-x-2">
                     <Checkbox
-                      id={`objetivo-${objetivo}`}
-                      checked={imigranteForm.watch("objetivos")?.includes(objetivo) || false}
+                      id={`objetivo-${objetivo.value}`}
+                      checked={imigranteForm.watch("objetivos")?.includes(objetivo.value) || false}
                       onCheckedChange={(checked) => {
                         const currentObjetivos = imigranteForm.getValues("objetivos") || [];
                         if (checked) {
-                          imigranteForm.setValue("objetivos", [...currentObjetivos, objetivo]);
+                          imigranteForm.setValue("objetivos", [...currentObjetivos, objetivo.value]);
                         } else {
-                          imigranteForm.setValue("objetivos", currentObjetivos.filter(obj => obj !== objetivo));
+                          imigranteForm.setValue("objetivos", currentObjetivos.filter(obj => obj !== objetivo.value));
                         }
                       }}
+                      className="mt-1"
                     />
-                    <Label htmlFor={`objetivo-${objetivo}`} className="text-sm font-normal">
-                      {objetivo}
-                    </Label>
+                    <div className="flex-1">
+                      <Label htmlFor={`objetivo-${objetivo.value}`} className="text-sm font-semibold cursor-pointer">
+                        {objetivo.label}
+                      </Label>
+                      <p className="text-xs text-gray-600 mt-1 leading-relaxed">
+                        {objetivo.description}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
