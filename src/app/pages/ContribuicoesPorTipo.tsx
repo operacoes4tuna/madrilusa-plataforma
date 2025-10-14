@@ -43,6 +43,22 @@ const ContribuicoesPorTipo: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingContribuicao, setEditingContribuicao] = useState<Contribuicao | null>(null);
 
+  // Helper para singularizar títulos corretamente
+  const getSingularTitulo = (titulo: string): string => {
+    // Mapeamento específico para títulos que não seguem regra simples
+    const singularMap: Record<string, string> = {
+      'Habilidades': 'Habilidade',
+      'Oportunidades': 'Oportunidade',
+      'Cursos': 'Curso',
+      'Eventos': 'Evento',
+      'Notícias': 'Notícia',
+      'Personalidade': 'Personalidade', // Já está no singular
+      'Interesse': 'Interesse' // Já está no singular
+    };
+
+    return singularMap[titulo] || titulo.replace(/s$/, ''); // Fallback: remove 's' do final
+  };
+
   useEffect(() => {
     if (tipoId && user?.id) {
       fetchTipoEContribuicoes();
@@ -277,13 +293,13 @@ const ContribuicoesPorTipo: React.FC = () => {
       {/* Botão Adicionar */}
       <Row className="mb-4">
         <Col>
-          <Button 
-            theme="primary" 
+          <Button
+            theme="primary"
             onClick={() => setShowForm(true)}
             className="mb-3"
           >
             <i className="material-icons mr-1">add</i>
-            Adicionar {tipo.titulo.slice(0, -1)} {/* Remove 's' do final */}
+            Adicionar {getSingularTitulo(tipo.titulo)}
           </Button>
           
           {tipo.perguntasModelo && (
@@ -324,18 +340,18 @@ const ContribuicoesPorTipo: React.FC = () => {
                     {getIconForTipo(tipo.titulo)}
                   </i>
                   <h4 className="mt-3 text-muted">
-                    Nenhum(a) {tipo.titulo.toLowerCase().slice(0, -1)} cadastrado(a)
+                    Nenhum(a) {getSingularTitulo(tipo.titulo).toLowerCase()} cadastrado(a)
                   </h4>
                   <p className="text-muted mb-4">
-                    Comece adicionando seu(a) primeiro(a) {tipo.titulo.toLowerCase().slice(0, -1)} à plataforma.
+                    Comece adicionando seu(a) primeiro(a) {getSingularTitulo(tipo.titulo).toLowerCase()} à plataforma.
                   </p>
-                  
-                  <Button 
-                    theme="primary" 
+
+                  <Button
+                    theme="primary"
                     onClick={() => setShowForm(true)}
                   >
                     <i className="material-icons mr-1">add</i>
-                    Adicionar Primeiro(a) {tipo.titulo.slice(0, -1)}
+                    Adicionar Primeiro(a) {getSingularTitulo(tipo.titulo)}
                   </Button>
                 </div>
               </CardBody>
