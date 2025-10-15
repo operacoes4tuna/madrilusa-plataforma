@@ -16,6 +16,22 @@ async function seedContribuicoes() {
       perguntasModelo: "Descreva suas principais habilidades profissionais, experiências anteriores e competências que podem contribuir para o mercado português."
     },
     {
+      titulo: "Interesse",
+      categoria: "IMIGRANTE",
+      contextoIA: "Interesses pessoais e profissionais de jovens imigrantes para melhor integração social",
+      textoModelo: "Tenho interesse em trabalhar na área de tecnologia, especialmente em empresas inovadoras. Gosto de participar de eventos culturais e comunitários...",
+      tagsModelo: JSON.stringify(["Tecnologia", "Cultura", "Comunidade", "Inovação"]),
+      perguntasModelo: "Descreva seus interesses pessoais e profissionais, áreas que gostaria de explorar e atividades que aprecia."
+    },
+    {
+      titulo: "Personalidade",
+      categoria: "IMIGRANTE",
+      contextoIA: "Características pessoais e traços de personalidade que facilitam a integração social e profissional",
+      textoModelo: "Sou uma pessoa comunicativa, adaptável e que gosta de trabalhar em equipe. Tenho facilidade em aprender novas línguas e culturas...",
+      tagsModelo: JSON.stringify(["Comunicativo", "Adaptável", "Trabalho em Equipe", "Proativo"]),
+      perguntasModelo: "Descreva suas principais características pessoais, pontos fortes e aspectos da sua personalidade."
+    },
+    {
       titulo: "Oportunidades",
       categoria: "EMPRESA",
       contextoIA: "Oportunidades de emprego, estágios e parcerias oferecidas por empresas para jovens imigrantes",

@@ -317,7 +317,7 @@ async function createDevUsers() {
           const exp = experiencias[i];
           await prisma.dadosProfissionaisImigrante.create({
             data: {
-              userId: createdUser.id,
+              userId: user.id,
               tipo: 'experiencia',
               dados: JSON.stringify(exp),
               titulo: `${exp.cargo} na ${exp.empresa}`,
@@ -331,7 +331,7 @@ async function createDevUsers() {
           const form = formacoes[i];
           await prisma.dadosProfissionaisImigrante.create({
             data: {
-              userId: createdUser.id,
+              userId: user.id,
               tipo: 'formacao',
               dados: JSON.stringify(form),
               titulo: `${form.curso || form.nivelEscolaridade}${form.instituicao ? ` - ${form.instituicao}` : ''}`,
@@ -345,7 +345,7 @@ async function createDevUsers() {
           const idioma = idiomas[i];
           await prisma.dadosProfissionaisImigrante.create({
             data: {
-              userId: createdUser.id,
+              userId: user.id,
               tipo: 'idioma',
               dados: JSON.stringify(idioma),
               titulo: `${idioma.idioma} (${idioma.nivel})`,
