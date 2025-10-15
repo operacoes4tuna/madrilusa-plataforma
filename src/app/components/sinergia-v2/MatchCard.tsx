@@ -209,20 +209,13 @@ const MatchCard: React.FC<MatchCardProps> = ({
 
           {/* Badges de Status */}
           <div className="mb-3">
-            {hasAIAnalysis && (
-              <Badge theme="info" className="mr-2">
-                <i className="material-icons mr-1" style={{ fontSize: '12px' }}>psychology</i>
-                IA Analisada ({match.tokensUsed} tokens)
-              </Badge>
-            )}
-            
             {hasEliminatoryIssues && (
               <Badge theme="danger" className="mr-2">
                 <i className="material-icons mr-1" style={{ fontSize: '12px' }}>warning</i>
                 Critérios Eliminatórios
               </Badge>
             )}
-            
+
             {match.scoreTotal >= 70 && (
               <Badge theme="success" className="mr-2">
                 <i className="material-icons mr-1" style={{ fontSize: '12px' }}>recommend</i>
@@ -270,71 +263,60 @@ const MatchCard: React.FC<MatchCardProps> = ({
           )}
 
           {/* Actions */}
-          <div className="d-flex justify-content-between align-items-center">
-            <div>
-              <Button 
-                size="sm" 
-                theme="outline-primary" 
-                className="mr-2"
+          <div className="match-card-actions">
+            {/* Primeira linha - Botões de informação */}
+            <div className="d-flex flex-wrap gap-2 mb-2">
+              <Button
+                size="sm"
+                theme="outline-primary"
                 onClick={() => setShowBreakdown(true)}
+                style={{ minWidth: '110px' }}
               >
                 <i className="material-icons mr-1" style={{ fontSize: '14px' }}>analytics</i>
                 Detalhes
               </Button>
-              
-              <Button 
-                size="sm" 
-                theme="outline-secondary" 
-                className="mr-2"
+
+              <Button
+                size="sm"
+                theme="outline-secondary"
                 onClick={() => setShowJustificativa(true)}
+                style={{ minWidth: '130px' }}
               >
                 <i className="material-icons mr-1" style={{ fontSize: '14px' }}>description</i>
                 Justificativa
               </Button>
-              
-              <Button 
-                size="sm" 
-                theme="outline-warning" 
-                className="mr-2"
+
+              <Button
+                size="sm"
+                theme="outline-warning"
                 onClick={() => setShowFeedback(true)}
+                style={{ minWidth: '110px' }}
               >
                 <i className="material-icons mr-1" style={{ fontSize: '14px' }}>feedback</i>
                 Feedback
               </Button>
-              
-              {/* Temporariamente removido até correção do modal
-              <Button 
-                size="sm" 
-                theme="outline-info" 
-                className="mr-2"
-                onClick={() => setShowCompleteProfile(true)}
-              >
-                <i className="material-icons mr-1" style={{ fontSize: '14px' }}>
-                  {viewMode === 'opportunity' ? 'person' : 'work'}
-                </i>
-                {viewMode === 'opportunity' ? 'Perfil' : 'Detalhes'}
-              </Button>
-              */}
             </div>
-            
-            <div>
+
+            {/* Segunda linha - Botões de ação principal */}
+            <div className="d-flex justify-content-end gap-2">
               {onExportMatch && (
-                <Button 
-                  size="sm" 
-                  theme="outline-info" 
-                  className="mr-2"
+                <Button
+                  size="sm"
+                  theme="outline-info"
                   onClick={() => onExportMatch(match)}
+                  style={{ minWidth: '110px' }}
                 >
                   <i className="material-icons mr-1" style={{ fontSize: '14px' }}>download</i>
                   Exportar
                 </Button>
               )}
-              
+
               {onRequestContact && match.scoreTotal >= 40 && (
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   theme="primary"
                   onClick={() => onRequestContact(match)}
+                  style={{ minWidth: '160px' }}
                 >
                   <i className="material-icons mr-1" style={{ fontSize: '14px' }}>contact_mail</i>
                   Solicitar Contato
@@ -342,6 +324,24 @@ const MatchCard: React.FC<MatchCardProps> = ({
               )}
             </div>
           </div>
+
+          <style>{`
+            .match-card-actions .gap-2 > * {
+              margin-right: 8px;
+              margin-bottom: 4px;
+            }
+
+            @media (max-width: 768px) {
+              .match-card-actions .d-flex {
+                flex-direction: column;
+              }
+
+              .match-card-actions button {
+                width: 100%;
+                min-width: unset !important;
+              }
+            }
+          `}</style>
 
           {/* Metadata */}
           <div className="mt-3 pt-2 border-top">

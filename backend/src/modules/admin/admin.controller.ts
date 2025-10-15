@@ -239,5 +239,51 @@ export const adminController = {
         message: 'Não foi possível buscar usuários da categoria'
       });
     }
+  },
+
+  // ✨ POST /api/admin/notifications - Receber notificações para o admin
+  async createNotification(req: Request, res: Response) {
+    try {
+      const { adminId, tipo, titulo, mensagem, metadata } = req.body;
+
+      // Validar campos obrigatórios
+      if (!adminId || !tipo || !titulo || !mensagem) {
+        return res.status(400).json({
+          success: false,
+          message: 'Campos obrigatórios: adminId, tipo, titulo, mensagem'
+        });
+      }
+
+      // Por enquanto, vamos apenas logar a notificação
+      // Em produção, você pode salvar no banco de dados
+      console.log('📬 NOVA NOTIFICAÇÃO PARA ADMIN:');
+      console.log('Admin ID:', adminId);
+      console.log('Tipo:', tipo);
+      console.log('Título:', titulo);
+      console.log('Mensagem:', mensagem);
+      console.log('Metadata:', JSON.stringify(metadata, null, 2));
+
+      // Retornar sucesso
+      res.json({
+        success: true,
+        data: {
+          id: `notif-${Date.now()}`,
+          adminId,
+          tipo,
+          titulo,
+          mensagem,
+          metadata,
+          createdAt: new Date().toISOString()
+        },
+        message: 'Notificação registrada com sucesso'
+      });
+    } catch (error) {
+      console.error('Erro ao criar notificação:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Erro interno do servidor',
+        message: 'Não foi possível registrar a notificação'
+      });
+    }
   }
 }; 

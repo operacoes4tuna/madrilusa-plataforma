@@ -40,4 +40,7 @@ router.get('/tipos-contribuicao/:tipoId/contribuicoes', adminContribuicoesContro
 router.put('/contribuicao/:contribuicaoId/status', adminContribuicoesController.toggleContribuicaoStatus);
 router.delete('/contribuicao/:contribuicaoId', adminContribuicoesController.deleteContribuicaoAdmin);
 
+// ✨ NOTIFICAÇÕES - Receber solicitações de contato do SinergIA
+router.post('/notifications', adminController.createNotification);
+
 export default router; 

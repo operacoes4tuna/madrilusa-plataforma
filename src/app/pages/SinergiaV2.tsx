@@ -50,6 +50,9 @@ const SinergiaV2: React.FC = () => {
   const [selectedOportunidade, setSelectedOportunidade] = useState<string>('');
   const [oportunidades, setOportunidades] = useState<any[]>([]);
   const [showFilters, setShowFilters] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [selectedMatch, setSelectedMatch] = useState<RigorousMatchFrontend | null>(null);
+  const [contactMessage, setContactMessage] = useState('');
 
   const isEmpresa = user?.categoria === 'EMPRESA';
   const isImigrante = user?.categoria === 'IMIGRANTE';
@@ -144,9 +147,87 @@ const SinergiaV2: React.FC = () => {
     });
 
   const handleRequestContact = (match: RigorousMatchFrontend) => {
-    // Implementar lógica de solicitação de contato
-    console.log('Solicitar contato para:', match);
-    // TODO: Integrar com sistema de mensagens
+    setSelectedMatch(match);
+
+    // Criar mensagem padrão baseada no tipo de usuário
+    const defaultMessage = isEmpresa
+      ? `Olá ${match.imigrante?.nomeCompleto},\n\nVimos seu perfil através do SinergIA Madrilusa e identificamos uma compatibilidade de ${match.scoreTotal}% com nossa vaga.\n\nGostaríamos de conversar sobre esta oportunidade.\n\nAguardamos seu contato!`
+      : `Olá,\n\nVi a vaga "${match.oportunidade?.titulo}" na empresa ${match.oportunidade?.empresa} através do SinergIA Madrilusa.\n\nIdentifiquei uma compatibilidade de ${match.scoreTotal}% com meu perfil e gostaria de saber mais sobre esta oportunidade.\n\nAguardo retorno!`;
+
+    setContactMessage(defaultMessage);
+    setShowContactModal(true);
+  };
+
+  const handleSendContactRequest = async () => {
+    if (!selectedMatch || !contactMessage.trim()) {
+      alert('Por favor, escreva uma mensagem antes de enviar.');
+      return;
+    }
+
+    try {
+      // Buscar admin do sistema
+      const adminResponse = await fetch('/api/users?categoria=ADMIN');
+      const adminData = await adminResponse.json();
+
+      if (!adminData.success || !adminData.data || adminData.data.length === 0) {
+        alert('❌ Erro: Administrador do sistema não encontrado.');
+        return;
+      }
+
+      const adminId = adminData.data[0].id;
+
+      // Montar a notificação para o admin
+      const notificationMessage = isEmpresa
+        ? `🔔 NOVA SOLICITAÇÃO DE CONTATO\n\n` +
+          `📊 Match: ${selectedMatch.scoreTotal}% de compatibilidade\n` +
+          `🏢 Empresa: ${user?.nomeCompleto}\n` +
+          `👤 Candidato: ${selectedMatch.imigrante?.nomeCompleto}\n` +
+          `📧 Email do candidato: ${selectedMatch.imigrante?.email}\n` +
+          `💼 Vaga: ${selectedMatch.oportunidade?.titulo}\n\n` +
+          `📝 Mensagem da empresa:\n${contactMessage}`
+        : `🔔 NOVA SOLICITAÇÃO DE CONTATO\n\n` +
+          `📊 Match: ${selectedMatch.scoreTotal}% de compatibilidade\n` +
+          `👤 Imigrante: ${user?.nomeCompleto}\n` +
+          `📧 Email do imigrante: ${user?.email}\n` +
+          `🏢 Empresa: ${selectedMatch.oportunidade?.empresa}\n` +
+          `💼 Vaga: ${selectedMatch.oportunidade?.titulo}\n\n` +
+          `📝 Mensagem do imigrante:\n${contactMessage}`;
+
+      // Enviar notificação para o admin
+      const response = await fetch('/api/admin/notifications', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          adminId: adminId,
+          tipo: 'SOLICITACAO_CONTATO_SINERGIA',
+          titulo: `Solicitação de Contato - Match ${selectedMatch.scoreTotal}%`,
+          mensagem: notificationMessage,
+          metadata: {
+            matchId: `${selectedMatch.oportunidadeId}-${selectedMatch.imigranteId}`,
+            oportunidadeId: selectedMatch.oportunidadeId,
+            imigranteId: selectedMatch.imigranteId,
+            remetenteId: user?.id,
+            remetenteTipo: user?.categoria,
+            scoreCompatibilidade: selectedMatch.scoreTotal,
+            mensagemOriginal: contactMessage
+          }
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert('✅ Solicitação enviada para o administrador do sistema com sucesso!\n\nO administrador Madrilusa entrará em contato em breve para intermediar o contato.');
+        setShowContactModal(false);
+        setContactMessage('');
+        setSelectedMatch(null);
+      } else {
+        alert(`❌ Erro ao enviar solicitação: ${data.message || 'Erro desconhecido'}`);
+      }
+    } catch (error) {
+      console.error('Erro ao enviar solicitação:', error);
+      alert('❌ Erro ao enviar solicitação de contato. Tente novamente.');
+    }
   };
 
   const handleExportMatch = (match: RigorousMatchFrontend) => {
@@ -291,6 +372,66 @@ const SinergiaV2: React.FC = () => {
         </Row>
       )}
 
+
+      {/* Modal de Solicitação de Contato */}
+      <Modal open={showContactModal} toggle={() => setShowContactModal(false)} size="lg">
+        <ModalHeader>
+          <i className="material-icons mr-2">contact_mail</i>
+          Solicitar Contato
+        </ModalHeader>
+        <ModalBody>
+          {selectedMatch && (
+            <>
+              <div className="mb-3 p-3 bg-light rounded">
+                <h6 className="mb-2">
+                  {isEmpresa
+                    ? `Candidato: ${selectedMatch.imigrante?.nomeCompleto}`
+                    : `Vaga: ${selectedMatch.oportunidade?.titulo}`
+                  }
+                </h6>
+                <div className="d-flex align-items-center">
+                  <Badge theme={selectedMatch.scoreTotal >= 80 ? 'success' : 'info'} className="mr-2">
+                    {selectedMatch.scoreTotal}% de compatibilidade
+                  </Badge>
+                  {isEmpresa ? (
+                    <small className="text-muted">
+                      {selectedMatch.imigrante?.email}
+                    </small>
+                  ) : (
+                    <small className="text-muted">
+                      {selectedMatch.oportunidade?.empresa}
+                    </small>
+                  )}
+                </div>
+              </div>
+
+              <FormGroup>
+                <label htmlFor="contactMessage">Mensagem</label>
+                <textarea
+                  id="contactMessage"
+                  className="form-control"
+                  rows={8}
+                  value={contactMessage}
+                  onChange={(e) => setContactMessage(e.target.value)}
+                  placeholder="Escreva sua mensagem..."
+                />
+                <small className="text-muted">
+                  Esta mensagem será enviada para {isEmpresa ? 'o candidato' : 'a empresa'}.
+                </small>
+              </FormGroup>
+            </>
+          )}
+        </ModalBody>
+        <ModalFooter>
+          <Button theme="secondary" onClick={() => setShowContactModal(false)}>
+            Cancelar
+          </Button>
+          <Button theme="primary" onClick={handleSendContactRequest}>
+            <i className="material-icons mr-1" style={{ fontSize: '14px' }}>send</i>
+            Enviar Solicitação
+          </Button>
+        </ModalFooter>
+      </Modal>
 
       {/* Modal de Filtros */}
       <Modal open={showFilters} toggle={() => setShowFilters(false)} size="lg">
