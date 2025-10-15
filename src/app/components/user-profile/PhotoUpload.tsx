@@ -80,7 +80,10 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onPhotoUploaded }) => {
       if (result.success && result.data) {
         // Atualizar contexto do usuário
         setUser(result.data);
-        localStorage.setItem('user', JSON.stringify(result.data));
+        localStorage.setItem('madrilusa_user', JSON.stringify(result.data));
+
+        // Limpar preview local
+        setPreviewUrl(null);
 
         // Callback para componente pai
         if (onPhotoUploaded) {
@@ -91,6 +94,11 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onPhotoUploaded }) => {
           title: "Foto actualizada com sucesso!",
           description: "A sua foto de perfil foi alterada.",
         });
+
+        // Force reload da página para atualizar todas as imagens
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       }
     } catch (error) {
       console.error('Erro no upload:', error);
@@ -128,7 +136,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onPhotoUploaded }) => {
       if (result.success && result.data) {
         // Atualizar contexto do usuário
         setUser(result.data);
-        localStorage.setItem('user', JSON.stringify(result.data));
+        localStorage.setItem('madrilusa_user', JSON.stringify(result.data));
         setPreviewUrl(null);
 
         // Callback para componente pai
