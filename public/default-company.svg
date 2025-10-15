@@ -1,0 +1,20 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="companyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F5A623;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e09316;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <circle cx="60" cy="60" r="60" fill="url(#companyGrad)"/>
+  <rect x="35" y="30" width="50" height="60" rx="2" fill="white" opacity="0.9"/>
+  <rect x="42" y="38" width="10" height="8" fill="url(#companyGrad)" opacity="0.7"/>
+  <rect x="55" y="38" width="10" height="8" fill="url(#companyGrad)" opacity="0.7"/>
+  <rect x="68" y="38" width="10" height="8" fill="url(#companyGrad)" opacity="0.7"/>
+  <rect x="42" y="50" width="10" height="8" fill="url(#companyGrad)" opacity="0.7"/>
+  <rect x="55" y="50" width="10" height="8" fill="url(#companyGrad)" opacity="0.7"/>
+  <rect x="68" y="50" width="10" height="8" fill="url(#companyGrad)" opacity="0.7"/>
+  <rect x="42" y="62" width="10" height="8" fill="url(#companyGrad)" opacity="0.7"/>
+  <rect x="55" y="62" width="10" height="8" fill="url(#companyGrad)" opacity="0.7"/>
+  <rect x="68" y="62" width="10" height="8" fill="url(#companyGrad)" opacity="0.7"/>
+  <rect x="50" y="75" width="20" height="15" fill="url(#companyGrad)" opacity="0.9"/>
+</svg>

@@ -18,13 +18,12 @@ import {
 } from 'shards-react';
 import PageTitle from '../components/common/PageTitle';
 import MatchCard from '../components/sinergia-v2/MatchCard';
+import MatchAnimation from '../components/sinergia-v2/MatchAnimation';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
 import { useSinergiaV2 } from '../../hooks/useSinergiaV2';
-import type { 
+import type {
   RigorousMatchFrontend,
-  FilterOptions,
-  CostMetrics,
-  PerformanceMetrics
+  FilterOptions
 } from '../../types/sinergia-v2.types';
 
 const SinergiaV2: React.FC = () => {
@@ -32,8 +31,6 @@ const SinergiaV2: React.FC = () => {
   const {
     analyzeOpportunityMatches,
     analyzeImigranteOpportunities,
-    getCostMetrics,
-    getPerformanceMetrics,
     isAnalyzing,
     matches,
     error,
@@ -42,7 +39,7 @@ const SinergiaV2: React.FC = () => {
   } = useSinergiaV2();
 
   const [filters, setFilters] = useState<FilterOptions>({
-    minScore: 0,
+    minScore: 50,
     maxScore: 100,
     sortBy: 'score',
     sortOrder: 'desc',
@@ -53,9 +50,6 @@ const SinergiaV2: React.FC = () => {
   const [selectedOportunidade, setSelectedOportunidade] = useState<string>('');
   const [oportunidades, setOportunidades] = useState<any[]>([]);
   const [showFilters, setShowFilters] = useState(false);
-  const [showMetrics, setShowMetrics] = useState(false);
-  const [costMetrics, setCostMetrics] = useState<CostMetrics | null>(null);
-  const [performanceMetrics, setPerformanceMetrics] = useState<PerformanceMetrics | null>(null);
 
   const isEmpresa = user?.categoria === 'EMPRESA';
   const isImigrante = user?.categoria === 'IMIGRANTE';
@@ -64,14 +58,13 @@ const SinergiaV2: React.FC = () => {
     if (isEmpresa) {
       fetchOportunidades();
     }
-    loadMetrics();
   }, [isEmpresa]);
 
   const fetchOportunidades = async () => {
     try {
       const response = await fetch(`/api/oportunidades-trabalho/empresa/${user?.id}`);
       const data = await response.json();
-      
+
       if (data.success) {
         setOportunidades(data.data);
         if (data.data.length > 0) {
@@ -81,16 +74,6 @@ const SinergiaV2: React.FC = () => {
     } catch (error) {
       console.error('Erro ao buscar oportunidades:', error);
     }
-  };
-
-  const loadMetrics = async () => {
-    const [cost, performance] = await Promise.all([
-      getCostMetrics(),
-      getPerformanceMetrics()
-    ]);
-    
-    setCostMetrics(cost);
-    setPerformanceMetrics(performance);
   };
 
   const handleAnalyze = async () => {
@@ -112,9 +95,6 @@ const SinergiaV2: React.FC = () => {
         includeBreakdown: true
       });
     }
-
-    // Atualizar métricas após análise
-    setTimeout(loadMetrics, 1000);
   };
 
   const filteredMatches = matches
@@ -224,94 +204,12 @@ const SinergiaV2: React.FC = () => {
         />
       </Row>
 
-      {/* Métricas Rápidas */}
-      {(costMetrics || performanceMetrics) && (
-        <Row className="mb-4">
-          {costMetrics && (
-            <Col md={3}>
-              <Card className="stats-small">
-                <CardBody className="p-3">
-                  <div className="d-flex align-items-center">
-                    <div className="icon-wrapper rounded-circle bg-info text-white mr-3">
-                      <i className="material-icons">attach_money</i>
-                    </div>
-                    <div>
-                      <span className="stats-small__value text-dark">
-                        ${costMetrics.totalCostToday.toFixed(4)}
-                      </span>
-                      <span className="stats-small__label text-uppercase text-muted">
-                        Custo Hoje
-                      </span>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-          )}
-
-          {performanceMetrics && (
-            <>
-              <Col md={3}>
-                <Card className="stats-small">
-                  <CardBody className="p-3">
-                    <div className="d-flex align-items-center">
-                      <div className="icon-wrapper rounded-circle bg-success text-white mr-3">
-                        <i className="material-icons">speed</i>
-                      </div>
-                      <div>
-                        <span className="stats-small__value text-dark">
-                          {Math.round(performanceMetrics.averageProcessingTime)}ms
-                        </span>
-                        <span className="stats-small__label text-uppercase text-muted">
-                          Tempo Médio
-                        </span>
-                      </div>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-
-              <Col md={3}>
-                <Card className="stats-small">
-                  <CardBody className="p-3">
-                    <div className="d-flex align-items-center">
-                      <div className="icon-wrapper rounded-circle bg-primary text-white mr-3">
-                        <i className="material-icons">trending_up</i>
-                      </div>
-                      <div>
-                        <span className="stats-small__value text-dark">
-                          {Math.round(performanceMetrics.averageScore)}%
-                        </span>
-                        <span className="stats-small__label text-uppercase text-muted">
-                          Score Médio
-                        </span>
-                      </div>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-
-              <Col md={3}>
-                <Card className="stats-small">
-                  <CardBody className="p-3">
-                    <div className="d-flex align-items-center">
-                      <div className="icon-wrapper rounded-circle bg-warning text-white mr-3">
-                        <i className="material-icons">psychology</i>
-                      </div>
-                      <div>
-                        <span className="stats-small__value text-dark">
-                          {costMetrics ? Math.round(costMetrics.aiUsageRate) : 0}%
-                        </span>
-                        <span className="stats-small__label text-uppercase text-muted">
-                          Uso de IA
-                        </span>
-                      </div>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-            </>
-          )}
+      {/* Animação de Match */}
+      {filteredMatches.length > 0 && (
+        <Row>
+          <Col>
+            <MatchAnimation topMatch={filteredMatches[0]} isEmpresa={isEmpresa} />
+          </Col>
         </Row>
       )}
 
@@ -325,23 +223,14 @@ const SinergiaV2: React.FC = () => {
                   {isEmpresa ? 'Análise de Candidatos' : 'Análise de Oportunidades'}
                 </h5>
                 <div>
-                  <Button 
-                    theme="outline-secondary" 
-                    size="sm" 
+                  <Button
+                    theme="outline-secondary"
+                    size="sm"
                     className="mr-2"
                     onClick={() => setShowFilters(true)}
                   >
                     <i className="material-icons mr-1">filter_list</i>
                     Filtros
-                  </Button>
-                  <Button 
-                    theme="outline-info" 
-                    size="sm" 
-                    className="mr-2"
-                    onClick={() => setShowMetrics(true)}
-                  >
-                    <i className="material-icons mr-1">analytics</i>
-                    Métricas
                   </Button>
                 </div>
               </div>
@@ -597,80 +486,6 @@ const SinergiaV2: React.FC = () => {
         <ModalFooter>
           <Button theme="secondary" onClick={() => setShowFilters(false)}>
             Aplicar Filtros
-          </Button>
-        </ModalFooter>
-      </Modal>
-
-      {/* Modal de Métricas */}
-      <Modal open={showMetrics} toggle={() => setShowMetrics(false)} size="xl">
-        <ModalHeader>
-          <i className="material-icons mr-2">analytics</i>
-          Métricas Detalhadas do Sistema
-        </ModalHeader>
-        <ModalBody>
-          {costMetrics && performanceMetrics && (
-            <Row>
-              <Col md={6}>
-                <h6>Métricas de Custo</h6>
-                <div className="table-responsive">
-                  <table className="table table-sm">
-                    <tbody>
-                      <tr>
-                        <td>Tokens consumidos hoje:</td>
-                        <td className="font-weight-bold">{costMetrics.totalTokensToday}</td>
-                      </tr>
-                      <tr>
-                        <td>Custo total hoje:</td>
-                        <td className="font-weight-bold">${costMetrics.totalCostToday.toFixed(4)}</td>
-                      </tr>
-                      <tr>
-                        <td>Análises hoje:</td>
-                        <td className="font-weight-bold">{costMetrics.totalAnalysesToday}</td>
-                      </tr>
-                      <tr>
-                        <td>Taxa de uso de IA:</td>
-                        <td className="font-weight-bold">{Math.round(costMetrics.aiUsageRate)}%</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </Col>
-              
-              <Col md={6}>
-                <h6>Métricas de Performance</h6>
-                <div className="table-responsive">
-                  <table className="table table-sm">
-                    <tbody>
-                      <tr>
-                        <td>Tempo médio de análise:</td>
-                        <td className="font-weight-bold">{Math.round(performanceMetrics.averageProcessingTime)}ms</td>
-                      </tr>
-                      <tr>
-                        <td>Score médio:</td>
-                        <td className="font-weight-bold">{Math.round(performanceMetrics.averageScore)}%</td>
-                      </tr>
-                      <tr>
-                        <td>Matches alta qualidade:</td>
-                        <td className="font-weight-bold">
-                          {performanceMetrics.scoreDistribution['81-100']} (≥81%)
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Matches baixa qualidade:</td>
-                        <td className="font-weight-bold">
-                          {performanceMetrics.scoreDistribution['0-20']} (≤20%)
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </Col>
-            </Row>
-          )}
-        </ModalBody>
-        <ModalFooter>
-          <Button theme="secondary" onClick={() => setShowMetrics(false)}>
-            Fechar
           </Button>
         </ModalFooter>
       </Modal>
