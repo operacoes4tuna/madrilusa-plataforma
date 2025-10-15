@@ -193,10 +193,10 @@ const MainSidebar: React.FC = () => {
       //   });
       // }
 
-      // ✨ RENOMEADO: SinergIA Madrilusa V2 - apenas para Empresas e Imigrantes
+      // ✨ RENOMEADO: SinergIA Madrilusa - apenas para Empresas e Imigrantes
       if (user?.categoria === 'EMPRESA' || user?.categoria === 'IMIGRANTE') {
         categoryMenuItems.push({
-          title: 'SinergIA Madrilusa V2',
+          title: 'SinergIA Madrilusa',
           to: '/app/sinergia-v2',
           iconClass: 'auto_awesome',
           htmlAfter: '<span class="badge badge-warning ml-auto" style="font-size: 9px;">IA</span>'
@@ -249,7 +249,7 @@ const MainSidebar: React.FC = () => {
         htmlAfter: ''
       },
       {
-        title: 'SinergIA Madrilusa V2',
+        title: 'SinergIA Madrilusa',
         to: '/app/sinergia-v2-admin',
         iconClass: 'auto_awesome',
         htmlAfter: '<span class="badge badge-warning ml-auto" style="font-size: 9px;">IA</span>'

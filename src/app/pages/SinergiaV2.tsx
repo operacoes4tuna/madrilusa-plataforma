@@ -60,6 +60,17 @@ const SinergiaV2: React.FC = () => {
     }
   }, [isEmpresa]);
 
+  // Iniciar análise automaticamente ao entrar na página
+  useEffect(() => {
+    if (isImigrante && user?.id && !isAnalyzing && matches.length === 0) {
+      // Para imigrantes, iniciar automaticamente
+      handleAnalyze();
+    } else if (isEmpresa && selectedOportunidade && !isAnalyzing && matches.length === 0) {
+      // Para empresas, iniciar quando tiver oportunidade selecionada
+      handleAnalyze();
+    }
+  }, [isImigrante, isEmpresa, selectedOportunidade, user?.id]);
+
   const fetchOportunidades = async () => {
     try {
       const response = await fetch(`/api/oportunidades-trabalho/empresa/${user?.id}`);
@@ -194,18 +205,30 @@ const SinergiaV2: React.FC = () => {
 
   return (
     <Container fluid className="main-content-container px-4">
-      <Row noGutters className="page-header py-4">
-        <PageTitle 
-          title="SinergIA Madrilusa V2" 
-          subtitle={isEmpresa ? 
-            "Encontre os candidatos ideais com matching rigoroso baseado em IA" :
-            "Descubra oportunidades compatíveis com seu perfil profissional"
-          }
-        />
-      </Row>
+      {/* Loading durante análise */}
+      {isAnalyzing && (
+        <Row>
+          <Col>
+            <Card>
+              <CardBody>
+                <div className="text-center py-5">
+                  <div className="spinner-border text-primary mb-3" style={{ width: '3rem', height: '3rem' }} />
+                  <h4 className="text-muted">Analisando compatibilidades...</h4>
+                  <p className="text-muted">
+                    {isEmpresa ?
+                      'Buscando os melhores candidatos para sua vaga' :
+                      'Encontrando as melhores oportunidades para você'
+                    }
+                  </p>
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      )}
 
       {/* Animação de Match */}
-      {filteredMatches.length > 0 && (
+      {!isAnalyzing && filteredMatches.length > 0 && (
         <Row>
           <Col>
             <MatchAnimation topMatch={filteredMatches[0]} isEmpresa={isEmpresa} />
@@ -213,96 +236,8 @@ const SinergiaV2: React.FC = () => {
         </Row>
       )}
 
-      {/* Controles */}
-      <Row className="mb-4">
-        <Col>
-          <Card>
-            <CardHeader>
-              <div className="d-flex justify-content-between align-items-center">
-                <h5 className="mb-0">
-                  {isEmpresa ? 'Análise de Candidatos' : 'Análise de Oportunidades'}
-                </h5>
-                <div>
-                  <Button
-                    theme="outline-secondary"
-                    size="sm"
-                    className="mr-2"
-                    onClick={() => setShowFilters(true)}
-                  >
-                    <i className="material-icons mr-1">filter_list</i>
-                    Filtros
-                  </Button>
-                </div>
-              </div>
-            </CardHeader>
-            <CardBody>
-              <Row>
-                {isEmpresa && (
-                  <Col md={6}>
-                    <FormGroup>
-                      <label>Selecionar Oportunidade</label>
-                      <FormSelect
-                        value={selectedOportunidade}
-                        onChange={(e) => setSelectedOportunidade(e.target.value)}
-                        className="form-control"
-                      >
-                        <option value="">Selecione uma oportunidade...</option>
-                        {oportunidades.map(op => (
-                          <option key={op.id} value={op.id}>
-                            {op.titulo} - {op.nomeCargo}
-                          </option>
-                        ))}
-                      </FormSelect>
-                    </FormGroup>
-                  </Col>
-                )}
-
-                <Col md={3}>
-                  <FormGroup>
-                    <label>Score Mínimo</label>
-                    <FormInput
-                      type="number"
-                      min="0"
-                      max="100"
-                      value={filters.minScore}
-                      onChange={(e) => setFilters(prev => ({ ...prev, minScore: parseInt(e.target.value) || 0 }))}
-                    />
-                  </FormGroup>
-                </Col>
-
-                <Col md={3}>
-                  <FormGroup>
-                    <label>&nbsp;</label>
-                    <div>
-                      <Button 
-                        theme="primary" 
-                        onClick={handleAnalyze}
-                        disabled={isAnalyzing || (isEmpresa && !selectedOportunidade)}
-                        className="w-100"
-                      >
-                        {isAnalyzing ? (
-                          <>
-                            <span className="spinner-border spinner-border-sm mr-2" />
-                            Analisando...
-                          </>
-                        ) : (
-                          <>
-                            <i className="material-icons mr-1">psychology</i>
-                            Iniciar Análise IA
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  </FormGroup>
-                </Col>
-              </Row>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-
       {/* Resultados */}
-      {error && (
+      {!isAnalyzing && error && (
         <Row className="mb-4">
           <Col>
             <div className="alert alert-danger">
@@ -313,7 +248,7 @@ const SinergiaV2: React.FC = () => {
         </Row>
       )}
 
-      {filteredMatches.length > 0 && (
+      {!isAnalyzing && filteredMatches.length > 0 && (
         <Row className="mb-4">
           <Col>
             <Card>
@@ -325,11 +260,16 @@ const SinergiaV2: React.FC = () => {
                       {filteredMatches.length} matches
                     </Badge>
                   </h5>
-                  <small className="text-muted">
-                    Ordenado por {filters.sortBy === 'score' ? 'compatibilidade' : 
-                                 filters.sortBy === 'created' ? 'data' : 'tokens IA'} 
-                    ({filters.sortOrder === 'desc' ? 'maior primeiro' : 'menor primeiro'})
-                  </small>
+                  <div>
+                    <Button
+                      theme="outline-secondary"
+                      size="sm"
+                      onClick={() => setShowFilters(true)}
+                    >
+                      <i className="material-icons mr-1">filter_list</i>
+                      Filtros
+                    </Button>
+                  </div>
                 </div>
               </CardHeader>
               <CardBody>
@@ -351,38 +291,6 @@ const SinergiaV2: React.FC = () => {
         </Row>
       )}
 
-      {matches.length === 0 && !isAnalyzing && (
-        <Row>
-          <Col>
-            <Card>
-              <CardBody>
-                <div className="text-center py-5">
-                  <i className="material-icons" style={{fontSize: '64px', color: '#fd7e14'}}>
-                    psychology
-                  </i>
-                  <h4 className="mt-3 text-muted">
-                    {isEmpresa ? 'Encontre Candidatos Ideais' : 'Descubra Oportunidades Compatíveis'}
-                  </h4>
-                  <p className="text-muted mb-4">
-                    {isEmpresa ? 
-                      'Selecione uma oportunidade de trabalho e inicie a análise para encontrar os candidatos mais compatíveis.' :
-                      'Inicie a análise para descobrir oportunidades de trabalho que correspondem ao seu perfil profissional.'
-                    }
-                  </p>
-                  <Button 
-                    theme="primary" 
-                    onClick={handleAnalyze}
-                    disabled={isEmpresa && !selectedOportunidade}
-                  >
-                    <i className="material-icons mr-1">psychology</i>
-                    Iniciar Primeira Análise
-                  </Button>
-                </div>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      )}
 
       {/* Modal de Filtros */}
       <Modal open={showFilters} toggle={() => setShowFilters(false)} size="lg">
