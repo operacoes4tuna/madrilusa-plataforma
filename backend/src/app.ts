@@ -31,6 +31,9 @@ app.use(express.json());
 // Servir arquivos estáticos (uploads)
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
+// Servir arquivos de áudio (play)
+app.use('/api/play', express.static(path.join(__dirname, '../play')));
+
 // Rotas
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);

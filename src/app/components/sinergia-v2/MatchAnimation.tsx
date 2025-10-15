@@ -20,6 +20,13 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
       setTimeout(() => {
         setAnimationState('matched');
         setShowParticles(true);
+
+        // Tocar som de sucesso
+        const audio = new Audio('/api/play/success-match.mp3');
+        audio.volume = 0.5;
+        audio.play().catch(err => {
+          console.log('Não foi possível tocar o som:', err);
+        });
       }, 2000);
       setTimeout(() => setShowParticles(false), 3500);
     } else {
@@ -48,16 +55,6 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
     : topMatch.oportunidade?.empresa || 'Empresa';
 
   const score = Math.round(topMatch.scoreTotal);
-
-  // Debug: Log das fotos
-  console.log('🖼️ MatchAnimation - Fotos:', {
-    isEmpresa,
-    imigranteFoto,
-    empresaFoto,
-    'topMatch.imigrante?.foto': topMatch.imigrante?.foto,
-    'topMatch.dadosEstruturados?.empresaFoto': topMatch.dadosEstruturados?.empresaFoto,
-    'user?.foto': user?.foto
-  });
 
   return (
     <Card className="match-animation-card mb-4">
