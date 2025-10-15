@@ -133,7 +133,7 @@ const MatchCard: React.FC<MatchCardProps> = ({
                 <>
                   {match.dadosEstruturados?.empresaFoto && (
                     <img
-                      src={match.dadosEstruturados.empresaFoto}
+                      src={match.dadosEstruturados.empresaFoto.startsWith('/uploads/') ? `http://localhost:3001${match.dadosEstruturados.empresaFoto}` : match.dadosEstruturados.empresaFoto}
                       alt={match.dadosEstruturados.empresa}
                       style={{
                         width: '80px',
