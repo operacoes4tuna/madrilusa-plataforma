@@ -16,7 +16,7 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
   useEffect(() => {
     if (topMatch) {
       // Iniciar animação
-      setTimeout(() => setAnimationState('moving'), 300);
+      setTimeout(() => setAnimationState('moving'), 500);
       setTimeout(() => {
         setAnimationState('matched');
         setShowParticles(true);
@@ -27,8 +27,8 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
         audio.play().catch(err => {
           console.log('Não foi possível tocar o som:', err);
         });
-      }, 2000);
-      setTimeout(() => setShowParticles(false), 3500);
+      }, 2500);
+      setTimeout(() => setShowParticles(false), 5000);
     } else {
       setAnimationState('idle');
       setShowParticles(false);
@@ -162,20 +162,40 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
 
           {/* Partículas de celebração */}
           {showParticles && (
-            <div className="particles-container">
-              {[...Array(20)].map((_, i) => (
-                <div
-                  key={i}
-                  className="particle"
-                  style={{
-                    '--angle': `${(360 / 20) * i}deg`,
-                    '--delay': `${Math.random() * 0.3}s`,
-                    '--duration': `${1 + Math.random() * 0.5}s`,
-                    '--color': ['#F5A623', '#4A90A4', '#28a745', '#ffc107'][i % 4]
-                  } as React.CSSProperties}
-                />
-              ))}
-            </div>
+            <>
+              <div className="confetti-container">
+                {[...Array(80)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="confetti"
+                    style={{
+                      '--angle': `${(360 / 80) * i}deg`,
+                      '--delay': `${Math.random() * 0.3}s`,
+                      '--duration': `${1.5 + Math.random() * 1}s`,
+                      '--color': ['#F5A623', '#4A90A4', '#28a745', '#ffc107', '#e74c3c', '#9b59b6', '#ff6b6b', '#4ecdc4'][i % 8],
+                      '--size': `${10 + Math.random() * 6}px`,
+                      '--rotation': `${Math.random() * 1080}deg`
+                    } as React.CSSProperties}
+                  />
+                ))}
+              </div>
+              {/* Confetes caindo de cima */}
+              <div className="confetti-rain">
+                {[...Array(50)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="confetti-piece"
+                    style={{
+                      '--x-pos': `${Math.random() * 100}%`,
+                      '--delay': `${Math.random() * 0.8}s`,
+                      '--duration': `${2 + Math.random() * 1.5}s`,
+                      '--color': ['#F5A623', '#4A90A4', '#28a745', '#ffc107', '#e74c3c', '#9b59b6', '#ff6b6b', '#4ecdc4'][i % 8],
+                      '--rotation': `${Math.random() * 720}deg`
+                    } as React.CSSProperties}
+                  />
+                ))}
+              </div>
+            </>
           )}
 
           {/* Mensagem de match */}
@@ -223,31 +243,82 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
         .match-photo {
           position: relative;
           z-index: 2;
-          transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+          transition: all 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .match-photo.idle {
           transform: translateX(0) scale(1);
           opacity: 0;
-          animation: fadeIn 0.5s ease-out forwards;
+          animation: fadeInBounce 0.8s ease-out forwards;
         }
 
         .match-photo-left.moving {
-          transform: translateX(280px) scale(1.05);
+          transform: translateX(150px) translateY(-10px) scale(1.2) rotate(5deg);
         }
 
         .match-photo-right.moving {
-          transform: translateX(-280px) scale(1.05);
+          transform: translateX(-150px) translateY(-10px) scale(1.2) rotate(-5deg);
         }
 
-        .match-photo-left.matched,
+        .match-photo-left.matched {
+          transform: translateX(80px) translateY(0) scale(0.95) rotate(0deg);
+          animation: smoothMatchLeft 1.2s ease-out;
+        }
+
         .match-photo-right.matched {
-          transform: translateX(0) scale(1);
+          transform: translateX(-80px) translateY(0) scale(0.95) rotate(0deg);
+          animation: smoothMatchRight 1.2s ease-out;
         }
 
-        @keyframes fadeIn {
-          from { opacity: 0; transform: scale(0.9); }
-          to { opacity: 1; transform: scale(1); }
+        @keyframes fadeInBounce {
+          0% {
+            opacity: 0;
+            transform: scale(0.5) translateY(20px);
+          }
+          60% {
+            opacity: 1;
+            transform: scale(1.1) translateY(-5px);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+
+        @keyframes smoothMatchLeft {
+          0% {
+            transform: translateX(150px) translateY(-10px) scale(1.2) rotate(5deg);
+          }
+          40% {
+            transform: translateX(90px) translateY(-3px) scale(1.05) rotate(2deg);
+          }
+          70% {
+            transform: translateX(75px) translateY(2px) scale(0.98) rotate(-1deg);
+          }
+          85% {
+            transform: translateX(82px) translateY(0) scale(0.93) rotate(0.5deg);
+          }
+          100% {
+            transform: translateX(80px) translateY(0) scale(0.95) rotate(0deg);
+          }
+        }
+
+        @keyframes smoothMatchRight {
+          0% {
+            transform: translateX(-150px) translateY(-10px) scale(1.2) rotate(-5deg);
+          }
+          40% {
+            transform: translateX(-90px) translateY(-3px) scale(1.05) rotate(-2deg);
+          }
+          70% {
+            transform: translateX(-75px) translateY(2px) scale(0.98) rotate(1deg);
+          }
+          85% {
+            transform: translateX(-82px) translateY(0) scale(0.93) rotate(-0.5deg);
+          }
+          100% {
+            transform: translateX(-80px) translateY(0) scale(0.95) rotate(0deg);
+          }
         }
 
         /* Frame da foto */
@@ -318,7 +389,26 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
 
         .match-score-center.matched {
           opacity: 1;
-          transform: translateX(-50%) scale(1.1);
+          transform: translateX(-50%) scale(1.2);
+          animation: scoreExplode 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes scoreExplode {
+          0% {
+            transform: translateX(-50%) scale(1);
+          }
+          30% {
+            transform: translateX(-50%) scale(1.4) rotate(5deg);
+          }
+          50% {
+            transform: translateX(-50%) scale(1.1) rotate(-3deg);
+          }
+          70% {
+            transform: translateX(-50%) scale(1.3) rotate(2deg);
+          }
+          100% {
+            transform: translateX(-50%) scale(1.2) rotate(0deg);
+          }
         }
 
         .score-circle {
@@ -333,17 +423,24 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
           box-shadow: 0 8px 24px rgba(245, 166, 35, 0.3);
           color: white;
           position: relative;
+          transition: all 0.3s ease;
         }
 
         .match-score-center.matched .score-circle {
           background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-          box-shadow: 0 8px 32px rgba(40, 167, 69, 0.4);
-          animation: pulse 0.6s ease-out;
+          box-shadow: 0 0 40px rgba(40, 167, 69, 0.6), 0 0 80px rgba(40, 167, 69, 0.3);
+          animation: pulseGlow 1.5s ease-in-out infinite;
         }
 
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.15); }
+        @keyframes pulseGlow {
+          0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 0 40px rgba(40, 167, 69, 0.6), 0 0 80px rgba(40, 167, 69, 0.3);
+          }
+          50% {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px rgba(40, 167, 69, 0.8), 0 0 120px rgba(40, 167, 69, 0.4);
+          }
         }
 
         .score-value {
@@ -379,40 +476,78 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
           100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
-        /* Partículas */
-        .particles-container {
+        /* Confetes explosão */
+        .confetti-container {
           position: absolute;
           top: 50%;
           left: 50%;
           width: 0;
           height: 0;
           pointer-events: none;
-          z-index: 4;
+          z-index: 5;
         }
 
-        .particle {
+        .confetti {
           position: absolute;
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
+          width: var(--size);
+          height: var(--size);
           background: var(--color);
-          animation: particleBurst var(--duration) ease-out var(--delay) forwards;
+          animation: confettiBurst var(--duration) ease-out var(--delay) forwards;
           transform-origin: center;
           opacity: 0;
+          border-radius: 3px;
         }
 
-        @keyframes particleBurst {
+        @keyframes confettiBurst {
           0% {
-            transform: translate(0, 0) scale(0);
+            transform: translate(0, 0) scale(0) rotate(0deg);
+            opacity: 1;
+          }
+          50% {
             opacity: 1;
           }
           100% {
             transform:
               translate(
-                calc(cos(var(--angle)) * 120px),
-                calc(sin(var(--angle)) * 120px)
+                calc(cos(var(--angle)) * 250px),
+                calc(sin(var(--angle)) * 250px)
               )
-              scale(1.5);
+              scale(1.5)
+              rotate(var(--rotation));
+            opacity: 0;
+          }
+        }
+
+        /* Confetes caindo */
+        .confetti-rain {
+          position: absolute;
+          top: -50px;
+          left: 0;
+          right: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 4;
+        }
+
+        .confetti-piece {
+          position: absolute;
+          left: var(--x-pos);
+          width: 12px;
+          height: 12px;
+          background: var(--color);
+          animation: confettiFall var(--duration) ease-in var(--delay) forwards;
+          opacity: 0;
+          border-radius: 3px;
+        }
+
+        @keyframes confettiFall {
+          0% {
+            transform: translateY(-50px) rotate(0deg);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(600px) rotate(var(--rotation));
             opacity: 0;
           }
         }
