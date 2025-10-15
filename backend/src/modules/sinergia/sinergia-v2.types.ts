@@ -113,6 +113,7 @@ export interface RigorousMatch {
   imigrante?: {
     nomeCompleto: string;
     email: string;
+    foto?: string;
     municipioResidencia?: string;
     genero?: string;
     idade?: number;
@@ -147,6 +148,7 @@ export interface RigorousMatch {
   // Dados estruturados para comparação visual
   dadosEstruturados?: {
     empresa: string;
+    empresaFoto?: string;
     municipioResidencia?: string | null;
     genero: string | null;
     idade?: string | null;
@@ -159,7 +161,8 @@ export interface ImigranteCompleteProfile {
   id: string;
   nomeCompleto: string;
   email: string;
-  
+  foto?: string;
+
   // Dados básicos
   genero?: string;
   municipioResidencia?: string;

@@ -392,6 +392,7 @@ export class SinergiaV2Service {
       imigrante: {
         nomeCompleto: imigrante.nomeCompleto,
         email: imigrante.email,
+        foto: (imigrante as any).foto,
         municipioResidencia: imigrante.municipioResidencia,
         genero: imigrante.genero,
         idade: imigrante.idade,
@@ -409,6 +410,7 @@ export class SinergiaV2Service {
       // DADOS ESTRUTURADOS PARA COMPARAÇÃO VISUAL
       dadosEstruturados: {
         empresa: (oportunidade as any).user?.nomeCompleto || 'Empresa',
+        empresaFoto: (oportunidade as any).user?.foto,
         municipioResidencia: oportunidade.municipioResidencia,
         genero: oportunidade.genero,
         idade: oportunidade.idade,
@@ -771,7 +773,8 @@ export class SinergiaV2Service {
         user: {
           select: {
             nomeCompleto: true,
-            email: true
+            email: true,
+            foto: true
           }
         }
       }
@@ -797,7 +800,8 @@ export class SinergiaV2Service {
         user: {
           select: {
             nomeCompleto: true,
-            email: true
+            email: true,
+            foto: true
           }
         }
       }
@@ -886,6 +890,7 @@ export class SinergiaV2Service {
       id: user.id,
       nomeCompleto: user.nomeCompleto,
       email: user.email,
+      foto: user.foto,
       genero: user.perfilImigrante?.genero,
       municipioResidencia: user.perfilImigrante?.municipioResidencia,
       transporteProprio: user.perfilImigrante?.transporteProprio,

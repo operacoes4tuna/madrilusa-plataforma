@@ -74,44 +74,81 @@ const MatchCard: React.FC<MatchCardProps> = ({
         <CardBody>
           {/* Header com Score */}
           <div className="d-flex justify-content-between align-items-start mb-3">
-            <div className="flex-grow-1">
+            <div className="flex-grow-1 d-flex align-items-start">
               {viewMode === 'opportunity' ? (
                 // Empresa vendo candidatos - INFORMAÇÕES COMPLETAS
-                <div>
-                  <h5 className="mb-1">
-                    {match.imigrante?.nomeCompleto || 'Candidato'}
-                  </h5>
-                  <small className="text-muted d-block">
-                    <i className="material-icons mr-1" style={{ fontSize: '14px' }}>location_on</i>
-                    {match.imigrante?.municipioResidencia || 'Localização não informada'}
-                  </small>
-                  <small className="text-muted d-block">
-                    <i className="material-icons mr-1" style={{ fontSize: '14px' }}>email</i>
-                    {match.imigrante?.email}
-                  </small>
-                  {/* NOVOS DADOS COMPLETOS */}
-                  {match.imigrante?.genero && (
-                    <small className="text-muted d-block">
-                      <i className="material-icons mr-1" style={{ fontSize: '14px' }}>person</i>
-                      {match.imigrante.genero}, {match.imigrante.idade} anos
-                    </small>
+                <>
+                  {match.imigrante?.foto && (
+                    <img
+                      src={match.imigrante.foto.startsWith('/uploads/') ? `http://localhost:3001${match.imigrante.foto}` : match.imigrante.foto}
+                      alt={match.imigrante.nomeCompleto}
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                        marginRight: '15px',
+                        border: '3px solid #F5A623'
+                      }}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
                   )}
-                  {match.imigrante?.fluenciaPortugues && (
+                  <div>
+                    <h5 className="mb-1">
+                      {match.imigrante?.nomeCompleto || 'Candidato'}
+                    </h5>
                     <small className="text-muted d-block">
-                      <i className="material-icons mr-1" style={{ fontSize: '14px' }}>language</i>
-                      Português: {match.imigrante.fluenciaPortugues}
+                      <i className="material-icons mr-1" style={{ fontSize: '14px' }}>location_on</i>
+                      {match.imigrante?.municipioResidencia || 'Localização não informada'}
                     </small>
-                  )}
-                  {match.imigrante?.transporteProprio !== undefined && (
                     <small className="text-muted d-block">
-                      <i className="material-icons mr-1" style={{ fontSize: '14px' }}>directions_car</i>
-                      Transporte: {match.imigrante.transporteProprio ? 'Próprio' : 'Não tem'}
+                      <i className="material-icons mr-1" style={{ fontSize: '14px' }}>email</i>
+                      {match.imigrante?.email}
                     </small>
-                  )}
-                </div>
+                    {/* NOVOS DADOS COMPLETOS */}
+                    {match.imigrante?.genero && (
+                      <small className="text-muted d-block">
+                        <i className="material-icons mr-1" style={{ fontSize: '14px' }}>person</i>
+                        {match.imigrante.genero}, {match.imigrante.idade} anos
+                      </small>
+                    )}
+                    {match.imigrante?.fluenciaPortugues && (
+                      <small className="text-muted d-block">
+                        <i className="material-icons mr-1" style={{ fontSize: '14px' }}>language</i>
+                        Português: {match.imigrante.fluenciaPortugues}
+                      </small>
+                    )}
+                    {match.imigrante?.transporteProprio !== undefined && (
+                      <small className="text-muted d-block">
+                        <i className="material-icons mr-1" style={{ fontSize: '14px' }}>directions_car</i>
+                        Transporte: {match.imigrante.transporteProprio ? 'Próprio' : 'Não tem'}
+                      </small>
+                    )}
+                  </div>
+                </>
               ) : (
                 // Imigrante vendo oportunidades - INFORMAÇÕES COMPLETAS
-                <div>
+                <>
+                  {match.dadosEstruturados?.empresaFoto && (
+                    <img
+                      src={match.dadosEstruturados.empresaFoto}
+                      alt={match.dadosEstruturados.empresa}
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                        marginRight: '15px',
+                        border: '3px solid #4A90A4'
+                      }}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
+                  )}
+                  <div>
                   <h5 className="mb-1">
                     {match.oportunidade?.titulo || 'Oportunidade de Trabalho'}
                   </h5>
@@ -148,7 +185,8 @@ const MatchCard: React.FC<MatchCardProps> = ({
                       Requisito: Português fluente obrigatório
                     </small>
                   )}
-                </div>
+                  </div>
+                </>
               )}
             </div>
             

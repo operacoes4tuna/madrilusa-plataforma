@@ -30,8 +30,14 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
 
   if (!topMatch) return null;
 
-  const imigranteFoto = '/default-avatar.svg';
-  const empresaFoto = '/default-company.svg';
+  // Buscar fotos reais dos perfis
+  const imigranteFoto = isEmpresa
+    ? (topMatch.imigrante?.foto || '/default-avatar.svg')
+    : (user?.foto || '/default-avatar.svg');
+
+  const empresaFoto = isEmpresa
+    ? (user?.foto || '/default-company.svg')
+    : (topMatch.dadosEstruturados?.empresaFoto || '/default-company.svg');
 
   const imigranteNome = isEmpresa
     ? topMatch.imigrante?.nomeCompleto || 'Candidato'
@@ -42,6 +48,16 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
     : topMatch.oportunidade?.empresa || 'Empresa';
 
   const score = Math.round(topMatch.scoreTotal);
+
+  // Debug: Log das fotos
+  console.log('🖼️ MatchAnimation - Fotos:', {
+    isEmpresa,
+    imigranteFoto,
+    empresaFoto,
+    'topMatch.imigrante?.foto': topMatch.imigrante?.foto,
+    'topMatch.dadosEstruturados?.empresaFoto': topMatch.dadosEstruturados?.empresaFoto,
+    'user?.foto': user?.foto
+  });
 
   return (
     <Card className="match-animation-card mb-4">
@@ -56,10 +72,31 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
             >
               <div className="photo-frame">
                 <img
-                  src={imigranteFoto}
+                  src={imigranteFoto.startsWith('/uploads/') ? `http://localhost:3001${imigranteFoto}` : imigranteFoto}
                   alt={imigranteNome}
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/default-avatar.png';
+                    const target = e.target as HTMLImageElement;
+                    // Fallback para avatar padrão
+                    target.style.display = 'none';
+                    target.parentElement!.innerHTML = `
+                      <div style="
+                        width: 120px;
+                        height: 120px;
+                        border-radius: 50%;
+                        background: linear-gradient(135deg, #F5A623 0%, #ff8c00 100%);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        font-size: 48px;
+                        font-weight: bold;
+                        border: 4px solid #F5A623;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+                      ">
+                        ${imigranteNome.charAt(0).toUpperCase()}
+                      </div>
+                      ${target.parentElement!.querySelector('.photo-label')?.outerHTML || ''}
+                    `;
                   }}
                 />
                 <div className="photo-label">
@@ -91,10 +128,31 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
             >
               <div className="photo-frame">
                 <img
-                  src={empresaFoto}
+                  src={empresaFoto.startsWith('/uploads/') ? `http://localhost:3001${empresaFoto}` : empresaFoto}
                   alt={empresaNome}
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/default-company.png';
+                    const target = e.target as HTMLImageElement;
+                    // Fallback para ícone de empresa padrão
+                    target.style.display = 'none';
+                    target.parentElement!.innerHTML = `
+                      <div style="
+                        width: 120px;
+                        height: 120px;
+                        border-radius: 50%;
+                        background: linear-gradient(135deg, #4A90A4 0%, #357a8a 100%);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        font-size: 48px;
+                        font-weight: bold;
+                        border: 4px solid #4A90A4;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+                      ">
+                        ${empresaNome.charAt(0).toUpperCase()}
+                      </div>
+                      ${target.parentElement!.querySelector('.photo-label')?.outerHTML || ''}
+                    `;
                   }}
                 />
                 <div className="photo-label">
@@ -210,6 +268,14 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
           box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
           background: #f0f0f0;
           transition: all 0.3s ease;
+        }
+
+        .match-photo-left .photo-frame img {
+          border-color: #F5A623;
+        }
+
+        .match-photo-right .photo-frame img {
+          border-color: #4A90A4;
         }
 
         .match-photo.matched .photo-frame img {

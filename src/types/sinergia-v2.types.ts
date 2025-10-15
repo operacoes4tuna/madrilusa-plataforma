@@ -109,6 +109,7 @@ export interface RigorousMatchFrontend {
   imigrante?: {
     nomeCompleto: string;
     email: string;
+    foto?: string;
     municipioResidencia?: string;
     genero?: string;
     idade?: number;
@@ -138,10 +139,11 @@ export interface RigorousMatchFrontend {
   // Dados estruturados para comparação visual
   dadosEstruturados?: {
     empresa: string;
+    empresaFoto?: string;
     municipioResidencia?: string | null;
     genero: string | null;
     idade?: string | null;
-    transporteProprio: string | null;  
+    transporteProprio: string | null;
     fluenciaPortugues: string | null;
   };
 }
