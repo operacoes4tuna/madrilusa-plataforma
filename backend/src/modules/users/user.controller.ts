@@ -43,12 +43,16 @@ export const userController = {
       const { id } = req.params;
       const updateData: UpdateUserRequest = req.body;
 
+      console.log('🔄 Atualizando usuário:', id, 'com dados:', updateData);
+
       const updatedUser = await userService.updateUser(id, updateData);
-      
+
+      console.log('✅ Usuário atualizado:', updatedUser);
+
       if (!updatedUser) {
-        return res.status(404).json({ 
-          success: false, 
-          error: 'Usuário não encontrado' 
+        return res.status(404).json({
+          success: false,
+          error: 'Usuário não encontrado'
         });
       }
 

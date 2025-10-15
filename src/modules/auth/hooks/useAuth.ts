@@ -1,16 +1,12 @@
-import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { authApi } from '../services/authApi';
 import { User, RegisterRequest, LoginRequest } from '../types/auth.types';
+import { useAuthContext } from '../context/AuthContext';
 
 export const useAuth = () => {
-  const [user, setUser] = useState<User | null>(() => {
-    const savedUser = localStorage.getItem('madrilusa_user');
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
-  
+  const { user, setUser } = useAuthContext();
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -18,14 +14,13 @@ export const useAuth = () => {
     mutationFn: authApi.register,
     onSuccess: (data) => {
       const userData = data.data as User;
-      setUser(userData);
-      localStorage.setItem('madrilusa_user', JSON.stringify(userData));
-      
+      setUser(userData); // O contexto já salva no localStorage
+
       toast({
         title: "Cadastro realizado com sucesso!",
         description: `Bem-vindo(a), ${userData.nomeCompleto}`,
       });
-      
+
       // Redirecionar para dashboard
       setTimeout(() => {
         navigate('/app/dashboard');
@@ -44,14 +39,13 @@ export const useAuth = () => {
     mutationFn: authApi.login,
     onSuccess: (data) => {
       const userData = data.data as User;
-      setUser(userData);
-      localStorage.setItem('madrilusa_user', JSON.stringify(userData));
-      
+      setUser(userData); // O contexto já salva no localStorage
+
       toast({
         title: "Login realizado com sucesso!",
         description: `Bem-vindo(a) de volta, ${userData.nomeCompleto}`,
       });
-      
+
       // Redirecionar para dashboard
       setTimeout(() => {
         navigate('/app/dashboard');
@@ -67,8 +61,7 @@ export const useAuth = () => {
   });
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('madrilusa_user');
+    setUser(null); // O contexto já remove do localStorage
     toast({
       title: "Logout realizado",
       description: "Até logo!",

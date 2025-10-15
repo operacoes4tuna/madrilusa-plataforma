@@ -94,8 +94,11 @@ const UserAccountDetails: React.FC<UserAccountDetailsProps> = ({
           title: "Nenhuma alteração detectada",
           description: "Não há mudanças para guardar.",
         });
+        setIsSaving(false);
         return;
       }
+
+      console.log('🔄 Atualizando perfil:', updateData);
 
       const response = await fetch(`/api/users/${user?.id}`, {
         method: 'PUT',
@@ -105,17 +108,22 @@ const UserAccountDetails: React.FC<UserAccountDetailsProps> = ({
         body: JSON.stringify(updateData),
       });
 
+      console.log('📡 Resposta do servidor:', response.status);
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Erro ao actualizar conta');
       }
 
       const result = await response.json();
+      console.log('✅ Resposta completa:', result);
 
       // Actualizar dados do utilizador no contexto
       if (result.success && result.data) {
-        setUser(result.data);
-        localStorage.setItem('user', JSON.stringify(result.data));
+        console.log('💾 Atualizando contexto com:', result.data);
+        setUser(result.data); // O contexto já salva no localStorage automaticamente
+      } else {
+        console.warn('⚠️ Resposta sem sucesso ou sem data:', result);
       }
 
       toast({

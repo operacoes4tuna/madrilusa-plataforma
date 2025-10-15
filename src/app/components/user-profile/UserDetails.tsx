@@ -13,6 +13,8 @@ import { getUserPhotoUrl } from '@/lib/userPhotoUtils';
 const UserDetails: React.FC = () => {
   const { user } = useAuth();
 
+  console.log('🔄 UserDetails renderizando com user:', user?.nomeCompleto);
+
   // Dados do utilizador com valores padrão seguindo padrão original
   const userDetails = {
     name: user?.nomeCompleto || "Utilizador Madrilusa",
