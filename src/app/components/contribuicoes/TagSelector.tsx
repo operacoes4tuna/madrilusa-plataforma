@@ -209,9 +209,34 @@ const TagSelector: React.FC<TagSelectorProps> = ({
         )}
       </div>
 
+      {/* Tags Sugeridas */}
+      {safeTags.length < maxTags && displayTags.length > 0 && (
+        <div className="mt-3">
+          <small className="text-muted d-block mb-2">Tags Sugeridas:</small>
+          <div>
+            {displayTags.slice(0, 15).map((tag) => (
+              <span
+                key={tag.id}
+                className="badge mr-1 mb-1"
+                style={{
+                  backgroundColor: tag.cor || '#6c757d',
+                  color: '#fff',
+                  fontSize: '12px',
+                  padding: '6px 8px',
+                  cursor: 'pointer'
+                }}
+                onClick={() => handleAddTag(tag.nome)}
+              >
+                {tag.nome}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Informações */}
       <small className="form-text text-muted mt-1">
-        Digite para buscar tags existentes ou criar novas. 
+        Digite para buscar tags existentes ou criar novas.
         Máximo {maxTags} tags. ({safeTags.length}/{maxTags})
       </small>
     </div>
