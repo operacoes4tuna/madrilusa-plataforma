@@ -214,7 +214,7 @@ const TagSelector: React.FC<TagSelectorProps> = ({
         <div className="mt-3">
           <small className="text-muted d-block mb-2">Tags Sugeridas:</small>
           <div>
-            {displayTags.slice(0, 15).map((tag) => (
+            {displayTags.map((tag) => (
               <span
                 key={tag.id}
                 className="badge mr-1 mb-1"
