@@ -69,7 +69,7 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
             >
               <div className="photo-frame">
                 <img
-                  src={imigranteFoto.startsWith('/uploads/') ? `http://localhost:3001${imigranteFoto}` : imigranteFoto}
+                  src={imigranteFoto}
                   alt={imigranteNome}
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
@@ -125,7 +125,7 @@ const MatchAnimation: React.FC<MatchAnimationProps> = ({ topMatch, isEmpresa }) 
             >
               <div className="photo-frame">
                 <img
-                  src={empresaFoto.startsWith('/uploads/') ? `http://localhost:3001${empresaFoto}` : empresaFoto}
+                  src={empresaFoto}
                   alt={empresaNome}
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
