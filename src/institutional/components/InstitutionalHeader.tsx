@@ -64,6 +64,17 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
+  // Abrir modal de login automaticamente se URL tiver ?login=true
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('login') === 'true' && !isAuthenticated) {
+      setAuthMode('login');
+      setIsAuthModalOpen(true);
+      // Limpar o parâmetro da URL após abrir o modal
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, [isAuthenticated]);
+
   // Fechar dropdown quando clicar fora
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
