@@ -80,7 +80,7 @@ const MatchCard: React.FC<MatchCardProps> = ({
                 <>
                   {match.imigrante?.foto && (
                     <img
-                      src={match.imigrante.foto.startsWith('/uploads/') ? `http://localhost:3001${match.imigrante.foto}` : match.imigrante.foto}
+                      src={match.imigrante.foto}
                       alt={match.imigrante.nomeCompleto}
                       style={{
                         width: '80px',
@@ -133,7 +133,7 @@ const MatchCard: React.FC<MatchCardProps> = ({
                 <>
                   {match.dadosEstruturados?.empresaFoto && (
                     <img
-                      src={match.dadosEstruturados.empresaFoto.startsWith('/uploads/') ? `http://localhost:3001${match.dadosEstruturados.empresaFoto}` : match.dadosEstruturados.empresaFoto}
+                      src={match.dadosEstruturados.empresaFoto}
                       alt={match.dadosEstruturados.empresa}
                       style={{
                         width: '80px',
