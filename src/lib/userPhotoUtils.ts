@@ -13,21 +13,27 @@ interface User {
  * @returns URL da foto ou logo padrão
  */
 export const getUserPhotoUrl = (user?: User | null): string => {
+  console.log('🖼️ getUserPhotoUrl:', user?.foto);
+
   if (!user?.foto) {
     return "/logo_madrilusa/logo madrilusa.png";
   }
 
   // Se a foto já tem a URL completa (http), usar direto
   if (user.foto.startsWith('http')) {
+    console.log('✅ HTTP direto:', user.foto);
     return user.foto;
   }
 
   // Se começa com /uploads, é uma foto relativa - usar sem backend
   if (user.foto.startsWith('/uploads')) {
+    console.log('✅ Uploads relativo:', user.foto);
     return user.foto;
   }
 
   // Senão, construir URL do backend (desenvolvimento)
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
-  return `${apiUrl}${user.foto}`;
+  const finalUrl = `${apiUrl}${user.foto}`;
+  console.log('✅ URL final:', finalUrl);
+  return finalUrl;
 }; 
