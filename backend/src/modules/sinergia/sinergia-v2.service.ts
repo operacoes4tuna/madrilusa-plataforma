@@ -418,6 +418,15 @@ export class SinergiaV2Service {
         fluenciaPortugues: oportunidade.fluenciaPortugues
       }
     };
+
+    // DEBUG: Log das fotos para verificar se estão sendo incluídas
+    console.log('🖼️ DEBUG FOTOS:', {
+      imigranteFoto: (imigrante as any).foto,
+      empresaFoto: (oportunidade as any).user?.foto,
+      empresaNome: (oportunidade as any).user?.nomeCompleto
+    });
+
+    return match;
   }
 
   /**
