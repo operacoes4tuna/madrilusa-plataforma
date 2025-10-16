@@ -75,6 +75,22 @@ const Header = () => {
     }
   }, [isAuthenticated]);
 
+  // Scroll automático para seção de registro se URL tiver ?register=true
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('register') === 'true') {
+      // Aguardar um pouco para garantir que a página carregou
+      setTimeout(() => {
+        const registrationSection = document.getElementById('registration-cards');
+        if (registrationSection) {
+          registrationSection.scrollIntoView({ behavior: 'smooth' });
+        }
+        // Limpar o parâmetro da URL após fazer o scroll
+        window.history.replaceState({}, '', window.location.pathname);
+      }, 500);
+    }
+  }, []);
+
   // Fechar dropdown quando clicar fora
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
