@@ -45,10 +45,25 @@ const TagSelector: React.FC<TagSelectorProps> = ({
     }
   };
 
-  const filteredTags = availableTags.filter(tag =>
-    tag.nome.toLowerCase().includes(inputValue.toLowerCase()) &&
-    !safeTags.includes(tag.nome)
-  );
+  const filteredTags = availableTags.filter(tag => {
+    const matchesSearch = tag.nome.toLowerCase().includes(inputValue.toLowerCase());
+    const notAlreadySelected = !safeTags.includes(tag.nome);
+    return matchesSearch && notAlreadySelected;
+  });
+
+  // Se não houver busca, mostrar todas as tags ordenadas por categoria e uso
+  const displayTags = inputValue.length === 0
+    ? availableTags
+        .filter(tag => !safeTags.includes(tag.nome))
+        .sort((a, b) => {
+          // Priorizar tags de Personalidade
+          if (a.categoria === 'Personalidade' && b.categoria !== 'Personalidade') return -1;
+          if (a.categoria !== 'Personalidade' && b.categoria === 'Personalidade') return 1;
+          // Depois ordenar por usos e nome
+          if (b.usos !== a.usos) return b.usos - a.usos;
+          return a.nome.localeCompare(b.nome);
+        })
+    : filteredTags;
 
   const handleAddTag = (tagName: string) => {
     if (safeTags.length >= maxTags) {
@@ -137,12 +152,12 @@ const TagSelector: React.FC<TagSelectorProps> = ({
         />
 
         {/* Sugestões */}
-        {showSuggestions && filteredTags.length > 0 && (
-          <div 
+        {showSuggestions && displayTags.length > 0 && (
+          <div
             className="position-absolute w-100 bg-white border rounded shadow-sm mt-1"
             style={{ zIndex: 1050, maxHeight: '200px', overflowY: 'auto' }}
           >
-            {filteredTags.slice(0, 8).map((tag, index) => (
+            {displayTags.slice(0, 20).map((tag) => (
               <div
                 key={tag.id}
                 className="px-3 py-2 border-bottom cursor-pointer hover-bg-light"
