@@ -29,6 +29,14 @@ const MatchCard: React.FC<MatchCardProps> = ({
   onExportMatch,
   className = ''
 }) => {
+  // DEBUG: Log para verificar se as fotos estão chegando
+  console.log('🖼️ MATCHCARD DEBUG:', {
+    viewMode,
+    imigranteFoto: match.imigrante?.foto,
+    empresaFoto: match.dadosEstruturados?.empresaFoto,
+    oportunidadeTitulo: match.oportunidade?.titulo
+  });
+
   const [showBreakdown, setShowBreakdown] = useState(false);
   const [showJustificativa, setShowJustificativa] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
