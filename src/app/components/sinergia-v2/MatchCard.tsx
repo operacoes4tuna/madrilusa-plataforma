@@ -98,7 +98,11 @@ const MatchCard: React.FC<MatchCardProps> = ({
                         marginRight: '15px',
                         border: '3px solid #F5A623'
                       }}
+                      onLoad={() => {
+                        console.log('✅ Foto do imigrante carregada:', match.imigrante?.foto);
+                      }}
                       onError={(e) => {
+                        console.error('❌ Erro ao carregar foto do imigrante:', match.imigrante?.foto);
                         (e.target as HTMLImageElement).style.display = 'none';
                       }}
                     />
@@ -151,7 +155,11 @@ const MatchCard: React.FC<MatchCardProps> = ({
                         marginRight: '15px',
                         border: '3px solid #4A90A4'
                       }}
+                      onLoad={() => {
+                        console.log('✅ Foto da empresa carregada:', match.dadosEstruturados?.empresaFoto);
+                      }}
                       onError={(e) => {
+                        console.error('❌ Erro ao carregar foto da empresa:', match.dadosEstruturados?.empresaFoto);
                         (e.target as HTMLImageElement).style.display = 'none';
                       }}
                     />
